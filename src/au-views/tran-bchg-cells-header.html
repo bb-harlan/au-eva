@@ -1,0 +1,26 @@
+<template bindable="eva, equationSide">
+  <require from="./column-gridline.html"></require>
+
+  <div class="aaInlineBlock aaSansSerif">
+    <div class="aaCellText aaFontData aaCellAcctTitle aaInlineBlock">
+      Target ${equationSide == eva.SIDE_ASSETS ? 'asset' : 'equity'} account
+    </div>
+    <div css="display: block; position: relative; border-top: 1px solid ${eva.GRIDLINE_COLOR};">
+      <div class="aaCellText aaFontData">
+        <input type="text"
+               disabled
+               class="aaFormInputText aaCellBchgDesc"
+               value="Change description">
+      </div>
+      <column-gridline
+          gridline-width="${eva.GRIDLINE_WIDTH}"
+          gridline-color="${eva.GRIDLINE_COLOR}"></column-gridline>
+      <div class="aaCellText aaFontData">
+        <input type="text"
+               disabled
+               class="aaFormInputText aaCellBchgAmt"
+               style="border-color: transparent;"
+               value="Change amt">
+      </div>
+    </div>
+</template>

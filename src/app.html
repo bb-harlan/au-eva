@@ -1,0 +1,90 @@
+<template>
+  <require from="./au-components/module-fae"></require>
+  <require from="./au-components/module-acct"></require>
+  <require from="./au-components/module-bchg"></require>
+  <require from="./au-components/module-tran"></require>
+  <require from="./au-components/module-jrnl"></require>
+  <a id="scrollToSelected" href="#" style="position: absolute; top: -10pc;">#</a>
+
+  <div class="aaPanelContainer" css="margin: 0.5pc 0; visibility: ${eva.isEditing ? 'hidden' : 'visible'}">
+    <div class="aaPanel aaPanelBoxShadow" style="font-size: small;">
+      <div class="aaPanelHeader">Navigation map</div>
+      <div class="aaPanelBody" style="padding: 0.5pc;">
+        <table class="aaSansSerif aaInlineBlock" style="color: #333;">
+          <tr>
+            <td class="aaNavCell">
+              <div class="aaNavBtn ${eva.selectedModule == eva.MODULE_FAE ? 'aaNavBtnSelected' : ''}"
+                   click.trigger="onFaeModule($event)">Assets = Equities
+              </div>
+            </td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td class="aaNavCell">
+              <div class="aaNavBtn ${eva.selectedModule == eva.MODULE_JRNL ? 'aaNavBtnSelected' : ''}"
+                   click.trigger="onJrnlModule($event)">Transaction journal
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <td></td>
+            <td class="aaNavCell">
+              <div class="aaNavBtnInert ${eva.selectedModule == eva.MODULE_ACCT ? 'aaNavBtnSelected' : ''}">
+                Account
+              </div>
+            </td>
+            <td><div style="width: 1pc;"></div></td>
+            <td class="aaNavCell">
+              <div class="aaNavBtnInert ${eva.selectedModule == eva.MODULE_TRAN ? 'aaNavBtnSelected' : ''}">
+                Transaction
+              </div>
+            </td>
+            <td></td>
+          </tr>
+          <template if.bind="eva.showingModuleBchg">
+            <tr>
+              <td></td>
+              <td></td>
+              <td class="aaNavCell">
+                <div class="aaNavBtnInert ${eva.selectedModule == eva.MODULE_BCHG ? 'aaNavBtnSelected' : ''}">
+                  Account balance-change Item
+                </div>
+              </td>
+              <td></td>
+              <td></td>
+          </template>
+          </tr>
+        </table>
+      </div>
+    </div>
+  </div>
+  <div class="aaPanelContainer">
+    <module-fae if.bind="eva.selectedModule == eva.MODULE_FAE"></module-fae>
+    <module-acct if.bind="eva.selectedModule == eva.MODULE_ACCT"></module-acct>
+    <module-bchg if.bind="eva.selectedModule == eva.MODULE_BCHG"></module-bchg>
+    <module-tran if.bind="eva.selectedModule == eva.MODULE_TRAN"></module-tran>
+    <module-jrnl if.bind="eva.selectedModule == eva.MODULE_JRNL"></module-jrnl>
+  </div>
+</template>
+
+
+<!--
+<template>
+  <h1>${message}</h1>
+  <div class="btn-group">
+    <a class="aaBtn dropdown-toggle" data-toggle="dropdown">
+      <span class="fa fa-bars fa-fw" aria-hidden="true"></span>
+    </a>
+    <ul class="dropdown-menu aaSansSerif">
+      <li><a><i class="fa fa-plus-circle fa-fw aaIconGreen"></i> Insert new account row</a></li>
+      <li><a><i class="fa fa-plus-circle fa-fw aaIconGreen"></i> Insert new annotation row</a></li>
+      <li class="divider"></li>
+      <li><a><i class="fa fa-minus-circle fa-fw aaIconRed"></i> Delete row...</a></li>
+      <li class="divider"></li>
+      <li><a><i class="fa fa-arrows-v fa-fw aaIconBlue"></i> Re-position row...</a>
+      </li>
+    </ul>
+  </div>
+
+</template>
+-->

@@ -1,0 +1,34 @@
+<template>
+  <require from="../au-views/column-gridline.html"></require>
+  <div class="aaInlineBlock"
+       xcss="background-color: ${eva.GRIDLINE_COLOR};">
+    <div class="aaInlineBlock aaCellText aaFontSizeData">
+      <input type="text"
+             disabled
+             class="aaFormInputText aaCellAcctTitle"
+             style="vertical-align: middle; border-color: transparent;"
+             value="">
+    </div>
+
+    <div style="display: block; position: relative; border-top: 1px solid transparent;">
+      <div class="aaCellText aaFontSizeData">
+        <input type="text"
+               disabled
+               class="aaFormInputText aaCellBchgDesc"
+               style="border-color: transparent;"
+               value="">
+      </div>
+      <column-gridline
+          gridline-width="${eva.GRIDLINE_THIN}"
+          gridline-color="transparent"></column-gridline>
+      <div class="aaCellText aaFontSizeData">
+        <input type="text"
+               disabled
+               class="aaFormInputText aaCellBchgAmt"
+               style="border-color: transparent;"
+               value="">
+      </div>
+    </div>
+  </div>
+</template>
+

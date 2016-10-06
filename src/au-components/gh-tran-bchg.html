@@ -1,0 +1,82 @@
+<template>
+  <require from="../au-views/column-gridline.html"></require>
+
+  <div class="aaInlineBlock">
+    <column-gridline
+        gridline-width="${eva.GRIDLINE_THIN}"
+        gridline-color="${eva.GRIDLINE_COLOR}"></column-gridline>
+    <div class="aaInlineBlock">
+      <div class="aaInlineBlock aaCellText aaFontSizeLabel">
+        <input type="text"
+               disabled
+               class="aaFormInputText aaCellAcctTitle"
+               css="vertical-align: middle; border-color: ${eva.GRIDLINE_COLOR};"
+               value="Target asset account">
+
+        <span class="aaBtn aaBtnHidden"
+              style="vertical-align: middle; border-color: #999;">
+                  <i class="fa fa-ellipsis-h fa-fw" aria-hidden="true"></i>
+                </span>
+      </div>
+
+      <div style="display: block; position: relative; border-top: 1px solid transparent;">
+        <div class="aaCellText aaFontSizeLabel">
+          <input type="text"
+                 disabled
+                 class="aaFormInputText aaCellBchgDesc"
+                 css="border-color: ${eva.GRIDLINE_COLOR};"
+                 value="Change description">
+        </div>
+        <column-gridline
+            gridline-width="${eva.GRIDLINE_THIN}"
+            gridline-color="transparent"></column-gridline>
+        <div class="aaCellText aaFontSizeLabel">
+          <input type="text"
+                 disabled
+                 class="aaFormInputText aaCellBchgAmt"
+                 css="border-color: ${eva.GRIDLINE_COLOR};"
+                 value="Change amt">
+        </div>
+      </div>
+    </div>
+    <column-gridline
+        gridline-width="${eva.GRIDLINE_THIN}"
+        gridline-color="${eva.GRIDLINE_COLOR}"></column-gridline>
+    <div class="aaInlineBlock">
+      <div class="aaInlineBlock aaCellText aaFontSizeLabel">
+        <input type="text"
+               disabled
+               class="aaFormInputText aaCellAcctTitle"
+               css="vertical-align: middle; border-color: ${eva.GRIDLINE_COLOR};"
+               value="Target equity account">
+
+        <span class="aaBtn aaBtnHidden"
+              style="vertical-align: middle; border-color: #999;">
+                  <i class="fa fa-ellipsis-h fa-fw" aria-hidden="true"></i>
+                </span>
+      </div>
+      <div style="display: block; position: relative; border-top: 1px solid transparent;">
+        <div class="aaCellText aaFontSizeLabel">
+          <input type="text"
+                 disabled
+                 class="aaFormInputText aaCellBchgDesc"
+                 css="border-color: ${eva.GRIDLINE_COLOR};"
+                 value="Change description">
+        </div>
+        <column-gridline
+            gridline-width="${eva.GRIDLINE_THIN}"
+            gridline-color="transparent"></column-gridline>
+        <div class="aaCellText aaFontSizeLabel">
+          <input type="text"
+                 disabled
+                 class="aaFormInputText aaCellBchgAmt"
+                 css="border-color: ${eva.GRIDLINE_COLOR};"
+                 value="Change amt">
+        </div>
+      </div>
+    </div>
+    <column-gridline
+        gridline-width="100%"
+        gridline-color="${eva.GRIDLINE_COLOR}"></column-gridline>
+  </div>
+</template>

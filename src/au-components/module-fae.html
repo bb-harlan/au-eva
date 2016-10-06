@@ -1,0 +1,31 @@
+<template>
+  <require from="./acct-list-fae"></require>
+  <require from="../au-attributes/equation-side"></require>
+
+  <div class="aaPanel aaPanelBoxShadow">
+    <div class="aaPanelHeader aaPanelHeaderModule">The fundamental accounting equation</div>
+    <div class="aaPanelBody">
+      <!--<div style="white-space: nowrap;">-->
+        <div class="aaEquSideContainer">
+          <h1 class="text-right">Assets</h1>
+          <acct-list-fae
+              aa-equation-side="${eva.SIDE_ASSETS}"
+              mouseenter.trigger="selectSide(eva.SIDE_ASSETS)"
+              mouseleave.trigger="deselectSide(eva.SIDE_ASSETS)">
+          </acct-list-fae>
+        </div>
+        <div class="aaEquSideContainer" style="padding: 0 1pc;">
+          <h1>=</h1>
+        </div>
+        <div class="aaEquSideContainer">
+          <h1 style="text-align: left;">Equities</h1>
+          <acct-list-fae
+              aa-equation-side="${eva.SIDE_EQUITIES}"
+              mouseenter.trigger="selectSide(eva.SIDE_EQUITIES)"
+              mouseleave.trigger="deselectSide(eva.SIDE_EQUITIES)">
+          </acct-list-fae>
+        </div>
+      <!--</div>-->
+    </div>
+  </div>
+</template>

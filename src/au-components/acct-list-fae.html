@@ -1,0 +1,181 @@
+<template>
+  <require from="../au-views/column-gridline.html"></require>
+  <div class="aaGridContainer">
+    <div class="aaGridTitleBar" style="font-size: larger;">${sideHeading}</div>
+    <div class="aaGridHeader">
+      <div class="aaFontLabel aaRow">
+        <div class="aaFontLabel aaCellRowOps"
+             click.delegate="onArrangeRows($event)">
+          <span class="aaBtn"><i class="fa fa-arrows-v fa-fw aaIconBlue" aria-hidden="true"></i></span>
+        </div>
+        <div class="aaCellRowOps ">
+          <span class="aaBtn aaBtnHidden">
+                      <i class="fa fa-chevron-right fa-fw" aria-hidden="true"></i>
+          </span>
+        </div>
+        <column-gridline
+            gridline-width="${eva.GRIDLINE_THIN}"
+            gridline-color="${eva.GRIDLINE_COLOR}"></column-gridline>
+        <div class="aaCellText aaCellRowSelectedChar" style="visibility: hidden;">${eva.ROW_SELECTED_CHAR}</div>
+        <column-gridline
+            gridline-width="${eva.GRIDLINE_THIN}"
+            gridline-color="${eva.GRIDLINE_COLOR}"></column-gridline>
+        <div class="aaCellText aaFontSizeLabel aaCellAcctTitle"><span class=" aaSansSerif">Title</span></div>
+        <column-gridline
+            gridline-width="${eva.GRIDLINE_THIN}"
+            gridline-color="${eva.GRIDLINE_COLOR}"></column-gridline>
+        <div class="aaCellText aaFontSizeLabel aaCellBchgBal"><span class=" aaSansSerif">Balance</span></div>
+        <column-gridline
+            gridline-width="100%"
+            gridline-color="${eva.GRIDLINE_COLOR}"></column-gridline>
+      </div>
+    </div>
+    <div class="aaGridScrollableRows">
+      <template repeat.for="listItem of sideAcctList">
+        <div id="${listItem.id}"
+             class="aaRow"
+             mouseenter.trigger="onRowEnter($event, listItem)"
+             mouseleave.trigger="onRowLeave($event, listItem)">
+          <template if.bind="listItem.isAcct">
+            <div class="aaCellRowOps">
+              <span class="aaBtn aaBtnHidden"
+                    click.delegate="onMenuClick($event, listItem)">
+                <i class="fa fa-bars fa-fw" aria-hidden="true"></i>
+              </span>
+            </div>
+            <div class="aaCellRowOps">
+              <span class="aaBtn aaBtnHidden"
+                    click.delegate="onGoAcct($event, listItem)">
+                <i class="fa fa-chevron-right fa-fw" aria-hidden="true"></i>
+              </span>
+            </div>
+            <column-gridline
+                gridline-width="${eva.GRIDLINE_THIN}"
+                gridline-color="${eva.GRIDLINE_COLOR}"></column-gridline>
+            <div class="aaCellText aaCellRowSelectedChar" css="visibility: ${listItem.id == eva.selectedAcct.id ? 'visible' : 'hidden'};">${eva.ROW_SELECTED_CHAR}</div>
+            <div class="aaRowDataCells">
+              <column-gridline
+                  gridline-width="${eva.GRIDLINE_THIN}"
+                  gridline-color="${eva.GRIDLINE_COLOR}"></column-gridline>
+              <span class="aaCellText aaFontSizeData aaCellAcctTitle">${listItem.title}</span>
+              <column-gridline
+                  gridline-width="${eva.GRIDLINE_THIN}"
+                  gridline-color="${eva.GRIDLINE_COLOR}"></column-gridline>
+              <span class="aaCellText aaFontSizeData aaCellBchgBal">${listItem.bchgList.endingBalance.toFixed(2)}</span>
+              <column-gridline
+                  gridline-width="${eva.GRIDLINE_THIN}"
+                  gridline-color="${eva.GRIDLINE_COLOR}"></column-gridline>
+            </div>
+          </template>
+          <template if.bind="listItem.isAnnotation">
+            <div class="aaCellRowOps">
+                <span class="aaBtn aaBtnHidden"
+                      click.delegate="onMenuClick($event, listItem)">
+                    <i class="fa fa-bars fa-fw" aria-hidden="true"></i>
+                </span>
+            </div>
+            <div class="aaCellRowOps">
+              <span class="aaBtn aaBtnHidden"
+                    click.delegate="onGoAcct($event, listItem)">
+                <i class="fa fa-chevron-right fa-fw" aria-hidden="true"></i>
+              </span>
+            </div>
+            <column-gridline
+                gridline-width="${eva.GRIDLINE_THIN}"
+                gridline-color="${eva.GRIDLINE_COLOR}"></column-gridline>
+            <div class="aaCellText aaCellRowSelectedChar" css="visibility: ${listItem.id == eva.selectedAcct.id ? 'visible' : 'hidden'};">${eva.ROW_SELECTED_CHAR}</div>
+            <div class="aaRowDataCells">
+              <column-gridline
+                  gridline-width="${eva.GRIDLINE_THIN}"
+                  gridline-color="${eva.GRIDLINE_COLOR}"></column-gridline>
+              <span class="aaCellText aaFontSizeData aaCellAnnoTitle">${listItem.annotation}</span>
+              <column-gridline
+                  gridline-width="${eva.GRIDLINE_THIN}"
+                  gridline-color="${eva.GRIDLINE_COLOR}"></column-gridline>
+              <span class="aaCellText aaFontSizeData aaCellBchgBal"></span>
+              <column-gridline
+                  gridline-width="${eva.GRIDLINE_THIN}"
+                  gridline-color="${eva.GRIDLINE_COLOR}"></column-gridline>
+
+            </div>
+          </template>
+        </div>
+      </template>
+
+      <!--
+          Following is the coding for an end-of-list row that is not associated
+          with any account. Since "insertion" is the facility provided to a user
+          for creating a new account in the list, this end-of-list row provides
+          a point to insert a new account at the end of the list.
+      -->
+      <div class="aaRow"
+           id="End of equation side ${sideAcctList.equationSide}"
+           mouseenter.trigger="onRowEnter($event, null)"
+           mouseleave.trigger="onRowLeave($event, null)">
+        <div class="aaCellRowOps">
+          <span class="aaBtn aaBtnHidden"
+                click.delegate="onMenuClick($event, listItem)">
+            <i class="fa fa-bars fa-fw" aria-hidden="true"></i>
+          </span>
+        </div>
+        <div class="aaCellRowOps">
+          <span class="aaBtn aaBtnHidden">
+            <i class="fa fa-chevron-right fa-fw" aria-hidden="true"></i>
+          </span>
+        </div>
+        <column-gridline
+            gridline-width="${eva.GRIDLINE_THIN}"
+            gridline-color="${eva.GRIDLINE_COLOR}"></column-gridline>
+        <div class="aaCellText aaCellRowSelectedChar" style="visibility: hidden;">${eva.ROW_SELECTED_CHAR}</div>
+        <div class="aaInlineBlock">
+          <column-gridline
+              gridline-width="${eva.GRIDLINE_THIN}"
+              gridline-color="${eva.GRIDLINE_COLOR}"></column-gridline>
+          <span class="aaCellText aaFontData aaCellAcctTitle"><span
+              class="aaSansSerif aaCellTextEOL">${eva.END_OF_LIST}</span></span>
+          <column-gridline
+              gridline-width="${eva.GRIDLINE_THIN}"
+              gridline-color="transparent"></column-gridline>
+          <span class="aaCellText aaFontData aaCellBchgBal"></span>
+          <column-gridline
+              gridline-width="${eva.GRIDLINE_THIN}"
+              gridline-color="transparent"></column-gridline>
+        </div>
+      </div>
+    </div>
+    <div class="aaGridFooterBar"></div>
+    <!--
+    Following is the coding for a row that shows the total of
+    all account balances. It is code with invisible menu and nav buttons
+    as horizontal space holders to result in proper horizontal positioning
+    of the "Total" label amd the total amt.
+    -->
+  </div>
+  <div class="aaGridTotals">
+    <div class="aaRowTotals">
+      <div class="aaCellRowOps">
+        <span class="aaBtn aaBtnHidden"><i class="fa fa-bars fa-fw" aria-hidden="true"></i></span>
+      </div>
+      <div class="aaCellRowOps">
+        <span class="aaBtn aaBtnHidden"><i class="fa fa-chevron-right fa-fw" aria-hidden="true"></i></span>
+      </div>
+      <column-gridline
+          gridline-width="${eva.GRIDLINE_THIN}"
+          gridline-color="${eva.GRIDLINE_COLOR}"></column-gridline>
+      <div class="aaCellText aaCellRowSelectedChar" style="visibility: hidden;">${eva.ROW_SELECTED_CHAR}</div>
+      <column-gridline
+          gridline-width="${eva.GRIDLINE_THIN}"
+          gridline-color="transparent"></column-gridline>
+      <span class="aaCellText aaFontData aaCellAcctTitle" style="text-align: right;"><span
+          class="aaSansSerif">Total:</span></span>
+      <column-gridline
+          gridline-width="${eva.GRIDLINE_THIN}"
+          gridline-color="transparent"></column-gridline>
+      <span class="aaCellText aaFontData aaCellBchgBal">${sideAcctList.listTotal.toFixed(2)}</span>
+      <column-gridline
+          gridline-width="${eva.GRIDLINE_THIN}"
+          gridline-color="transparent"></column-gridline>
+    </div>
+  </div>
+
+</template>
