@@ -105,6 +105,9 @@ export class ModuleAcct {
     onMenuClick(event, selectedAcct) {
         // alert(`selectedAcct.title = ${selectedAcct.title}`);
     }
+  onNewTran(event, selectedAcct) {
+    alert('"New tran..." not yet implemented.');
+  }
     attached() {
         let hyperLink:Element = document.getElementById('scrollToSelected');
         if (this.eva.selectedBchg) {
