@@ -44,6 +44,7 @@ export class Eva {
     get TOOLBAR_BACKGROUND_COLOR():string {return "#ddd";};
     // get ROW_SELECTED_CHAR():string {return String.fromCharCode(0xf005);} // FontAwesome fa-star
     get ROW_SELECTED_CHAR():string {return String.fromCharCode(0xf111);} // FontAwesome fa-circle
+    // get ROW_SELECTED_CHAR():string {return String.fromCharCode(0xf192);} // FontAwesome fa-dot-circle
     equSideText(equSideAbbr:string):string {
         if (equSideAbbr == this.SIDE_ASSETS) {
             return 'Assets';
