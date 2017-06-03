@@ -16,12 +16,12 @@ export class TranBchgList extends Array<Bchg> {
         let changeToAssetBalances:number = 0.00;
         let changeToEquityBalances:number = 0.00;
         for (let bchg of this) {
-            if (bchg.parentAcct.equationSide == this.eva.SIDE_ASSETS) {
+            if (bchg.targetAcct.equationSide == this.eva.SIDE_ASSETS) {
                 changeToAssetBalances += bchg.amt;
-            } else if (bchg.parentAcct.equationSide == this.eva.SIDE_EQUITIES) {
+            } else if (bchg.targetAcct.equationSide == this.eva.SIDE_EQUITIES) {
                 changeToEquityBalances += bchg.amt;
             } else {
-                throw new Error(`acct.equationSide has invalid value: ${bchg.parentAcct.equationSide}.`);
+                throw new Error(`acct.equationSide has invalid value: ${bchg.targetAcct.equationSide}.`);
             }
         }
         this.changeToAssetBalances = changeToAssetBalances;

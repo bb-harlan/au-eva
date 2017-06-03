@@ -52,7 +52,7 @@ export class ModuleTran {
     }
     onGoBchg(event, bchg) {
         this.eva.selectedBchg = bchg;
-        this.eva.selectedAcct = bchg.parentAcct;
+        this.eva.selectedAcct = bchg.targetAcct;
         if (this.eva.showingModuleBchg) {
             this.eva.selectedModule = this.eva.MODULE_BCHG;
         }
@@ -104,8 +104,8 @@ export class ModuleTran {
         for (let bchg of this.eva.selectedTran.bchgList) {
             copyOfBchg = new Bchg(
                 bchg.id,
-                bchg.parentAcct,
-                bchg.parentTran,
+                bchg.targetAcct,
+                bchg.sourceTran,
                 bchg.intraTranSorter,
                 bchg.desc,
                 bchg.amt);

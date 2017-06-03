@@ -3,22 +3,22 @@ import {Tran} from '../models/tran';
 //
 export class Bchg {
     id:string;
-    parentAcct:Acct;
-    parentTran:Tran;
+    targetAcct:Acct;
+    sourceTran:Tran;
     intraTranSorter:number;
     desc:string;
     amt:number;
     newBalance:number;
 
     constructor(id:string,
-                parentAcct:Acct,
-                parentTran:Tran,
+                targetAcct:Acct,
+                sourceTran:Tran,
                 intraTranSorter:number,
                 desc:string,
                 amt:number) {
         this.id = id;
-        this.parentAcct = parentAcct;
-        this.parentTran = parentTran;
+        this.targetAcct = targetAcct;
+        this.sourceTran = sourceTran;
         this.intraTranSorter = intraTranSorter;
         this.desc = desc;
         this.amt = amt;
@@ -26,7 +26,7 @@ export class Bchg {
     }
 
     compareToInAcct(b:Bchg):number {
-        return this.parentTran.compareTo(b.parentTran);
+        return this.sourceTran.compareTo(b.sourceTran);
     }
 
     compareToInTran(b:Bchg):number {

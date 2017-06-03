@@ -1,15 +1,15 @@
 <template>
   <require from="../au-views/column-gridline.html"></require>
   <div class="aaPanel aaPanelBoxShadow">
-    <div class="aaPanelHeader aaPanelHeaderModule">Account Balance-change Item</div>
+    <div class="aaPanelHeader aaPanelHeaderModule">Account balance change</div>
     <div class="aaPanelToolBar" xstyle="text-align: center;">
           <span click.trigger="onGoAcct($event)"
                 class="aaBtn">
-             <i class="fa fa-chevron-left fa-fw" aria-hidden="true"></i> Show in target account
+             <i class="fa fa-chevron-left fa-fw" aria-hidden="true"></i>Target account
           </span>
       <span class="aaToolBarDivider">.</span>
       <span click.trigger="onGoTran($event)"
-            class="aaBtn">Show in source transaction
+            class="aaBtn">Source transaction
              <i class="fa fa-chevron-right fa-fw" aria-hidden="true"></i>
           </span>
     </div>
@@ -34,15 +34,15 @@
           </div>
           <div class="aaRow">
             <div class="aaRowDataCells">
-              <div class="aaCellText aaFontSizeData aaCellId">${eva.selectedBchg.parentAcct.id}</div>
+              <div class="aaCellText aaFontSizeData aaCellId">${eva.selectedBchg.targetAcct.id}</div>
               <column-gridline
                   gridline-width="${eva.GRIDLINE_THIN}"
                   gridline-color="${eva.GRIDLINE_COLOR}"></column-gridline>
-              <div class="aaCellText aaFontSizeData aaCellEquSide">${eva.equSideText(eva.selectedBchg.parentAcct.equationSide)}</div>
+              <div class="aaCellText aaFontSizeData aaCellEquSide">${eva.equSideText(eva.selectedBchg.targetAcct.equationSide)}</div>
               <column-gridline
                   gridline-width="${eva.GRIDLINE_THIN}"
                   gridline-color="${eva.GRIDLINE_COLOR}"></column-gridline>
-              <div class="aaCellText aaFontSizeData aaCellAcctTitle">${eva.selectedBchg.parentAcct.title}</div>
+              <div class="aaCellText aaFontSizeData aaCellAcctTitle">${eva.selectedBchg.targetAcct.title}</div>
             </div>
           </div>
         </div>
@@ -65,11 +65,11 @@
           </div>
           <div class="aaRow">
             <div class="aaRowDataCells">
-              <div class="aaCellText aaFontSizeData aaCellId">${eva.selectedBchg.parentTran.id}</div>
+              <div class="aaCellText aaFontSizeData aaCellId">${eva.selectedBchg.sourceTran.id}</div>
               <column-gridline
                   gridline-width="${eva.GRIDLINE_THIN}"
                   gridline-color="${eva.GRIDLINE_COLOR}"></column-gridline>
-              <div class="aaCellText aaFontSizeData aaCellTranDate">${eva.selectedBchg.parentTran.date}</div>
+              <div class="aaCellText aaFontSizeData aaCellTranDate">${eva.selectedBchg.sourceTran.date}</div>
               <column-gridline
                 gridline-width="${eva.GRIDLINE_THIN}"
                 gridline-color="${eva.GRIDLINE_COLOR}"></column-gridline>

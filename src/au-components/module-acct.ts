@@ -51,7 +51,7 @@ export class ModuleAcct {
         }
     }
     onGoBchg(event, bchg) {
-        this.eva.selectedTran = bchg.parentTran;
+        this.eva.selectedTran = bchg.sourceTran;
         this.eva.selectedBchg = bchg;
         if (this.eva.showingModuleBchg) {
             this.eva.selectedModule = this.eva.MODULE_BCHG;

@@ -8,7 +8,7 @@
         gridline-width="${eva.GRIDLINE_THIN}"
         gridline-color="${eva.GRIDLINE_COLOR}"></column-gridline>
 
-    <template if.bind="bchg.parentAcct.equationSide == eva.SIDE_ASSETS">
+    <template if.bind="bchg.targetAcct.equationSide == eva.SIDE_ASSETS">
       <tran-bchg-cells bchg.bind="bchg"></tran-bchg-cells>
       <column-gridline
           gridline-width="${eva.GRIDLINE_THIN}"
@@ -16,7 +16,7 @@
       <tran-bchg-cells-blank></tran-bchg-cells-blank>
     </template>
 
-    <template if.bind="bchg.parentAcct.equationSide == eva.SIDE_EQUITIES">
+    <template if.bind="bchg.targetAcct.equationSide == eva.SIDE_EQUITIES">
       <tran-bchg-cells-blank></tran-bchg-cells-blank>
       <column-gridline
           gridline-width="${eva.GRIDLINE_THIN}"

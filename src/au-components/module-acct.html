@@ -86,7 +86,7 @@
         </div>
 
         <div class="aaGridContainer">
-          <div class="aaGridTitleBar">Balance-change items</div>
+          <div class="aaGridTitleBar">Balance changes</div>
           <div class="aaGridHeader">
             <div class="aaFontLabel aaRow">
               <div class="aaCellRowOps aaFontSizeLabel">
@@ -141,7 +141,7 @@
                   <column-gridline
                       gridline-width="${eva.GRIDLINE_THIN}"
                       gridline-color="${eva.GRIDLINE_COLOR}"></column-gridline>
-                  <div class="aaCellText aaFontSizeData aaCellTranDate">${bchg.parentTran.date}</div>
+                  <div class="aaCellText aaFontSizeData aaCellTranDate">${bchg.sourceTran.date}</div>
                   <column-gridline
                       gridline-width="${eva.GRIDLINE_THIN}"
                       gridline-color="${eva.GRIDLINE_COLOR}"></column-gridline>
@@ -198,13 +198,13 @@
         <div class="aaForm">
           <template if.bind="!eva.isEditing">
             <span class="aaSansSerif">Annotation:</span>
-            <input class="aaInputText aaCellAnnoTitle aaSansSerif" type="text" value="${eva.selectedAcct.annotation}"
+            <input class="aaInputText aaCellAnnoTitle aaSansSerif" type="text" value="${eva.selectedAcct.annoText}"
                    disabled>
             <br>
           </template>
           <template if.bind="eva.isEditing">
             <span class="aaSansSerif">Annotation:</span>
-            <input class="aaInputText aaCellAnnoTitle aaSansSerif" type="text" value="${eva.selectedAcct.annotation}">
+            <input class="aaInputText aaCellAnnoTitle aaSansSerif" type="text" value="${eva.selectedAcct.annoText}">
             <br>
           </template>
         </div>

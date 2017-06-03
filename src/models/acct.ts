@@ -27,12 +27,12 @@ export abstract class EquationSideItem {
 //
 export class Annotation extends EquationSideItem {
     //
-    annotation:string;
+    annoText:string;
 
-    constructor(id:string, equationSide:string, intraSideSorter:number, annotation:string) {
+    constructor(id:string, equationSide:string, intraSideSorter:number, annoText:string) {
         super(id, equationSide, intraSideSorter);
         this.isAnnotation = true;
-        this.annotation = annotation;
+        this.annoText = annoText;
     }
 }
 //

@@ -34,12 +34,12 @@ export class Tran {
         let assetsBchg:number = 0.00;
         let equitiesBchg:number = 0.00;
         for (let bchg of this.bchgList) {
-            if (bchg.parentAcct.equationSide == this.eva.SIDE_ASSETS) {
+            if (bchg.targetAcct.equationSide == this.eva.SIDE_ASSETS) {
                 assetsBchg += bchg.amt;
-            } else if (bchg.parentAcct.equationSide == this.eva.SIDE_EQUITIES) {
+            } else if (bchg.targetAcct.equationSide == this.eva.SIDE_EQUITIES) {
                 equitiesBchg += bchg.amt;
             } else {
-                throw new Error(`acct.equationSide has invalid value: ${bchg.parentAcct.equationSide}.`);
+                throw new Error(`acct.equationSide has invalid value: ${bchg.targetAcct.equationSide}.`);
             }
         }
         this.assetsBchg = assetsBchg;
