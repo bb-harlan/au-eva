@@ -3,11 +3,31 @@
   <div class="aaPanel aaPanelBoxShadow">
     <div class="aaPanelHeader aaPanelHeaderModule">Account balance change</div>
     <div class="aaPanelToolBar" xstyle="text-align: center;">
-          <span click.trigger="onGoAcct($event)"
-                class="aaBtn">
-             <i class="fa fa-chevron-left fa-fw" aria-hidden="true"></i>Target account
-          </span>
+      <span click.trigger="onGoAcct($event)"
+            class="aaBtn">
+            <i class="fa fa-chevron-left fa-fw" aria-hidden="true"></i>Target account
+      </span>
+<!--
+      <span click.trigger="onGoUpInAcct($event)"
+            class="aaBtn">
+          <i class="fa fa-chevron-up fa-fw" aria-hidden="true"></i>
+      </span>
+      <span click.trigger="onGoDownInAcct($event)"
+            class="aaBtn">
+          <i class="fa fa-chevron-down fa-fw" aria-hidden="true"></i>
+      </span>
+-->
       <span class="aaToolBarDivider">.</span>
+<!--
+      <span click.trigger="onGoUpInTran($event)"
+            class="aaBtn">
+          <i class="fa fa-chevron-up fa-fw" aria-hidden="true"></i>
+      </span>
+      <span click.trigger="onGoDownInTran($event)"
+            class="aaBtn">
+          <i class="fa fa-chevron-down fa-fw" aria-hidden="true"></i>
+      </span>
+-->
       <span click.trigger="onGoTran($event)"
             class="aaBtn">Source transaction
              <i class="fa fa-chevron-right fa-fw" aria-hidden="true"></i>
