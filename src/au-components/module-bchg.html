@@ -3,65 +3,76 @@
   <div class="aaPanel aaPanelBoxShadow">
     <div class="aaPanelHeader aaPanelHeaderModule">Account balance change</div>
     <div class="aaPanelToolBar" xstyle="text-align: center;">
+<!--
       <span click.trigger="onGoAcct($event)"
             class="aaBtn">
             <i class="fa fa-chevron-left fa-fw" aria-hidden="true"></i>Target account
       </span>
-<!--
-      <span click.trigger="onGoUpInAcct($event)"
-            class="aaBtn">
-          <i class="fa fa-chevron-up fa-fw" aria-hidden="true"></i>
-      </span>
-      <span click.trigger="onGoDownInAcct($event)"
-            class="aaBtn">
-          <i class="fa fa-chevron-down fa-fw" aria-hidden="true"></i>
-      </span>
--->
       <span class="aaToolBarDivider">.</span>
-<!--
-      <span click.trigger="onGoUpInTran($event)"
-            class="aaBtn">
-          <i class="fa fa-chevron-up fa-fw" aria-hidden="true"></i>
-      </span>
-      <span click.trigger="onGoDownInTran($event)"
-            class="aaBtn">
-          <i class="fa fa-chevron-down fa-fw" aria-hidden="true"></i>
-      </span>
--->
       <span click.trigger="onGoTran($event)"
             class="aaBtn">Source transaction
              <i class="fa fa-chevron-right fa-fw" aria-hidden="true"></i>
           </span>
+-->
+      <span class="aaToolBarDivider">.</span>
+      <span click.trigger="onEdit($event)"
+            class="aaBtn">
+           <i class="fa fa-pencil-square-o fa-fw aaIconBlue" aria-hidden="true"></i> Edit
+      </span>
+      <span click.trigger="onDelete($event)"
+            class="aaBtn" style="margin-left: 1pc;">
+           <i class="fa fa-minus-circle fa-fw aaIconRed" aria-hidden="true"></i> Delete
+      </span>
+      <span class="aaToolBarDivider">.</span>
     </div>
     <div class="aaPanelBody">
       <div style="text-align: center;">
         <!--Target account-->
         <div class="aaGridContainer aaInlineBlock" style="margin-right: 1pc;">
-          <!--Target account-->
           <div class="aaGridTitleBar">Target account</div>
           <div class="aaGridHeader">
             <div class="aaFontLabel aaRow">
+              <div class="aaCellRowOps aaFontSizeLabel">
+                <span class="aaBtn aaBtnHidden">
+                  <i class="fa fa-chevron-left fa-fw aaIconGreen" aria-hidden="true"></i>
+                </span>
+              </div>
+              <column-gridline
+                gridline-width="${eva.GRIDLINE_THIN}"
+                gridline-color="${eva.GRIDLINE_COLOR}"></column-gridline>
               <div class="aaCellText aaFontSizeLabel aaCellId"><span class=" aaSansSerif">ID</span></div>
               <column-gridline
-                  gridline-width="${eva.GRIDLINE_THIN}"
-                  gridline-color="${eva.GRIDLINE_COLOR}"></column-gridline>
-              <div class="aaCellText aaFontSizeLabel aaCellEquSide"><span class=" aaSansSerif">Equation side</span></div>
+                gridline-width="${eva.GRIDLINE_THIN}"
+                gridline-color="${eva.GRIDLINE_COLOR}"></column-gridline>
+              <div class="aaCellText aaFontSizeLabel aaCellEquSide"><span class=" aaSansSerif">Equation side</span>
+              </div>
               <column-gridline
-                  gridline-width="${eva.GRIDLINE_THIN}"
-                  gridline-color="${eva.GRIDLINE_COLOR}"></column-gridline>
+                gridline-width="${eva.GRIDLINE_THIN}"
+                gridline-color="${eva.GRIDLINE_COLOR}"></column-gridline>
               <div class="aaCellText aaFontSizeLabel aaCellAcctTitle"><span class=" aaSansSerif">Title</span></div>
             </div>
           </div>
           <div class="aaRow">
+            <div class="aaCellRowOps  aaFontSizeLabel">
+                  <span class="aaBtn"
+                        click.delegate="onGoAcct($event)">
+                    <i class="fa fa-chevron-left fa-fw" aria-hidden="true"></i>
+                  </span>
+            </div>
+            <column-gridline
+              gridline-width="${eva.GRIDLINE_THIN}"
+              gridline-color="${eva.GRIDLINE_COLOR}"></column-gridline>
             <div class="aaRowDataCells">
               <div class="aaCellText aaFontSizeData aaCellId">${eva.selectedBchg.targetAcct.id}</div>
               <column-gridline
-                  gridline-width="${eva.GRIDLINE_THIN}"
-                  gridline-color="${eva.GRIDLINE_COLOR}"></column-gridline>
-              <div class="aaCellText aaFontSizeData aaCellEquSide">${eva.equSideText(eva.selectedBchg.targetAcct.equationSide)}</div>
+                gridline-width="${eva.GRIDLINE_THIN}"
+                gridline-color="${eva.GRIDLINE_COLOR}"></column-gridline>
+              <div class="aaCellText aaFontSizeData aaCellEquSide">
+                ${eva.equSideText(eva.selectedBchg.targetAcct.equationSide)}
+              </div>
               <column-gridline
-                  gridline-width="${eva.GRIDLINE_THIN}"
-                  gridline-color="${eva.GRIDLINE_COLOR}"></column-gridline>
+                gridline-width="${eva.GRIDLINE_THIN}"
+                gridline-color="${eva.GRIDLINE_COLOR}"></column-gridline>
               <div class="aaCellText aaFontSizeData aaCellAcctTitle">${eva.selectedBchg.targetAcct.title}</div>
             </div>
           </div>
@@ -73,37 +84,57 @@
           </div>
           <div class="aaGridHeader">
             <div class="aaFontLabel aaRow">
-              <div class="aaCellText aaFontSizeLabel aaCellId"><span class="aaSansSerif">ID</span></div>
-              <column-gridline
-                  gridline-width="${eva.GRIDLINE_THIN}"
-                  gridline-color="${eva.GRIDLINE_COLOR}"></column-gridline>
-              <div class="aaCellText aaFontSizeLabel aaCellTranDate"><span class=" aaSansSerif">Date</span></div>
+              <div class="aaCellRowOps aaFontSizeLabel">
+                <span class="aaBtn aaBtnHidden">
+                  <i class="fa fa-chevron-right fa-fw aaIconGreen" aria-hidden="true"></i>
+                </span>
+              </div>
               <column-gridline
                 gridline-width="${eva.GRIDLINE_THIN}"
                 gridline-color="${eva.GRIDLINE_COLOR}"></column-gridline>
+              <div class="aaCellText aaFontSizeLabel aaCellId"><span class="aaSansSerif">ID</span></div>
+              <column-gridline
+                gridline-width="${eva.GRIDLINE_THIN}"
+                gridline-color="${eva.GRIDLINE_COLOR}"></column-gridline>
+              <div class="aaCellText aaFontSizeLabel aaCellTranDate"><span class=" aaSansSerif">Date</span></div>
+<!--
+              <column-gridline
+                gridline-width="${eva.GRIDLINE_THIN}"
+                gridline-color="${eva.GRIDLINE_COLOR}"></column-gridline>
+-->
             </div>
           </div>
           <div class="aaRow">
+            <div class="aaCellRowOps  aaFontSizeLabel">
+                  <span class="aaBtn"
+                        click.delegate="onGoTran($event)">
+                    <i class="fa fa-chevron-right fa-fw" aria-hidden="true"></i>
+                  </span>
+            </div>
+            <column-gridline
+              gridline-width="${eva.GRIDLINE_THIN}"
+              gridline-color="${eva.GRIDLINE_COLOR}"></column-gridline>
             <div class="aaRowDataCells">
               <div class="aaCellText aaFontSizeData aaCellId">${eva.selectedBchg.sourceTran.id}</div>
               <column-gridline
-                  gridline-width="${eva.GRIDLINE_THIN}"
-                  gridline-color="${eva.GRIDLINE_COLOR}"></column-gridline>
-              <div class="aaCellText aaFontSizeData aaCellTranDate">${eva.selectedBchg.sourceTran.date}</div>
-              <column-gridline
                 gridline-width="${eva.GRIDLINE_THIN}"
                 gridline-color="${eva.GRIDLINE_COLOR}"></column-gridline>
+              <div class="aaCellText aaFontSizeData aaCellTranDate">${eva.selectedBchg.sourceTran.date}</div>
+              <!--<column-gridline
+                gridline-width="${eva.GRIDLINE_THIN}"
+                gridline-color="${eva.GRIDLINE_COLOR}"></column-gridline>
+                -->
             </div>
           </div>
         </div>
       </div>
       <div style="margin-top: 2pc; text-align: center;">
-<!--
-          <span click.trigger="onGoAcct($event)"
-                class="aaBtn">
-            <i class="fa fa-chevron-left fa-fw" aria-hidden="true"></i> Show in target account
-          </span>
--->
+        <!--
+                  <span click.trigger="onGoAcct($event)"
+                        class="aaBtn">
+                    <i class="fa fa-chevron-left fa-fw" aria-hidden="true"></i> Show in target account
+                  </span>
+        -->
         <!--Balance change-->
         <div class="aaGridContainer aaInlineBlock" style="margin-top: 0;">
           <!--Balance change-->
@@ -112,8 +143,8 @@
             <div class="aaFontLabel aaRow">
               <div class="aaCellText aaFontSizeLabel aaCellBchgDesc"><span class=" aaSansSerif">Description</span></div>
               <column-gridline
-                  gridline-width="${eva.GRIDLINE_THIN}"
-                  gridline-color="${eva.GRIDLINE_COLOR}"></column-gridline>
+                gridline-width="${eva.GRIDLINE_THIN}"
+                gridline-color="${eva.GRIDLINE_COLOR}"></column-gridline>
               <div class="aaCellText aaFontSizeLabel aaCellBchgAmt"><span class=" aaSansSerif">Amount</span></div>
             </div>
           </div>
@@ -121,18 +152,18 @@
             <div class="aaRowDataCells">
               <div class="aaCellText aaFontSizeData aaCellBchgDesc">${eva.selectedBchg.desc}</div>
               <column-gridline
-                  gridline-width="${eva.GRIDLINE_THIN}"
-                  gridline-color="${eva.GRIDLINE_COLOR}"></column-gridline>
+                gridline-width="${eva.GRIDLINE_THIN}"
+                gridline-color="${eva.GRIDLINE_COLOR}"></column-gridline>
               <div class="aaCellText aaFontSizeData aaCellBchgAmt">${eva.selectedBchg.amt.toFixed(2)}</div>
             </div>
           </div>
         </div>
-<!--
-        <span click.trigger="onGoTran($event)"
-              class="aaBtn">Show in source transaction
-            <i class="fa fa-chevron-right fa-fw" aria-hidden="true"></i>
-          </span>
--->
+        <!--
+                <span click.trigger="onGoTran($event)"
+                      class="aaBtn">Show in source transaction
+                    <i class="fa fa-chevron-right fa-fw" aria-hidden="true"></i>
+                  </span>
+        -->
       </div>
     </div>
   </div>
