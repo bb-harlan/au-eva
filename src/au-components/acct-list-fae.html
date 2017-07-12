@@ -61,7 +61,8 @@
               <column-gridline
                   gridline-width="${eva.GRIDLINE_THIN}"
                   gridline-color="${eva.GRIDLINE_COLOR}"></column-gridline>
-              <span class="aaCellText aaFontSizeData aaCellBchgBal">${listItem.bchgList.endingBalance.toFixed(2)}</span>
+              <!--<span class="aaCellText aaFontSizeData aaCellBchgBal">${listItem.bchgList.endingBalance.toFixed(2)}</span>-->
+              <span class="aaCellText aaFontSizeData aaCellBchgBal">${eva.formattedCurrency(listItem.bchgList.endingBalance)}</span>
               <column-gridline
                   gridline-width="${eva.GRIDLINE_THIN}"
                   gridline-color="${eva.GRIDLINE_COLOR}"></column-gridline>
@@ -171,7 +172,7 @@
       <column-gridline
           gridline-width="${eva.GRIDLINE_THIN}"
           gridline-color="transparent"></column-gridline>
-      <span class="aaCellText aaFontData aaCellBchgBal">${sideAcctList.listTotal.toFixed(2)}</span>
+      <span class="aaCellText aaFontData aaCellBchgBal">${eva.formattedCurrency(sideAcctList.listTotal)}</span>
       <column-gridline
           gridline-width="${eva.GRIDLINE_THIN}"
           gridline-color="transparent"></column-gridline>

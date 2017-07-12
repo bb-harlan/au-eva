@@ -23,7 +23,7 @@ export class App {
    * any components needing its members.
    * ===================================================
    */
-  eva:Eva = Eva.getInstance(); // will create the first instance of Eva
+  eva:Eva = Eva.getInstance();
 
   constructor() {
   }

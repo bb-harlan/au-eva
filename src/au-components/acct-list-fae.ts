@@ -77,6 +77,11 @@ export class AcctListFae {
     }
     detached() {
     }
+    formattedCurrency(currency) {
+      return Intl.NumberFormat("en-US", {style: "decimal", maximumFractionDigits: 2}).format(currency);
+      // return numeral(currency).format('0,0.00');
+    }
+
 }
 
 
