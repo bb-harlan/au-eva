@@ -138,8 +138,12 @@ export class Eva {
     return this._nextBchgId++;
   }
 
-  formattedCurrency(currency: number) {
-    return Intl.NumberFormat("en-US", {style: "decimal", maximumFractionDigits: 2}).format(currency);
+  formattedCurrency(currencyAmount: number):string {
+    return Intl.NumberFormat("en-US",
+      {style: "decimal",
+        minimumIntegerDigits: 1,
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2}).format(currencyAmount);
     // return numeral(currency).format('0,0.00');
   }
 
@@ -211,8 +215,8 @@ export class Eva {
     console.log('Run completed!');
 
     let myNumber = 12345678.9876;
-    console.log(Intl.NumberFormat("en-US", {style: "decimal", maximumFractionDigits: 2}).format(myNumber));
-    console.log(numeral(myNumber).format('0,0.00'));
+    console.log(new Intl.NumberFormat("en-US", {style: "currency", currency: "USD"}).format(myNumber));
+    // console.log(numeral(myNumber).format('0,0.00'));
   }
 }
 

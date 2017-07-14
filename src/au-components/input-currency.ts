@@ -5,95 +5,92 @@ import {Eva} from '../eva';
 export class InputCurrency {
   //
   eva: Eva = Eva.getInstance();
-  cursorPosition: number;
-  currencyAmount: number;
-  @bindable dataProvider: number;
+  // input element reference
+  inputElement:HTMLInputElement;
+  sanitizedValue: string;
+  currencyAmount = 1234.56;
+  formattedCurrencyAmount = "1,234.56";
 
-  oninput(event) {
-    let currencyAmount;
-    let unsanitizedValue = event.target.value;
-    this.cursorPosition = event.target.selectionStart;
+  onFocus() {
+    console.log("onFocus()");
+  }
+  onBlur() {
+    console.log("onBlur()");
+  }
+  onInput() {
+    console.log(this.inputElement.value);
+    // console.log('entering onInput processing');
+    let cursorPosition = this.inputElement.selectionStart;
     let sanitizedValue = "";
     let encounteredDecimalPoint = false;
     let fractionLength = 0;
     let char: string;
     let i: number;
-    for (i = 0; i < unsanitizedValue.length; i++) {
-      char = unsanitizedValue.substr(i, 1);
-      /*
-       console.log(i, "char = " + char);
-       */
+    console.log("sanitizedValue = '" + sanitizedValue + "'; cursorPosition = ", cursorPosition);
+    for (i = 0; i < this.inputElement.value.length; i++) {
+      char = this.inputElement.value.substr(i, 1);
       if (i == 0 && char == "-") {
         sanitizedValue += char;
+        console.log("sanitizedValue = ", sanitizedValue, "; cursorPosition = ", cursorPosition);
       }
       else if (char == ".") {
         if (!encounteredDecimalPoint) {
           // first encounter
           encounteredDecimalPoint = true;
           sanitizedValue += char;
+          console.log("sanitizedValue = ", sanitizedValue, "; cursorPosition = ", cursorPosition);
         }
-        /*
-         else {
-         if (i <= this.cursorPosition) {
-         this.cursorPosition--;
-         }
-         }
-         */
       } else if (char >= "0" && char <= "9") {
         sanitizedValue += char;
+        console.log("sanitizedValue = ", sanitizedValue, "; cursorPosition = ", cursorPosition);
         if (encounteredDecimalPoint) {
           fractionLength++;
         }
       }
       else {
         //unacceptable char, don't append to sanitizedValue and put cursor back to prior position
-        if (i < this.cursorPosition) {
-          this.cursorPosition--;
+        if (i < cursorPosition) {
+          cursorPosition--;
         }
       }
-      /*
-       console.log(i, "sanitizedValue = '" + sanitizedValue + "'");
-       console.log(i, "Updated unsanitizedthis.cursorPosition = ", this.cursorPosition);
-       */
     }
     // eliminate any leading zeros
     if (sanitizedValue.substr(0, 1) == "0") {
       sanitizedValue = sanitizedValue.substr(1);
-      if (this.cursorPosition >= 1) {
-        this.cursorPosition--;
+      console.log("sanitizedValue = ", sanitizedValue, "; cursorPosition = ", cursorPosition);
+      if (cursorPosition >= 1) {
+        cursorPosition--;
       }
     } else if (sanitizedValue.substr(0, 2) == "-0") {
       sanitizedValue = "-" + sanitizedValue.substr(2);
-      if (this.cursorPosition >= 2) {
-        this.cursorPosition--;
+      console.log("sanitizedValue = ", sanitizedValue, "; cursorPosition = ", cursorPosition);
+      if (cursorPosition >= 2) {
+        cursorPosition--;
       }
     }
-    /*
-     console.log("sanitizedValue = '" + sanitizedValue + "'");
-     */
     // truncate any trailing characters in excess if 2 decimal places
-    var decimalPointPosition = sanitizedValue.indexOf(".");
+    let decimalPointPosition = sanitizedValue.indexOf(".");
     fractionLength = sanitizedValue.substr(decimalPointPosition).length - 1;
     if (fractionLength > 2) {
       sanitizedValue = sanitizedValue.substr(0, decimalPointPosition + 3);
-      if (this.cursorPosition > sanitizedValue.length) {
-        this.cursorPosition = sanitizedValue.length;
+      console.log("sanitizedValue = ", sanitizedValue, "; cursorPosition = ", cursorPosition);
+      if (cursorPosition > sanitizedValue.length) {
+        cursorPosition = sanitizedValue.length;
       }
     }
-    currencyAmount = parseFloat(sanitizedValue);
-    let formattedCurrencyAmount = Intl.NumberFormat("en-US", {style: "decimal", maximumFractionDigits: 2}).format(currencyAmount);
+    this.currencyAmount = parseFloat(sanitizedValue);
+    this.formattedCurrencyAmount = this.eva.formattedCurrency(this.currencyAmount);
     // numeral(currencyAmount).format('0,0.00');
-    event.target.value = formattedCurrencyAmount;
-    // adjust cursor position for any thousands separaters added by formatting
-    for (i = 0; i <= this.cursorPosition; i++) {
-      if (formattedCurrencyAmount.substr(i, 1) == ",") {
-        this.cursorPosition++;
+    // adjust cursor position for any digit group separaters added by formatting
+    for (i = 0; i <= cursorPosition; i++) {
+      if (this.formattedCurrencyAmount.substr(i, 1) == ",") {
+        cursorPosition++;
       }
     }
-    event.target.setSelectionRange(this.cursorPosition, this.cursorPosition);
-    document.getElementById("myFractionLength").innerHTML = "fractionLength = '" + fractionLength + "'";
-    document.getElementById("mySanitizedValue").innerHTML = "Sanitized value = '" + sanitizedValue + "'";
-    console.log("============ end of char processing");
+    this.inputElement.value = this.formattedCurrencyAmount;
+    this.inputElement.setSelectionRange(cursorPosition, cursorPosition);
+    console.log("sanitizedValue = ", sanitizedValue, "; cursorPosition = ", cursorPosition);
+    console.log("============ end of char processing ==============");
   }
 }
 
