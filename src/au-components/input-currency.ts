@@ -1,25 +1,32 @@
 import {customElement, bindable} from 'aurelia-framework';
 import {Eva} from '../eva';
+
 //
-@customElement('input-currency')
+@customElement('au-input-currency')
 export class InputCurrency {
   //
   eva: Eva = Eva.getInstance();
   // input element reference
-  inputElement:HTMLInputElement;
+  inputElement: HTMLInputElement;
+  previousValue: string;
   sanitizedValue: string;
-  currencyAmount = 1234.56;
-  formattedCurrencyAmount = "1,234.56";
+  @bindable currencyAmount: number;
+  private tempCurrencyAmount: number
+  formattedCurrencyAmount: string;
 
   onFocus() {
     console.log("onFocus()");
+    if (this.currencyAmount) {
+      this.tempCurrencyAmount = this.currencyAmount;
+    }
   }
   onBlur() {
     console.log("onBlur()");
+    this.currencyAmount = this.tempCurrencyAmount;
   }
+
   onInput() {
-    console.log(this.inputElement.value);
-    // console.log('entering onInput processing');
+    console.log("onInput: ", this.inputElement.value);
     let cursorPosition = this.inputElement.selectionStart;
     let sanitizedValue = "";
     let encounteredDecimalPoint = false;
@@ -78,8 +85,8 @@ export class InputCurrency {
         cursorPosition = sanitizedValue.length;
       }
     }
-    this.currencyAmount = parseFloat(sanitizedValue);
-    this.formattedCurrencyAmount = this.eva.formattedCurrency(this.currencyAmount);
+    this.tempCurrencyAmount = parseFloat(sanitizedValue);
+    this.formattedCurrencyAmount = this.eva.formattedCurrency(this.tempCurrencyAmount);
     // numeral(currencyAmount).format('0,0.00');
     // adjust cursor position for any digit group separaters added by formatting
     for (i = 0; i <= cursorPosition; i++) {
@@ -92,6 +99,19 @@ export class InputCurrency {
     console.log("sanitizedValue = ", sanitizedValue, "; cursorPosition = ", cursorPosition);
     console.log("============ end of char processing ==============");
   }
+
+  onKeyDown() {
+    // console.log('onKeyDown');
+  }
+/*
+  onKeyPress() {
+    // console.log('onKeyPress');
+  }
+  onKeyUp() {
+    // console.log('onKeyUp');
+  }
+*/
+
 }
 
 

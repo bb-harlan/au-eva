@@ -3,7 +3,7 @@ import {Eva} from '../eva';
 import {AcctListFae} from '../au-components/acct-list-fae';
 import {AcctList} from '../models/acct-list';
 //
-@customAttribute('aa-equation-side')
+@customAttribute('au-equation-side')
 @inject(AcctListFae)
 export class EquationSide {
 

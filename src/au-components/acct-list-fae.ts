@@ -11,16 +11,16 @@ export class AcctListFae {
     /*
      constructor() {
      /!*
-     The equation-side custom attribute is used to set this.equationSide to
+     The au-equation-side custom attribute is used to set this.equationSide to
      either "A" or "E" which in turn is used by the this.dataProvider getter
      to return either this.appModel.assetList or this.appModel.equitiesList, respectively.
 
      the custom element acct-list-fae and its custom attribute equation-side
      are used in app.html like so:
 
-     <acct-list-fae equation-side=eva.SIDE_ASSETS></acct-list-fae>
+     <acct-list-fae au-equation-side=eva.SIDE_ASSETS></acct-list-fae>
      and
-     <acct-list-fae equation-side=this.eva.SIDE_EQUITIES></acct-list-fae>
+     <acct-list-fae au-equation-side=this.eva.SIDE_EQUITIES></acct-list-fae>
 
      For details see equation-side.ts
      *!/

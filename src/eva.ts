@@ -1,3 +1,4 @@
+import {bindable} from 'aurelia-framework';
 import {Bchg} from './models/bchg';
 import {AcctList} from './models/acct-list';
 import {Acct, Annotation} from './models/acct';
@@ -147,6 +148,9 @@ export class Eva {
     // return numeral(currency).format('0,0.00');
   }
 
+  dataSource = "eva.currencyAmount1";
+  currencyAmount1: number = 1234.56;
+  @bindable currencyAmount2: number = 789.12;
   generateTestData() {
     /*
      Create some accounts**********************************************************
