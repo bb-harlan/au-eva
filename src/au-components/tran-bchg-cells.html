@@ -1,5 +1,6 @@
 <template bindable="bchg">
   <require from="../au-views/column-gridline.html"></require>
+  <require from="./input-currency"></require>
   <div class="aaInlineBlock">
     <template if.bind="!eva.isEditing">
       <div class="aaInlineBlock aaCellText aaFontSizeData">
@@ -26,10 +27,16 @@
             gridline-width="${eva.GRIDLINE_THIN}"
             gridline-color="transparent"></column-gridline>
         <div class="aaCellText aaFontSizeData">
+<!--
             <input type="text"
                    disabled
                    class="aaFormInputText aaCellBchgAmt"
                    value="${bchg.amt.toFixed(2)}">
+-->
+          <au-input-currency
+            currency-amount.two-way="bchg.amt"
+            is-disabled.one-way="true"
+            classes-string.one-way="'aaFormInputText aaCellBchgAmt'"></au-input-currency>
         </div>
       </div>
     </template>
@@ -60,15 +67,27 @@
             gridline-color="transparent"></column-gridline>
         <div class="aaCellText aaFontSizeData">
           <template if.bind="bchg.intraTranSorter == 0">
+<!--
             <input type="text"
                    disabled
                    class="aaFormInputText aaCellBchgAmt"
                    value="${bchg.amt.toFixed(2)}">
+-->
+            <au-input-currency
+              currency-amount.two-way="bchg.amt"
+              is-disabled.one-way="true"
+              classes-string.one-way="'aaFormInputText aaCellBchgAmt'"></au-input-currency>
           </template>
           <template if.bind="bchg.intraTranSorter != 0">
+<!--
             <input type="text"
                    class="aaFormInputText aaCellBchgAmt"
                    value.two-way="bchg.amt.toFixed(2)">
+-->
+            <au-input-currency
+              currency-amount.two-way="bchg.amt"
+              is-disabled.one-way="false"
+              classes-string.one-way="'aaFormInputText aaCellBchgAmt'"></au-input-currency>
           </template>
         </div>
       </div>

@@ -18,19 +18,31 @@
               gridline-color="${gridlineColor}"></column-gridline>
           <template if.bind="autoBalanceItem">
             <div class="aaCellText aaFontData">
+<!--
               <input type="text"
                      disabled
                      class="aaFormInputText aaCellBchgAmt"
                      style="border-color: transparent;"
                      value="${bchgAmt}">
+-->
+              <au-input-currency
+                currency-amount.two-way="bchgAmt"
+                is-disabled.one-way="true"
+                classes-string.one-way="'aaFormInputText aaCellBchgAmt'"></au-input-currency>
             </div>
           </template>
           <template if.bind="!autoBalanceItem">
             <div class="aaCellText aaFontData">
+<!--
               <input type="text"
                      disabled
                      class="aaFormInputText aaCellBchgAmt"
                      value="${bchgAmt}">
+-->
+              <au-input-currency
+                currency-amount.two-way="bchgAmt"
+                is-disabled.one-way="true"
+                classes-string.one-way="'aaFormInputText aaCellBchgAmt'"></au-input-currency>
             </div>
           </template>
       </template>
@@ -53,6 +65,10 @@
                  class="aaFormInputText aaCellBchgAmt"
                  style="border-color: transparent;"
                  value="">
+          <au-input-currency
+            currency-amount.two-way="bchgAmt"
+            classes-string.one-way="'aaFormInputText aaCellBchgAmt'"
+          ></au-input-currency>
         </div>
       </div>
     </template>

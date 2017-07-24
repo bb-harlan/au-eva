@@ -1,18 +1,14 @@
 <template>
   <require from="../au-converters/currency-converter"></require>
-  <div style="margin: 10px; padding: 15px; border: 2px dotted #fff; display: inline-block">
-    <h2 style="color: #fff">Test input currency box</h2>
-    <input
-      ref="inputElement"
-      type="text"
-      style="padding: 2px;
-      text-align: right;
-      font-family: 'Courier New';
-      font-weight: bold;
-      font-size: 12pt;"
-      focus.trigger="onFocus()"
-      blur.trigger="onBlur()"
-      input.trigger="onInput()"
-      value.one-way="currencyAmount | currencyConverter">
-  </div>
+  <input
+    ref="inputElement"
+    type="text"
+    readonly="${isReadonly ? 'readonly' : ''}"
+    disabled="${isDisabled ? 'disabled' : ''}"
+    class="${classesString}"
+    focus.trigger="onFocus()"
+    blur.trigger="onBlur()"
+    keydown.trigger="onKeydown($event)"
+    input.trigger="onInput()"
+    value.one-way="currencyAmount | currencyConverter">
 </template>
