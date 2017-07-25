@@ -1,0 +1,27 @@
+module-jrnl.html
+=====================================
+
+---------------------------------------------------------------
+<require from="../au-views/column-gridline.html"></require>
+---------------------------------------------------------------
+<column-gridline
+  gridline-width="${eva.GRIDLINE_THIN}"
+  gridline-color="${eva.GRIDLINE_COLOR}">
+</column-gridline>
+
+---------------------------------------------------------------
+<require from="./tran-bchg"></require>
+---------------------------------------------------------------
+<template repeat.for="bchg of tran.bchgList.slice(0, 1)">
+  <tran-bchg bchg.bind="bchg"></tran-bchg>
+</template>
+
+---------------------------------------------------------------
+<require from="./gh-tran-bchg"></require>    *** journal grid column headings ***
+---------------------------------------------------------------
+<gh-tran-bchg></gh-tran-bchg>
+
+
+---------------------------------------------------------------
+<require from="./cell-bchg.html"></require>  *** apparently not used ***
+---------------------------------------------------------------

@@ -151,7 +151,9 @@ export class Eva {
   dataSource = "eva.currencyAmount1";
   currencyAmount1: number = 1234.56;
   @bindable currencyAmount2: number = 789.12;
+
   generateTestData() {
+    console.log('Generating test data...');
     /*
      Create some accounts**********************************************************
      */
@@ -180,17 +182,16 @@ export class Eva {
       let filteredAssetAcctList = this.assetList.filter((listItem) => listItem instanceof Acct);
       let filteredEquityAcctList = this.equityList.filter((listItem) => listItem instanceof Acct);
       let acctList = filteredAssetAcctList.concat(filteredEquityAcctList);
-      let randomAcct2 = acctList[(Math.random() * (acctList.length - 1)).toFixed(0)];
-      // bchgId = `bchg-${this.nextBchgId}`;
-      let bchg2 = new Bchg(
+      let randomAcct0 = acctList[(Math.random() * (acctList.length - 1)).toFixed(0)];
+      let bchg0 = new Bchg(
         `B${this.nextBchgId}`,
-        randomAcct2 as Acct,
+        randomAcct0 as Acct,
         tran,
         0,
-        `<change desc: bchg #B${this.nextBchgId}; tran #${tran.id}; acct #${randomAcct2.id}; >`,
-        Math.round(Math.random() * 1000000)/100);
-      tran.bchgList.push(bchg2);
-      (randomAcct2 as Acct).bchgList.push(bchg2);
+        `<change desc: bchg #B${this.nextBchgId}; tran #${tran.id}; acct #${randomAcct0.id}; >`,
+        0.00);
+      tran.bchgList.push(bchg0);
+      (randomAcct0 as Acct).bchgList.push(bchg0);
       let randomAcct1 = acctList[(Math.random() * (acctList.length - 1)).toFixed(0)];
       let bchg1 = new Bchg(
         `B${this.nextBchgId}`,
@@ -198,9 +199,10 @@ export class Eva {
         tran,
         1,
         `<change desc: bchg #B${this.nextBchgId}; tran #${tran.id}; acct #${randomAcct1.id}; >`,
-        (randomAcct2.equationSide == randomAcct1.equationSide ? -bchg2.amt : bchg2.amt));
+        Math.round(Math.random() * 1000000)/100);
       tran.bchgList.push(bchg1);
       (randomAcct1 as Acct).bchgList.push(bchg1);
+      tran.refresh();
     }
     console.log('Created some transactions (order scrambled from normal order)');
     /*
@@ -216,11 +218,7 @@ export class Eva {
      */
     this.tranList.refresh();
     console.log(`Refreshed tranList`);
-    console.log('Run completed!');
-
-    let myNumber = 12345678.9876;
-    console.log(new Intl.NumberFormat("en-US", {style: "currency", currency: "USD"}).format(myNumber));
-    // console.log(numeral(myNumber).format('0,0.00'));
+    console.log('Generation of test data completed!');
   }
 }
 

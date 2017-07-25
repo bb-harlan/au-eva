@@ -18,16 +18,18 @@
               </span>
             </div>
             <column-gridline
-                gridline-width="${eva.GRIDLINE_THIN}"
-                gridline-color="${eva.GRIDLINE_COLOR}"></column-gridline>
+              gridline-width="${eva.GRIDLINE_THIN}"
+              gridline-color="${eva.GRIDLINE_COLOR}"></column-gridline>
             <div class="aaCellText aaCellRowSelectedChar" style="visibility: hidden;">${eva.ROW_SELECTED_CHAR}</div>
+<!--
             <column-gridline
-                gridline-width="${eva.GRIDLINE_THIN}"
-                gridline-color="${eva.GRIDLINE_COLOR}"></column-gridline>
+              gridline-width="${eva.GRIDLINE_THIN}"
+              gridline-color="${eva.GRIDLINE_COLOR}"></column-gridline>
             <div class="aaCellText aaFontSizeLabel aaCellId">ID</div>
+-->
             <column-gridline
-                gridline-width="${eva.GRIDLINE_THIN}"
-                gridline-color="${eva.GRIDLINE_COLOR}"></column-gridline>
+              gridline-width="${eva.GRIDLINE_THIN}"
+              gridline-color="${eva.GRIDLINE_COLOR}"></column-gridline>
             <div class="aaCellText aaFontSizeLabel aaCellTranDate">Date</div>
             <gh-tran-bchg></gh-tran-bchg>
           </div>
@@ -50,31 +52,34 @@
                   </span>
               </div>
               <column-gridline
+                gridline-width="${eva.GRIDLINE_THIN}"
+                gridline-color="${eva.GRIDLINE_COLOR}"></column-gridline>
+              <div class="aaCellText aaCellRowSelectedChar"
+                   css="visibility: ${tran.id == eva.selectedTran.id ? 'visible' : 'hidden'};">${eva.ROW_SELECTED_CHAR}
+              </div>
+              <div class="aaRowDataCells">
+<!--
+                <column-gridline
                   gridline-width="${eva.GRIDLINE_THIN}"
                   gridline-color="${eva.GRIDLINE_COLOR}"></column-gridline>
-              <div class="aaCellText aaCellRowSelectedChar" css="visibility: ${tran.id == eva.selectedTran.id ? 'visible' : 'hidden'};">${eva.ROW_SELECTED_CHAR}</div>
-              <div class="aaRowDataCells">
-                <column-gridline
-                    gridline-width="${eva.GRIDLINE_THIN}"
-                    gridline-color="${eva.GRIDLINE_COLOR}"></column-gridline>
                 <div class="aaCellText aaFontData aaCellId">${tran.id}</div>
+-->
                 <column-gridline
-                    gridline-width="${eva.GRIDLINE_THIN}"
-                    gridline-color="${eva.GRIDLINE_COLOR}"></column-gridline>
+                  gridline-width="${eva.GRIDLINE_THIN}"
+                  gridline-color="${eva.GRIDLINE_COLOR}"></column-gridline>
                 <div class="aaCellText aaFontData aaCellTranDate">${tran.date}</div>
                 <div class="aaInlineBlock">
                   <div class="aaInlineBlock"
                        css="border-bottom: 1px solid ${eva.GRIDLINE_COLOR};">
-                    <template repeat.for="bchg of tran.bchgList.slice(0, 1)">
-                      <tran-bchg bchg.bind="bchg"></tran-bchg>
-                    </template>
+                    <tran-bchg bchg.bind="tran.bchgList[0]"></tran-bchg>
                   </div>
+<!--
                   <template repeat.for="bchg of tran.bchgList.slice(1)">
-                    <div class="aaSubRow"
-                         xcss="border-top: ${eva.GRIDLINE_THICK} solid ${eva.GRIDLINE_COLOR};">
+                    <div class="aaSubRow">
                       <tran-bchg bchg.bind="bchg"></tran-bchg>
                     </div>
                   </template>
+-->
                 </div>
               </div>
             </div>
