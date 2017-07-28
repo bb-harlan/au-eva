@@ -1,7 +1,8 @@
 <template>
   <require from="../au-views/column-gridline.html"></require>
   <require from="./tran-bchg"></require>
-  <require from="./gh-tran-bchg"></require>
+  <require from="../au-views/column-gridline.html"></require>
+  <require from="../au-views/gh-tran-bchg.html"></require>
   <require from="./cell-bchg.html"></require>
 
   <div class="aaPanel aaPanelBoxShadow">
@@ -21,17 +22,19 @@
               gridline-width="${eva.GRIDLINE_THIN}"
               gridline-color="${eva.GRIDLINE_COLOR}"></column-gridline>
             <div class="aaCellText aaCellRowSelectedChar" style="visibility: hidden;">${eva.ROW_SELECTED_CHAR}</div>
-<!--
-            <column-gridline
-              gridline-width="${eva.GRIDLINE_THIN}"
-              gridline-color="${eva.GRIDLINE_COLOR}"></column-gridline>
-            <div class="aaCellText aaFontSizeLabel aaCellId">ID</div>
--->
+            <!--
+                        <column-gridline
+                          gridline-width="${eva.GRIDLINE_THIN}"
+                          gridline-color="${eva.GRIDLINE_COLOR}"></column-gridline>
+                        <div class="aaCellText aaFontSizeLabel aaCellId">ID</div>
+            -->
             <column-gridline
               gridline-width="${eva.GRIDLINE_THIN}"
               gridline-color="${eva.GRIDLINE_COLOR}"></column-gridline>
             <div class="aaCellText aaFontSizeLabel aaCellTranDate">Date</div>
-            <gh-tran-bchg></gh-tran-bchg>
+            <gh-tran-bchg
+              gridline-width="${eva.GRIDLINE_THIN}"
+              gridline-color="${eva.GRIDLINE_COLOR}"></gh-tran-bchg>
           </div>
         </div>
         <div class="aaGridScrollableRows"

@@ -9,18 +9,15 @@ import {TranList} from '../models/tran-list';
 export class ModuleTran {
   //
   eva: Eva = Eva.getInstance();
-  tranViewSource: Tran;
   /* will point to eva.selectedTran or a copy of eva.selectedTran for editing */
 
   //
   bind(bindingContext: Object, overrideContext: Object) {
     // console.log('bind');
-    this.tranViewSource = this.eva.selectedTran;
   }
 
   unbind(bindingContext: Object, overrideContext: Object) {
     // console.log('unbind');
-    this.tranViewSource = null;
   }
 
   onGoJrnl(event) {
@@ -34,7 +31,6 @@ export class ModuleTran {
     if (listIndex > 0) {
       this.eva.selectedBchg = null;
       this.eva.selectedTran = tranList[listIndex - 1];
-      this.tranViewSource = this.eva.selectedTran;
     } else {
       alert('Reached beginning of list.');
     }
@@ -46,7 +42,6 @@ export class ModuleTran {
     if (listIndex < tranList.length - 1) {
       this.eva.selectedBchg = null;
       this.eva.selectedTran = tranList[listIndex + 1];
-      this.tranViewSource = this.eva.selectedTran;
     }
     else {
       alert('Reached end of list.');
@@ -101,27 +96,6 @@ export class ModuleTran {
   }
 
   onEdit(event) {
-    let copyOfTran = new Tran(
-      `copy-of-${this.eva.selectedTran.id}`,
-      this.eva.selectedTran.date,
-      this.eva.selectedTran.intraDateSorter);
-    copyOfTran.assetsBchg = this.eva.selectedTran.assetsBchg;
-    copyOfTran.equitiesBchg = this.eva.selectedTran.equitiesBchg;
-    let copyOfBchg: Bchg;
-    for (let bchg of this.eva.selectedTran.bchgList) {
-      copyOfBchg = new Bchg(
-        bchg.id,
-        bchg.targetAcct,
-        bchg.sourceTran,
-        bchg.intraTranSorter,
-        bchg.desc,
-        bchg.amt);
-      copyOfTran.bchgList.push(copyOfBchg);
-    }
-    copyOfTran.refresh();
-    // console.log(copyOfTran);
-    // document.getElementById('tranModule-' + this.eva.selectedTran.id).classList.toggle('aaRowHover', true);
-    this.tranViewSource = copyOfTran;
     this.eva.isEditing = true;
   }
 
@@ -132,7 +106,6 @@ export class ModuleTran {
 
   onCancelEdits(event) {
     document.getElementById('tranModule-' + this.eva.selectedTran.id).classList.toggle('aaRowHover', false);
-    this.tranViewSource = this.eva.selectedTran;
     this.eva.isEditing = false;
   }
 

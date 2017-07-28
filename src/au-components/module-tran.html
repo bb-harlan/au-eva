@@ -86,6 +86,7 @@
 
       <div class="aaGridContainer">
         <div class="aaGridTitleBar">Account balance changes</div>
+<!--
         <div class="aaGridHeader">
           <div class="aaFontLabel aaRow">
             <div class="aaCellRowOps">
@@ -98,8 +99,10 @@
             <gh-tran-bchg></gh-tran-bchg>
           </div>
         </div>
+-->
 
         <!-- subheading row for Aato-change-amt item -->
+<!--
         <div class="aaFontLabel aaRow">
           <div class="aaCellRowOps">
             <span class="aaBtn aaBtnHidden aaFontLabel"></span>
@@ -115,6 +118,7 @@
             <span>Automatically computed amount</span>
           </div>
         </div>
+-->
         <!-- Auto-change-amt item -->
         <div id="${bchg.id}"
              class="aaRow"
@@ -143,7 +147,7 @@
                css="visibility: ${bchg.id == eva.selectedBchg.id ? 'visible' : 'hidden'};">${eva.ROW_SELECTED_CHAR}
           </div>
           <div class="aaRowDataCells">
-            <tran-bchg bchg.bind="tranViewSource.bchgList[0]"></tran-bchg>
+            <tran-bchg bchg.bind="eva.selectedTran.bchgList[0]"></tran-bchg>
             <column-gridline
               gridline-width="100%"
               gridline-color="${eva.GRIDLINE_COLOR}"></column-gridline>
@@ -169,7 +173,7 @@
         <div class="aaGridScrollableRows"
              id="tranModule-${eva.selectedTran.id}"
              style="height: 15pc;">
-          <template repeat.for="bchg of tranViewSource.bchgList.slice(1)">
+          <template repeat.for="bchg of eva.selectedTran.bchgList.slice(1)">
             <div
               class="aaRow"
               mouseenter.trigger="onRowEnter($event, bchg)"
@@ -296,7 +300,7 @@
             <div class="aaCellText aaFontData">
               <input type="text" disabled
                      class="aaFormInputText aaCellBchgAmt"
-                     value="${eva.formattedCurrency(tranViewSource.assetsBchg)}">
+                     value="${eva.formattedCurrency(eva.selectedTran.assetsBchg)}">
             </div>
             <column-gridline
               gridline-width="${eva.GRIDLINE_THIN}"
@@ -313,7 +317,7 @@
             <div class="aaCellText aaFontData">
               <input type="text" disabled
                      class="aaFormInputText aaCellBchgAmt"
-                     value="${eva.formattedCurrency(tranViewSource.equitiesBchg)}">
+                     value="${eva.formattedCurrency(eva.selectedTran.equitiesBchg)}">
             </div>
           </div>
           <column-gridline

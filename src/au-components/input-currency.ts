@@ -40,6 +40,7 @@ export class InputCurrency {
   onBlur() {
     console.log("onBlur()");
     this.currencyAmount = this.tempCurrencyAmount;
+    this.eva.selectedTran.refresh();
   }
 
   onKeydown(event) {

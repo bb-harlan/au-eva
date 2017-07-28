@@ -47,7 +47,7 @@ export class Tran {
           throw new Error(`acct.equationSide has invalid value: ${bchg.targetAcct.equationSide}.`);
       }
 
-      // compute bchgList[0].amt--balancing amt
+      // compute bchgList[0].amt (balancing amt)
       switch (this.bchgList[0].targetAcct.equationSide) {
         case this.eva.SIDE_ASSETS:
           this.bchgList[0].amt = equitiesBchg - assetsBchg;
@@ -61,8 +61,13 @@ export class Tran {
           throw new Error(`acct.equationSide has invalid value: ${bchg.targetAcct.equationSide}.`);
       }
 
+      // For each bchg in bchgList, refresh targetAddt's bchgList
+      for (bchg of this.bchgList) {
+        bchg.targetAcct.bchgList.refresh();
+      }
+
     }
-    // console.log("tran.refresh()", assetsBchg, equitiesBchg);
+    console.log("tran.refresh()", assetsBchg, equitiesBchg);
     this.assetsBchg = assetsBchg;
     this.equitiesBchg = equitiesBchg;
   }

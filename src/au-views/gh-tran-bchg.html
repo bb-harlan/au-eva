@@ -1,16 +1,16 @@
-<template>
-  <require from="../au-views/column-gridline.html"></require>
+<template bindable="gridlineWidth, gridlineColor">
+  <require from="./column-gridline.html"></require>
 
   <div class="aaInlineBlock">
     <column-gridline
-        gridline-width="${eva.GRIDLINE_THIN}"
-        gridline-color="${eva.GRIDLINE_COLOR}"></column-gridline>
+        gridline-width="${gridlineWidth}"
+        gridline-color="${gridlineColor}"></column-gridline>
     <div class="aaInlineBlock">
       <div class="aaInlineBlock aaCellText aaFontSizeLabel">
         <input type="text"
                disabled
                class="aaFormInputText aaCellAcctTitle"
-               css="vertical-align: middle; border-color: ${eva.GRIDLINE_COLOR};"
+               css="vertical-align: middle; border-color: ${gridlineColor};"
                value="Target asset account">
 
         <span class="aaBtn aaBtnHidden"
@@ -24,30 +24,30 @@
           <input type="text"
                  disabled
                  class="aaFormInputText aaCellBchgDesc"
-                 css="border-color: ${eva.GRIDLINE_COLOR};"
+                 css="border-color: ${gridlineColor};"
                  value="Change description">
         </div>
         <column-gridline
-            gridline-width="${eva.GRIDLINE_THIN}"
+            gridline-width="${gridlineWidth}"
             gridline-color="transparent"></column-gridline>
         <div class="aaCellText aaFontSizeLabel">
           <input type="text"
                  disabled
                  class="aaFormInputText aaCellBchgAmt"
-                 css="border-color: ${eva.GRIDLINE_COLOR};"
+                 css="border-color: ${gridlineColor};"
                  value="Change amt">
         </div>
       </div>
     </div>
     <column-gridline
-        gridline-width="${eva.GRIDLINE_THIN}"
-        gridline-color="${eva.GRIDLINE_COLOR}"></column-gridline>
+        gridline-width="${gridlineWidth}"
+        gridline-color="${gridlineColor}"></column-gridline>
     <div class="aaInlineBlock">
       <div class="aaInlineBlock aaCellText aaFontSizeLabel">
         <input type="text"
                disabled
                class="aaFormInputText aaCellAcctTitle"
-               css="vertical-align: middle; border-color: ${eva.GRIDLINE_COLOR};"
+               css="vertical-align: middle; border-color: ${gridlineColor};"
                value="Target equity account">
 
         <span class="aaBtn aaBtnHidden"
@@ -60,23 +60,23 @@
           <input type="text"
                  disabled
                  class="aaFormInputText aaCellBchgDesc"
-                 css="border-color: ${eva.GRIDLINE_COLOR};"
+                 css="border-color: ${gridlineColor};"
                  value="Change description">
         </div>
         <column-gridline
-            gridline-width="${eva.GRIDLINE_THIN}"
+            gridline-width="${gridlineWidth}"
             gridline-color="transparent"></column-gridline>
         <div class="aaCellText aaFontSizeLabel">
           <input type="text"
                  disabled
                  class="aaFormInputText aaCellBchgAmt"
-                 css="border-color: ${eva.GRIDLINE_COLOR};"
+                 css="border-color: ${gridlineColor};"
                  value="Change amt">
         </div>
       </div>
     </div>
     <column-gridline
         gridline-width="100%"
-        gridline-color="${eva.GRIDLINE_COLOR}"></column-gridline>
+        gridline-color="${gridlineColor}"></column-gridline>
   </div>
 </template>

@@ -35,4 +35,14 @@ export class Bchg {
                 1 :
                 (this.intraTranSorter < b.intraTranSorter ? -1 : 0));
     }
+
+    copy () {
+      return new Bchg(
+        this.id,
+        this.targetAcct,
+        this.sourceTran,
+        this.intraTranSorter,
+        this.desc,
+        this.amt);
+    }
 }
