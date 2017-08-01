@@ -487,3 +487,17 @@ h1 {
 .aaTranBchgRow2Indent {
   margin-left: 3pc;
 }
+
+.aaVerticalGridline1 {
+  display: inline-block;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 1px;
+  background-color: #ccc;
+}
+.aaVerticalGridline2 {
+  display: inline-block;
+  width: 1px;
+  visibility: hidden;
+}

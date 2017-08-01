@@ -1,7 +1,9 @@
 <template>
-  <require from="../au-views/column-gridline.html"></require>
-  <require from="./tran-bchg"></require>
-  <require from="./gh-tran-bchg"></require>
+  <require from="../au-views/gh-tran-bchg.html"></require>
+  <require from="../au-views/vertical-gridline.html"></require>
+  <require from="../au-views/vertical-gridline-spacer.html"></require>
+  <require from="../au-views/tran-bchg-cells-spacer.html"></require>
+  <require from="../au-components/tran-bchg"></require>
 
   <div class="aaPanel aaPanelBoxShadow">
 
@@ -86,48 +88,15 @@
 
       <div class="aaGridContainer">
         <div class="aaGridTitleBar">Account balance changes</div>
-<!--
-        <div class="aaGridHeader">
-          <div class="aaFontLabel aaRow">
-            <div class="aaCellRowOps">
-              <span class="aaBtn aaBtnHidden aaFontLabel"><i class="fa fa-bars fa-fw" aria-hidden="true"></i></span>
-            </div>
-            <column-gridline
-              gridline-width="${eva.GRIDLINE_THIN}"
-              gridline-color="${eva.GRIDLINE_COLOR}"></column-gridline>
-            <div class="aaCellText aaCellRowSelectedChar" style="visibility: hidden;">${eva.ROW_SELECTED_CHAR}</div>
-            <gh-tran-bchg></gh-tran-bchg>
-          </div>
-        </div>
--->
-
-        <!-- subheading row for Aato-change-amt item -->
-<!--
-        <div class="aaFontLabel aaRow">
-          <div class="aaCellRowOps">
-            <span class="aaBtn aaBtnHidden aaFontLabel"></span>
-          </div>
-          <column-gridline
-            gridline-width="${eva.GRIDLINE_THIN}"
-            gridline-color="${eva.GRIDLINE_COLOR}"></column-gridline>
-          <div class="aaCellText aaCellRowSelectedChar" style="visibility: hidden;">${eva.ROW_SELECTED_CHAR}</div>
-          <column-gridline
-            gridline-width="${eva.GRIDLINE_THIN}"
-            gridline-color="${eva.GRIDLINE_COLOR}"></column-gridline>
-          <div class="aaInlineBlock aaGridBchgSubtitleBar" style="width: 100%;">
-            <span>Automatically computed amount</span>
-          </div>
-        </div>
--->
         <!-- Auto-change-amt item -->
         <div id="${bchg.id}"
              class="aaRow"
-             mouseenter.trigger="onRowEnter($event, bchg)"
-             mouseleave.trigger="onRowLeave($event, bchg)">
+             mouseenter.trigger="onRowEnter($event, eva.selectedTran.bchgList[0])"
+             mouseleave.trigger="onRowLeave($event, eva.selectedTran.bchgList[0])">
           <template if.bind="!eva.isEditing">
             <div class="aaCellRowOps">
                   <span class="aaBtn aaBtnHidden"
-                        click.delegate="onGoBchg($event, bchg)">
+                        click.delegate="onGoBchg($event, eva.selectedTran.bchgList[0])">
                     <i class="fa fa-chevron-left fa-fw" aria-hidden="true"></i>
                   </span>
             </div>
@@ -135,22 +104,18 @@
           <template if.bind="eva.isEditing">
             <div class="aaCellRowOps">
                   <span class="aaBtn aaBtnHidden"
-                        click.delegate="onMenuClick($event, bchg)">
+                        click.delegate="onMenuClick($event, eva.selectedTran.bchgList[0])">
                     <i class="fa fa-bars fa-fw" aria-hidden="true"></i>
                   </span>
             </div>
           </template>
-          <column-gridline
-            gridline-width="${eva.GRIDLINE_THIN}"
-            gridline-color="${eva.GRIDLINE_COLOR}"></column-gridline>
+          <vertical-gridline></vertical-gridline>
           <div class="aaCellText aaCellRowSelectedChar"
                css="visibility: ${bchg.id == eva.selectedBchg.id ? 'visible' : 'hidden'};">${eva.ROW_SELECTED_CHAR}
           </div>
+          <vertical-gridline></vertical-gridline>
           <div class="aaRowDataCells">
             <tran-bchg bchg.bind="eva.selectedTran.bchgList[0]"></tran-bchg>
-            <column-gridline
-              gridline-width="100%"
-              gridline-color="${eva.GRIDLINE_COLOR}"></column-gridline>
           </div>
         </div>
         <!-- subheading row for other item(s) -->
@@ -159,13 +124,9 @@
                click.delegate="onArrangeRows($event)">
             <span class="aaBtn"><i class="fa fa-arrows-v fa-fw aaIconBlue" aria-hidden="true"></i></span>
           </div>
-          <column-gridline
-            gridline-width="${eva.GRIDLINE_THIN}"
-            gridline-color="${eva.GRIDLINE_COLOR}"></column-gridline>
+          <vertical-gridline></vertical-gridline>
           <div class="aaCellText aaCellRowSelectedChar" style="visibility: hidden;">${eva.ROW_SELECTED_CHAR}</div>
-          <column-gridline
-            gridline-width="${eva.GRIDLINE_THIN}"
-            gridline-color="${eva.GRIDLINE_COLOR}"></column-gridline>
+          <vertical-gridline></vertical-gridline>
           <div class="aaInlineBlock aaGridBchgSubtitleBar" style="width: 100%;">
             <span>User-supplied amount(s)</span>
           </div>
@@ -194,12 +155,11 @@
                   </span>
                 </div>
               </template>
-              <column-gridline
-                gridline-width="${eva.GRIDLINE_THIN}"
-                gridline-color="${eva.GRIDLINE_COLOR}"></column-gridline>
+              <vertical-gridline></vertical-gridline>
               <div class="aaCellText aaCellRowSelectedChar"
                    css="visibility: ${bchg.id == eva.selectedBchg.id ? 'visible' : 'hidden'};">${eva.ROW_SELECTED_CHAR}
               </div>
+              <vertical-gridline></vertical-gridline>
               <div class="aaRowDataCells">
                 <tran-bchg bchg.bind="bchg"></tran-bchg>
               </div>
@@ -225,54 +185,18 @@
                   </span>
               </div>
             </template>
-            <column-gridline
-              gridline-width="${eva.GRIDLINE_THIN}"
-              gridline-color="${eva.GRIDLINE_COLOR}"></column-gridline>
+            <vertical-gridline></vertical-gridline>
             <div class="aaCellText aaCellRowSelectedChar" style="visibility: hidden;">${eva.ROW_SELECTED_CHAR}</div>
-            <column-gridline
-              gridline-width="${eva.GRIDLINE_THIN}"
-              gridline-color="${eva.GRIDLINE_COLOR}"></column-gridline>
+            <vertical-gridline></vertical-gridline>
             <div class="aaInlineBlock">
-              <div class="aaCellText aaFontData">
-                <input type="text"
-                       disabled
-                       class="aaFormInputText aaCellBchgDesc aaFontLabel aaCellTextEOL"
-                       style="border-color: transparent;"
-                       value="${eva.END_OF_LIST}">
-              </div>
-              <column-gridline
-                gridline-width="${eva.GRIDLINE_THIN}"
-                gridline-color="transparent"></column-gridline>
-              <div class="aaCellText aaFontData">
-                <input type="text"
-                       disabled
-                       class="aaFormInputText aaCellBchgAmt"
-                       style="border-color: transparent;"
-                       value="">
-              </div>
-              <column-gridline
-                gridline-width="${eva.GRIDLINE_THIN}"
-                gridline-color="transparent"></column-gridline>
-              <div class="aaCellText aaFontData">
-                <input type="text" disabled
-                       class="aaFormInputText aaCellBchgDesc aaFontLabel aaCellTextEOL"
-                       style="border-color: transparent;"
-                       value="">
-              </div>
-              <column-gridline
-                gridline-width="${eva.GRIDLINE_THIN}"
-                gridline-color="transparent"></column-gridline>
-              <div class="aaCellText aaFontData">
-                <input type="text" disabled
-                       class="aaFormInputText aaCellBchgAmt"
-                       style="border-color: transparent;"
-                       value="">
-              </div>
+              <div class="aaInlineBlock aaCellText aaFontData" style="position: absolute;"><span class="aaSansSerif aaCellTextEOL">${eva.END_OF_LIST}</span></div>
+              <tran-bchg-cells-spacer></tran-bchg-cells-spacer>
+              <vertical-gridline-spacer></vertical-gridline-spacer>
+              <tran-bchg-cells-spacer></tran-bchg-cells-spacer>
+              <vertical-gridline></vertical-gridline>
             </div>
-            <column-gridline
-              gridline-width="${eva.GRIDLINE_THIN}"
-              gridline-color="${eva.GRIDLINE_COLOR}"></column-gridline>
           </div>
+
         </div>
         <div class="aaGridFooterBar"></div>
       </div>
@@ -283,9 +207,7 @@
           <div class="aaCellRowOps">
             <span class="aaBtn aaBtnHidden"><i class="fa fa-bars fa-fw" aria-hidden="true"></i></span>
           </div>
-          <column-gridline
-            gridline-width="${eva.GRIDLINE_THIN}"
-            gridline-color="transparent"></column-gridline>
+          <vertical-gridline-spacer></vertical-gridline-spacer>
           <div class="aaCellText aaCellRowSelectedChar" style="visibility: hidden;">${eva.ROW_SELECTED_CHAR}</div>
           <div class="aaInlineBlock">
             <div class="aaCellText aaFontData aaTranBchgRow2Indent">
@@ -294,35 +216,27 @@
                      style="text-align: right; border-color: transparent;"
                      value="Net change to assets:">
             </div>
-            <column-gridline
-              gridline-width="${eva.GRIDLINE_THIN}"
-              gridline-color="transparent"></column-gridline>
+            <vertical-gridline-spacer></vertical-gridline-spacer>
             <div class="aaCellText aaFontData">
               <input type="text" disabled
                      class="aaFormInputText aaCellBchgAmt"
                      value="${eva.formattedCurrency(eva.selectedTran.assetsBchg)}">
             </div>
-            <column-gridline
-              gridline-width="${eva.GRIDLINE_THIN}"
-              gridline-color="transparent"></column-gridline>
+            <vertical-gridline-spacer></vertical-gridline-spacer>
             <div class="aaCellText aaFontData aaTranBchgRow2Indent">
               <input type="text" disabled
                      class="aaFormInputText aaCellBchgDesc aaFontLabel"
                      style="text-align: right; border-color: transparent;"
                      value="Net change to equities:">
             </div>
-            <column-gridline
-              gridline-width="${eva.GRIDLINE_THIN}"
-              gridline-color="transparent"></column-gridline>
+            <vertical-gridline-spacer></vertical-gridline-spacer>
             <div class="aaCellText aaFontData">
               <input type="text" disabled
                      class="aaFormInputText aaCellBchgAmt"
                      value="${eva.formattedCurrency(eva.selectedTran.equitiesBchg)}">
             </div>
           </div>
-          <column-gridline
-            gridline-width="${eva.GRIDLINE_THIN}"
-            gridline-color="transparent"></column-gridline>
+          <vertical-gridline-spacer></vertical-gridline-spacer>
         </div>
       </div>
     </div>

@@ -2,12 +2,9 @@ module-jrnl.html
 =====================================
 
 ---------------------------------------------------------------
-<require from="../au-views/column-gridline.html"></require>
+<require from="../au-views/vertical-gridline.html"></require>
 ---------------------------------------------------------------
-<column-gridline
-  gridline-width="${eva.GRIDLINE_THIN}"
-  gridline-color="${eva.GRIDLINE_COLOR}">
-</column-gridline>
+<vertical-gridline></vertical-gridline>
 
 ---------------------------------------------------------------
 <require from="./tran-bchg"></require>

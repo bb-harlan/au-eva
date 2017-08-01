@@ -14,6 +14,15 @@ export class InputCurrency {
   @bindable isDisabled: boolean = false;
   @bindable classesString: string;
 
+  currencyAmountChanged(newValue, oldValue) {
+    console.log("currencyAmountChanged()", newValue, oldValue, this.currencyAmount);
+    if (this.eva.selectedTran) {
+      console.log("this.eva.selectedTran.bchgList[0].amt:", this.eva.selectedTran.bchgList[0].amt);
+      console.log("this.eva.selectedTran.bchgList[1].amt:", this.eva.selectedTran.bchgList[1].amt);
+      this.eva.selectedTran.refresh();
+    }
+  }
+
   private tempCurrencyAmount: number;
   formattedCurrencyAmount: string;
   private modifyDelete: boolean = false;
@@ -40,7 +49,6 @@ export class InputCurrency {
   onBlur() {
     console.log("onBlur()");
     this.currencyAmount = this.tempCurrencyAmount;
-    this.eva.selectedTran.refresh();
   }
 
   onKeydown(event) {

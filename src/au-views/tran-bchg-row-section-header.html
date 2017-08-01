@@ -1,22 +1,16 @@
 <template bindable="eva">
-  <require from="./column-gridline.html"></require>
+  <require from="./vertical-gridline.html"></require>
   <require from="./tran-bchg-cells-header.html"></require>
 
   <div class="aaInlineBlock">
-    <column-gridline
-        gridline-width="${eva.GRIDLINE_THICK}"
-        gridline-color="${eva.GRIDLINE_COLOR}"></column-gridline>
+    <vertical-gridline></vertical-gridline>
     <tran-bchg-cells-header
         eva="eva"
         equationSide="${eva.SIDE_ASSETS}"></tran-bchg-cells-header>
-    <column-gridline
-        gridline-width="${eva.GRIDLINE_THICK}"
-        gridline-color="${eva.GRIDLINE_COLOR}"></column-gridline>
+    <vertical-gridline></vertical-gridline>
     <tran-bchg-cells-header
         eva="eva"
         equationSide="${eva.SIDE_EQUITIES}"></tran-bchg-cells-header>
-    <column-gridline
-        gridline-width="${eva.GRIDLINE_THICK}"
-        gridline-color="${eva.GRIDLINE_COLOR}"></column-gridline>
+    <vertical-gridline></vertical-gridline>
   </div>
 </template>

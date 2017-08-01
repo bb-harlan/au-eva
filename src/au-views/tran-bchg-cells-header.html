@@ -1,5 +1,5 @@
 <template bindable="eva, equationSide">
-  <require from="./column-gridline.html"></require>
+  <require from="./vertical-gridline.html"></require>
 
   <div class="aaInlineBlock aaSansSerif">
     <div class="aaCellText aaFontData aaCellAcctTitle aaInlineBlock">
@@ -12,9 +12,7 @@
                class="aaFormInputText aaCellBchgDesc"
                value="Change description">
       </div>
-      <column-gridline
-          gridline-width="${eva.GRIDLINE_WIDTH}"
-          gridline-color="${eva.GRIDLINE_COLOR}"></column-gridline>
+      <vertical-gridline></vertical-gridline>
       <div class="aaCellText aaFontData">
         <input type="text"
                disabled

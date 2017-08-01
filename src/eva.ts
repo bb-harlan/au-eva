@@ -60,6 +60,7 @@ export class Eva {
     return "- End of list -";
   };
 
+/*
   get GRIDLINE_COLOR(): string {
     return "#ccc";
   };
@@ -72,6 +73,7 @@ export class Eva {
   get GRIDLINE_THICK(): string {
     return "2px"
   };
+*/
 
   get TOOLBAR_BACKGROUND_COLOR(): string {
     return "#ddd";

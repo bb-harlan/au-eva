@@ -8,12 +8,12 @@ export class ModuleJrnl {
 
     onRowEnter(event, tran) {
         event.target.children[0].children[0].style.visibility = 'visible';
-        event.target.children[3].classList.toggle('aaRowHover', true);
+        event.target.children[4].classList.toggle('aaRowHover', true);
     }
 
     onRowLeave(event, tran) {
         event.target.children[0].children[0].style.visibility = 'hidden';
-        event.target.children[3].classList.toggle('aaRowHover', false);
+        event.target.children[4].classList.toggle('aaRowHover', false);
     }
     onGoTran(event, tran) {
         this.eva.selectedBchg = null;

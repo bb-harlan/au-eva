@@ -1,10 +1,8 @@
 <template bindable="gridlineWidth, gridlineColor">
-  <require from="./column-gridline.html"></require>
+  <require from="./vertical-gridline.html"></require>
 
   <div class="aaInlineBlock">
-    <column-gridline
-        gridline-width="${gridlineWidth}"
-        gridline-color="${gridlineColor}"></column-gridline>
+    <vertical-gridline></vertical-gridline>
     <div class="aaInlineBlock">
       <div class="aaInlineBlock aaCellText aaFontSizeLabel">
         <input type="text"
@@ -27,9 +25,6 @@
                  css="border-color: ${gridlineColor};"
                  value="Change description">
         </div>
-        <column-gridline
-            gridline-width="${gridlineWidth}"
-            gridline-color="transparent"></column-gridline>
         <div class="aaCellText aaFontSizeLabel">
           <input type="text"
                  disabled
@@ -39,9 +34,7 @@
         </div>
       </div>
     </div>
-    <column-gridline
-        gridline-width="${gridlineWidth}"
-        gridline-color="${gridlineColor}"></column-gridline>
+    <vertical-gridline></vertical-gridline>
     <div class="aaInlineBlock">
       <div class="aaInlineBlock aaCellText aaFontSizeLabel">
         <input type="text"
@@ -63,9 +56,6 @@
                  css="border-color: ${gridlineColor};"
                  value="Change description">
         </div>
-        <column-gridline
-            gridline-width="${gridlineWidth}"
-            gridline-color="transparent"></column-gridline>
         <div class="aaCellText aaFontSizeLabel">
           <input type="text"
                  disabled
@@ -75,8 +65,10 @@
         </div>
       </div>
     </div>
-    <column-gridline
+    <vertical-gridline></vertical-gridline>
+<!--
         gridline-width="100%"
         gridline-color="${gridlineColor}"></column-gridline>
+-->
   </div>
 </template>

@@ -11,15 +11,6 @@ export class ModuleTran {
   eva: Eva = Eva.getInstance();
   /* will point to eva.selectedTran or a copy of eva.selectedTran for editing */
 
-  //
-  bind(bindingContext: Object, overrideContext: Object) {
-    // console.log('bind');
-  }
-
-  unbind(bindingContext: Object, overrideContext: Object) {
-    // console.log('unbind');
-  }
-
   onGoJrnl(event) {
     this.eva.selectedBchg = null;
     this.eva.selectedModule = this.eva.MODULE_JRNL;
@@ -71,12 +62,18 @@ export class ModuleTran {
       else if (!this.eva.isEditing) {
         event.target.children[0].children[0].style.visibility = 'visible';
       }
-      event.target.children[3].classList.toggle('aaRowHover', true);
     }
+    else {
+      // end-of-list item
+      event.target.children[0].children[0].style.visibility = 'visible';
+    }
+    event.target.children[4].classList.toggle('aaRowHover', true);
+/*
     if (!bchg && this.eva.isEditing) {
       // end-of-list item
       event.target.children[0].children[0].style.visibility = 'visible';
     }
+*/
   }
 
   onRowLeave(event, bchg) {
@@ -87,12 +84,11 @@ export class ModuleTran {
       else if (!this.eva.isEditing) {
         event.target.children[0].children[0].style.visibility = 'hidden';
       }
-      event.target.children[3].classList.toggle('aaRowHover', false);
     }
-    if (!bchg && this.eva.isEditing) {
-      // end-of-list item
+    else {
       event.target.children[0].children[0].style.visibility = 'hidden';
     }
+    event.target.children[4].classList.toggle('aaRowHover', false);
   }
 
   onEdit(event) {
