@@ -30,6 +30,7 @@ h1 {
 }
 .aaFontSizeLabel {
     font-size: small;
+    background-color: transparent;
 }
 .aaFontData {
     font-family: Cambria, serif, Serif;
@@ -129,9 +130,9 @@ h1 {
     color: #fff;
     /*background-color: #58b;*/
     background-color: #6d99c5;
-    -webkit-box-shadow: inset 0px 5px 10px 0px #7ad;
-    -moz-box-shadow: inset 0px 5px 10px 0px #7ad;
-    box-shadow: inset 0px 5px 10px 0px #7ad;
+    /* -webkit-box-shadow: inset 0px 5px 10px 0px #7ad; */
+    /* -moz-box-shadow: inset 0px 5px 10px 0px #7ad; */
+    /* box-shadow: inset 0px 5px 10px 0px #7ad; */
     font-family: sans-serif, SansSerif;
     /*font-size: medium;*/
     font-weight: normal;
@@ -175,7 +176,7 @@ h1 {
 }
 .aaFormInputText {
     padding: 1px 0.5pc;
-    background-color: inherit;
+    background-color: #fff;
 }
 .aaFormInputText:disabled {
     /*border-color: transparent;*/
@@ -271,20 +272,15 @@ h1 {
 
 .aaGridTitleBar {
     padding: 0.25pc;
-    /* color: #fff; */
-    /*background-color: #aaa;*/
-    color: #000;
-    /* background-color: #bbb; */
+    color: #555;
     background-color: #b6cbe2;
     border-bottom: 1px solid #999;
-    -webkit-box-shadow: inset 0px 5px 10px 0px #eee;
-    -moz-box-shadow: inset 0px 5px 10px 0px #eee;
-    box-shadow: inset 0px 5px 10px 0px #dbe5f0;
+    /* -webkit-box-shadow: inset 0px 5px 10px 0px #eee; */
+    /* -moz-box-shadow: inset 0px 5px 10px 0px #eee; */
+    /* box-shadow: inset 0px 5px 10px 0px #eee; */
     font-family: sans-serif, SansSerif;
     font-size: medium;
-    /*font-weight: normal;*/
-    font-weight: normal;
-    letter-spacing: 2px;
+    letter-spacing: 1px;
 }
 .aaGridBchgSubtitleBar {
     padding: 0.15pc 0;
@@ -300,16 +296,14 @@ h1 {
     height: 25px;
 }
 .aaGridFooterBar {
-    /*background-color: #aaa;*/
     background-color: #b6cbe2;
     border-top: 1px solid #999;
     padding-bottom: 0.75pc;
     margin: 0;
-    /*-webkit-box-shadow: inset 0px -2px 4px 1px #888;*/
-    /*-moz-box-shadow: inset 0px -2px 4px 1px #888;*/
-    box-shadow: inset 0px -2px 4px 1px #fff;
-    box-shadow: inset 0px 5px 10px 0px #dbe5f0;
-    /*border-top: 2px solid #ccc;*/
+    /* -webkit-box-shadow: inset 0px -2px 4px 1px #eee; */
+    /* -moz-box-shadow: inset 0px -2px 4px 1px #eee; */
+    /* box-shadow: inset 0px -2px 4px 1px #fff; */
+    /* box-shadow: inset 0px 5px 10px 0px #eee; */
 }
 
 .aaGridHeader {

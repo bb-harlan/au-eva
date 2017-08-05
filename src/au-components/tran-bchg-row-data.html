@@ -58,7 +58,7 @@
                 currency-amount.one-way="bchg.amt"
                 is-disabled.one-way="false"
                 classes-string.one-way="'aaFormInputText aaCellBchgAmt'"
-                inputcompletion.delegate="onInputCompletion($event)"></au-input-currency>
+                inputcurrencycompleted.delegate="onInputCurrencyCompleted($event)"></au-input-currency>
             </template>
             <template if.bind="bchg.intraTranSorter == 0">
               <au-input-currency

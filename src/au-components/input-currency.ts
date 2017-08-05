@@ -23,10 +23,12 @@ export class InputCurrency {
 
   currencyAmountChanged(newValue, oldValue) {
     let customEvent = new CustomEvent(
-      'inputcompletion',
+      'inputcurrencycompleted',
       {
         bubbles: true,
-        detail: { newvalue: newValue }
+        detail: {
+          newCurrencyAmount: newValue
+        }
       }
     );
     this.element.dispatchEvent(customEvent);
