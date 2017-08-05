@@ -1,53 +1,50 @@
-import {customElement, bindable} from 'aurelia-framework';
-import {Eva} from '../eva';
-
+import { customElement, bindable, inject } from 'aurelia-framework';
+import { Eva } from '../eva';
 //
 @customElement('au-input-currency')
+@inject(Element)
 export class InputCurrency {
   //
   eva: Eva = Eva.getInstance();
-  // input element reference
+  element: Element;
+
+  constructor(Element) {
+    this.element = Element;
+  }
+
+
   inputElement: HTMLInputElement;
 
   @bindable currencyAmount: number;
   @bindable isReadonly: boolean = false;
   @bindable isDisabled: boolean = false;
   @bindable classesString: string;
+  @bindable inputCompletion: Function;
 
   currencyAmountChanged(newValue, oldValue) {
-    console.log("currencyAmountChanged()", newValue, oldValue, this.currencyAmount);
-    if (this.eva.selectedTran) {
-      console.log("this.eva.selectedTran.bchgList[0].amt:", this.eva.selectedTran.bchgList[0].amt);
-      console.log("this.eva.selectedTran.bchgList[1].amt:", this.eva.selectedTran.bchgList[1].amt);
-      this.eva.selectedTran.refresh();
-    }
+    let customEvent = new CustomEvent(
+      'inputcompletion',
+      {
+        bubbles: true,
+        detail: { newvalue: newValue }
+      }
+    );
+    this.element.dispatchEvent(customEvent);
   }
 
-  private tempCurrencyAmount: number;
   formattedCurrencyAmount: string;
+  private tempCurrencyAmount: number;
   private modifyDelete: boolean = false;
   private modifyBackspace: boolean = false;
   private targetCharForRemoval: string;
 
   onFocus() {
-    console.log("onFocus()");
-    console.log("currencyAmount: '" + this.currencyAmount + "'");
-    console.log("isReadonly: '" + this.isReadonly + "'");
-    console.log("classesString: '" + this.classesString + "'");
     if (this.currencyAmount) {
       this.tempCurrencyAmount = this.currencyAmount;
     }
   }
 
-  attached() {
-    console.log("attached()");
-    console.log("currencyAmount: '" + this.currencyAmount + "'");
-    console.log("isReadonly: '" + this.isReadonly + "'");
-    // console.log("classString: '" + this.classString + "'");
-  }
-
   onBlur() {
-    console.log("onBlur()");
     this.currencyAmount = this.tempCurrencyAmount;
   }
 
@@ -100,7 +97,7 @@ export class InputCurrency {
       }
       console.log("onInput() value: '" + inputElementValue + "'");
     }
-    else if(this.modifyDelete) {
+    else if (this.modifyDelete) {
       if (this.targetCharForRemoval == ",") {
         inputElementValue = inputElementValue.substr(0, cursorPosition) + inputElementValue.substr(cursorPosition + 1);
         cursorPosition = cursorPosition - 1;

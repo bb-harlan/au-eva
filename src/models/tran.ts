@@ -1,6 +1,6 @@
-import {Bchg} from '../models/bchg';
-import {Eva} from '../eva';
-import {TranBchgList} from '../models/tran-bchg-list';
+import { Bchg } from '../models/bchg';
+import { Eva } from '../eva';
+import { TranBchgList } from '../models/tran-bchg-list';
 
 //
 export class Tran {
@@ -34,7 +34,7 @@ export class Tran {
     let assetsBchg: number = 0.00;
     let equitiesBchg: number = 0.00;
 
-    // compute assetsBchg, equitiesBach for indexes 1 ... n of this.bchgList
+    // compute assetsBchg, equitiesBchg for indexes 1 ... n of this.bchgList
     for (let bchg of this.bchgList.slice(1)) {
       switch (bchg.targetAcct.equationSide) {
         case this.eva.SIDE_ASSETS:
@@ -46,7 +46,6 @@ export class Tran {
         default:
           throw new Error(`acct.equationSide has invalid value: ${bchg.targetAcct.equationSide}.`);
       }
-
       // compute bchgList[0].amt (balancing amt)
       switch (this.bchgList[0].targetAcct.equationSide) {
         case this.eva.SIDE_ASSETS:
@@ -67,7 +66,6 @@ export class Tran {
       }
 
     }
-    console.log("tran.refresh()", assetsBchg, equitiesBchg);
     this.assetsBchg = assetsBchg;
     this.equitiesBchg = equitiesBchg;
   }

@@ -8,7 +8,7 @@
     <template if.bind="bchg.targetAcct.equationSide == eva.SIDE_EQUITIES">
       <tran-bchg-cells-spacer></tran-bchg-cells-spacer>
       <vertical-gridline></vertical-gridline>
-\    </template>
+    </template>
 
     <div class="aaInlineBlock">
       <div class="aaCellText aaFontSizeData">
@@ -55,9 +55,10 @@
           <template if.bind="eva.isEditing">
             <template if.bind="bchg.intraTranSorter != 0">
               <au-input-currency
-                currency-amount.two-way="bchg.amt"
+                currency-amount.one-way="bchg.amt"
                 is-disabled.one-way="false"
-                classes-string.one-way="'aaFormInputText aaCellBchgAmt'"></au-input-currency>
+                classes-string.one-way="'aaFormInputText aaCellBchgAmt'"
+                inputcompletion.delegate="onInputCompletion($event)"></au-input-currency>
             </template>
             <template if.bind="bchg.intraTranSorter == 0">
               <au-input-currency

@@ -1,9 +1,10 @@
 body {
     text-align: center;
     /*background-color: #fff;*/
-    background-color: #ABABAB;
-    /*background-color: #c0c0c0;*/
-    /*background-color: #d0d0d0;*/
+    /* background-color: #ABABAB; */
+    /* background-color: #c0c0c0; */
+    background-color: #d0d0d0;
+    background-color: #fff;
     font-family: Cambria, serif, Serif;
     font-weight: bold;
     font-size: medium;
@@ -127,7 +128,7 @@ h1 {
     /*color: #eee;*/
     color: #fff;
     /*background-color: #58b;*/
-    background-color: #58b;
+    background-color: #6d99c5;
     -webkit-box-shadow: inset 0px 5px 10px 0px #7ad;
     -moz-box-shadow: inset 0px 5px 10px 0px #7ad;
     box-shadow: inset 0px 5px 10px 0px #7ad;
@@ -270,18 +271,19 @@ h1 {
 
 .aaGridTitleBar {
     padding: 0.25pc;
-    color: #fff;
+    /* color: #fff; */
     /*background-color: #aaa;*/
-    /*color: #000;*/
-    background-color: #bbb;
+    color: #000;
+    /* background-color: #bbb; */
+    background-color: #b6cbe2;
     border-bottom: 1px solid #999;
-    -webkit-box-shadow: inset 0px 5px 10px 0px #ddd;
-    -moz-box-shadow: inset 0px 5px 10px 0px #ddd;
-    box-shadow: inset 0px 5px 10px 0px #ddd;
+    -webkit-box-shadow: inset 0px 5px 10px 0px #eee;
+    -moz-box-shadow: inset 0px 5px 10px 0px #eee;
+    box-shadow: inset 0px 5px 10px 0px #dbe5f0;
     font-family: sans-serif, SansSerif;
     font-size: medium;
     /*font-weight: normal;*/
-    font-weight: bold;
+    font-weight: normal;
     letter-spacing: 2px;
 }
 .aaGridBchgSubtitleBar {
@@ -299,13 +301,14 @@ h1 {
 }
 .aaGridFooterBar {
     /*background-color: #aaa;*/
-    background-color: #bbb;
+    background-color: #b6cbe2;
     border-top: 1px solid #999;
     padding-bottom: 0.75pc;
     margin: 0;
     /*-webkit-box-shadow: inset 0px -2px 4px 1px #888;*/
     /*-moz-box-shadow: inset 0px -2px 4px 1px #888;*/
-    /*box-shadow: inset 0px -2px 4px 1px #888;*/
+    box-shadow: inset 0px -2px 4px 1px #fff;
+    box-shadow: inset 0px 5px 10px 0px #dbe5f0;
     /*border-top: 2px solid #ccc;*/
 }
 
