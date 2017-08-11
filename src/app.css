@@ -298,7 +298,7 @@ h1 {
 .aaGridFooterBar {
     background-color: #b6cbe2;
     border-top: 1px solid #999;
-    padding-bottom: 0.75pc;
+    padding-bottom: 0.5pc;
     margin: 0;
     /* -webkit-box-shadow: inset 0px -2px 4px 1px #eee; */
     /* -moz-box-shadow: inset 0px -2px 4px 1px #eee; */
@@ -347,7 +347,7 @@ h1 {
     text-align: left;
     white-space: nowrap;
     font-size: 0;
-    /*border-bottom: 1px solid #ccc;*/
+    border-top: 1px solid #ccc;
 }
 .aaRowTotals {
     position: relative;
@@ -497,4 +497,8 @@ h1 {
   display: inline-block;
   width: 1px;
   visibility: hidden;
+}
+.aaBchgAmtComputed {
+    border-color: transparent;
+    background-color: inherit;
 }

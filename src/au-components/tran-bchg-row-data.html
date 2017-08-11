@@ -12,21 +12,15 @@
 
     <div class="aaInlineBlock">
       <div class="aaCellText aaFontSizeData">
-        <input type="text"
-               disabled
-               class="aaFormInputText aaCellAcctTitle"
-               css="vertical-align: middle; border-color: ${eva.GRIDLINE_COLOR};"
-               value.one-way="bchg.targetAcct.title">
+        <input type="text" disabled class="aaFormInputText aaCellAcctTitle" css="vertical-align: middle; border-color: ${eva.GRIDLINE_COLOR};"
+          value.one-way="bchg.targetAcct.title">
         <template if.bind="!eva.isEditing">
-          <span class="aaBtn aaBtnHidden"
-                style="vertical-align: middle; border-color: #999;">
+          <span class="aaBtn aaBtnHidden" style="vertical-align: middle; border-color: #999;">
             <i class="fa fa-ellipsis-h fa-fw" aria-hidden="true"></i>
           </span>
         </template>
         <template if.bind="eva.isEditing">
-          <span class="aaBtn"
-                click.delegate="moduleTran.onPickAcct($event, bchg)"
-                style="vertical-align: middle; border-color: #999;">
+          <span class="aaBtn" click.delegate="moduleTran.onPickAcct($event, bchg)" style="vertical-align: middle; border-color: #999;">
             <i class="fa fa-ellipsis-h fa-fw" aria-hidden="true"></i>
           </span>
         </template>
@@ -34,41 +28,32 @@
       <div class="aaTranBchgRow2Indent">
         <div class="aaCellText aaFontSizeData">
           <template if.bind="!eva.isEditing">
-            <input type="text"
-                   disabled
-                   class="aaFormInputText aaCellBchgDesc"
-                   value.one-way="bchg.desc">
+            <input type="text" disabled class="aaFormInputText aaCellBchgDesc" value.one-way="bchg.desc">
           </template>
           <template if.bind="eva.isEditing">
-            <input type="text"
-                   class="aaFormInputText aaCellBchgDesc"
-                   value.two-way="bchg.desc">
+            <input type="text" class="aaFormInputText aaCellBchgDesc" value.two-way="bchg.desc">
           </template>
         </div>
         <div class="aaCellText aaFontSizeData">
           <template if.bind="!eva.isEditing">
-            <au-input-currency
-              currency-amount.one-way="bchg.amt"
-              is-disabled.one-way="true"
-              classes-string.one-way="'aaFormInputText aaCellBchgAmt'"></au-input-currency>
+            <au-input-currency currency-amount.one-way="bchg.amt" is-disabled.one-way="true" classes-string.one-way="'aaFormInputText aaCellBchgAmt'"></au-input-currency>
           </template>
           <template if.bind="eva.isEditing">
             <template if.bind="bchg.intraTranSorter != 0">
-              <au-input-currency
-                currency-amount.one-way="bchg.amt"
-                is-disabled.one-way="false"
-                classes-string.one-way="'aaFormInputText aaCellBchgAmt'"
+              <au-input-currency currency-amount.one-way="bchg.amt" is-disabled.one-way="false" classes-string.one-way="'aaFormInputText aaCellBchgAmt'"
                 inputcurrencycompleted.delegate="onInputCurrencyCompleted($event)"></au-input-currency>
             </template>
             <template if.bind="bchg.intraTranSorter == 0">
-              <au-input-currency
-                currency-amount.one-way="bchg.amt"
-                is-disabled.one-way="true"
-                classes-string.one-way="'aaFormInputText aaCellBchgAmt'"></au-input-currency>
+              <au-input-currency currency-amount.one-way="bchg.amt" is-disabled.one-way="true" classes-string.one-way="'aaFormInputText aaCellBchgAmt aaBchgAmtComputed'"></au-input-currency>
             </template>
           </template>
         </div>
       </div>
+      <template if.bind="eva.selectedModule == eva.MODULE_TRAN && bchg.intraTranSorter == 0 && eva.isEditing">
+        <div style="text-align: right;">
+          <div class="aaCellText aaFontLabel">NOTE: The change amount in this first row is automatically computed to balance the transaction.</div>
+        </div>
+      </template>
     </div>
     <vertical-gridline></vertical-gridline>
   </div>

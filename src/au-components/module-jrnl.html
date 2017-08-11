@@ -1,6 +1,7 @@
 <template>
-  <require from="../au-views/vertical-gridline.html"></require>
   <require from="../au-views/gh-tran-bchg.html"></require>
+  <require from="../au-views/vertical-gridline.html"></require>
+  <require from="../au-views/tran-bchg-cells-spacer.html"></require>
   <require from="../au-components/tran-bchg-row-data"></require>
 
   <div class="aaPanel aaPanelBoxShadow">
@@ -10,8 +11,7 @@
         <div class="aaGridTitleBar">Transactions</div>
         <div class="aaGridHeader aaFontLabel">
           <div class="aaRow aaFontLabel">
-            <div class="aaCellRowOps"
-                 click.delegate="onNewTran($event)">
+            <div class="aaCellRowOps" click.delegate="onNewTran($event)">
               <span class="aaBtn">
                 <i class="fa fa-plus-circle fa-fw aaIconGreen" aria-hidden="true"></i>
               </span>
@@ -23,43 +23,43 @@
             <gh-tran-bchg></gh-tran-bchg>
           </div>
         </div>
-        <div class="aaGridScrollableRows"
-             style="height: 33pc;"
-             id="jrnlGridBodyContainer">
+        <div class="aaGridScrollableRows" style="height: 33pc;" id="jrnlGridBodyContainer">
           <template repeat.for="tran of eva.tranList">
-            <div id="${tran.id}"
-                 class="aaRow aaRowJrnl"
-                 xcss="border-top: 5px solid ${eva.GRIDLINE_COLOR};
+            <div id="${tran.id}" class="aaRow aaRowJrnl" xcss="border-top: 5px solid ${eva.GRIDLINE_COLOR};
                       border-bottom: 5px solid ${eva.GRIDLINE_COLOR};
-                      margin: 5px 0;"
-                 mouseenter.trigger="onRowEnter($event, tran)"
-                 mouseleave.trigger="onRowLeave($event, tran)">
+                      margin: 5px 0;" mouseenter.trigger="onRowEnter($event, tran)" mouseleave.trigger="onRowLeave($event, tran)">
               <div class="aaCellRowOps">
-                  <span class="aaBtn aaBtnHidden"
-                        click.delegate="onGoTran($event, tran)">
+                <span class="aaBtn aaBtnHidden" click.delegate="onGoTran($event, tran)">
                     <i class="fa fa-chevron-left fa-fw" aria-hidden="true"></i>
                   </span>
               </div>
               <vertical-gridline></vertical-gridline>
-              <div class="aaCellText aaCellRowSelectedChar"
-                   css="visibility: ${tran.id == eva.selectedTran.id ? 'visible' : 'hidden'};">${eva.ROW_SELECTED_CHAR}
+              <div class="aaCellText aaCellRowSelectedChar" css="visibility: ${tran.id == eva.selectedTran.id ? 'visible' : 'hidden'};">${eva.ROW_SELECTED_CHAR}
               </div>
               <vertical-gridline></vertical-gridline>
               <div class="aaRowDataCells">
                 <div class="aaCellText aaFontData aaCellTranDate">${tran.date}</div>
                 <vertical-gridline></vertical-gridline>
                 <div class="aaInlineBlock">
-                  <div class="aaInlineBlock"
-                       xcss="border-bottom: 1px solid ${eva.GRIDLINE_COLOR};">
+                  <div class="aaInlineBlock" xcss="border-bottom: 1px solid ${eva.GRIDLINE_COLOR};">
                     <tran-bchg-row-data bchg.bind="tran.bchgList[0]"></tran-bchg>
                   </div>
-<!--
+
                   <template repeat.for="bchg of tran.bchgList.slice(1)">
                     <div class="aaSubRow">
                       <tran-bchg-row-data bchg.bind="bchg"></tran-bchg>
                     </div>
                   </template>
--->
+                  <!-- 
+                  <div class="aaSubRow">
+                    <div class="aaInlineBlock">
+                      <tran-bchg-cells-spacer></tran-bchg-cells-spacer>
+                      <vertical-gridline></vertical-gridline>
+                      <tran-bchg-cells-spacer></tran-bchg-cells-spacer>
+                      <vertical-gridline></vertical-gridline>
+                    </div>
+                  </div>
+ -->
                 </div>
               </div>
             </div>

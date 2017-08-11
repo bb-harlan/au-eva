@@ -1,34 +1,29 @@
 <template>
   <require from="../au-views/vertical-gridline.html"></require>
-<!--
+  <!--
   <require from="../au-views/bchg-selected-row.html"></require>
 -->
   <div class="aaPanel aaPanelBoxShadow">
     <div class="aaPanelHeader aaPanelHeaderModule">${eva.selectedAcct.isAcct ? 'Account' : 'Annotation'}</div>
     <div class="aaPanelToolBar" if.bind="!eva.isEditing">
-      <span click.trigger="onGoFae($event)"
-            class="aaBtn">
+      <span click.trigger="onGoFae($event)" class="aaBtn">
          <i class="fa fa-chevron-left fa-fw" aria-hidden="true"></i> Assets = Equities
       </span>
-      <span click.trigger="onGoUp($event)"
-            class="aaBtn">
+      <span click.trigger="onGoUp($event)" class="aaBtn">
           <i class="fa fa-chevron-up fa-fw" aria-hidden="true"></i>
       </span>
-      <span click.trigger="onGoDown($event)"
-            class="aaBtn">
+      <span click.trigger="onGoDown($event)" class="aaBtn">
           <i class="fa fa-chevron-down fa-fw" aria-hidden="true"></i>
       </span>
       <span class="aaToolBarDivider">.</span>
-      <span click.trigger="onEdit($event)"
-            class="aaBtn">
+      <span click.trigger="onEdit($event)" class="aaBtn">
            <i class="fa fa-pencil-square-o fa-fw aaIconBlue" aria-hidden="true"></i> Edit
       </span>
-      <span click.trigger="onDelete($event)"
-            class="aaBtn" style="margin-left: 1pc;">
+      <span click.trigger="onDelete($event)" class="aaBtn" style="margin-left: 1pc;">
            <i class="fa fa-minus-circle fa-fw aaIconRed" aria-hidden="true"></i> Delete
       </span>
       <span class="aaToolBarDivider">.</span>
-<!--
+      <!--
       <div class="btn-group">
         <a class="aaBtn dropdown-toggle" data-toggle="dropdown" click.trigger="onMenuClick($event, eva.selectedAcct)">
           <span class="fa fa-bars fa-fw" aria-hidden="true"></span>
@@ -48,10 +43,8 @@
     <div class="aaPanelToolBar" if.bind="eva.isEditing">
       <div style="text-align: left;">
         <span class="aaToolBarDivider">.</span>
-        <span click.trigger="onSaveEdits($event)"
-              class="aaBtn">Save</span>
-        <span click.trigger="onCancelEdits($event)"
-              class="aaBtn" style="margin-left: 3pc;">Cancel</span>
+        <span click.trigger="onSaveEdits($event)" class="aaBtn">Save</span>
+        <span click.trigger="onCancelEdits($event)" class="aaBtn" style="margin-left: 3pc;">Cancel</span>
         <span class="aaToolBarDivider">.</span>
       </div>
     </div>
@@ -59,11 +52,11 @@
       <template if.bind="eva.selectedAcct.isAcct">
         <div class="aaForm">
           <table border="0" style="border-collapse: collapse;">
-            <tr>
+<!--             <tr>
               <td class="aaFormItemLabel">ID:</td>
               <td class="aaFormItemData">${eva.selectedAcct.id}</td>
             </tr>
-            <tr>
+ -->            <tr>
               <td class="aaFormItemLabel">Equation side:</td>
               <td class="aaFormItemData">${eva.equSideText(eva.selectedAcct.equationSide)}</td>
             </tr>
@@ -71,16 +64,12 @@
               <td class="aaFormItemLabel">Title:</td>
               <template if.bind="!eva.isEditing">
                 <td class="aaFormItemData">
-                  <input type="text" disabled
-                         class="aaFormInputText aaCellAcctTitle"
-                         value="${eva.selectedAcct.title}">
+                  <input type="text" disabled class="aaFormInputText aaCellAcctTitle" value="${eva.selectedAcct.title}">
                 </td>
               </template>
               <template if.bind="eva.isEditing">
                 <td class="aaFormItemData">
-                  <input type="text"
-                         class="aaFormInputText aaCellAcctTitle"
-                         value="${eva.selectedAcct.title}">
+                  <input type="text" class="aaFormInputText aaCellAcctTitle" value="${eva.selectedAcct.title}">
                 </td>
               </template>
             </tr>
@@ -92,8 +81,7 @@
           <div class="aaGridHeader">
             <div class="aaFontLabel aaRow">
               <div class="aaCellRowOps aaFontSizeLabel">
-                <span class="aaBtn"
-                      click.trigger="onNewTran($event, eva.selectedAcct)">
+                <span class="aaBtn" click.trigger="onNewTran($event, eva.selectedAcct)">
                   <i class="fa fa-plus-circle fa-fw aaIconGreen" aria-hidden="true"></i>
                 </span>
               </div>
@@ -110,16 +98,11 @@
               <vertical-gridline></vertical-gridline>
             </div>
           </div>
-          <div class="aaGridScrollableRows"
-               id="acctModule-${eva.selectedAcct.id}">
+          <div class="aaGridScrollableRows" id="acctModule-${eva.selectedAcct.id}">
             <template repeat.for="bchg of eva.selectedAcct.bchgList">
-              <div id="${bchg.id}"
-                   class="aaRow"
-                   mouseenter.trigger="onRowEnter($event, bchg)"
-                   mouseleave.trigger="onRowLeave($event, bchg)">
+              <div id="${bchg.id}" class="aaRow" mouseenter.trigger="onRowEnter($event, bchg)" mouseleave.trigger="onRowLeave($event, bchg)">
                 <div class="aaCellRowOps  aaFontSizeLabel">
-                  <span class="aaBtn aaBtnHidden"
-                        click.delegate="onGoBchg($event, bchg)">
+                  <span class="aaBtn aaBtnHidden" click.delegate="onGoBchg($event, bchg)">
                     <i class="fa fa-chevron-right fa-fw" aria-hidden="true"></i>
                   </span>
                 </div>
@@ -148,8 +131,7 @@
                 <span class="aaBtn aaBtnHidden"><i class="fa fa-chevron-right fa-fw" aria-hidden="true"></i></span>
               </div>
               <vertical-gridline></vertical-gridline>
-              <div class="aaCellText aaFontData aaCellTranDate"><span
-                  class="aaSansSerif aaCellTextEOL">${eva.END_OF_LIST}</span></div>
+              <div class="aaCellText aaFontData aaCellTranDate"><span class="aaSansSerif aaCellTextEOL">${eva.END_OF_LIST}</span></div>
               <vertical-gridline></vertical-gridline>
               <div class="aaCellText aaFontData aaCellBchgDesc"></div>
               <vertical-gridline></vertical-gridline>
@@ -166,8 +148,7 @@
         <div class="aaForm">
           <template if.bind="!eva.isEditing">
             <span class="aaSansSerif">Annotation:</span>
-            <input class="aaInputText aaCellAnnoTitle aaSansSerif" type="text" value="${eva.selectedAcct.annoText}"
-                   disabled>
+            <input class="aaInputText aaCellAnnoTitle aaSansSerif" type="text" value="${eva.selectedAcct.annoText}" disabled>
             <br>
           </template>
           <template if.bind="eva.isEditing">
@@ -176,8 +157,7 @@
             <br>
           </template>
         </div>
-        <div class="aaGridScrollableRows"
-             style="height: 2pc; visibility: hidden;">
+        <div class="aaGridScrollableRows" style="height: 2pc; visibility: hidden;">
           <!--
           The purpose of having the following invisible end-of-list row
           is to cause this "Annotation" panel to have the same width as that
@@ -188,8 +168,7 @@
               <span class="aaBtn aaBtnHidden"><i class="fa fa-chevron-right fa-fw" aria-hidden="true"></i></span>
             </div>
             <vertical-gridline></vertical-gridline>
-            <div class="aaCellText aaFontData aaCellTranDate"><span
-                class="aaSansSerif aaCellTextEOL">${eva.END_OF_LIST}</span></div>
+            <div class="aaCellText aaFontData aaCellTranDate"><span class="aaSansSerif aaCellTextEOL">${eva.END_OF_LIST}</span></div>
             <vertical-gridline></vertical-gridline>
             <div class="aaCellText aaFontData aaCellBchgDesc"></div>
             <vertical-gridline></vertical-gridline>

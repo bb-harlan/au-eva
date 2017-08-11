@@ -7,19 +7,18 @@ export class InputCurrency {
   //
   eva: Eva = Eva.getInstance();
   element: Element;
-
-  constructor(Element) {
-    this.element = Element;
-  }
-
-
   inputElement: HTMLInputElement;
 
   @bindable currencyAmount: number;
   @bindable isReadonly: boolean = false;
   @bindable isDisabled: boolean = false;
   @bindable classesString: string;
-  @bindable inputCompletion: Function;
+
+  constructor(Element) {
+    this.element = Element;
+  }
+
+
 
   currencyAmountChanged(newValue, oldValue) {
     let customEvent = new CustomEvent(
@@ -170,8 +169,14 @@ export class InputCurrency {
         cursorPosition = sanitizedValue.length;
       }
     }
-    this.tempCurrencyAmount = parseFloat(sanitizedValue);
+    if (sanitizedValue === "") {
+      this.tempCurrencyAmount = 0;
+    }
+    else {
+      this.tempCurrencyAmount = parseFloat(sanitizedValue);
+    }
     this.formattedCurrencyAmount = this.eva.formattedCurrency(this.tempCurrencyAmount);
+
     // adjust cursor position for any digit group separaters added by formatting
     for (i = 0; i <= cursorPosition; i++) {
       if (this.formattedCurrencyAmount.substr(i, 1) == ",") {

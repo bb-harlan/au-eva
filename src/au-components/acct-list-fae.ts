@@ -73,17 +73,6 @@ export class AcctListFae {
     this.eva.selectedAcct = listItem;
     this.eva.selectedModule = this.eva.MODULE_ACCT;
   }
-
-  attached() {
-  }
-
-  detached() {
-  }
-
-  formattedCurrency(currency) {
-    return Intl.NumberFormat("en-US", {style: "decimal", maximumFractionDigits: 2}).format(currency);
-    // return numeral(currency).format('0,0.00');
-  }
 }
 
 

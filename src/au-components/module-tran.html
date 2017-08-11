@@ -55,10 +55,10 @@
     <div class="aaPanelBody">
       <div class="aaForm">
         <table border="0" style="border-collapse: collapse;">
-          <tr>
+          <!-- <tr>
             <td class="aaFormItemLabel">ID:</td>
             <td class="aaFormItemData">${eva.selectedTran.id}</td>
-          </tr>
+          </tr> -->
           <tr>
             <td class="aaFormItemLabel">Date:</td>
             <template if.bind="!eva.isEditing">
@@ -75,72 +75,15 @@
         </table>
       </div>
 
-      <div>
-        <div class="aaGridContainer">
-          <div class="aaGridTitleBar">Primary account balance change</div>
-          <!-- Auto-change-amt item -->
-          <div id="${bchg.id}" 
-               class="aaRow" 
-               mouseenter.trigger="onRowEnter($event, eva.selectedTran.bchgList[0])" 
-               mouseleave.trigger="onRowLeave($event, eva.selectedTran.bchgList[0])">
-            <template if.bind="!eva.isEditing">
-              <div class="aaCellRowOps">
-                <span class="aaBtn aaBtnHidden" click.delegate="onGoBchg($event, eva.selectedTran.bchgList[0])">
-                    <i class="fa fa-chevron-left fa-fw" aria-hidden="true"></i>
-                  </span>
-              </div>
-            </template>
-            <template if.bind="eva.isEditing">
-              <div class="aaCellRowOps">
-                <span class="aaBtn aaBtnHidden" click.delegate="onMenuClick($event, eva.selectedTran.bchgList[0])">
-                    <i class="fa fa-bars fa-fw" aria-hidden="true"></i>
-                  </span>
-              </div>
-            </template>
-            <vertical-gridline></vertical-gridline>
-            <div class="aaCellText aaCellRowSelectedChar" css="visibility: ${bchg.id == eva.selectedBchg.id ? 'visible' : 'hidden'};">${eva.ROW_SELECTED_CHAR}
-            </div>
-            <vertical-gridline></vertical-gridline>
-            <div class="aaRowDataCells">
-              <tran-bchg-row-data bchg.bind="eva.selectedTran.bchgList[0]"></tran-bchg-row-data>
-            </div>
-          </div>
-        </div>
-        <div class="aaGridContainer">
-          <div class="aaGridTitleBar">Other account balance change(s)</div>
-          <div class="aaGridScrollableRows" id="tranModule-${eva.selectedTran.id}" style="height: 15pc;">
-            <template repeat.for="bchg of eva.selectedTran.bchgList.slice(1)">
-              <div class="aaRow" mouseenter.trigger="onRowEnter($event, bchg)" mouseleave.trigger="onRowLeave($event, bchg)">
-                <template if.bind="!eva.isEditing">
-                  <div class="aaCellRowOps">
-                    <span class="aaBtn aaBtnHidden" click.delegate="onGoBchg($event, bchg)">
-                    <i class="fa fa-chevron-left fa-fw" aria-hidden="true"></i>
-                  </span>
-                  </div>
-                </template>
-                <template if.bind="eva.isEditing">
-                  <div class="aaCellRowOps">
-                    <span class="aaBtn aaBtnHidden" click.delegate="onMenuClick($event, bchg)">
-                    <i class="fa fa-bars fa-fw" aria-hidden="true"></i>
-                  </span>
-                  </div>
-                </template>
-                <vertical-gridline></vertical-gridline>
-                <div class="aaCellText aaCellRowSelectedChar" css="visibility: ${bchg.id == eva.selectedBchg.id ? 'visible' : 'hidden'};">${eva.ROW_SELECTED_CHAR}
-                </div>
-                <vertical-gridline></vertical-gridline>
-                <div class="aaRowDataCells">
-                  <tran-bchg-row-data bchg.bind="bchg"></tran-bchg-row-data>
-                </div>
-              </div>
-            </template>
-
-            <!-- End of list row -->
-            <div class="aaRow" mouseenter.trigger="onRowEnter($event, null)" mouseleave.trigger="onRowLeave($event, null)">
+      <div class="aaGridContainer">
+        <div class="aaGridTitleBar">Account balance changes</div>
+        <div class="aaGridScrollableRows" id="tranModule-${eva.selectedTran.id}" style="height: 25pc;">
+          <template repeat.for="bchg of eva.selectedTran.bchgList">
+            <div class="aaRow" mouseenter.trigger="onRowEnter($event, bchg)" mouseleave.trigger="onRowLeave($event, bchg)">
               <template if.bind="!eva.isEditing">
                 <div class="aaCellRowOps">
-                  <span class="aaBtn aaBtnHidden">
-                    <i class="fa fa-bars fa-fw" aria-hidden="true"></i>
+                  <span class="aaBtn aaBtnHidden" click.delegate="onGoBchg($event, bchg)">
+                    <i class="fa fa-chevron-left fa-fw" aria-hidden="true"></i>
                   </span>
                 </div>
               </template>
@@ -152,20 +95,45 @@
                 </div>
               </template>
               <vertical-gridline></vertical-gridline>
-              <div class="aaCellText aaCellRowSelectedChar" style="visibility: hidden;">${eva.ROW_SELECTED_CHAR}</div>
+              <div class="aaCellText aaCellRowSelectedChar" css="visibility: ${bchg.id == eva.selectedBchg.id ? 'visible' : 'hidden'};">${eva.ROW_SELECTED_CHAR}
+              </div>
               <vertical-gridline></vertical-gridline>
-              <div class="aaInlineBlock">
-                <div class="aaInlineBlock aaCellText aaFontData" style="position: absolute;"><span class="aaSansSerif aaCellTextEOL">${eva.END_OF_LIST}</span></div>
-                <tran-bchg-cells-spacer></tran-bchg-cells-spacer>
-                <vertical-gridline-spacer></vertical-gridline-spacer>
-                <tran-bchg-cells-spacer></tran-bchg-cells-spacer>
-                <vertical-gridline></vertical-gridline>
+              <div class="aaRowDataCells">
+                <tran-bchg-row-data bchg.bind="bchg"></tran-bchg-row-data>
               </div>
             </div>
+          </template>
 
+          <!-- End of list row -->
+          <div class="aaRow" mouseenter.trigger="onRowEnter($event, null)" mouseleave.trigger="onRowLeave($event, null)">
+            <template if.bind="!eva.isEditing">
+              <div class="aaCellRowOps">
+                <span class="aaBtn aaBtnHidden">
+                    <i class="fa fa-bars fa-fw" aria-hidden="true"></i>
+                  </span>
+              </div>
+            </template>
+            <template if.bind="eva.isEditing">
+              <div class="aaCellRowOps">
+                <span class="aaBtn aaBtnHidden" click.delegate="onMenuClick($event, bchg)">
+                    <i class="fa fa-bars fa-fw" aria-hidden="true"></i>
+                  </span>
+              </div>
+            </template>
+            <vertical-gridline></vertical-gridline>
+            <div class="aaCellText aaCellRowSelectedChar" style="visibility: hidden;">${eva.ROW_SELECTED_CHAR}</div>
+            <vertical-gridline></vertical-gridline>
+            <div class="aaInlineBlock">
+              <div class="aaInlineBlock aaCellText aaFontData" style="position: absolute;"><span class="aaSansSerif aaCellTextEOL">${eva.END_OF_LIST}</span></div>
+              <tran-bchg-cells-spacer></tran-bchg-cells-spacer>
+              <vertical-gridline-spacer></vertical-gridline-spacer>
+              <tran-bchg-cells-spacer></tran-bchg-cells-spacer>
+              <vertical-gridline></vertical-gridline>
+            </div>
           </div>
-          <div class="aaGridFooterBar"></div>
+
         </div>
+        <div class="aaGridFooterBar"></div>
       </div>
 
       <!-- net change amt for eash side -->
