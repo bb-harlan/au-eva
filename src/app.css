@@ -90,16 +90,16 @@ h1 {
 }
 
 .aaNavBtn:hover {
-    background-color: #DAE6F1 !important;
+    background-color: #edf2f7 !important;
     cursor: pointer;
 }
 
 .aaNavBtnSelected {
     border-style: none;
-    -webkit-box-shadow: 0px 0px 3px 3px #09f;
-    -moz-box-shadow: 0px 0px 3px 3px #09f;
-    box-shadow: 0px 0px 3px 3px #09f;
-    background-color: #eee;
+    -webkit-box-shadow: 0px 0px 2px 2px #6d99c5;
+    -moz-box-shadow: 0px 0px 2px 2px #6d99c5;
+    box-shadow: 0px 0px 2px 2px #6D99C5;
+    background-color: #ffffee;
 }
 
 .aaPanelContainer {
