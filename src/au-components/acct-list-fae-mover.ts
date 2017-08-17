@@ -1,14 +1,16 @@
 import {customElement, inject} from 'aurelia-framework';
-import {Eva} from '../eva';
+import {AcctListFae} from '../au-components/acct-list-fae'
+import {AcctList} from '../models/acct-list'
 
 @customElement('acct-list-fae-mover')
+@inject(AcctListFae)
 export class AcctListFaeMover {
-  eva: Eva = Eva.getInstance();
-  equationSide: string;
-  sideHeading: string;
-  sideAcctList;
-  AcctList;
-  
+  acctListFae;
+  tempAcctList: AcctList;
+
+  constructor(acctListFae: AcctListFae) {
+    this.acctListFae = acctListFae;
+  }
 }
 
 

@@ -17,10 +17,6 @@ export class EquationSide {
 
     bind() {
         this.acctListFae.equationSide = this.value;
-/*
-        console.log(`this.acctListFae.equationSide = ${this.acctListFae.equationSide}`);
-        console.log(`Constants.SIDE_ASSETS = ${Constants.SIDE_ASSETS}; this.eva.SIDE_EQUITIES = ${this.eva.SIDE_EQUITIES}`);
-*/
         switch (this.acctListFae.equationSide) {
             case this.eva.SIDE_ASSETS:
                 this.acctListFae.sideHeading = "Asset accounts";

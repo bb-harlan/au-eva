@@ -1,31 +1,64 @@
-import {customElement, inject} from 'aurelia-framework';
+import {customElement, inject, bindable} from 'aurelia-framework';
 import {Eva} from '../eva';
+import {AcctList} from '../models/acct-list';
+import {AcctMover} from '../models/acct-mover';
+import {Acct, Annotation} from '../models/acct';
 
 @customElement('acct-list-fae')
 export class AcctListFae {
   eva: Eva = Eva.getInstance();
-  equationSide: string;
+  @bindable equationSide: string;
   sideHeading: string;
-  sideAcctList;
-  AcctList;
-  /*
-   constructor() {
-   /!*
-   The au-equation-side custom attribute is used to set this.equationSide to
-   either "A" or "E" which in turn is used by the this.dataProvider getter
-   to return either this.appModel.assetList or this.appModel.equitiesList, respectively.
+  sideAcctList: AcctList;
+  moverDialog;
+  moverList: Array<AcctMover>;
+  mouseIsDown: boolean = false;
+  swapListItem: AcctMover = null;
 
-   the custom element acct-list-fae and its custom attribute equation-side
-   are used in app.html like so:
 
-   <acct-list-fae au-equation-side=eva.SIDE_ASSETS></acct-list-fae>
-   and
-   <acct-list-fae au-equation-side=this.eva.SIDE_EQUITIES></acct-list-fae>
 
-   For details see equation-side.ts
-   *!/
-   }
-   */
+  attached() {
+    /*
+    The au-equation-side custom attribute is used to set this.equationSide to
+    either "A" or "E" which in turn is used by this method to set the properties...
+      sideHeading
+      sideAcctList
+
+    ...as follows.
+    */
+    switch (this.equationSide) {
+      case this.eva.SIDE_ASSETS:
+        this.sideHeading = "Asset accounts";
+        this.sideAcctList = this.eva.assetList;
+        break;
+      case this.eva.SIDE_EQUITIES:
+        this.sideHeading = "Equity accounts";
+        this.sideAcctList = this.eva.equityList;
+        break;
+      default:
+        this.sideHeading = "[Logic fault]";
+    }
+    // this.sideAcctList: AcctList = [];
+    /*
+    In module-fae.html this custom element acct-list-fae coded as follows:
+
+      <acct-list-fae equation-side="${eva.SIDE_ASSETS}" ...></acct-list-fae>
+
+    and
+
+       <acct-list-fae equation-side="${eva.SIDE_EQUITIES}" ...></acct-list-fae>
+    */
+
+    /*
+    * Position modal content
+    */
+    this.moverDialog = document.getElementById(`moverDialog${this.equationSide}`);
+    let positioningElement = document.getElementById(`moverAnchor-${this.equationSide}`);
+    let moverDialogContent = document.getElementById(`moverDialogContent${this.equationSide}`);
+    moverDialogContent.style.position = "absolute";
+    moverDialogContent.style.top = `${positioningElement.offsetTop}px`;
+    moverDialogContent.style.left = `${positioningElement.offsetLeft}px`;
+  }
 
   /*
    * In the following two mouesenter/mouseleave handlers, the end-of-list
@@ -64,17 +97,70 @@ export class AcctListFae {
     alert('"Row ops menu" not yet implemented.');
   }
 
-  onArrangeRows(event) {
-    alert('"Rearrange list sequence" not yet implemented.');
-  }
-
   onGoAcct(event, listItem) {
     this.eva.selectedBchg = null;
     this.eva.selectedAcct = listItem;
     this.eva.selectedModule = this.eva.MODULE_ACCT;
   }
+
+  onMoverOpen(event) {
+    this.moverList = [];
+    for (let listItem of this.sideAcctList) {
+      if (listItem instanceof Acct) {
+        this.moverList.push(new AcctMover(listItem.id, "Acct", (listItem as Acct).title));
+      }
+      if (listItem instanceof Annotation) {
+        this.moverList.push(new AcctMover(listItem.id, "Annotation", (listItem as Annotation).annoText));
+      }
+    }
+    this.moverDialog.style.display = "block";
+  }
+  onMoverDone(event) {
+    for (let i = 0; i < this.moverList.length; i++) {
+      for (let listItem of this.sideAcctList) {
+        if (listItem.id == this.moverList[i].id) {
+          listItem.intraSideSorter = i;
+          break;
+        }
+      }
+    }
+    this.sideAcctList.refresh();
+    this.moverList = [];
+    this.moverDialog.style.display = "none";
+  }
+  onMoverCancel(event) {
+    this.moverList = [];
+    this.moverDialog.style.display = "none";
+  }
+  onMoverMouseDown(event) {
+    event.target.classList.toggle('aaDragging', true);
+    this.mouseIsDown = true;
+  }
+  onMoverMouseUp(event) {
+    event.target.classList.toggle('aaDragging', false);
+    this.mouseIsDown = false;
+    this.swapListItem = null;
+  }
+  onMoverMouseEnter(event, listItem) {
+    event.target.children[0].classList.toggle('aaRowHover', true);
+    if (this.mouseIsDown && this.swapListItem) {
+      event.target.classList.toggle('aaDragging', true);
+      let saveId = listItem.id;
+      let saveSourceClass = listItem.sourceClass;
+      let saveDisplayText = listItem.displayText;
+      listItem.id = this.swapListItem.id;
+      listItem.sourceClass = this.swapListItem.sourceClass;
+      listItem.displayText = this.swapListItem.displayText;
+      this.swapListItem.id = saveId;
+      this.swapListItem.sourceClass = saveSourceClass;
+      this.swapListItem.displayText = saveDisplayText;
+    }
+  }
+  onMoverMouseLeave(event, listItem) {
+    event.target.children[0].classList.toggle('aaRowHover', false);
+    event.target.classList.toggle('aaDragging', false);
+    if (this.mouseIsDown) {
+      this.swapListItem = listItem;
+    }
+  }
 }
-
-
-
-

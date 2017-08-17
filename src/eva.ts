@@ -150,6 +150,7 @@ export class Eva {
     // return numeral(currency).format('0,0.00');
   }
 
+
   dataSource = "eva.currencyAmount1";
   currencyAmount1: number = 1234.56;
   @bindable currencyAmount2: number = 789.12;

@@ -1,11 +1,16 @@
 <template>
   <require from="../au-views/vertical-gridline.html"></require>
   <require from="../au-views/vertical-gridline-spacer.html"></require>
+  <!--<require from="../au-components/acct-list-fae-mover"></require>-->
+  <!--<acct-list-fae-mover></acct-list-fae-mover>-->
+  <h1 id="moverAnchor-${equationSide}"
+      css="text-align: ${equationSide == eva.SIDE_ASSETS ? 'right' : 'left'};">${equationSide == eva.SIDE_ASSETS ?
+    "Assets" : "Equities"}</h1>
   <div class="aaGridContainer">
     <div class="aaGridTitleBar" style="font-size: larger;">${sideHeading}</div>
-    <div class="aaGridHeader">
+    <div id="gridHeader${equationSide}" class="aaGridHeader">
       <div class="aaFontLabel aaRow">
-        <div class="aaFontLabel aaCellRowOps" click.delegate="onArrangeRows($event)">
+        <div class="aaFontLabel aaCellRowOps" click.delegate="onMoverOpen($event)">
           <span class="aaBtn"><i class="fa fa-arrows-v fa-fw aaIconBlue" aria-hidden="true"></i></span>
         </div>
         <div class="aaCellRowOps ">
@@ -24,7 +29,8 @@
     </div>
     <div class="aaGridScrollableRows">
       <template repeat.for="listItem of sideAcctList">
-        <div id="${listItem.id}" class="aaRow" mouseenter.trigger="onRowEnter($event, listItem)" mouseleave.trigger="onRowLeave($event, listItem)">
+        <div id="${listItem.id}" class="aaRow" mouseenter.trigger="onRowEnter($event, listItem)"
+             mouseleave.trigger="onRowLeave($event, listItem)">
           <template if.bind="listItem.isAcct">
             <div class="aaCellRowOps">
               <span class="aaBtn aaBtnHidden" click.delegate="onMenuClick($event, listItem)">
@@ -37,7 +43,10 @@
               </span>
             </div>
             <vertical-gridline></vertical-gridline>
-            <div class="aaCellText aaCellRowSelectedChar" css="visibility: ${listItem.id == eva.selectedAcct.id ? 'visible' : 'hidden'};">${eva.ROW_SELECTED_CHAR}</div>
+            <div class="aaCellText aaCellRowSelectedChar"
+                 css="visibility: ${listItem.id == eva.selectedAcct.id ? 'visible' : 'hidden'};">
+              ${eva.ROW_SELECTED_CHAR}
+            </div>
             <vertical-gridline></vertical-gridline>
             <div class="aaRowDataCells">
               <span class="aaCellText aaFontSizeData aaCellAcctTitle">${listItem.title}</span>
@@ -59,7 +68,10 @@
               </span>
             </div>
             <vertical-gridline></vertical-gridline>
-            <div class="aaCellText aaCellRowSelectedChar" css="visibility: ${listItem.id == eva.selectedAcct.id ? 'visible' : 'hidden'};">${eva.ROW_SELECTED_CHAR}</div>
+            <div class="aaCellText aaCellRowSelectedChar"
+                 css="visibility: ${listItem.id == eva.selectedAcct.id ? 'visible' : 'hidden'};">
+              ${eva.ROW_SELECTED_CHAR}
+            </div>
             <vertical-gridline></vertical-gridline>
             <div class="aaRowDataCells">
               <span class="aaCellText aaFontSizeData aaCellAnnoTitle">${listItem.annoText}</span>
@@ -77,7 +89,8 @@
           for creating a new account in the list, this end-of-list row provides
           a point to insert a new account at the end of the list.
       -->
-      <div class="aaRow" id="End of equation side ${sideAcctList.equationSide}" mouseenter.trigger="onRowEnter($event, null)" mouseleave.trigger="onRowLeave($event, null)">
+      <div class="aaRow" id="End of equation side ${sideAcctList.equationSide}"
+           mouseenter.trigger="onRowEnter($event, null)" mouseleave.trigger="onRowLeave($event, null)">
         <div class="aaCellRowOps">
           <span class="aaBtn aaBtnHidden" click.delegate="onMenuClick($event, listItem)">
             <i class="fa fa-bars fa-fw" aria-hidden="true"></i>
@@ -93,7 +106,7 @@
         <vertical-gridline></vertical-gridline>
         <div class="aaInlineBlock">
           <span class="aaCellText aaFontData aaCellAcctTitle"><span
-              class="aaSansSerif aaCellTextEOL">${eva.END_OF_LIST}</span></span>
+            class="aaSansSerif aaCellTextEOL">${eva.END_OF_LIST}</span></span>
           <vertical-gridline></vertical-gridline>
           <span class="aaCellText aaFontData aaCellBchgBal"></span>
           <vertical-gridline></vertical-gridline>
@@ -120,11 +133,50 @@
       <div class="aaCellText aaCellRowSelectedChar" style="visibility: hidden;">${eva.ROW_SELECTED_CHAR}</div>
       <vertical-gridline-spacer></vertical-gridline-spacer>
       <span class="aaCellText aaFontData aaCellAcctTitle" style="text-align: right;"><span
-          class="aaSansSerif">Total:</span></span>
+        class="aaSansSerif">Total:</span></span>
       <vertical-gridline-spacer></vertical-gridline-spacer>
       <span class="aaCellText aaFontData aaCellBchgBal">${eva.formattedCurrency(sideAcctList.listTotal)}</span>
       <vertical-gridline-spacer></vertical-gridline-spacer>
     </div>
   </div>
 
+  <div id="moverDialog${equationSide}" class="aaModal">
+    <div id="moverDialogContent${equationSide}" class="aaPanel aaPanelBoxShadow" style="margin: 0;">
+      <div class="aaPanelHeader aaPanelHeaderModule">Mover</div>
+      <div class="aaPanelToolBar">
+        <div style="text-align: center;">
+          <span click.trigger="onMoverDone($event)" class="aaBtn">Done</span>
+          <span click.trigger="onMoverCancel($event)" class="aaBtn" style="margin-left: 4pc;">Cancel</span>
+        </div>
+        <hr>
+        <span
+          style="
+            font-family: sans-serif, SansSerif;
+            font-weight: normal;
+            font-size: small;">xxxx</span>
+      </div>
+
+      <div class="aaPanelBody">
+        <div class="aaGridContainer aaInlineBlock">
+          <div class="aaGridTitleBar" style="font-size: larger;">${sideHeading}</div>
+          <div class="aaGridScrollableRows">
+            <template repeat.for="listItem of moverList">
+              <div class="aaRow"
+                   mousedown.trigger="onMoverMouseDown($event)"
+                   mouseup.trigger="onMoverMouseUp($event)"
+                   mouseenter.trigger="onMoverMouseEnter($event, listItem)"
+                   mouseleave.trigger="onMoverMouseLeave($event, listItem)">
+                <div class="aaRowDataCells">
+                  <span class="aaCellText aaFontSizeData aaCellAcctTitle">${listItem.displayText}</span>
+                  <vertical-gridline></vertical-gridline>
+                </div>
+              </div>
+            </template>
+          </div>
+          <div class="aaGridFooterBar"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  </div>
 </template>
