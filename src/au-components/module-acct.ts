@@ -79,21 +79,21 @@ export class ModuleAcct {
     }
 
     onEdit(event) {
-        if (this.eva.selectedAcct.isAcct) {
+        if (this.eva.selectedAcct.isAcct()) {
             document.getElementById('acctModule-' + this.eva.selectedAcct.id).classList.toggle('aaRowHover', true);
         }
         this.eva.isEditing = true;
     }
 
     onSaveEdits(event) {
-        if (this.eva.selectedAcct.isAcct) {
+        if (this.eva.selectedAcct.isAcct()) {
             document.getElementById('acctModule-' + this.eva.selectedAcct.id).classList.toggle('aaRowHover', false);
         }
         this.eva.isEditing = false;
     }
 
     onCancelEdits(event) {
-        if (this.eva.selectedAcct.isAcct) {
+        if (this.eva.selectedAcct.isAcct()) {
             document.getElementById('acctModule-' + this.eva.selectedAcct.id).classList.toggle('aaRowHover', false);
         }
         this.eva.isEditing = false;

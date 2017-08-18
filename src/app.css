@@ -156,6 +156,7 @@ h1 {
   white-space: nowrap;
   background-color: #ddd;
   text-align: left;
+  border-bottom: 1px solid #999;
 }
 
 .aaPanelBody {
@@ -551,7 +552,7 @@ h1 {
 }
 .aaDragging {
   cursor: n-resize;
-  outline: 1px solid #ccc;
+  /*outline: 1px solid #ccc;*/
   /* -webkit-box-shadow: 0px 0px 3px 3px #ffc107; */
   /* -moz-box-shadow: 0px 0px 3px 3px #ffc107; */
   /* box-shadow: 0px 0px 3px 3px #ffc107; */
@@ -559,4 +560,6 @@ h1 {
   /*-webkit-box-shadow: 0px 0px 2px 2px #58b;*/
   /*-moz-box-shadow: 0px 0px 2px 2px #58b;*/
   /*box-shadow: 0px 0px 2px 2px #58b;*/
+  background-color: #ffffee;
+  box-shadow: 0 0 2px 2px #6D99C5 inset;
 }

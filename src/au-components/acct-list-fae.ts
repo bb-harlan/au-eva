@@ -71,6 +71,7 @@ export class AcctListFae {
    * event.target.children[0] is the menu buttom.
    * event.target.children[1] is the nav buttom.
    */
+
   onRowEnter(event, listItem) {
     if (listItem) {
       event.target.children[0].children[0].style.visibility = 'visible';
@@ -107,10 +108,11 @@ export class AcctListFae {
     this.moverList = [];
     for (let listItem of this.sideAcctList) {
       if (listItem instanceof Acct) {
-        this.moverList.push(new AcctMover(listItem.id, "Acct", (listItem as Acct).title));
+        this.moverList.push(new AcctMover(listItem.id, "Acct", listItem.title, this.eva.formattedCurrency(listItem.bchgList.endingBalance)));
+        console.log(`bchgList.endingBalance: ${listItem.bchgList.endingBalance}; formatted: ${this.eva.formattedCurrency(listItem.bchgList.endingBalance)}`)
       }
       if (listItem instanceof Annotation) {
-        this.moverList.push(new AcctMover(listItem.id, "Annotation", (listItem as Annotation).annoText));
+        this.moverList.push(new AcctMover(listItem.id, "Annotation", listItem.annoText, ""));
       }
     }
     this.moverDialog.style.display = "block";
@@ -125,42 +127,53 @@ export class AcctListFae {
       }
     }
     this.sideAcctList.refresh();
+    this.swapListItem = null;
     this.moverList = [];
     this.moverDialog.style.display = "none";
   }
   onMoverCancel(event) {
+    this.swapListItem = null;
     this.moverList = [];
     this.moverDialog.style.display = "none";
   }
   onMoverMouseDown(event) {
-    event.target.classList.toggle('aaDragging', true);
+    event.currentTarget.classList.toggle('aaRowHover', false);
+    event.currentTarget.classList.toggle('aaDragging', true);
     this.mouseIsDown = true;
   }
   onMoverMouseUp(event) {
-    event.target.classList.toggle('aaDragging', false);
+    event.currentTarget.classList.toggle('aaDragging', false);
+    event.currentTarget.classList.toggle('aaRowHover', true);
     this.mouseIsDown = false;
     this.swapListItem = null;
   }
   onMoverMouseEnter(event, listItem) {
-    event.target.children[0].classList.toggle('aaRowHover', true);
-    if (this.mouseIsDown && this.swapListItem) {
-      event.target.classList.toggle('aaDragging', true);
+    if (this.mouseIsDown) {
+      event.currentTarget.classList.toggle('aaDragging', true);
       let saveId = listItem.id;
       let saveSourceClass = listItem.sourceClass;
       let saveDisplayText = listItem.displayText;
+      let saveEndingBalance = listItem.endingBalance;
       listItem.id = this.swapListItem.id;
       listItem.sourceClass = this.swapListItem.sourceClass;
       listItem.displayText = this.swapListItem.displayText;
+      listItem.endingBalance = this.swapListItem.endingBalance;
       this.swapListItem.id = saveId;
       this.swapListItem.sourceClass = saveSourceClass;
       this.swapListItem.displayText = saveDisplayText;
+      this.swapListItem.endingBalance = saveEndingBalance;
+    }
+    else {
+      event.currentTarget.classList.toggle('aaRowHover', true);
     }
   }
   onMoverMouseLeave(event, listItem) {
-    event.target.children[0].classList.toggle('aaRowHover', false);
-    event.target.classList.toggle('aaDragging', false);
     if (this.mouseIsDown) {
       this.swapListItem = listItem;
+      event.currentTarget.classList.toggle('aaDragging', false);
+    }
+    else {
+      event.currentTarget.classList.toggle('aaRowHover', false);
     }
   }
 }

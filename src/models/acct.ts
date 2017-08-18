@@ -2,9 +2,6 @@ import {AcctBchgList} from '../models/acct-bchg-list';
 //
 export abstract class EquationSideItem {
 
-    isAcct:boolean = false;
-    isAnnotation:boolean = false;
-
     id: string;
     equationSide: string;
     intraSideSorter: number;
@@ -15,6 +12,12 @@ export abstract class EquationSideItem {
         this.intraSideSorter = intraSideSorter;
     }
 
+  isAcct() {
+      return (this instanceof Acct);
+    }
+  isAnnotation() {
+      return (this instanceof Annotation);
+    }
     compareTo(b: EquationSideItem):number {
         return (
             this.equationSide == b.equationSide ?
@@ -31,7 +34,6 @@ export class Annotation extends EquationSideItem {
 
     constructor(id:string, equationSide:string, intraSideSorter:number, annoText:string) {
         super(id, equationSide, intraSideSorter);
-        this.isAnnotation = true;
         this.annoText = annoText;
     }
 }
@@ -44,7 +46,6 @@ export class Acct extends EquationSideItem {
 
     constructor(id:string, equationSide: string, intraSideSorter: number, title: string, normalBalance: number) {
         super(id, equationSide, intraSideSorter);
-        this.isAcct = true;
         this.title = title;
         this.normalBalance = normalBalance;
     }

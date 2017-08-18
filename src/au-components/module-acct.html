@@ -4,7 +4,7 @@
   <require from="../au-views/bchg-selected-row.html"></require>
 -->
   <div class="aaPanel aaPanelBoxShadow">
-    <div class="aaPanelHeader aaPanelHeaderModule">${eva.selectedAcct.isAcct ? 'Account' : 'Annotation'}</div>
+    <div class="aaPanelHeader aaPanelHeaderModule">${eva.selectedAcct.isAcct() ? 'Account' : 'Annotation'}</div>
     <div class="aaPanelToolBar" if.bind="!eva.isEditing">
       <span click.trigger="onGoFae($event)" class="aaBtn">
          <i class="fa fa-chevron-left fa-fw" aria-hidden="true"></i> Assets = Equities
@@ -49,7 +49,7 @@
       </div>
     </div>
     <div class="aaPanelBody">
-      <template if.bind="eva.selectedAcct.isAcct">
+      <template if.bind="eva.selectedAcct.isAcct()">
         <div class="aaForm">
           <table border="0" style="border-collapse: collapse;">
 <!--             <tr>
@@ -144,7 +144,7 @@
           <div class="aaGridFooterBar"></div>
         </div>
       </template>
-      <template if.bind="eva.selectedAcct.isAnnotation">
+      <template if.bind="eva.selectedAcct.isAnnotation()">
         <div class="aaForm">
           <template if.bind="!eva.isEditing">
             <span class="aaSansSerif">Annotation:</span>

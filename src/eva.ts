@@ -141,13 +141,12 @@ export class Eva {
     return this._nextBchgId++;
   }
 
-  formattedCurrency(currencyAmount: number):string {
+  formattedCurrency(currencyAmount: number): string {
     return Intl.NumberFormat("en-US",
       {style: "decimal",
         minimumIntegerDigits: 1,
         minimumFractionDigits: 2,
         maximumFractionDigits: 2}).format(currencyAmount);
-    // return numeral(currency).format('0,0.00');
   }
 
 
@@ -160,15 +159,17 @@ export class Eva {
     /*
      Create some accounts**********************************************************
      */
-    let annotation: Annotation = new Annotation(`anno-${this.nextAcctId}`, this.SIDE_ASSETS, 0, "Current assets (an annotation row)");
+
+    let annotation: Annotation = new Annotation(`anno-${this.nextAcctId}`, this.SIDE_ASSETS, 0, "Current assets (a test annotation row)");
     this.assetList.push(annotation);
+
     let acctId = '';
     for (let intraSideSorter = 15; intraSideSorter > 0; intraSideSorter--) {
       acctId = `A${this.nextAcctId}`;
-      let assetAcct = new Acct(acctId, this.SIDE_ASSETS, intraSideSorter, `<test data account title: equation side ${this.SIDE_ASSETS}, acct #${acctId}>`, 1);
+      let assetAcct = new Acct(acctId, this.SIDE_ASSETS, intraSideSorter, `Test account (equationSide: ${this.SIDE_ASSETS}; acctId: ${acctId};)`, 1);
       this.assetList.push(assetAcct);
       acctId = `A${this.nextAcctId}`;
-      let equityAcct = new Acct(acctId, this.SIDE_EQUITIES, intraSideSorter, `(test data account title, equation side ${this.SIDE_EQUITIES}, acct #${acctId})`, 1);
+      let equityAcct = new Acct(acctId, this.SIDE_EQUITIES, intraSideSorter, `Test account (equationSide: ${this.SIDE_EQUITIES}; acctId: ${acctId};)`, 1);
       this.equityList.push(equityAcct);
     }
     console.log('Created some accounts (order scrambled from normal order)');
