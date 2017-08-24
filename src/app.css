@@ -377,6 +377,7 @@ h1 {
 .aaRowHover {
   /*background-color: #d9e5f2 !important;*/
   /*background-color: #dbe6f0 !important;*/
+  cursor: default;
   background-color: #edf2f7 !important;
 }
 
@@ -552,14 +553,28 @@ h1 {
 }
 .aaDragging {
   cursor: n-resize;
-  /*outline: 1px solid #ccc;*/
-  /* -webkit-box-shadow: 0px 0px 3px 3px #ffc107; */
-  /* -moz-box-shadow: 0px 0px 3px 3px #ffc107; */
-  /* box-shadow: 0px 0px 3px 3px #ffc107; */
-
   /*-webkit-box-shadow: 0px 0px 2px 2px #58b;*/
   /*-moz-box-shadow: 0px 0px 2px 2px #58b;*/
   /*box-shadow: 0px 0px 2px 2px #58b;*/
   background-color: #ffffee;
   box-shadow: 0 0 2px 2px #6D99C5 inset;
+}
+.aaDragFrom {
+  cursor: n-resize;
+  /*-webkit-box-shadow: 0px 0px 2px 2px #58b;*/
+  /*-moz-box-shadow: 0px 0px 2px 2px #58b;*/
+  /*box-shadow: 0px 0px 2px 2px #58b;*/
+  background-color: #ffffee;
+  box-shadow: 0 0 2px 2px #6D99C5 inset;
+}
+.aaDragTo {
+  cursor: n-resize;
+  /*-webkit-box-shadow: 0px 0px 2px 2px #58b;*/
+  /*-moz-box-shadow: 0px 0px 2px 2px #58b;*/
+  /*box-shadow: 0px 0px 2px 2px #58b;*/
+  background-color: #ffffee;
+  box-shadow: 0 0 2px 2px #C56D99 inset;
+}
+.aaPointerEventsNone {
+  pointer-events: none;
 }

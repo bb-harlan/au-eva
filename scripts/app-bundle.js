@@ -425,14 +425,15 @@ define('eva',["require", "exports", 'aurelia-framework', './models/bchg', './mod
         };
         Eva.prototype.generateTestData = function () {
             console.log('Generating test data...');
-            var annotation = new acct_1.Annotation("anno-" + this.nextAcctId, this.SIDE_ASSETS, 0, "Current assets (a test annotation row)");
+            var annoId = "anno" + this.nextAcctId;
+            var annotation = new acct_1.Annotation(annoId, this.SIDE_ASSETS, 0, "Test annotation (equationSide: " + this.SIDE_ASSETS + "; annoId: " + annoId + ";)");
             this.assetList.push(annotation);
             var acctId = '';
             for (var intraSideSorter = 15; intraSideSorter > 0; intraSideSorter--) {
-                acctId = "A" + this.nextAcctId;
+                acctId = "acct" + this.nextAcctId;
                 var assetAcct = new acct_1.Acct(acctId, this.SIDE_ASSETS, intraSideSorter, "Test account (equationSide: " + this.SIDE_ASSETS + "; acctId: " + acctId + ";)", 1);
                 this.assetList.push(assetAcct);
-                acctId = "A" + this.nextAcctId;
+                acctId = "acct" + this.nextAcctId;
                 var equityAcct = new acct_1.Acct(acctId, this.SIDE_EQUITIES, intraSideSorter, "Test account (equationSide: " + this.SIDE_EQUITIES + "; acctId: " + acctId + ";)", 1);
                 this.equityList.push(equityAcct);
             }
@@ -442,17 +443,17 @@ define('eva',["require", "exports", 'aurelia-framework', './models/bchg', './mod
             var bchgId;
             for (var i = 1; i <= 50; ++i) {
                 var tranDate = (i % 2 ? "2016/02/13" : "2016/02/12");
-                var tran = new tran_1.Tran("T" + this.nextTranId, tranDate, this.nextSorter);
+                var tran = new tran_1.Tran("tran" + this.nextTranId, tranDate, this.nextSorter);
                 this.tranList.push(tran);
                 var filteredAssetAcctList = this.assetList.filter(function (listItem) { return listItem instanceof acct_1.Acct; });
                 var filteredEquityAcctList = this.equityList.filter(function (listItem) { return listItem instanceof acct_1.Acct; });
                 var acctList = filteredAssetAcctList.concat(filteredEquityAcctList);
                 var randomAcct0 = acctList[(Math.random() * (acctList.length - 1)).toFixed(0)];
-                var bchg0 = new bchg_1.Bchg("B" + this.nextBchgId, randomAcct0, tran, 0, "<change desc: bchg #B" + this.nextBchgId + "; tran #" + tran.id + "; acct #" + randomAcct0.id + "; >", 0.00);
+                var bchg0 = new bchg_1.Bchg("bchg" + this.nextBchgId, randomAcct0, tran, 0, "<change desc: bchg #B" + this.nextBchgId + "; tran #" + tran.id + "; acct #" + randomAcct0.id + "; >", 0.00);
                 tran.bchgList.push(bchg0);
                 randomAcct0.bchgList.push(bchg0);
                 var randomAcct1 = acctList[(Math.random() * (acctList.length - 1)).toFixed(0)];
-                var bchg1_1 = new bchg_1.Bchg("B" + this.nextBchgId, randomAcct1, tran, 1, "<change desc: bchg #B" + this.nextBchgId + "; tran #" + tran.id + "; acct #" + randomAcct1.id + "; >", Math.round(Math.random() * 1000000) / 100);
+                var bchg1_1 = new bchg_1.Bchg("bchg" + this.nextBchgId, randomAcct1, tran, 1, "<change desc: bchg #B" + this.nextBchgId + "; tran #" + tran.id + "; acct #" + randomAcct1.id + "; >", Math.round(Math.random() * 1000000) / 100);
                 tran.bchgList.push(bchg1_1);
                 randomAcct1.bchgList.push(bchg1_1);
                 tran.refresh();
@@ -539,20 +540,6 @@ define('main',["require", "exports", './environment'], function (require, export
     exports.configure = configure;
 });
 
-define('models/acct-mover',["require", "exports"], function (require, exports) {
-    "use strict";
-    var AcctMover = (function () {
-        function AcctMover(id, sourceClass, displayText, endingBalance) {
-            this.id = id;
-            this.sourceClass = sourceClass;
-            this.displayText = displayText;
-            this.endingBalance = endingBalance;
-        }
-        return AcctMover;
-    }());
-    exports.AcctMover = AcctMover;
-});
-
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -562,13 +549,14 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-define('au-components/acct-list-fae',["require", "exports", 'aurelia-framework', '../eva', '../models/acct-mover', '../models/acct'], function (require, exports, aurelia_framework_1, eva_1, acct_mover_1, acct_1) {
+define('au-components/acct-list-fae',["require", "exports", 'aurelia-framework', '../eva'], function (require, exports, aurelia_framework_1, eva_1) {
     "use strict";
     var AcctListFae = (function () {
         function AcctListFae() {
             this.eva = eva_1.Eva.getInstance();
             this.mouseIsDown = false;
-            this.swapListItem = null;
+            this.sourceRow = null;
+            this.mouseEventCnt = 1;
         }
         AcctListFae.prototype.attached = function () {
             switch (this.equationSide) {
@@ -619,78 +607,201 @@ define('au-components/acct-list-fae',["require", "exports", 'aurelia-framework',
             this.eva.selectedModule = this.eva.MODULE_ACCT;
         };
         AcctListFae.prototype.onMoverOpen = function (event) {
-            this.moverList = [];
-            for (var _i = 0, _a = this.sideAcctList; _i < _a.length; _i++) {
-                var listItem = _a[_i];
-                if (listItem instanceof acct_1.Acct) {
-                    this.moverList.push(new acct_mover_1.AcctMover(listItem.id, "Acct", listItem.title, this.eva.formattedCurrency(listItem.bchgList.endingBalance)));
-                    console.log("bchgList.endingBalance: " + listItem.bchgList.endingBalance + "; formatted: " + this.eva.formattedCurrency(listItem.bchgList.endingBalance));
-                }
-                if (listItem instanceof acct_1.Annotation) {
-                    this.moverList.push(new acct_mover_1.AcctMover(listItem.id, "Annotation", listItem.annoText, ""));
-                }
-            }
             this.moverDialog.style.display = "block";
         };
         AcctListFae.prototype.onMoverDone = function (event) {
-            for (var i = 0; i < this.moverList.length; i++) {
+            var acctMoverRows = document.getElementById(this.equationSide + "-acct-mover-rows");
+            console.log(acctMoverRows);
+            for (var i = 0; i < acctMoverRows.childElementCount; i++) {
+                var moverRowId = acctMoverRows.children[i].children[0].children[0].innerHTML.slice(15);
                 for (var _i = 0, _a = this.sideAcctList; _i < _a.length; _i++) {
                     var listItem = _a[_i];
-                    if (listItem.id == this.moverList[i].id) {
+                    console.log("moverRowId: \"" + moverRowId + "\"; listItem.id: \"" + listItem.id + "\"");
+                    if (listItem.id == moverRowId) {
                         listItem.intraSideSorter = i;
                         break;
                     }
                 }
+                console.log("-------------------------------------------------------");
             }
             this.sideAcctList.refresh();
-            this.swapListItem = null;
-            this.moverList = [];
+            this.sourceRow = null;
             this.moverDialog.style.display = "none";
         };
         AcctListFae.prototype.onMoverCancel = function (event) {
-            this.swapListItem = null;
-            this.moverList = [];
+            this.sourceRow = null;
             this.moverDialog.style.display = "none";
         };
         AcctListFae.prototype.onMoverMouseDown = function (event) {
-            event.currentTarget.classList.toggle('aaRowHover', false);
-            event.currentTarget.classList.toggle('aaDragging', true);
+            var targetRow = event.currentTarget;
+            targetRow.children[0].classList.toggle('aaRowHover', false);
+            targetRow.children[0].classList.toggle('aaDragging', true);
             this.mouseIsDown = true;
         };
         AcctListFae.prototype.onMoverMouseUp = function (event) {
-            event.currentTarget.classList.toggle('aaDragging', false);
-            event.currentTarget.classList.toggle('aaRowHover', true);
+            var targetRow = event.currentTarget;
+            targetRow.children[0].classList.toggle('aaDragging', false);
+            targetRow.children[0].classList.toggle('aaRowHover', true);
             this.mouseIsDown = false;
-            this.swapListItem = null;
-        };
-        AcctListFae.prototype.onMoverMouseEnter = function (event, listItem) {
-            if (this.mouseIsDown) {
-                event.currentTarget.classList.toggle('aaDragging', true);
-                var saveId = listItem.id;
-                var saveSourceClass = listItem.sourceClass;
-                var saveDisplayText = listItem.displayText;
-                var saveEndingBalance = listItem.endingBalance;
-                listItem.id = this.swapListItem.id;
-                listItem.sourceClass = this.swapListItem.sourceClass;
-                listItem.displayText = this.swapListItem.displayText;
-                listItem.endingBalance = this.swapListItem.endingBalance;
-                this.swapListItem.id = saveId;
-                this.swapListItem.sourceClass = saveSourceClass;
-                this.swapListItem.displayText = saveDisplayText;
-                this.swapListItem.endingBalance = saveEndingBalance;
-            }
-            else {
-                event.currentTarget.classList.toggle('aaRowHover', true);
-            }
+            this.sourceRow = null;
         };
         AcctListFae.prototype.onMoverMouseLeave = function (event, listItem) {
+            var targetRow = event.currentTarget;
             if (this.mouseIsDown) {
-                this.swapListItem = listItem;
-                event.currentTarget.classList.toggle('aaDragging', false);
+                targetRow.children[0].classList.toggle('aaDragging', false);
+                this.sourceRow = targetRow;
             }
             else {
-                event.currentTarget.classList.toggle('aaRowHover', false);
+                targetRow.children[0].classList.toggle('aaRowHover', false);
             }
+        };
+        AcctListFae.prototype.onMoverMouseEnter = function (event, listItem) {
+            var targetRow = event.currentTarget;
+            if (this.mouseIsDown) {
+                var targetRowDataCells = targetRow.children[0];
+                var exitedRowDataCells = this.sourceRow.children[0];
+                var currentId = targetRowDataCells.children[0].innerHTML;
+                var currentClass = targetRowDataCells.children[1].innerHTML;
+                var currentTitle = targetRowDataCells.children[2].innerHTML;
+                var currentEndingBalance = targetRowDataCells.children[4].innerHTML;
+                targetRowDataCells.children[0].innerHTML = exitedRowDataCells.children[0].innerHTML;
+                targetRowDataCells.children[1].innerHTML = exitedRowDataCells.children[1].innerHTML;
+                targetRowDataCells.children[2].innerHTML = exitedRowDataCells.children[2].innerHTML;
+                targetRowDataCells.children[4].innerHTML = exitedRowDataCells.children[4].innerHTML;
+                switch (targetRowDataCells.children[1].innerHTML) {
+                    case "Acct":
+                        targetRowDataCells.children[2].classList.toggle('aaCellAnnoTitle', false);
+                        targetRowDataCells.children[2].classList.toggle('aaCellAcctTitle', true);
+                        break;
+                    case "Annotation":
+                        targetRowDataCells.children[2].classList.toggle('aaCellAcctTitle', false);
+                        targetRowDataCells.children[2].classList.toggle('aaCellAnnoTitle', true);
+                        break;
+                }
+                exitedRowDataCells.children[0].innerHTML = currentId;
+                exitedRowDataCells.children[1].innerHTML = currentClass;
+                exitedRowDataCells.children[2].innerHTML = currentTitle;
+                exitedRowDataCells.children[4].innerHTML = currentEndingBalance;
+                switch (exitedRowDataCells.children[1].innerHTML) {
+                    case "Acct":
+                        exitedRowDataCells.children[2].classList.toggle('aaCellAnnoTitle', false);
+                        exitedRowDataCells.children[2].classList.toggle('aaCellAcctTitle', true);
+                        break;
+                    case "Annotation":
+                        exitedRowDataCells.children[2].classList.toggle('aaCellAcctTitle', false);
+                        exitedRowDataCells.children[2].classList.toggle('aaCellAnnoTitle', true);
+                        break;
+                }
+                targetRow.children[0].classList.toggle('aaDragging', true);
+            }
+            else {
+                targetRow.children[0].classList.toggle('aaRowHover', true);
+            }
+        };
+        AcctListFae.prototype.onMoverOpen2 = function (event) {
+            this.moverDialog.style.display = "block";
+        };
+        AcctListFae.prototype.onMoverDone2 = function (event) {
+            var acctMoverRows = document.getElementById(this.equationSide + "-acct-mover-rows");
+            console.log(acctMoverRows);
+            for (var i = 0; i < acctMoverRows.childElementCount; i++) {
+                var moverRowId = acctMoverRows.children[i].children[0].children[0].innerHTML.slice(15);
+                for (var _i = 0, _a = this.sideAcctList; _i < _a.length; _i++) {
+                    var listItem = _a[_i];
+                    console.log("moverRowId: \"" + moverRowId + "\"; listItem.id: \"" + listItem.id + "\"");
+                    if (listItem.id == moverRowId) {
+                        listItem.intraSideSorter = i;
+                        break;
+                    }
+                }
+                console.log("-------------------------------------------------------");
+            }
+            this.sideAcctList.refresh();
+            this.sourceRow = null;
+            this.moverDialog.style.display = "none";
+        };
+        AcctListFae.prototype.onMoverCancel2 = function (event) {
+            this.sourceRow = null;
+            this.moverDialog.style.display = "none";
+        };
+        AcctListFae.prototype.onMoverMouseDown2 = function (event) {
+            var targetRow = event.currentTarget;
+            this.logMouseEvent("mouseDown", this.sourceRow, targetRow);
+            targetRow.children[1].classList.toggle('aaRowHover', false);
+            targetRow.children[1].classList.toggle('aaDragging', true);
+            this.mouseIsDown = true;
+        };
+        AcctListFae.prototype.onMoverMouseUp2 = function (event) {
+            var targetRow = event.currentTarget;
+            this.logMouseEvent("mouseUp", this.sourceRow, targetRow);
+            targetRow.children[1].classList.toggle('aaDragging', false);
+            targetRow.children[1].classList.toggle('aaRowHover', true);
+            this.mouseIsDown = false;
+            this.sourceRow = null;
+        };
+        AcctListFae.prototype.onMoverMouseLeave2 = function (event, listItem) {
+            var targetRow = event.currentTarget;
+            this.logMouseEvent("mouseLeave", this.sourceRow, targetRow);
+            if (this.mouseIsDown) {
+                targetRow.children[1].classList.toggle('aaDragging', false);
+                this.sourceRow = targetRow;
+            }
+            else {
+                targetRow.children[1].classList.toggle('aaRowHover', false);
+            }
+        };
+        AcctListFae.prototype.onMoverMouseEnter2 = function (event, listItem) {
+            var targetRow = event.currentTarget;
+            this.logMouseEvent("mouseEnter", this.sourceRow, targetRow);
+            var parentList = targetRow.parentElement;
+            if (this.mouseIsDown && this.sourceRow) {
+                this.sourceRow.classList.toggle('aaDragging', false);
+                targetRow.children[1].classList.toggle('aaRowHover', false);
+                targetRow.children[1].classList.toggle('aaDragging', true);
+                var compareDocumentPositionResult = targetRow.compareDocumentPosition(this.sourceRow);
+                switch (compareDocumentPositionResult) {
+                    case targetRow.DOCUMENT_POSITION_PRECEDING:
+                        parentList.insertBefore(targetRow, this.sourceRow);
+                        break;
+                    case targetRow.DOCUMENT_POSITION_FOLLOWING:
+                        parentList.insertBefore(this.sourceRow, targetRow);
+                        break;
+                    default:
+                        console.log('logic fault! compareDocumentPositionResult: ${compareDocumentPositionResult}');
+                }
+                while (true) {
+                    var compareDocumentPositionResult2 = targetRow.compareDocumentPosition(this.sourceRow);
+                    console.log("compareDocumentPositionResult: " + compareDocumentPositionResult + "; compareDocumentPositionResult2: " + compareDocumentPositionResult2 + ";");
+                    if (compareDocumentPositionResult2 !== compareDocumentPositionResult) {
+                        break;
+                    }
+                }
+            }
+            else {
+                targetRow.children[1].classList.toggle('aaRowHover', true);
+            }
+        };
+        AcctListFae.prototype.onSwapRows = function (event) {
+            console.log("onSwapRows " + this.mouseEventCnt++);
+            var moverRowList = document.getElementById(this.equationSide + "-acct-mover-rows");
+            moverRowList.insertBefore(moverRowList.children[1], moverRowList.children[0]);
+        };
+        AcctListFae.prototype.onMouseMove = function (event) {
+            var moverRowList = event.currentTarget;
+            var mouseFeedback = document.getElementById(this.equationSide + "-CoorY");
+            mouseFeedback.innerHTML = "mouseY: " + event.clientY + "; moverRowListY: " + this.elementY(moverRowList) + ";";
+            for (var _i = 0, _a = moverRowList.children; _i < _a.length; _i++) {
+                var moverRow = _a[_i];
+                console.log("moverRow.id: " + moverRow.children[0].innerHTML + "; moverRowY: " + this.elementY(moverRow) + ";");
+            }
+            console.log("=================================================");
+        };
+        AcctListFae.prototype.elementY = function (element) {
+            return element.getBoundingClientRect().top;
+        };
+        ;
+        AcctListFae.prototype.logMouseEvent = function (mouseEvent, sourceRow, targetRow) {
+            return;
         };
         __decorate([
             aurelia_framework_1.bindable, 
@@ -745,31 +856,6 @@ define('au-attributes/equation-side',["require", "exports", 'aurelia-framework',
         return EquationSide;
     }());
     exports.EquationSide = EquationSide;
-});
-
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var __metadata = (this && this.__metadata) || function (k, v) {
-    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-};
-define('au-components/acct-list-fae-mover',["require", "exports", 'aurelia-framework', '../au-components/acct-list-fae'], function (require, exports, aurelia_framework_1, acct_list_fae_1) {
-    "use strict";
-    var AcctListFaeMover = (function () {
-        function AcctListFaeMover(acctListFae) {
-            this.acctListFae = acctListFae;
-        }
-        AcctListFaeMover = __decorate([
-            aurelia_framework_1.customElement('acct-list-fae-mover'),
-            aurelia_framework_1.inject(acct_list_fae_1.AcctListFae), 
-            __metadata('design:paramtypes', [acct_list_fae_1.AcctListFae])
-        ], AcctListFaeMover);
-        return AcctListFaeMover;
-    }());
-    exports.AcctListFaeMover = AcctListFaeMover;
 });
 
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -1488,6 +1574,20 @@ define('au-converters/currency-converter',["require", "exports", "aurelia-framew
     exports.CurrencyConverter = CurrencyConverter;
 });
 
+define('models/acct-mover',["require", "exports"], function (require, exports) {
+    "use strict";
+    var AcctMover = (function () {
+        function AcctMover(id, sourceClass, displayText, endingBalance) {
+            this.id = id;
+            this.sourceClass = sourceClass;
+            this.displayText = displayText;
+            this.endingBalance = endingBalance;
+        }
+        return AcctMover;
+    }());
+    exports.AcctMover = AcctMover;
+});
+
 define('resources/index',["require", "exports"], function (require, exports) {
     "use strict";
     function configure(config) {
@@ -1635,10 +1735,9 @@ define('x/jonathan-input-currency',["require", "exports", "aurelia-framework"], 
     exports.InputCurrency = InputCurrency;
 });
 
-define('text!app.html', ['module'], function(module) { module.exports = "<template>\n  <require from=\"./au-components/module-fae\"></require>\n  <require from=\"./au-components/module-acct\"></require>\n  <require from=\"./au-components/module-bchg\"></require>\n  <require from=\"./au-components/module-tran\"></require>\n  <require from=\"./au-components/module-jrnl\"></require>\n  <require from=\"./au-components/acct-list-fae-mover\"></require>\n\n  <a id=\"scrollToSelected\" href=\"#\" style=\"position: absolute; top: -10pc;\">#</a>\n\n  <!-- <acct-list-fae-mover></acct-list-fae-mover> -->\n  <div class=\"aaPanelContainer\" css=\"margin: 0.5pc 0; visibility: ${eva.isEditing ? 'hidden' : 'visible'}\">\n    <div class=\"aaPanel aaPanelBoxShadow\" style=\"font-size: small;\">\n      <div class=\"aaPanelHeader\">Navigation map</div>\n      <div class=\"aaPanelBody\" style=\"padding: 0.5pc;\">\n        <table class=\"aaSansSerif aaInlineBlock\" style=\"color: #333;\">\n          <tr>\n            <td class=\"aaNavCell\">\n              <div class=\"aaNavBtn ${eva.selectedModule == eva.MODULE_FAE ? 'aaNavBtnSelected' : ''}\" click.trigger=\"onFaeModule($event)\">Assets = Equities\n              </div>\n            </td>\n            <td></td>\n            <td></td>\n            <td></td>\n            <td class=\"aaNavCell\">\n              <div class=\"aaNavBtn ${eva.selectedModule == eva.MODULE_JRNL ? 'aaNavBtnSelected' : ''}\" click.trigger=\"onJrnlModule($event)\">Transaction journal\n              </div>\n            </td>\n          </tr>\n          <tr>\n            <td></td>\n            <td class=\"aaNavCell\">\n              <div class=\"aaNavBtnInert ${eva.selectedModule == eva.MODULE_ACCT ? 'aaNavBtnSelected' : ''}\">\n                Account\n              </div>\n            </td>\n            <td>\n              <div style=\"width: 1pc;\"></div>\n            </td>\n            <td class=\"aaNavCell\">\n              <div class=\"aaNavBtnInert ${eva.selectedModule == eva.MODULE_TRAN ? 'aaNavBtnSelected' : ''}\">\n                Transaction\n              </div>\n            </td>\n            <td></td>\n          </tr>\n          <template if.bind=\"eva.showingModuleBchg\">\n            <tr>\n              <td></td>\n              <td></td>\n              <td class=\"aaNavCell\">\n                <div class=\"aaNavBtnInert ${eva.selectedModule == eva.MODULE_BCHG ? 'aaNavBtnSelected' : ''}\">\n                  Account balance change\n                </div>\n              </td>\n              <td></td>\n              <td></td>\n          </template>\n          </tr>\n        </table>\n      </div>\n    </div>\n  </div>\n  <div class=\"aaPanelContainer\">\n    <module-fae if.bind=\"eva.selectedModule == eva.MODULE_FAE\"></module-fae>\n    <module-acct if.bind=\"eva.selectedModule == eva.MODULE_ACCT\"></module-acct>\n    <module-bchg if.bind=\"eva.selectedModule == eva.MODULE_BCHG\"></module-bchg>\n    <module-tran if.bind=\"eva.selectedModule == eva.MODULE_TRAN\"></module-tran>\n    <module-jrnl if.bind=\"eva.selectedModule == eva.MODULE_JRNL\"></module-jrnl>\n  </div>\n</template>\n\n\n<!--\n<template>\n  <h1>${message}</h1>\n  <div class=\"btn-group\">\n    <a class=\"aaBtn dropdown-toggle\" data-toggle=\"dropdown\">\n      <span class=\"fa fa-bars fa-fw\" aria-hidden=\"true\"></span>\n    </a>\n    <ul class=\"dropdown-menu aaSansSerif\">\n      <li><a><i class=\"fa fa-plus-circle fa-fw aaIconGreen\"></i> Insert new account row</a></li>\n      <li><a><i class=\"fa fa-plus-circle fa-fw aaIconGreen\"></i> Insert new annotation row</a></li>\n      <li class=\"divider\"></li>\n      <li><a><i class=\"fa fa-minus-circle fa-fw aaIconRed\"></i> Delete row...</a></li>\n      <li class=\"divider\"></li>\n      <li><a><i class=\"fa fa-arrows-v fa-fw aaIconBlue\"></i> Re-position row...</a>\n      </li>\n    </ul>\n  </div>\n\n</template>\n-->"; });
-define('text!app.css', ['module'], function(module) { module.exports = "body {\n  text-align: center;\n  /*background-color: #fff;*/\n  /* background-color: #ABABAB; */\n  /* background-color: #c0c0c0; */\n  background-color: #d0d0d0;\n  background-color: #fff;\n  font-family: Cambria, serif, Serif;\n  font-weight: bold;\n  font-size: medium;\n  color: #000;\n}\n\nh1, h2, h3 {\n  font-family: sans-serif, SansSerif;\n  font-weight: normal;\n}\n\nh1 {\n  letter-spacing: 2px;\n}\n\n.aaSansSerif {\n  font-family: sans-serif, SansSerif;\n  font-weight: normal;\n}\n\n.aaFontLabel {\n  font-family: sans-serif, SansSerif;\n  font-weight: normal;\n  font-size: small;\n}\n\n.aaFontSizeLabel {\n  font-size: small;\n  background-color: transparent;\n}\n\n.aaFontData {\n  font-family: Cambria, serif, Serif;\n  font-weight: bold;\n  font-size: medium;\n  color: #000;\n}\n\n.aaFontSizeData {\n  font-size: medium;\n}\n\n.aaIconRed {\n  /*color: #D9534F;*/\n  color: #e00;\n}\n\n.aaIconGreen {\n  /*color: #5CB85C;*/\n  color: #0b0;\n}\n\n.aaIconBlue {\n  /*color: #58b;*/\n  color: #00e;\n}\n\n.aaAppToolBar {\n  display: inline-block;\n  margin: 0;\n  padding: 0.25pc 0;\n  border-top: 1px solid #58b;\n  border-bottom: 1px solid #58b;\n  /*background-color: #EBF2F8;*/\n  /*background-color: #58b;*/\n  background-color: #fff;\n  color: rgba(255, 255, 255, 0.9);\n  text-align: center;\n  white-space: nowrap;\n}\n\n.aaNavCell {\n  padding: 2px;\n}\n\n.aaNavBtn {\n  display: inline-block;\n  padding: 2px 4px;\n  border: 1px solid #58b;\n  border-radius: 0.25pc;\n}\n\n.aaNavBtnInert {\n  display: inline-block;\n  padding: 2px 4px;;\n  border: 1px solid #58b;\n  border-radius: 0.25pc;\n  border-style: dotted;\n}\n\n.aaNavBtn:hover {\n  background-color: #edf2f7 !important;\n  cursor: pointer;\n}\n\n.aaNavBtnSelected {\n  border-style: none;\n  -webkit-box-shadow: 0px 0px 2px 2px #6d99c5;\n  -moz-box-shadow: 0px 0px 2px 2px #6d99c5;\n  box-shadow: 0px 0px 2px 2px #6D99C5;\n  background-color: #ffffee;\n}\n\n.aaPanelContainer {\n  margin: 1pc;\n  display: block;\n  text-align: center;\n}\n\n.aaPanel {\n  display: inline-block;\n  border: 1px solid #58b;\n  border-radius: 0.5pc;\n  background-color: #fff;\n  background-clip: border-box;\n  overflow: hidden;\n  font-size: medium;\n}\n\n.aaPanelBoxShadow {\n  -webkit-box-shadow: 4px 8px 5px 0px rgba(0, 0, 0, 0.2);\n  -moz-box-shadow: 4px 8px 5px 0px rgba(0, 0, 0, 0.2);\n  box-shadow: 4px 8px 5px 0px rgba(0, 0, 0, 0.2);\n}\n\n.aaPanelHeader {\n  padding: 0.25pc;\n  /*color: rgba(255, 255, 255, 0.7);*/\n  /*color: #eee;*/\n  color: #fff;\n  /*background-color: #58b;*/\n  background-color: #6d99c5;\n  /* -webkit-box-shadow: inset 0px 5px 10px 0px #7ad; */\n  /* -moz-box-shadow: inset 0px 5px 10px 0px #7ad; */\n  /* box-shadow: inset 0px 5px 10px 0px #7ad; */\n  font-family: sans-serif, SansSerif;\n  /*font-size: medium;*/\n  font-weight: normal;\n  letter-spacing: 1px;\n}\n\n.aaPanelHeaderModule {\n  font-size: 150%;\n  letter-spacing: 2px;\n}\n\n.aaPanelToolBar {\n  padding: 0.25pc 1pc;\n  white-space: nowrap;\n  background-color: #ddd;\n  text-align: left;\n  border-bottom: 1px solid #999;\n}\n\n.aaPanelBody {\n  padding: 1pc;\n  white-space: nowrap;\n  background-color: #fff;\n}\n\n.aaForm {\n  /*margin-top: 1pc;*/\n  text-align: left;\n  font-size: medium;\n}\n\n.aaFormItemLabel {\n  padding: 0.30pc 0 0.20pc 0;\n  text-align: right;\n  /*vertical-align: middle;*/\n  font-family: sans-serif, SansSerif;\n  font-weight: normal;\n  font-size: small;\n}\n\n.aaFormItemData {\n  padding: 0.30pc 0.5pc 0.20pc 0.5pc;\n}\n\n.aaFormInputText {\n  padding: 1px 0.5pc;\n  background-color: #fff;\n}\n\n.aaFormInputText:disabled {\n  /*border-color: transparent;*/\n  border-style: solid;\n  border-color: #ccc;\n}\n\n.aaInlineBlock {\n  display: inline-block;\n}\n\n.aaEquSideContainer {\n  display: inline-block;\n  vertical-align: top;\n}\n\n.aaBtn {\n  display: inline-block;\n  color: #333;\n  /*padding: 0.25pc 0.35pc;*/\n  padding: 2px 0.25pc;\n  margin: 0;\n  text-align: left;\n  white-space: nowrap;\n  vertical-align: top;\n  -webkit-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none;\n  background-image: none;\n  border: 1px solid transparent;\n  border-radius: 0.25pc;\n  background-clip: border-box;\n  background-color: transparent;\n  font-family: sans-serif, SansSerif;\n  font-weight: normal;\n  font-size: small;\n}\n\n.aaBtnHidden {\n  visibility: hidden;\n}\n\n.aaBtn:hover {\n  color: #000;\n  background-color: #eee;\n  border-color: #999;\n  cursor: pointer;\n}\n\n.aaBtn:active {\n  border-color: #000;\n  background-color: #ccc;\n}\n\n.aaToolBarDivider {\n  display: inline-block;\n  color: transparent;\n  padding: 0.25pc 0;\n  margin: 0 1pc;\n  width: 0;\n  text-align: center;\n  white-space: nowrap;\n  vertical-align: middle;\n  -webkit-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none;\n  background-image: none;\n  border-left: 1px solid #999;\n  border-right: 1px solid #bbb;\n  background-color: transparent;\n  font-family: sans-serif, SansSerif;\n  font-weight: normal;\n  font-size: small;\n}\n\n.aaGridContainer {\n  margin-top: 1pc;\n  padding: 0;\n  border: 1px solid #58b;\n  border-radius: 0.25pc;\n  background-clip: border-box;\n  overflow: hidden;\n}\n\n.aaGridTotals {\n  margin-top: 1pc;\n  padding: 0;\n  border: 1px solid transparent;\n  overflow: hidden;\n}\n\n.aaGridTitleBar {\n  padding: 0.25pc;\n  color: #555;\n  background-color: #b6cbe2;\n  border-bottom: 1px solid #999;\n  /* -webkit-box-shadow: inset 0px 5px 10px 0px #eee; */\n  /* -moz-box-shadow: inset 0px 5px 10px 0px #eee; */\n  /* box-shadow: inset 0px 5px 10px 0px #eee; */\n  font-family: sans-serif, SansSerif;\n  font-size: medium;\n  letter-spacing: 1px;\n}\n\n.aaGridBchgSubtitleBar {\n  padding: 0.15pc 0;\n  color: #fff;\n  /*background-color: #aaa;*/\n  /*color: #000;*/\n  background-color: #bbb;\n  text-align: center;\n  font-size: small;\n  font-weight: bold;\n  letter-spacing: 2px;\n  width: 1127px;\n  height: 25px;\n}\n\n.aaGridFooterBar {\n  background-color: #b6cbe2;\n  border-top: 1px solid #999;\n  padding-bottom: 0.5pc;\n  margin: 0;\n  /* -webkit-box-shadow: inset 0px -2px 4px 1px #eee; */\n  /* -moz-box-shadow: inset 0px -2px 4px 1px #eee; */\n  /* box-shadow: inset 0px -2px 4px 1px #fff; */\n  /* box-shadow: inset 0px 5px 10px 0px #eee; */\n}\n\n.aaGridHeader {\n  color: #666;\n  background-color: #ddd;\n  white-space: nowrap;\n  font-weight: normal;\n  /*border-bottom: 2px solid #ccc;*/\n}\n\n.aaGridScrollableRows {\n  margin: 0;\n  padding: 0;\n  height: 25pc;\n  overflow-x: hidden;\n  overflow-y: scroll;\n  white-space: nowrap;\n}\n\n.aaGridFooterTotals {\n  padding-top: 0.5pc;\n  border-top: 3px solid #ccc;\n}\n\n.aaRow {\n  position: relative;\n  margin: 0;\n  text-align: left;\n  white-space: nowrap;\n  font-size: 0;\n  border-bottom: 1px solid #ccc;\n  /*background-color: #ddd;*/\n  background-color: #eee;\n  cursor: default;\n}\n\n.aaRowJrnl {\n  border-bottom: 0.5pc solid #ccc;\n}\n\n.aaSubRow {\n  position: relative;\n  margin: 0;\n  text-align: left;\n  white-space: nowrap;\n  font-size: 0;\n  border-top: 1px solid #ccc;\n}\n\n.aaRowTotals {\n  position: relative;\n  margin: 0;\n  text-align: left;\n  white-space: nowrap;\n  font-size: 0;\n}\n\n.aaRowHover {\n  /*background-color: #d9e5f2 !important;*/\n  /*background-color: #dbe6f0 !important;*/\n  background-color: #edf2f7 !important;\n}\n\n.aaRowBchgTop {\n  margin-top: 0.5pc;\n  border-top: 3px solid #ccc;\n}\n\n.aaRowDataCells {\n  display: inline-block;\n  background-color: #fff;\n}\n\n.aaCellId {\n  display: inline-block;\n  width: 3pc;\n  text-align: left;\n}\n\n.aaCellRowOps {\n  display: inline-block;\n  vertical-align: top;\n  white-space: nowrap;\n  overflow: hidden;\n  font-size: 0;\n  width: 2.5pc;\n  text-align: center;\n}\n\n.aaCellRowSelectedChar {\n  display: inline-block;\n  padding-top: 6px;\n  white-space: nowrap;\n  overflow: hidden;\n  font-family: FontAwesome;\n  font-size: small;\n  color: #09f;\n}\n\n.aaCellRowOpsFiller {\n  display: inline-block;\n  /*padding: 0 0.35pc;*/\n  vertical-align: top;\n  width: 2.5pc;\n  text-align: center;\n}\n\n.aaCellRowSelected {\n  display: inline-block;\n  width: 1.5pc;\n  text-align: center;\n  font-weight: bold;\n}\n\n.aaCellText {\n  display: inline-block;\n  padding: 0.30pc 0.5pc 0.20pc 0.5pc;\n  vertical-align: top;\n  white-space: nowrap;\n  overflow: hidden;\n}\n\n.aaCellTextEOL {\n  color: #666;\n  font-size: small;\n}\n\n.aaCellAcctTitle {\n  display: inline-block;\n  width: 25pc;\n  text-align: left;\n}\n\n.aaCellAnnoTitle {\n  display: inline-block;\n  width: 25pc;\n  text-align: left;\n  font-family: sans-serif, SansSerif;\n  text-decoration: underline;\n}\n\n.aaCellTranDate {\n  display: inline-block;\n  width: 7pc;\n  /*text-align: center;*/\n  text-align: left;\n}\n\n.aaCellBchgDesc {\n  width: 25pc;\n  text-align: left;\n}\n\n.aaCellBchgAmt {\n  width: 8pc;\n  text-align: right;\n}\n\n.aaAutoBalanceItem {\n  color: #000;\n  background-color: #ffc;\n}\n\n.aaCellBchgBal {\n  width: 8pc;\n  text-align: right;\n}\n\n.aaCellEquSide {\n  width: 8pc;\n  text-align: center;\n}\n\n.aaInputText {\n  background-color: inherit;\n  padding: 0.25pc;\n  margin: 0.25pc;\n}\n\n.aaInputText:disabled {\n  border-color: transparent;\n}\n\n.aaHasFocus {\n  outline: 2px solid #58b;\n  outline-radius: 0.25pc;\n}\n\n.aaTranBchgRow2Indent {\n  margin-left: 3pc;\n}\n\n.aaVerticalGridline1 {\n  display: inline-block;\n  position: absolute;\n  top: 0;\n  bottom: 0;\n  width: 1px;\n  background-color: #ccc;\n}\n\n.aaVerticalGridline2 {\n  display: inline-block;\n  width: 1px;\n  visibility: hidden;\n}\n.aaBchgAmtComputed {\n  border-color: transparent;\n  background-color: inherit;\n}\n.aaModal {\n  display: none; /* Hidden by default */\n  position: fixed; /* Stay in place */\n  z-index: 1; /* Sit on top */\n  left: 0;\n  top: 0;\n  width: 100%; /* Full width */\n  height: 100%; /* Full height */\n  overflow: auto; /* Enable scroll if needed */\n  background-color: rgb(0, 0, 0); /* Fallback color */\n  background-color: rgba(0, 0, 0, 0.4); /* Black w/ opacity */\n}\n.aaDragRow {\n  /* margin: 2pc;  */\n  /* padding: 2pc;  */\n  /* border: 1px solid black;  */\n  text-align: left;\n  width: 20pc;\n  margin: 0;\n  padding: 0.25pc 0.5pc;\n  border: 1px solid black;\n  cursor: default;\n}\n.aaDragging {\n  cursor: n-resize;\n  /*outline: 1px solid #ccc;*/\n  /* -webkit-box-shadow: 0px 0px 3px 3px #ffc107; */\n  /* -moz-box-shadow: 0px 0px 3px 3px #ffc107; */\n  /* box-shadow: 0px 0px 3px 3px #ffc107; */\n\n  /*-webkit-box-shadow: 0px 0px 2px 2px #58b;*/\n  /*-moz-box-shadow: 0px 0px 2px 2px #58b;*/\n  /*box-shadow: 0px 0px 2px 2px #58b;*/\n  background-color: #ffffee;\n  box-shadow: 0 0 2px 2px #6D99C5 inset;\n}\n"; });
-define('text!au-components/acct-list-fae-mover.html', ['module'], function(module) { module.exports = "<template>\n  <div id=\"modal-${acctListFae.equationSide}-acct-mover\" class=\"aaModal\">\n    <div class=\"aaGridContainer aaInlineBlock\" style=\"position: absolute; top: 100px; left: 300px;\">\n      <template repeat.for=\"listItem of ['A', 'B', 'C']\">\n        <div class=\"aaRow\">\n          <span class=\"aaCellText aaFontSizeData aaCellAcctTitle \">${listItem}</span></div>\n      </template>\n    </div>\n  </div>\n</template>\n"; });
-define('text!au-components/acct-list-fae.html', ['module'], function(module) { module.exports = "<template>\n  <require from=\"../au-views/vertical-gridline.html\"></require>\n  <require from=\"../au-views/vertical-gridline-spacer.html\"></require>\n  <h1 id=\"moverAnchor-${equationSide}\"\n      css=\"text-align: ${equationSide == eva.SIDE_ASSETS ? 'right' : 'left'};\">${equationSide == eva.SIDE_ASSETS ?\n    \"Assets\" : \"Equities\"}</h1>\n  <div class=\"aaGridContainer\">\n    <div class=\"aaGridTitleBar\" style=\"font-size: larger;\">${sideHeading}</div>\n    <div class=\"aaPanelToolBar\">\n      <span click.trigger=\"onMoverOpen($event)\" class=\"aaBtn\">\n         <i class=\"fa fa-arrows-v fa-fw aaIconBlue\" aria-hidden=\"true\"></i> Move rows\n      </span>\n    </div>\n    <div id=\"gridHeader${equationSide}\" class=\"aaGridHeader\">\n      <div class=\"aaFontLabel aaRow\">\n        <div class=\"aaFontLabel aaCellRowOps\" click.delegate=\"onMoverOpen($event)\">\n          <!--<span class=\"aaBtn\"><i class=\"fa fa-arrows-v fa-fw aaIconBlue\" aria-hidden=\"true\"></i></span>-->\n        </div>\n        <div class=\"aaCellRowOps \">\n          <span class=\"aaBtn aaBtnHidden\">\n                      <i class=\"fa fa-chevron-right fa-fw\" aria-hidden=\"true\"></i>\n          </span>\n        </div>\n        <vertical-gridline></vertical-gridline>\n        <div class=\"aaCellText aaCellRowSelectedChar\" style=\"visibility: hidden;\">${eva.ROW_SELECTED_CHAR}</div>\n        <vertical-gridline></vertical-gridline>\n        <div class=\"aaCellText aaFontSizeLabel aaCellAcctTitle\"><span class=\" aaSansSerif\">Title</span></div>\n        <vertical-gridline></vertical-gridline>\n        <div class=\"aaCellText aaFontSizeLabel aaCellBchgBal\"><span class=\" aaSansSerif\">Balance</span></div>\n        <vertical-gridline></vertical-gridline>\n      </div>\n    </div>\n    <div class=\"aaGridScrollableRows\">\n      <template repeat.for=\"listItem of sideAcctList\">\n        <div id=\"${listItem.id}\" class=\"aaRow\" mouseenter.trigger=\"onRowEnter($event, listItem)\"\n             mouseleave.trigger=\"onRowLeave($event, listItem)\">\n          <template if.bind=\"listItem.isAcct()\">\n          <!--<template if.bind=\"listItem.isAcct()\">-->\n            <div class=\"aaCellRowOps\">\n              <span class=\"aaBtn aaBtnHidden\" click.delegate=\"onMenuClick($event, listItem)\">\n                <i class=\"fa fa-bars fa-fw\" aria-hidden=\"true\"></i>\n              </span>\n            </div>\n            <div class=\"aaCellRowOps\">\n              <span class=\"aaBtn aaBtnHidden\" click.delegate=\"onGoAcct($event, listItem)\">\n                <i class=\"fa fa-chevron-right fa-fw\" aria-hidden=\"true\"></i>\n              </span>\n            </div>\n            <vertical-gridline></vertical-gridline>\n            <div class=\"aaCellText aaCellRowSelectedChar\"\n                 css=\"visibility: ${listItem.id == eva.selectedAcct.id ? 'visible' : 'hidden'};\">\n              ${eva.ROW_SELECTED_CHAR}\n            </div>\n            <vertical-gridline></vertical-gridline>\n            <div class=\"aaRowDataCells\">\n              <span class=\"aaCellText aaFontSizeData aaCellAcctTitle\">${listItem.title}</span>\n              <vertical-gridline></vertical-gridline>\n              <span class=\"aaCellText aaFontSizeData aaCellBchgBal\">${eva.formattedCurrency(listItem.bchgList.endingBalance)}</span>\n              <vertical-gridline></vertical-gridline>\n            </div>\n          </template>\n          <template if.bind=\"listItem.isAnnotation()\">\n            <div class=\"aaCellRowOps\">\n              <span class=\"aaBtn aaBtnHidden\" click.delegate=\"onMenuClick($event, listItem)\">\n                    <i class=\"fa fa-bars fa-fw\" aria-hidden=\"true\"></i>\n                </span>\n            </div>\n            <div class=\"aaCellRowOps\">\n              <span class=\"aaBtn aaBtnHidden\" click.delegate=\"onGoAcct($event, listItem)\">\n                <i class=\"fa fa-chevron-right fa-fw\" aria-hidden=\"true\"></i>\n              </span>\n            </div>\n            <vertical-gridline></vertical-gridline>\n            <div class=\"aaCellText aaCellRowSelectedChar\"\n                 css=\"visibility: ${listItem.id == eva.selectedAcct.id ? 'visible' : 'hidden'};\">\n              ${eva.ROW_SELECTED_CHAR}\n            </div>\n            <vertical-gridline></vertical-gridline>\n            <div class=\"aaRowDataCells\">\n              <span class=\"aaCellText aaFontSizeData aaCellAnnoTitle\">${listItem.annoText}</span>\n              <vertical-gridline></vertical-gridline>\n              <span class=\"aaCellText aaFontSizeData aaCellBchgBal\"></span>\n              <vertical-gridline></vertical-gridline>\n            </div>\n          </template>\n        </div>\n      </template>\n\n      <!--\n          Following is the coding for an end-of-list row that is not associated\n          with any account. Since \"insertion\" is the facility provided to a user\n          for creating a new account in the list, this end-of-list row provides\n          a point to insert a new account at the end of the list.\n      -->\n      <div class=\"aaRow\" id=\"End of equation side ${sideAcctList.equationSide}\"\n           mouseenter.trigger=\"onRowEnter($event, null)\" mouseleave.trigger=\"onRowLeave($event, null)\">\n        <div class=\"aaCellRowOps\">\n          <span class=\"aaBtn aaBtnHidden\" click.delegate=\"onMenuClick($event, listItem)\">\n            <i class=\"fa fa-bars fa-fw\" aria-hidden=\"true\"></i>\n          </span>\n        </div>\n        <div class=\"aaCellRowOps\">\n          <span class=\"aaBtn aaBtnHidden\">\n            <i class=\"fa fa-chevron-right fa-fw\" aria-hidden=\"true\"></i>\n          </span>\n        </div>\n        <vertical-gridline></vertical-gridline>\n        <div class=\"aaCellText aaCellRowSelectedChar\" style=\"visibility: hidden;\">${eva.ROW_SELECTED_CHAR}</div>\n        <vertical-gridline></vertical-gridline>\n        <div class=\"aaInlineBlock\">\n          <span class=\"aaCellText aaFontData aaCellAcctTitle\"><span\n            class=\"aaSansSerif aaCellTextEOL\">${eva.END_OF_LIST}</span></span>\n          <vertical-gridline></vertical-gridline>\n          <span class=\"aaCellText aaFontData aaCellBchgBal\"></span>\n          <vertical-gridline></vertical-gridline>\n        </div>\n      </div>\n    </div>\n    <div class=\"aaGridFooterBar\"></div>\n    <!--\n    Following is the coding for a row that shows the total of\n    all account balances. It is code with invisible menu and nav buttons\n    as horizontal space holders to result in proper horizontal positioning\n    of the \"Total\" label amd the total amt.\n    -->\n  </div>\n  <div class=\"aaGridTotals\">\n    <div class=\"aaRowTotals\">\n      <div class=\"aaCellRowOps\">\n        <span class=\"aaBtn aaBtnHidden\"><i class=\"fa fa-bars fa-fw\" aria-hidden=\"true\"></i></span>\n      </div>\n      <div class=\"aaCellRowOps\">\n        <span class=\"aaBtn aaBtnHidden\"><i class=\"fa fa-chevron-right fa-fw\" aria-hidden=\"true\"></i></span>\n      </div>\n      <vertical-gridline-spacer></vertical-gridline-spacer>\n      <div class=\"aaCellText aaCellRowSelectedChar\" style=\"visibility: hidden;\">${eva.ROW_SELECTED_CHAR}</div>\n      <vertical-gridline-spacer></vertical-gridline-spacer>\n      <span class=\"aaCellText aaFontData aaCellAcctTitle\" style=\"text-align: right;\"><span\n        class=\"aaSansSerif\">Total:</span></span>\n      <vertical-gridline-spacer></vertical-gridline-spacer>\n      <span class=\"aaCellText aaFontData aaCellBchgBal\">${eva.formattedCurrency(sideAcctList.listTotal)}</span>\n      <vertical-gridline-spacer></vertical-gridline-spacer>\n    </div>\n  </div>\n\n  <div id=\"moverDialog${equationSide}\" class=\"aaModal\">\n    <div id=\"moverDialogContent${equationSide}\" class=\"aaPanel aaPanelBoxShadow\" style=\"margin: 0;\">\n      <div class=\"aaPanelHeader aaPanelHeaderModule\">Row mover</div>\n      <div class=\"aaPanelToolBar\">\n        <div style=\"text-align: center;\">\n          <span click.trigger=\"onMoverDone($event)\" class=\"aaBtn\">Done</span>\n          <span click.trigger=\"onMoverCancel($event)\" class=\"aaBtn\" style=\"margin-left: 4pc;\">Cancel</span>\n        </div>\n      </div>\n\n      <div class=\"aaPanelBody\">\n        <div class=\"aaGridContainer aaInlineBlock\">\n          <div class=\"aaGridTitleBar\" style=\"font-size: larger;\">${sideHeading}</div>\n          <div class=\"aaPanelToolBar\">\n            <div style=\"text-align: center;\">\n              <span class=\"aaFontLabel\">Drag any row to desired list position.</span>\n            </div>\n          </div>\n          <div class=\"aaGridScrollableRows\">\n            <template repeat.for=\"listItem of moverList\">\n              <div class=\"aaRow\">\n                <div class=\"aaRowDataCells\"\n                     mouseenter.trigger=\"onMoverMouseEnter($event, listItem)\"\n                     mouseleave.trigger=\"onMoverMouseLeave($event, listItem)\"\n                     mousedown.trigger=\"onMoverMouseDown($event)\"\n                     mouseup.trigger=\"onMoverMouseUp($event)\">\n                  <template if.bind=\"listItem.sourceClass=='Acct'\">\n                    <span class=\"aaCellText aaFontSizeData aaCellAcctTitle\">${listItem.displayText}</span>\n                    <vertical-gridline></vertical-gridline>\n                    <span class=\"aaCellText aaFontSizeData aaCellBchgBal\">${listItem.endingBalance}</span>\n                    <!--<vertical-gridline></vertical-gridline>-->\n                  </template>\n                  <template if.bind=\"listItem.sourceClass=='Annotation'\">\n                    <span class=\"aaCellText aaFontSizeData aaCellAnnoTitle\">${listItem.displayText}</span>\n                    <vertical-gridline></vertical-gridline>\n                    <span class=\"aaCellText aaFontSizeData aaCellBchgBal\"></span>\n                  </template>\n                  <vertical-gridline></vertical-gridline>\n                </div>\n              </div>\n            </template>\n          </div>\n          <div class=\"aaGridFooterBar\"></div>\n        </div>\n      </div>\n    </div>\n  </div>\n  </div>\n</template>\n"; });
+define('text!app.css', ['module'], function(module) { module.exports = "body {\n  text-align: center;\n  /*background-color: #fff;*/\n  /* background-color: #ABABAB; */\n  /* background-color: #c0c0c0; */\n  background-color: #d0d0d0;\n  background-color: #fff;\n  font-family: Cambria, serif, Serif;\n  font-weight: bold;\n  font-size: medium;\n  color: #000;\n}\n\nh1, h2, h3 {\n  font-family: sans-serif, SansSerif;\n  font-weight: normal;\n}\n\nh1 {\n  letter-spacing: 2px;\n}\n\n.aaSansSerif {\n  font-family: sans-serif, SansSerif;\n  font-weight: normal;\n}\n\n.aaFontLabel {\n  font-family: sans-serif, SansSerif;\n  font-weight: normal;\n  font-size: small;\n}\n\n.aaFontSizeLabel {\n  font-size: small;\n  background-color: transparent;\n}\n\n.aaFontData {\n  font-family: Cambria, serif, Serif;\n  font-weight: bold;\n  font-size: medium;\n  color: #000;\n}\n\n.aaFontSizeData {\n  font-size: medium;\n}\n\n.aaIconRed {\n  /*color: #D9534F;*/\n  color: #e00;\n}\n\n.aaIconGreen {\n  /*color: #5CB85C;*/\n  color: #0b0;\n}\n\n.aaIconBlue {\n  /*color: #58b;*/\n  color: #00e;\n}\n\n.aaAppToolBar {\n  display: inline-block;\n  margin: 0;\n  padding: 0.25pc 0;\n  border-top: 1px solid #58b;\n  border-bottom: 1px solid #58b;\n  /*background-color: #EBF2F8;*/\n  /*background-color: #58b;*/\n  background-color: #fff;\n  color: rgba(255, 255, 255, 0.9);\n  text-align: center;\n  white-space: nowrap;\n}\n\n.aaNavCell {\n  padding: 2px;\n}\n\n.aaNavBtn {\n  display: inline-block;\n  padding: 2px 4px;\n  border: 1px solid #58b;\n  border-radius: 0.25pc;\n}\n\n.aaNavBtnInert {\n  display: inline-block;\n  padding: 2px 4px;;\n  border: 1px solid #58b;\n  border-radius: 0.25pc;\n  border-style: dotted;\n}\n\n.aaNavBtn:hover {\n  background-color: #edf2f7 !important;\n  cursor: pointer;\n}\n\n.aaNavBtnSelected {\n  border-style: none;\n  -webkit-box-shadow: 0px 0px 2px 2px #6d99c5;\n  -moz-box-shadow: 0px 0px 2px 2px #6d99c5;\n  box-shadow: 0px 0px 2px 2px #6D99C5;\n  background-color: #ffffee;\n}\n\n.aaPanelContainer {\n  margin: 1pc;\n  display: block;\n  text-align: center;\n}\n\n.aaPanel {\n  display: inline-block;\n  border: 1px solid #58b;\n  border-radius: 0.5pc;\n  background-color: #fff;\n  background-clip: border-box;\n  overflow: hidden;\n  font-size: medium;\n}\n\n.aaPanelBoxShadow {\n  -webkit-box-shadow: 4px 8px 5px 0px rgba(0, 0, 0, 0.2);\n  -moz-box-shadow: 4px 8px 5px 0px rgba(0, 0, 0, 0.2);\n  box-shadow: 4px 8px 5px 0px rgba(0, 0, 0, 0.2);\n}\n\n.aaPanelHeader {\n  padding: 0.25pc;\n  /*color: rgba(255, 255, 255, 0.7);*/\n  /*color: #eee;*/\n  color: #fff;\n  /*background-color: #58b;*/\n  background-color: #6d99c5;\n  /* -webkit-box-shadow: inset 0px 5px 10px 0px #7ad; */\n  /* -moz-box-shadow: inset 0px 5px 10px 0px #7ad; */\n  /* box-shadow: inset 0px 5px 10px 0px #7ad; */\n  font-family: sans-serif, SansSerif;\n  /*font-size: medium;*/\n  font-weight: normal;\n  letter-spacing: 1px;\n}\n\n.aaPanelHeaderModule {\n  font-size: 150%;\n  letter-spacing: 2px;\n}\n\n.aaPanelToolBar {\n  padding: 0.25pc 1pc;\n  white-space: nowrap;\n  background-color: #ddd;\n  text-align: left;\n  border-bottom: 1px solid #999;\n}\n\n.aaPanelBody {\n  padding: 1pc;\n  white-space: nowrap;\n  background-color: #fff;\n}\n\n.aaForm {\n  /*margin-top: 1pc;*/\n  text-align: left;\n  font-size: medium;\n}\n\n.aaFormItemLabel {\n  padding: 0.30pc 0 0.20pc 0;\n  text-align: right;\n  /*vertical-align: middle;*/\n  font-family: sans-serif, SansSerif;\n  font-weight: normal;\n  font-size: small;\n}\n\n.aaFormItemData {\n  padding: 0.30pc 0.5pc 0.20pc 0.5pc;\n}\n\n.aaFormInputText {\n  padding: 1px 0.5pc;\n  background-color: #fff;\n}\n\n.aaFormInputText:disabled {\n  /*border-color: transparent;*/\n  border-style: solid;\n  border-color: #ccc;\n}\n\n.aaInlineBlock {\n  display: inline-block;\n}\n\n.aaEquSideContainer {\n  display: inline-block;\n  vertical-align: top;\n}\n\n.aaBtn {\n  display: inline-block;\n  color: #333;\n  /*padding: 0.25pc 0.35pc;*/\n  padding: 2px 0.25pc;\n  margin: 0;\n  text-align: left;\n  white-space: nowrap;\n  vertical-align: top;\n  -webkit-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none;\n  background-image: none;\n  border: 1px solid transparent;\n  border-radius: 0.25pc;\n  background-clip: border-box;\n  background-color: transparent;\n  font-family: sans-serif, SansSerif;\n  font-weight: normal;\n  font-size: small;\n}\n\n.aaBtnHidden {\n  visibility: hidden;\n}\n\n.aaBtn:hover {\n  color: #000;\n  background-color: #eee;\n  border-color: #999;\n  cursor: pointer;\n}\n\n.aaBtn:active {\n  border-color: #000;\n  background-color: #ccc;\n}\n\n.aaToolBarDivider {\n  display: inline-block;\n  color: transparent;\n  padding: 0.25pc 0;\n  margin: 0 1pc;\n  width: 0;\n  text-align: center;\n  white-space: nowrap;\n  vertical-align: middle;\n  -webkit-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none;\n  background-image: none;\n  border-left: 1px solid #999;\n  border-right: 1px solid #bbb;\n  background-color: transparent;\n  font-family: sans-serif, SansSerif;\n  font-weight: normal;\n  font-size: small;\n}\n\n.aaGridContainer {\n  margin-top: 1pc;\n  padding: 0;\n  border: 1px solid #58b;\n  border-radius: 0.25pc;\n  background-clip: border-box;\n  overflow: hidden;\n}\n\n.aaGridTotals {\n  margin-top: 1pc;\n  padding: 0;\n  border: 1px solid transparent;\n  overflow: hidden;\n}\n\n.aaGridTitleBar {\n  padding: 0.25pc;\n  color: #555;\n  background-color: #b6cbe2;\n  border-bottom: 1px solid #999;\n  /* -webkit-box-shadow: inset 0px 5px 10px 0px #eee; */\n  /* -moz-box-shadow: inset 0px 5px 10px 0px #eee; */\n  /* box-shadow: inset 0px 5px 10px 0px #eee; */\n  font-family: sans-serif, SansSerif;\n  font-size: medium;\n  letter-spacing: 1px;\n}\n\n.aaGridBchgSubtitleBar {\n  padding: 0.15pc 0;\n  color: #fff;\n  /*background-color: #aaa;*/\n  /*color: #000;*/\n  background-color: #bbb;\n  text-align: center;\n  font-size: small;\n  font-weight: bold;\n  letter-spacing: 2px;\n  width: 1127px;\n  height: 25px;\n}\n\n.aaGridFooterBar {\n  background-color: #b6cbe2;\n  border-top: 1px solid #999;\n  padding-bottom: 0.5pc;\n  margin: 0;\n  /* -webkit-box-shadow: inset 0px -2px 4px 1px #eee; */\n  /* -moz-box-shadow: inset 0px -2px 4px 1px #eee; */\n  /* box-shadow: inset 0px -2px 4px 1px #fff; */\n  /* box-shadow: inset 0px 5px 10px 0px #eee; */\n}\n\n.aaGridHeader {\n  color: #666;\n  background-color: #ddd;\n  white-space: nowrap;\n  font-weight: normal;\n  /*border-bottom: 2px solid #ccc;*/\n}\n\n.aaGridScrollableRows {\n  margin: 0;\n  padding: 0;\n  height: 25pc;\n  overflow-x: hidden;\n  overflow-y: scroll;\n  white-space: nowrap;\n}\n\n.aaGridFooterTotals {\n  padding-top: 0.5pc;\n  border-top: 3px solid #ccc;\n}\n\n.aaRow {\n  position: relative;\n  margin: 0;\n  text-align: left;\n  white-space: nowrap;\n  font-size: 0;\n  border-bottom: 1px solid #ccc;\n  /*background-color: #ddd;*/\n  background-color: #eee;\n  cursor: default;\n}\n\n.aaRowJrnl {\n  border-bottom: 0.5pc solid #ccc;\n}\n\n.aaSubRow {\n  position: relative;\n  margin: 0;\n  text-align: left;\n  white-space: nowrap;\n  font-size: 0;\n  border-top: 1px solid #ccc;\n}\n\n.aaRowTotals {\n  position: relative;\n  margin: 0;\n  text-align: left;\n  white-space: nowrap;\n  font-size: 0;\n}\n\n.aaRowHover {\n  /*background-color: #d9e5f2 !important;*/\n  /*background-color: #dbe6f0 !important;*/\n  cursor: default;\n  background-color: #edf2f7 !important;\n}\n\n.aaRowBchgTop {\n  margin-top: 0.5pc;\n  border-top: 3px solid #ccc;\n}\n\n.aaRowDataCells {\n  display: inline-block;\n  background-color: #fff;\n}\n\n.aaCellId {\n  display: inline-block;\n  width: 3pc;\n  text-align: left;\n}\n\n.aaCellRowOps {\n  display: inline-block;\n  vertical-align: top;\n  white-space: nowrap;\n  overflow: hidden;\n  font-size: 0;\n  width: 2.5pc;\n  text-align: center;\n}\n\n.aaCellRowSelectedChar {\n  display: inline-block;\n  padding-top: 6px;\n  white-space: nowrap;\n  overflow: hidden;\n  font-family: FontAwesome;\n  font-size: small;\n  color: #09f;\n}\n\n.aaCellRowOpsFiller {\n  display: inline-block;\n  /*padding: 0 0.35pc;*/\n  vertical-align: top;\n  width: 2.5pc;\n  text-align: center;\n}\n\n.aaCellRowSelected {\n  display: inline-block;\n  width: 1.5pc;\n  text-align: center;\n  font-weight: bold;\n}\n\n.aaCellText {\n  display: inline-block;\n  padding: 0.30pc 0.5pc 0.20pc 0.5pc;\n  vertical-align: top;\n  white-space: nowrap;\n  overflow: hidden;\n}\n\n.aaCellTextEOL {\n  color: #666;\n  font-size: small;\n}\n\n.aaCellAcctTitle {\n  display: inline-block;\n  width: 25pc;\n  text-align: left;\n}\n\n.aaCellAnnoTitle {\n  display: inline-block;\n  width: 25pc;\n  text-align: left;\n  font-family: sans-serif, SansSerif;\n  text-decoration: underline;\n}\n\n.aaCellTranDate {\n  display: inline-block;\n  width: 7pc;\n  /*text-align: center;*/\n  text-align: left;\n}\n\n.aaCellBchgDesc {\n  width: 25pc;\n  text-align: left;\n}\n\n.aaCellBchgAmt {\n  width: 8pc;\n  text-align: right;\n}\n\n.aaAutoBalanceItem {\n  color: #000;\n  background-color: #ffc;\n}\n\n.aaCellBchgBal {\n  width: 8pc;\n  text-align: right;\n}\n\n.aaCellEquSide {\n  width: 8pc;\n  text-align: center;\n}\n\n.aaInputText {\n  background-color: inherit;\n  padding: 0.25pc;\n  margin: 0.25pc;\n}\n\n.aaInputText:disabled {\n  border-color: transparent;\n}\n\n.aaHasFocus {\n  outline: 2px solid #58b;\n  outline-radius: 0.25pc;\n}\n\n.aaTranBchgRow2Indent {\n  margin-left: 3pc;\n}\n\n.aaVerticalGridline1 {\n  display: inline-block;\n  position: absolute;\n  top: 0;\n  bottom: 0;\n  width: 1px;\n  background-color: #ccc;\n}\n\n.aaVerticalGridline2 {\n  display: inline-block;\n  width: 1px;\n  visibility: hidden;\n}\n.aaBchgAmtComputed {\n  border-color: transparent;\n  background-color: inherit;\n}\n.aaModal {\n  display: none; /* Hidden by default */\n  position: fixed; /* Stay in place */\n  z-index: 1; /* Sit on top */\n  left: 0;\n  top: 0;\n  width: 100%; /* Full width */\n  height: 100%; /* Full height */\n  overflow: auto; /* Enable scroll if needed */\n  background-color: rgb(0, 0, 0); /* Fallback color */\n  background-color: rgba(0, 0, 0, 0.4); /* Black w/ opacity */\n}\n.aaDragRow {\n  /* margin: 2pc;  */\n  /* padding: 2pc;  */\n  /* border: 1px solid black;  */\n  text-align: left;\n  width: 20pc;\n  margin: 0;\n  padding: 0.25pc 0.5pc;\n  border: 1px solid black;\n  cursor: default;\n}\n.aaDragging {\n  cursor: n-resize;\n  /*-webkit-box-shadow: 0px 0px 2px 2px #58b;*/\n  /*-moz-box-shadow: 0px 0px 2px 2px #58b;*/\n  /*box-shadow: 0px 0px 2px 2px #58b;*/\n  background-color: #ffffee;\n  box-shadow: 0 0 2px 2px #6D99C5 inset;\n}\n.aaDragFrom {\n  cursor: n-resize;\n  /*-webkit-box-shadow: 0px 0px 2px 2px #58b;*/\n  /*-moz-box-shadow: 0px 0px 2px 2px #58b;*/\n  /*box-shadow: 0px 0px 2px 2px #58b;*/\n  background-color: #ffffee;\n  box-shadow: 0 0 2px 2px #6D99C5 inset;\n}\n.aaDragTo {\n  cursor: n-resize;\n  /*-webkit-box-shadow: 0px 0px 2px 2px #58b;*/\n  /*-moz-box-shadow: 0px 0px 2px 2px #58b;*/\n  /*box-shadow: 0px 0px 2px 2px #58b;*/\n  background-color: #ffffee;\n  box-shadow: 0 0 2px 2px #C56D99 inset;\n}\n.aaPointerEventsNone {\n  pointer-events: none;\n}\n"; });
+define('text!app.html', ['module'], function(module) { module.exports = "<template>\n  <require from=\"./au-components/module-fae\"></require>\n  <require from=\"./au-components/module-acct\"></require>\n  <require from=\"./au-components/module-bchg\"></require>\n  <require from=\"./au-components/module-tran\"></require>\n  <require from=\"./au-components/module-jrnl\"></require>\n\n  <a id=\"scrollToSelected\" href=\"#\" style=\"position: absolute; top: -10pc;\">#</a>\n\n  <div class=\"aaPanelContainer\" css=\"margin: 0.5pc 0; visibility: ${eva.isEditing ? 'hidden' : 'visible'}\">\n    <div class=\"aaPanel aaPanelBoxShadow\" style=\"font-size: small;\">\n      <div class=\"aaPanelHeader\">Navigation map</div>\n      <div class=\"aaPanelBody\" style=\"padding: 0.5pc;\">\n        <table class=\"aaSansSerif aaInlineBlock\" style=\"color: #333;\">\n          <tr>\n            <td class=\"aaNavCell\">\n              <div class=\"aaNavBtn ${eva.selectedModule == eva.MODULE_FAE ? 'aaNavBtnSelected' : ''}\" click.trigger=\"onFaeModule($event)\">Assets = Equities\n              </div>\n            </td>\n            <td></td>\n            <td></td>\n            <td></td>\n            <td class=\"aaNavCell\">\n              <div class=\"aaNavBtn ${eva.selectedModule == eva.MODULE_JRNL ? 'aaNavBtnSelected' : ''}\" click.trigger=\"onJrnlModule($event)\">Transaction journal\n              </div>\n            </td>\n          </tr>\n          <tr>\n            <td></td>\n            <td class=\"aaNavCell\">\n              <div class=\"aaNavBtnInert ${eva.selectedModule == eva.MODULE_ACCT ? 'aaNavBtnSelected' : ''}\">\n                Account\n              </div>\n            </td>\n            <td>\n              <div style=\"width: 1pc;\"></div>\n            </td>\n            <td class=\"aaNavCell\">\n              <div class=\"aaNavBtnInert ${eva.selectedModule == eva.MODULE_TRAN ? 'aaNavBtnSelected' : ''}\">\n                Transaction\n              </div>\n            </td>\n            <td></td>\n          </tr>\n          <template if.bind=\"eva.showingModuleBchg\">\n            <tr>\n              <td></td>\n              <td></td>\n              <td class=\"aaNavCell\">\n                <div class=\"aaNavBtnInert ${eva.selectedModule == eva.MODULE_BCHG ? 'aaNavBtnSelected' : ''}\">\n                  Account balance change\n                </div>\n              </td>\n              <td></td>\n              <td></td>\n          </template>\n          </tr>\n        </table>\n      </div>\n    </div>\n  </div>\n  <div class=\"aaPanelContainer\">\n    <module-fae if.bind=\"eva.selectedModule == eva.MODULE_FAE\"></module-fae>\n    <module-acct if.bind=\"eva.selectedModule == eva.MODULE_ACCT\"></module-acct>\n    <module-bchg if.bind=\"eva.selectedModule == eva.MODULE_BCHG\"></module-bchg>\n    <module-tran if.bind=\"eva.selectedModule == eva.MODULE_TRAN\"></module-tran>\n    <module-jrnl if.bind=\"eva.selectedModule == eva.MODULE_JRNL\"></module-jrnl>\n  </div>\n</template>\n\n\n<!--\n<template>\n  <h1>${message}</h1>\n  <div class=\"btn-group\">\n    <a class=\"aaBtn dropdown-toggle\" data-toggle=\"dropdown\">\n      <span class=\"fa fa-bars fa-fw\" aria-hidden=\"true\"></span>\n    </a>\n    <ul class=\"dropdown-menu aaSansSerif\">\n      <li><a><i class=\"fa fa-plus-circle fa-fw aaIconGreen\"></i> Insert new account row</a></li>\n      <li><a><i class=\"fa fa-plus-circle fa-fw aaIconGreen\"></i> Insert new annotation row</a></li>\n      <li class=\"divider\"></li>\n      <li><a><i class=\"fa fa-minus-circle fa-fw aaIconRed\"></i> Delete row...</a></li>\n      <li class=\"divider\"></li>\n      <li><a><i class=\"fa fa-arrows-v fa-fw aaIconBlue\"></i> Re-position row...</a>\n      </li>\n    </ul>\n  </div>\n\n</template>\n-->\n"; });
+define('text!au-components/acct-list-fae.html', ['module'], function(module) { module.exports = "<template>\n  <require from=\"../au-views/vertical-gridline.html\"></require>\n  <require from=\"../au-views/vertical-gridline-spacer.html\"></require>\n  <h1 id=\"moverAnchor-${equationSide}\"\n      css=\"text-align: ${equationSide == eva.SIDE_ASSETS ? 'right' : 'left'};\">${equationSide == eva.SIDE_ASSETS ?\n    \"Assets\" : \"Equities\"}</h1>\n  <div class=\"aaGridContainer\">\n    <div class=\"aaGridTitleBar\" style=\"font-size: larger;\">${sideHeading}</div>\n    <div class=\"aaPanelToolBar\">\n      <span click.trigger=\"onMoverOpen($event)\" class=\"aaBtn\">\n         <i class=\"fa fa-arrows-v fa-fw aaIconBlue\" aria-hidden=\"true\"></i> Move rows\n      </span>\n    </div>\n    <div id=\"gridHeader${equationSide}\" class=\"aaGridHeader\">\n      <div class=\"aaFontLabel aaRow\">\n        <div class=\"aaFontLabel aaCellRowOps\" click.delegate=\"onMoverOpen($event)\">\n          <!--<span class=\"aaBtn\"><i class=\"fa fa-arrows-v fa-fw aaIconBlue\" aria-hidden=\"true\"></i></span>-->\n        </div>\n        <div class=\"aaCellRowOps \">\n          <span class=\"aaBtn aaBtnHidden\">\n                      <i class=\"fa fa-chevron-right fa-fw\" aria-hidden=\"true\"></i>\n          </span>\n        </div>\n        <vertical-gridline></vertical-gridline>\n        <div class=\"aaCellText aaCellRowSelectedChar\" style=\"visibility: hidden;\">${eva.ROW_SELECTED_CHAR}</div>\n        <vertical-gridline></vertical-gridline>\n        <div class=\"aaCellText aaFontSizeLabel aaCellAcctTitle\"><span class=\" aaSansSerif\">Title</span></div>\n        <vertical-gridline></vertical-gridline>\n        <div class=\"aaCellText aaFontSizeLabel aaCellBchgBal\"><span class=\" aaSansSerif\">Balance</span></div>\n        <vertical-gridline></vertical-gridline>\n      </div>\n    </div>\n    <div class=\"aaGridScrollableRows\">\n      <template repeat.for=\"listItem of sideAcctList\">\n        <div id=\"${listItem.id}\" class=\"aaRow\" mouseenter.trigger=\"onRowEnter($event, listItem)\"\n             mouseleave.trigger=\"onRowLeave($event, listItem)\">\n          <template if.bind=\"listItem.isAcct()\">\n            <!--<template if.bind=\"listItem.isAcct()\">-->\n            <div class=\"aaCellRowOps\">\n              <span class=\"aaBtn aaBtnHidden\" click.delegate=\"onMenuClick($event, listItem)\">\n                <i class=\"fa fa-bars fa-fw\" aria-hidden=\"true\"></i>\n              </span>\n            </div>\n            <div class=\"aaCellRowOps\">\n              <span class=\"aaBtn aaBtnHidden\" click.delegate=\"onGoAcct($event, listItem)\">\n                <i class=\"fa fa-chevron-right fa-fw\" aria-hidden=\"true\"></i>\n              </span>\n            </div>\n            <vertical-gridline></vertical-gridline>\n            <div class=\"aaCellText aaCellRowSelectedChar\"\n                 css=\"visibility: ${listItem.id == eva.selectedAcct.id ? 'visible' : 'hidden'};\">\n              ${eva.ROW_SELECTED_CHAR}\n            </div>\n            <vertical-gridline></vertical-gridline>\n            <div class=\"aaRowDataCells\">\n              <span class=\"aaCellText aaFontSizeData aaCellAcctTitle\">${listItem.title}</span>\n              <vertical-gridline></vertical-gridline>\n              <span class=\"aaCellText aaFontSizeData aaCellBchgBal\">${eva.formattedCurrency(listItem.bchgList.endingBalance)}</span>\n              <vertical-gridline></vertical-gridline>\n            </div>\n          </template>\n          <template if.bind=\"listItem.isAnnotation()\">\n            <div class=\"aaCellRowOps\">\n              <span class=\"aaBtn aaBtnHidden\" click.delegate=\"onMenuClick($event, listItem)\">\n                    <i class=\"fa fa-bars fa-fw\" aria-hidden=\"true\"></i>\n                </span>\n            </div>\n            <div class=\"aaCellRowOps\">\n              <span class=\"aaBtn aaBtnHidden\" click.delegate=\"onGoAcct($event, listItem)\">\n                <i class=\"fa fa-chevron-right fa-fw\" aria-hidden=\"true\"></i>\n              </span>\n            </div>\n            <vertical-gridline></vertical-gridline>\n            <div class=\"aaCellText aaCellRowSelectedChar\"\n                 css=\"visibility: ${listItem.id == eva.selectedAcct.id ? 'visible' : 'hidden'};\">\n              ${eva.ROW_SELECTED_CHAR}\n            </div>\n            <vertical-gridline></vertical-gridline>\n            <div class=\"aaRowDataCells\">\n              <span class=\"aaCellText aaFontSizeData aaCellAnnoTitle\">${listItem.annoText}</span>\n              <vertical-gridline></vertical-gridline>\n              <span class=\"aaCellText aaFontSizeData aaCellBchgBal\"></span>\n              <vertical-gridline></vertical-gridline>\n            </div>\n          </template>\n        </div>\n      </template>\n\n      <!--\n          Following is the coding for an end-of-list row that is not associated\n          with any account. Since \"insertion\" is the facility provided to a user\n          for creating a new account in the list, this end-of-list row provides\n          a point to insert a new account at the end of the list.\n      -->\n      <div class=\"aaRow\" id=\"End of equation side ${sideAcctList.equationSide}\"\n           mouseenter.trigger=\"onRowEnter($event, null)\" mouseleave.trigger=\"onRowLeave($event, null)\">\n        <div class=\"aaCellRowOps\">\n          <span class=\"aaBtn aaBtnHidden\" click.delegate=\"onMenuClick($event, listItem)\">\n            <i class=\"fa fa-bars fa-fw\" aria-hidden=\"true\"></i>\n          </span>\n        </div>\n        <div class=\"aaCellRowOps\">\n          <span class=\"aaBtn aaBtnHidden\">\n            <i class=\"fa fa-chevron-right fa-fw\" aria-hidden=\"true\"></i>\n          </span>\n        </div>\n        <vertical-gridline></vertical-gridline>\n        <div class=\"aaCellText aaCellRowSelectedChar\" style=\"visibility: hidden;\">${eva.ROW_SELECTED_CHAR}</div>\n        <vertical-gridline></vertical-gridline>\n        <div class=\"aaInlineBlock\">\n          <span class=\"aaCellText aaFontData aaCellAcctTitle\"><span\n            class=\"aaSansSerif aaCellTextEOL\">${eva.END_OF_LIST}</span></span>\n          <vertical-gridline></vertical-gridline>\n          <span class=\"aaCellText aaFontData aaCellBchgBal\"></span>\n          <vertical-gridline></vertical-gridline>\n        </div>\n      </div>\n    </div>\n    <div class=\"aaGridFooterBar\"></div>\n    <!--\n    Following is the coding for a row that shows the total of\n    all account balances. It is code with invisible menu and nav buttons\n    as horizontal space holders to result in proper horizontal positioning\n    of the \"Total\" label amd the total amt.\n    -->\n  </div>\n  <div class=\"aaGridTotals\">\n    <div class=\"aaRowTotals\">\n      <div class=\"aaCellRowOps\">\n        <span class=\"aaBtn aaBtnHidden\"><i class=\"fa fa-bars fa-fw\" aria-hidden=\"true\"></i></span>\n      </div>\n      <div class=\"aaCellRowOps\">\n        <span class=\"aaBtn aaBtnHidden\"><i class=\"fa fa-chevron-right fa-fw\" aria-hidden=\"true\"></i></span>\n      </div>\n      <vertical-gridline-spacer></vertical-gridline-spacer>\n      <div class=\"aaCellText aaCellRowSelectedChar\" style=\"visibility: hidden;\">${eva.ROW_SELECTED_CHAR}</div>\n      <vertical-gridline-spacer></vertical-gridline-spacer>\n      <span class=\"aaCellText aaFontData aaCellAcctTitle\" style=\"text-align: right;\"><span\n        class=\"aaSansSerif\">Total:</span></span>\n      <vertical-gridline-spacer></vertical-gridline-spacer>\n      <span class=\"aaCellText aaFontData aaCellBchgBal\">${eva.formattedCurrency(sideAcctList.listTotal)}</span>\n      <vertical-gridline-spacer></vertical-gridline-spacer>\n    </div>\n  </div>\n\n  <div id=\"moverDialog${equationSide}\" class=\"aaModal\">\n    <div id=\"moverDialogContent${equationSide}\" class=\"aaPanel aaPanelBoxShadow\" style=\"margin: 0;\">\n      <div id=\"mouseShield${equationSide}\" class=\"aaModal\"></div>\n      <div class=\"aaPanelHeader aaPanelHeaderModule\">Row mover</div>\n      <div class=\"aaPanelBody\">\n        <div class=\"aaGridContainer aaInlineBlock\">\n          <div class=\"aaGridTitleBar\" style=\"font-size: larger;\">${sideHeading}</div>\n          <div class=\"aaPanelToolBar\">\n            <div style=\"text-align: center;\">\n              <span class=\"aaFontLabel\">Drag & drop any row to desired list position.</span>\n            </div>\n          </div>\n          <div\n              id=\"${equationSide}-acct-mover-rows\"\n              class=\"aaGridScrollableRows\"\n              mousemove.trigger=\"onMouseMove($event)\">\n            <template repeat.for=\"listItem of sideAcctList\">\n              <div\n                class=\"aaRow\"\n                mouseenter.trigger=\"onMoverMouseEnter2($event, listItem)\"\n                mouseleave.trigger=\"onMoverMouseLeave2($event, listItem)\"\n                mousedown.trigger=\"onMoverMouseDown2($event)\"\n                mouseup.trigger=\"onMoverMouseUp2($event)\"\n              >\n                <div style=\"display: none\">${listItem.id}</div>\n                <div class=\"aaRowDataCells\">\n                  <template if.bind=\"listItem.isAcct()\">\n                    <div style=\"display: none\">Acct</div>\n                    <span class=\"aaCellText aaFontSizeData aaCellAcctTitle\">${listItem.title}</span>\n                    <vertical-gridline></vertical-gridline>\n                    <span class=\"aaCellText aaFontSizeData aaCellBchgBal\">${eva.formattedCurrency(listItem.bchgList.endingBalance)}</span>\n                  </template>\n                  <template if.bind=\"listItem.isAnnotation()\">\n                    <div style=\"display: none\">Annotation</div>\n                    <span class=\"aaCellText aaFontSizeData aaCellAnnoTitle\">${listItem.annoText}</span>\n                    <vertical-gridline></vertical-gridline>\n                    <span class=\"aaCellText aaFontSizeData aaCellBchgBal\"></span>\n                  </template>\n                  <vertical-gridline></vertical-gridline>\n                </div>\n              </div>\n            </template>\n          </div>\n          <div class=\"aaGridFooterBar\"></div>\n        </div>\n      </div>\n      <div class=\"aaPanelToolBar\">\n        <div style=\"text-align: center;\">\n\n          <span click.trigger=\"onMoverDone2($event)\" class=\"aaBtn\">Done</span>\n          <span click.trigger=\"onMoverCancel2($event)\" class=\"aaBtn\" style=\"margin-left: 4pc;\">Cancel</span>\n          <span click.trigger=\"onSwapRows($event)\" class=\"aaBtn\" style=\"margin-left: 4pc;\">Swap rows</span>\n          <div id=\"${equationSide}-CoorY\" class=\"aaFontLabel\">*</div>\n        </div>\n      </div>\n    </div>\n  </div>\n  </div>\n</template>\n"; });
 define('text!au-components/cell-bchg.html', ['module'], function(module) { module.exports = "\n<template bindable=\"isBlank, acctTitle, bchgDesc, bchgAmt, autoBalanceItem, gridlineWidth, gridlineColor\">\n  <require from=\"../au-views/vertical-gridline.html\"></require>\n  <div css=\"display: inline-block; border-bottom: 0px solid ${gridlineColor};\">\n    <template if.bind=\"!isBlank\">\n      <template if.bind=\"!eva.isEditing\">\n        <div class=\"aaCellText aaFontData aaCellAcctTitle aaInlineBlock\">${acctTitle}</div>\n        <div css=\"display: block; position: relative; border-top: 1px solid ${gridlineColor};\">\n          <div class=\"aaCellText aaFontData\">\n            <input type=\"text\"\n                   disabled\n                   class=\"aaFormInputText aaCellBchgDesc\"\n                   value=\"${bchgDesc}\">\n          </div>\n\n          <vertical-gridline></vertical-gridline>\n          <template if.bind=\"autoBalanceItem\">\n            <div class=\"aaCellText aaFontData\">\n<!--\n              <input type=\"text\"\n                     disabled\n                     class=\"aaFormInputText aaCellBchgAmt\"\n                     style=\"border-color: transparent;\"\n                     value=\"${bchgAmt}\">\n-->\n              <au-input-currency\n                currency-amount.two-way=\"bchgAmt\"\n                is-disabled.one-way=\"true\"\n                classes-string.one-way=\"'aaFormInputText aaCellBchgAmt'\"></au-input-currency>\n            </div>\n          </template>\n          <template if.bind=\"!autoBalanceItem\">\n            <div class=\"aaCellText aaFontData\">\n<!--\n              <input type=\"text\"\n                     disabled\n                     class=\"aaFormInputText aaCellBchgAmt\"\n                     value=\"${bchgAmt}\">\n-->\n              <au-input-currency\n                currency-amount.two-way=\"bchgAmt\"\n                is-disabled.one-way=\"true\"\n                classes-string.one-way=\"'aaFormInputText aaCellBchgAmt'\"></au-input-currency>\n            </div>\n          </template>\n      </template>\n    </template>\n\n    <template if.bind=\"isBlank\">\n      <div class=\"aaCellText aaFontData aaCellAcctTitle aaInlineBlock\">&nbsp;</div>\n      <div css=\"display: block; position: relative; border-top: 1px solid transparent;\">\n        <div class=\"aaCellText aaFontData\">\n          <input type=\"text\"\n                 class=\"aaFormInputText aaCellBchgDesc\"\n                 style=\"border-color: transparent;\"\n                 disabled\n                 value=\"\">\n        </div>\n        <vertical-gridline></vertical-gridline>\n        <div class=\"aaCellText aaFontData\">\n          <input type=\"text\"\n                 class=\"aaFormInputText aaCellBchgAmt\"\n                 style=\"border-color: transparent;\"\n                 disabled\n                 value=\"\">\n        </div>\n      </div>\n    </template>\n  </div>\n</template>\n"; });
 define('text!au-components/di-experiment.html', ['module'], function(module) { module.exports = "<template>\n  <p>${app.testDataItem}</p>\n</template>\n"; });
 define('text!au-components/input-currency.html', ['module'], function(module) { module.exports = "<template>\n  <require from=\"../au-converters/currency-converter\"></require>\n  <input\n    element.ref=\"inputElement\"\n    type=\"text\"\n    readonly=\"${isReadonly ? 'readonly' : ''}\"\n    disabled=\"${isDisabled ? 'disabled' : ''}\"\n    class=\"${classesString}\"\n    focus.trigger=\"onFocus()\"\n    blur.trigger=\"onBlur()\"\n    keydown.trigger=\"onKeydown($event)\"\n    input.trigger=\"onInput()\"\n    value.one-way=\"currencyAmount | currencyConverter\">\n</template>\n"; });

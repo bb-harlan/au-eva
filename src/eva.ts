@@ -160,15 +160,16 @@ export class Eva {
      Create some accounts**********************************************************
      */
 
-    let annotation: Annotation = new Annotation(`anno-${this.nextAcctId}`, this.SIDE_ASSETS, 0, "Current assets (a test annotation row)");
+    let annoId = `anno${this.nextAcctId}`;
+    let annotation: Annotation = new Annotation(annoId, this.SIDE_ASSETS, 0, `Test annotation (equationSide: ${this.SIDE_ASSETS}; annoId: ${annoId};)`);
     this.assetList.push(annotation);
 
     let acctId = '';
     for (let intraSideSorter = 15; intraSideSorter > 0; intraSideSorter--) {
-      acctId = `A${this.nextAcctId}`;
+      acctId = `acct${this.nextAcctId}`;
       let assetAcct = new Acct(acctId, this.SIDE_ASSETS, intraSideSorter, `Test account (equationSide: ${this.SIDE_ASSETS}; acctId: ${acctId};)`, 1);
       this.assetList.push(assetAcct);
-      acctId = `A${this.nextAcctId}`;
+      acctId = `acct${this.nextAcctId}`;
       let equityAcct = new Acct(acctId, this.SIDE_EQUITIES, intraSideSorter, `Test account (equationSide: ${this.SIDE_EQUITIES}; acctId: ${acctId};)`, 1);
       this.equityList.push(equityAcct);
     }
@@ -181,14 +182,14 @@ export class Eva {
     let bchgId: string;
     for (let i = 1; i <= 50; ++i) {
       let tranDate: string = (i % 2 ? "2016/02/13" : "2016/02/12");
-      let tran = new Tran(`T${this.nextTranId}`, tranDate, this.nextSorter);
+      let tran = new Tran(`tran${this.nextTranId}`, tranDate, this.nextSorter);
       this.tranList.push(tran);
       let filteredAssetAcctList = this.assetList.filter((listItem) => listItem instanceof Acct);
       let filteredEquityAcctList = this.equityList.filter((listItem) => listItem instanceof Acct);
       let acctList = filteredAssetAcctList.concat(filteredEquityAcctList);
       let randomAcct0 = acctList[(Math.random() * (acctList.length - 1)).toFixed(0)];
       let bchg0 = new Bchg(
-        `B${this.nextBchgId}`,
+        `bchg${this.nextBchgId}`,
         randomAcct0 as Acct,
         tran,
         0,
@@ -198,7 +199,7 @@ export class Eva {
       (randomAcct0 as Acct).bchgList.push(bchg0);
       let randomAcct1 = acctList[(Math.random() * (acctList.length - 1)).toFixed(0)];
       let bchg1 = new Bchg(
-        `B${this.nextBchgId}`,
+        `bchg${this.nextBchgId}`,
         randomAcct1 as Acct,
         tran,
         1,

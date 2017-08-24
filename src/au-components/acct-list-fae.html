@@ -35,7 +35,7 @@
         <div id="${listItem.id}" class="aaRow" mouseenter.trigger="onRowEnter($event, listItem)"
              mouseleave.trigger="onRowLeave($event, listItem)">
           <template if.bind="listItem.isAcct()">
-          <!--<template if.bind="listItem.isAcct()">-->
+            <!--<template if.bind="listItem.isAcct()">-->
             <div class="aaCellRowOps">
               <span class="aaBtn aaBtnHidden" click.delegate="onMenuClick($event, listItem)">
                 <i class="fa fa-bars fa-fw" aria-hidden="true"></i>
@@ -145,38 +145,39 @@
 
   <div id="moverDialog${equationSide}" class="aaModal">
     <div id="moverDialogContent${equationSide}" class="aaPanel aaPanelBoxShadow" style="margin: 0;">
+      <div id="mouseShield${equationSide}" class="aaModal"></div>
       <div class="aaPanelHeader aaPanelHeaderModule">Row mover</div>
-      <div class="aaPanelToolBar">
-        <div style="text-align: center;">
-          <span click.trigger="onMoverDone($event)" class="aaBtn">Done</span>
-          <span click.trigger="onMoverCancel($event)" class="aaBtn" style="margin-left: 4pc;">Cancel</span>
-        </div>
-      </div>
-
       <div class="aaPanelBody">
         <div class="aaGridContainer aaInlineBlock">
           <div class="aaGridTitleBar" style="font-size: larger;">${sideHeading}</div>
           <div class="aaPanelToolBar">
             <div style="text-align: center;">
-              <span class="aaFontLabel">Drag any row to desired list position.</span>
+              <span class="aaFontLabel">Drag & drop any row to desired list position.</span>
             </div>
           </div>
-          <div class="aaGridScrollableRows">
-            <template repeat.for="listItem of moverList">
-              <div class="aaRow">
-                <div class="aaRowDataCells"
-                     mouseenter.trigger="onMoverMouseEnter($event, listItem)"
-                     mouseleave.trigger="onMoverMouseLeave($event, listItem)"
-                     mousedown.trigger="onMoverMouseDown($event)"
-                     mouseup.trigger="onMoverMouseUp($event)">
-                  <template if.bind="listItem.sourceClass=='Acct'">
-                    <span class="aaCellText aaFontSizeData aaCellAcctTitle">${listItem.displayText}</span>
+          <div
+              id="${equationSide}-acct-mover-rows"
+              class="aaGridScrollableRows"
+              mousemove.trigger="onMouseMove($event)">
+            <template repeat.for="listItem of sideAcctList">
+              <div
+                class="aaRow"
+                mouseenter.trigger="onMoverMouseEnter2($event, listItem)"
+                mouseleave.trigger="onMoverMouseLeave2($event, listItem)"
+                mousedown.trigger="onMoverMouseDown2($event)"
+                mouseup.trigger="onMoverMouseUp2($event)"
+              >
+                <div style="display: none">${listItem.id}</div>
+                <div class="aaRowDataCells">
+                  <template if.bind="listItem.isAcct()">
+                    <div style="display: none">Acct</div>
+                    <span class="aaCellText aaFontSizeData aaCellAcctTitle">${listItem.title}</span>
                     <vertical-gridline></vertical-gridline>
-                    <span class="aaCellText aaFontSizeData aaCellBchgBal">${listItem.endingBalance}</span>
-                    <!--<vertical-gridline></vertical-gridline>-->
+                    <span class="aaCellText aaFontSizeData aaCellBchgBal">${eva.formattedCurrency(listItem.bchgList.endingBalance)}</span>
                   </template>
-                  <template if.bind="listItem.sourceClass=='Annotation'">
-                    <span class="aaCellText aaFontSizeData aaCellAnnoTitle">${listItem.displayText}</span>
+                  <template if.bind="listItem.isAnnotation()">
+                    <div style="display: none">Annotation</div>
+                    <span class="aaCellText aaFontSizeData aaCellAnnoTitle">${listItem.annoText}</span>
                     <vertical-gridline></vertical-gridline>
                     <span class="aaCellText aaFontSizeData aaCellBchgBal"></span>
                   </template>
@@ -186,6 +187,15 @@
             </template>
           </div>
           <div class="aaGridFooterBar"></div>
+        </div>
+      </div>
+      <div class="aaPanelToolBar">
+        <div style="text-align: center;">
+
+          <span click.trigger="onMoverDone2($event)" class="aaBtn">Done</span>
+          <span click.trigger="onMoverCancel2($event)" class="aaBtn" style="margin-left: 4pc;">Cancel</span>
+          <span click.trigger="onSwapRows($event)" class="aaBtn" style="margin-left: 4pc;">Swap rows</span>
+          <div id="${equationSide}-CoorY" class="aaFontLabel">*</div>
         </div>
       </div>
     </div>

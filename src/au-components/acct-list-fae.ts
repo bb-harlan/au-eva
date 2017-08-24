@@ -1,7 +1,6 @@
 import {customElement, inject, bindable} from 'aurelia-framework';
 import {Eva} from '../eva';
 import {AcctList} from '../models/acct-list';
-import {AcctMover} from '../models/acct-mover';
 import {Acct, Annotation} from '../models/acct';
 
 @customElement('acct-list-fae')
@@ -11,11 +10,9 @@ export class AcctListFae {
   sideHeading: string;
   sideAcctList: AcctList;
   moverDialog;
-  moverList: Array<AcctMover>;
   mouseIsDown: boolean = false;
-  swapListItem: AcctMover = null;
-
-
+  sourceRow: Element = null;
+  mouseEventCnt: number = 1;
 
   attached() {
     /*
@@ -48,7 +45,6 @@ export class AcctListFae {
 
        <acct-list-fae equation-side="${eva.SIDE_EQUITIES}" ...></acct-list-fae>
     */
-
     /*
     * Position modal content
     */
@@ -71,7 +67,6 @@ export class AcctListFae {
    * event.target.children[0] is the menu buttom.
    * event.target.children[1] is the nav buttom.
    */
-
   onRowEnter(event, listItem) {
     if (listItem) {
       event.target.children[0].children[0].style.visibility = 'visible';
@@ -105,75 +100,244 @@ export class AcctListFae {
   }
 
   onMoverOpen(event) {
-    this.moverList = [];
-    for (let listItem of this.sideAcctList) {
-      if (listItem instanceof Acct) {
-        this.moverList.push(new AcctMover(listItem.id, "Acct", listItem.title, this.eva.formattedCurrency(listItem.bchgList.endingBalance)));
-        console.log(`bchgList.endingBalance: ${listItem.bchgList.endingBalance}; formatted: ${this.eva.formattedCurrency(listItem.bchgList.endingBalance)}`)
-      }
-      if (listItem instanceof Annotation) {
-        this.moverList.push(new AcctMover(listItem.id, "Annotation", listItem.annoText, ""));
-      }
-    }
     this.moverDialog.style.display = "block";
   }
+
   onMoverDone(event) {
-    for (let i = 0; i < this.moverList.length; i++) {
+    /*
+        for (let i = 0; i < this.moverList.length; i++) {
+          for (let listItem of this.sideAcctList) {
+            if (listItem.id == this.moverList[i].id) {
+              listItem.intraSideSorter = i;
+              break;
+            }
+          }
+        }
+    */
+    let acctMoverRows = document.getElementById(`${this.equationSide}-acct-mover-rows`);
+    console.log(acctMoverRows);
+    for (let i = 0; i < acctMoverRows.childElementCount; i++) {
+      let moverRowId = acctMoverRows.children[i].children[0].children[0].innerHTML.slice(15);
       for (let listItem of this.sideAcctList) {
-        if (listItem.id == this.moverList[i].id) {
+        console.log(`moverRowId: "${moverRowId}"; listItem.id: "${listItem.id}"`);
+        if (listItem.id == moverRowId) {
           listItem.intraSideSorter = i;
           break;
         }
       }
+      console.log("-------------------------------------------------------");
     }
     this.sideAcctList.refresh();
-    this.swapListItem = null;
-    this.moverList = [];
+    this.sourceRow = null;
     this.moverDialog.style.display = "none";
   }
+
   onMoverCancel(event) {
-    this.swapListItem = null;
-    this.moverList = [];
+    this.sourceRow = null;
     this.moverDialog.style.display = "none";
   }
+
   onMoverMouseDown(event) {
-    event.currentTarget.classList.toggle('aaRowHover', false);
-    event.currentTarget.classList.toggle('aaDragging', true);
+    let targetRow: Element = event.currentTarget as Element;
+    targetRow.children[0].classList.toggle('aaRowHover', false);
+    targetRow.children[0].classList.toggle('aaDragging', true);
     this.mouseIsDown = true;
   }
+
   onMoverMouseUp(event) {
-    event.currentTarget.classList.toggle('aaDragging', false);
-    event.currentTarget.classList.toggle('aaRowHover', true);
+    let targetRow: Element = event.currentTarget as Element;
+    targetRow.children[0].classList.toggle('aaDragging', false);
+    targetRow.children[0].classList.toggle('aaRowHover', true);
     this.mouseIsDown = false;
-    this.swapListItem = null;
+    this.sourceRow = null;
   }
-  onMoverMouseEnter(event, listItem) {
-    if (this.mouseIsDown) {
-      event.currentTarget.classList.toggle('aaDragging', true);
-      let saveId = listItem.id;
-      let saveSourceClass = listItem.sourceClass;
-      let saveDisplayText = listItem.displayText;
-      let saveEndingBalance = listItem.endingBalance;
-      listItem.id = this.swapListItem.id;
-      listItem.sourceClass = this.swapListItem.sourceClass;
-      listItem.displayText = this.swapListItem.displayText;
-      listItem.endingBalance = this.swapListItem.endingBalance;
-      this.swapListItem.id = saveId;
-      this.swapListItem.sourceClass = saveSourceClass;
-      this.swapListItem.displayText = saveDisplayText;
-      this.swapListItem.endingBalance = saveEndingBalance;
-    }
-    else {
-      event.currentTarget.classList.toggle('aaRowHover', true);
-    }
-  }
+
   onMoverMouseLeave(event, listItem) {
+    let targetRow: Element = event.currentTarget as Element;
     if (this.mouseIsDown) {
-      this.swapListItem = listItem;
-      event.currentTarget.classList.toggle('aaDragging', false);
+      targetRow.children[0].classList.toggle('aaDragging', false);
+      this.sourceRow = targetRow;
     }
     else {
-      event.currentTarget.classList.toggle('aaRowHover', false);
+      targetRow.children[0].classList.toggle('aaRowHover', false);
     }
+  }
+
+  onMoverMouseEnter(event, listItem) {
+    let targetRow: Element = event.currentTarget as Element;
+    if (this.mouseIsDown) {
+      let targetRowDataCells = targetRow.children[0];
+      let exitedRowDataCells = this.sourceRow.children[0];
+      //
+      let currentId = targetRowDataCells.children[0].innerHTML;
+      let currentClass = targetRowDataCells.children[1].innerHTML;
+      let currentTitle = targetRowDataCells.children[2].innerHTML;
+      let currentEndingBalance = targetRowDataCells.children[4].innerHTML;
+      //
+      targetRowDataCells.children[0].innerHTML = exitedRowDataCells.children[0].innerHTML; // id
+      targetRowDataCells.children[1].innerHTML = exitedRowDataCells.children[1].innerHTML; // class
+      targetRowDataCells.children[2].innerHTML = exitedRowDataCells.children[2].innerHTML; // title
+      targetRowDataCells.children[4].innerHTML = exitedRowDataCells.children[4].innerHTML; // endingBalance
+      switch (targetRowDataCells.children[1].innerHTML) {
+        case "Acct":
+          targetRowDataCells.children[2].classList.toggle('aaCellAnnoTitle', false)
+          targetRowDataCells.children[2].classList.toggle('aaCellAcctTitle', true)
+          break;
+        case "Annotation":
+          targetRowDataCells.children[2].classList.toggle('aaCellAcctTitle', false)
+          targetRowDataCells.children[2].classList.toggle('aaCellAnnoTitle', true)
+          break;
+      }
+      exitedRowDataCells.children[0].innerHTML = currentId;
+      exitedRowDataCells.children[1].innerHTML = currentClass;
+      exitedRowDataCells.children[2].innerHTML = currentTitle;
+      exitedRowDataCells.children[4].innerHTML = currentEndingBalance;
+      switch (exitedRowDataCells.children[1].innerHTML) {
+        case "Acct":
+          exitedRowDataCells.children[2].classList.toggle('aaCellAnnoTitle', false)
+          exitedRowDataCells.children[2].classList.toggle('aaCellAcctTitle', true)
+          break;
+        case "Annotation":
+          exitedRowDataCells.children[2].classList.toggle('aaCellAcctTitle', false)
+          exitedRowDataCells.children[2].classList.toggle('aaCellAnnoTitle', true)
+          break;
+      }
+      targetRow.children[0].classList.toggle('aaDragging', true);
+    }
+    else {
+      targetRow.children[0].classList.toggle('aaRowHover', true);
+    }
+  }
+
+  onMoverOpen2(event) {
+    this.moverDialog.style.display = "block";
+  }
+
+  onMoverDone2(event) {
+    /*
+        for (let i = 0; i < this.moverList.length; i++) {
+          for (let listItem of this.sideAcctList) {
+            if (listItem.id == this.moverList[i].id) {
+              listItem.intraSideSorter = i;
+              break;
+            }
+          }
+        }
+    */
+    let acctMoverRows = document.getElementById(`${this.equationSide}-acct-mover-rows`);
+    console.log(acctMoverRows);
+    for (let i = 0; i < acctMoverRows.childElementCount; i++) {
+      let moverRowId = acctMoverRows.children[i].children[0].children[0].innerHTML.slice(15);
+      for (let listItem of this.sideAcctList) {
+        console.log(`moverRowId: "${moverRowId}"; listItem.id: "${listItem.id}"`);
+        if (listItem.id == moverRowId) {
+          listItem.intraSideSorter = i;
+          break;
+        }
+      }
+      console.log("-------------------------------------------------------");
+    }
+    this.sideAcctList.refresh();
+    this.sourceRow = null;
+    this.moverDialog.style.display = "none";
+  }
+
+  onMoverCancel2(event) {
+    this.sourceRow = null;
+    this.moverDialog.style.display = "none";
+  }
+
+  onMoverMouseDown2(event) {
+    let targetRow: Element = event.currentTarget as Element;
+    this.logMouseEvent("mouseDown", this.sourceRow, targetRow);
+    targetRow.children[1].classList.toggle('aaRowHover', false);
+    targetRow.children[1].classList.toggle('aaDragging', true);
+    this.mouseIsDown = true;
+  }
+
+  onMoverMouseUp2(event) {
+    let targetRow: Element = event.currentTarget as Element;
+    this.logMouseEvent("mouseUp", this.sourceRow, targetRow);
+    targetRow.children[1].classList.toggle('aaDragging', false);
+    targetRow.children[1].classList.toggle('aaRowHover', true);
+    this.mouseIsDown = false;
+    this.sourceRow = null;
+  }
+
+  onMoverMouseLeave2(event, listItem) {
+    let targetRow: Element = event.currentTarget as Element;
+    this.logMouseEvent("mouseLeave", this.sourceRow, targetRow);
+    if (this.mouseIsDown) {
+      targetRow.children[1].classList.toggle('aaDragging', false);
+      this.sourceRow = targetRow;
+    }
+    else {
+      targetRow.children[1].classList.toggle('aaRowHover', false);
+    }
+  }
+
+  onMoverMouseEnter2(event, listItem) {
+    let targetRow: Element = event.currentTarget as Element;
+    this.logMouseEvent("mouseEnter", this.sourceRow, targetRow);
+    let parentList: Element = targetRow.parentElement;
+    if (this.mouseIsDown && this.sourceRow) {
+      this.sourceRow.classList.toggle('aaDragging', false);
+      targetRow.children[1].classList.toggle('aaRowHover', false);
+      targetRow.children[1].classList.toggle('aaDragging', true);
+      let compareDocumentPositionResult = targetRow.compareDocumentPosition(this.sourceRow);
+      switch (compareDocumentPositionResult) {
+        case targetRow.DOCUMENT_POSITION_PRECEDING:
+          // console.log(`targetRow.DOCUMENT_POSITION_PRECEDING`);
+          parentList.insertBefore(targetRow, this.sourceRow);
+          break;
+        case targetRow.DOCUMENT_POSITION_FOLLOWING:
+          // console.log(`targetRow.DOCUMENT_POSITION_FOLLOWING`);
+          parentList.insertBefore(this.sourceRow, targetRow);
+          break;
+        default:
+          console.log('logic fault! compareDocumentPositionResult: ${compareDocumentPositionResult}');
+      }
+      while (true) {
+        let compareDocumentPositionResult2 = targetRow.compareDocumentPosition(this.sourceRow);
+        console.log(`compareDocumentPositionResult: ${compareDocumentPositionResult}; compareDocumentPositionResult2: ${compareDocumentPositionResult2};`);
+        if (compareDocumentPositionResult2 !== compareDocumentPositionResult) {
+          break;
+        }
+      }
+    }
+    else {
+      targetRow.children[1].classList.toggle('aaRowHover', true);
+    }
+  }
+
+  onSwapRows(event) {
+    console.log(`onSwapRows ${this.mouseEventCnt++}`);
+    let moverRowList = document.getElementById(`${this.equationSide}-acct-mover-rows`)
+    moverRowList.insertBefore(moverRowList.children[1], moverRowList.children[0]);
+  }
+
+  onMouseMove(event) {
+    let moverRowList = event.currentTarget;
+    let mouseFeedback = document.getElementById(`${this.equationSide}-CoorY`);
+    mouseFeedback.innerHTML = `mouseY: ${event.clientY}; moverRowListY: ${this.elementY(moverRowList)};`;
+    for (let moverRow of moverRowList.children) {
+      console.log(`moverRow.id: ${moverRow.children[0].innerHTML}; moverRowY: ${this.elementY(moverRow)};`);
+    }
+    console.log("=================================================");
+  }
+
+  elementY(element) {
+    return element.getBoundingClientRect().top;
+    // let offsetTop = 0;
+    // do {
+    //   if (!isNaN(element.offsetTop))
+    //     offsetTop += element.offsetTop;
+    // } while (element = element.offsetParent);
+    // return offsetTop;
+  };
+
+  logMouseEvent(mouseEvent: string, sourceRow: Element, targetRow: Element) {
+    return;
+    // console.log(`${this.mouseEventCnt++}. mouseEvent: ${mouseEvent}; sourceRow: ${sourceRow ? sourceRow.children[0].innerHTML : "null"}; targetRow: ${targetRow.children[0].innerHTML};`);
   }
 }
