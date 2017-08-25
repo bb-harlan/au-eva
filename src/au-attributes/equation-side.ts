@@ -1,34 +1,34 @@
 import {customAttribute, inject} from 'aurelia-framework';
 import {Eva} from '../eva';
-import {AcctListFae} from '../au-components/acct-list-fae';
+import {FaeSide} from '../au-components/fae-side';
 import {AcctList} from '../models/acct-list';
 //
 @customAttribute('au-equation-side')
-@inject(AcctListFae)
+@inject(FaeSide)
 export class EquationSide {
 
     eva:Eva = Eva.getInstance();
-    acctListFae: AcctListFae;
+    faeSide:FaeSide;
     value;
     //
-    constructor(acctListFae:AcctListFae) {
-        this.acctListFae = acctListFae;
+    constructor(faeSide: FaeSide) {
+        this.faeSide = faeSide;
     }
 
     bind() {
-        this.acctListFae.equationSide = this.value;
-        switch (this.acctListFae.equationSide) {
+        this.faeSide.equationSide = this.value;
+        switch (this.faeSide.equationSide) {
             case this.eva.SIDE_ASSETS:
-                this.acctListFae.sideHeading = "Asset accounts";
-                this.acctListFae.sideAcctList = this.eva.assetList;
+                this.faeSide.sideHeading = "Asset accounts";
+                this.faeSide.sideAcctList = this.eva.assetList;
                 break;
             case this.eva.SIDE_EQUITIES:
-                this.acctListFae.sideHeading = "Equity accounts";
-                this.acctListFae.sideAcctList = this.eva.equityList;
+                this.faeSide.sideHeading = "Equity accounts";
+                this.faeSide.sideAcctList = this.eva.equityList;
                 break;
             default:
-                this.acctListFae.sideHeading = "[Logic fault]";
-                this.acctListFae.sideAcctList = [] as AcctList;
+                this.faeSide.sideHeading = "[Logic fault]";
+                this.faeSide.sideAcctList = [] as AcctList;
         }
     }
 }

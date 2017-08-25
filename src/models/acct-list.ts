@@ -10,7 +10,6 @@ export class AcctList extends Array<Acct | Annotation> {
     super()
     this.equationSide = equationSide;
   }
-
   refresh(): void {
     this.sort((a, b) => a.compareTo(b));
     let listTotal = 0.00;
@@ -22,12 +21,10 @@ export class AcctList extends Array<Acct | Annotation> {
     }
     this.listTotal = listTotal;
   }
-
   // Maybe not needed
   matchingId(listItem: Acct | Annotation): boolean {
     return listItem.id == this.idToFind;
   }
-
   // Maybe not needed
   findById(id: string): Acct | Annotation {
     this.idToFind = id;

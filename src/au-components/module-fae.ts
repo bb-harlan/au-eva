@@ -1,4 +1,4 @@
-import {customElement, inject} from 'aurelia-framework';
+import {customElement} from 'aurelia-framework';
 import {Eva} from '../eva';
 
 @customElement('module-fae')

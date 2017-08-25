@@ -553,11 +553,10 @@ h1 {
 }
 .aaDragging {
   cursor: n-resize;
-  /*-webkit-box-shadow: 0px 0px 2px 2px #58b;*/
-  /*-moz-box-shadow: 0px 0px 2px 2px #58b;*/
-  /*box-shadow: 0px 0px 2px 2px #58b;*/
-  background-color: #ffffee;
+  -webkit-box-shadow: 0px 0px 2px 2px #6D99C5 inset;
+  -moz-box-shadow: 0px 0px 2px 2px #6D99C5 inset;
   box-shadow: 0 0 2px 2px #6D99C5 inset;
+  background-color: #edf2f7 !important;
 }
 .aaDragFrom {
   cursor: n-resize;
