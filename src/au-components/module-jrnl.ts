@@ -1,7 +1,7 @@
 import {customElement, inject} from 'aurelia-framework';
 import {Eva} from '../eva';
 
-@customElement('module-jrnl')
+@customElement('au-module-jrnl')
 export class ModuleJrnl {
     //
     eva: Eva = Eva.getInstance();

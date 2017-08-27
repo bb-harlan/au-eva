@@ -2,7 +2,7 @@ import {customElement} from 'aurelia-framework';
 import {Eva} from '../eva';
 import {AcctList} from '../models/acct-list';
 
-@customElement('module-acct')
+@customElement('au-module-acct')
 export class ModuleAcct {
 
     eva:Eva = Eva.getInstance();

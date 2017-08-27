@@ -4,6 +4,7 @@
   <require from="../au-views/vertical-gridline-spacer.html"></require>
   <require from="../au-views/tran-bchg-cells-spacer.html"></require>
   <require from="../au-components/tran-bchg-row-data"></require>
+  <require from="../au-converters/currency-converter"></require>
 
   <div class="aaPanel aaPanelBoxShadow">
 
@@ -100,7 +101,7 @@
               </div>
               <vertical-gridline></vertical-gridline>
               <div class="aaRowDataCells">
-                <tran-bchg-row-data bchg.bind="bchg"></tran-bchg-row-data>
+                <au-tran-bchg-row-data bchg.bind="bchg"></au-tran-bchg-row-data>
               </div>
             </div>
           </template>
@@ -156,7 +157,7 @@
             <vertical-gridline-spacer></vertical-gridline-spacer>
             <div class="aaCellText aaFontData">
               <input type="text" disabled class="aaFormInputText aaCellBchgAmt"
-                     value="${eva.formattedCurrency(eva.selectedTran.assetsBchg)}">
+                     value="${eva.selectedTran.assetsBchg | currencyConverter}">
             </div>
             <vertical-gridline-spacer></vertical-gridline-spacer>
             <div class="aaCellText aaFontData aaTranBchgRow2Indent">
@@ -167,7 +168,7 @@
             <vertical-gridline-spacer></vertical-gridline-spacer>
             <div class="aaCellText aaFontData">
               <input type="text" disabled class="aaFormInputText aaCellBchgAmt"
-                     value="${eva.formattedCurrency(eva.selectedTran.equitiesBchg)}">
+                     value="${eva.selectedTran.equitiesBchg | currencyConverter}">
             </div>
           </div>
           <vertical-gridline-spacer></vertical-gridline-spacer>

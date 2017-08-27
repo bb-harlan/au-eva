@@ -5,7 +5,7 @@ import {Bchg} from '../models/bchg';
 import {TranList} from '../models/tran-list';
 
 //
-@customElement('module-tran')
+@customElement('au-module-tran')
 export class ModuleTran {
   //
   eva: Eva = Eva.getInstance();

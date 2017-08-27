@@ -1,7 +1,7 @@
 import {customElement} from 'aurelia-framework';
 import {Eva} from '../eva';
 //
-@customElement('module-bchg')
+@customElement('au-module-bchg')
 export class ModuleBchg {
   //
   eva: Eva = Eva.getInstance();

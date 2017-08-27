@@ -1,11 +1,12 @@
 <template>
   <require from="../au-views/vertical-gridline.html"></require>
   <require from="../au-views/vertical-gridline-spacer.html"></require>
+  <require from="../au-converters/currency-converter"></require>
+  <require from="../au-converters/equation-side-converter"></require>
   <h1 id="moverAnchor-${equationSide}"
-      css="text-align: ${equationSide == eva.SIDE_ASSETS ? 'right' : 'left'};">${equationSide == eva.SIDE_ASSETS ?
-    "Assets" : "Equities"}</h1>
+      css="text-align: ${equationSide == eva.SIDE_ASSETS ? 'right' : 'left'};">${equationSide | equationSideConverter:true:true}</h1>
   <div class="aaGridContainer">
-    <div class="aaGridTitleBar" style="font-size: larger;">${sideHeading}</div>
+    <div class="aaGridTitleBar" style="font-size: larger;">${equationSide | equationSideConverter:true:false} accounts</div>
     <div class="aaPanelToolBar">
       <span click.trigger="onMoverOpen($event)" class="aaBtn">
          <i class="fa fa-arrows-v fa-fw aaIconBlue" aria-hidden="true"></i> Move rows
@@ -54,7 +55,7 @@
             <div class="aaRowDataCells">
               <span class="aaCellText aaFontSizeData aaCellAcctTitle">${listItem.title}</span>
               <vertical-gridline></vertical-gridline>
-              <span class="aaCellText aaFontSizeData aaCellBchgBal">${eva.formattedCurrency(listItem.bchgList.endingBalance)}</span>
+              <span class="aaCellText aaFontSizeData aaCellBchgBal">${listItem.bchgList.endingBalance | currencyConverter}</span>
               <vertical-gridline></vertical-gridline>
             </div>
           </template>
@@ -137,65 +138,67 @@
       <span class="aaCellText aaFontData aaCellAcctTitle" style="text-align: right;"><span
         class="aaSansSerif">Total:</span></span>
       <vertical-gridline-spacer></vertical-gridline-spacer>
-      <span class="aaCellText aaFontData aaCellBchgBal">${eva.formattedCurrency(sideAcctList.listTotal)}</span>
+      <span class="aaCellText aaFontData aaCellBchgBal">${sideAcctList.listTotal | currencyConverter}</span>
       <vertical-gridline-spacer></vertical-gridline-spacer>
     </div>
   </div>
 
-  <div id="moverDialog${equationSide}" class="aaModal">
-    <div id="moverDialogContent${equationSide}" class="aaPanel aaPanelBoxShadow" style="margin: 0;">
-      <div id="mouseShield${equationSide}" class="aaModal"></div>
-      <div class="aaPanelHeader aaPanelHeaderModule">Row mover</div>
-      <div class="aaPanelBody">
-        <div class="aaGridContainer aaInlineBlock">
-          <div class="aaGridTitleBar" style="font-size: larger;">${sideHeading}</div>
-          <div class="aaPanelToolBar">
-            <div style="text-align: center;">
-              <span class="aaFontLabel">Drag & drop any row to desired list position.</span>
-            </div>
-          </div>
-          <div id="${equationSide}-mover-row-list"
-               class="aaGridScrollableRows"
-               mousemove.trigger="onMouseMove($event)">
-            <template repeat.for="listItem of sideAcctList">
-              <div
-                class="aaRow"
-                data-acct-id="${listItem.id}"
-                mouseenter.trigger="onMoverMouseEnter($event, listItem)"
-                mouseleave.trigger="onMoverMouseLeave($event, listItem)"
-                mousedown.trigger="onMoverMouseDown($event)"
-                mouseup.trigger="onMoverMouseUp($event)">
-                <div class="aaRowDataCells">
-                  <template if.bind="listItem.isAcct()">
-                    <span class="aaCellText aaFontSizeData aaCellAcctTitle">${listItem.title}</span>
-                    <vertical-gridline></vertical-gridline>
-                    <span class="aaCellText aaFontSizeData aaCellBchgBal">${eva.formattedCurrency(listItem.bchgList.endingBalance)}</span>
-                  </template>
-                  <template if.bind="listItem.isAnnotation()">
-                    <span class="aaCellText aaFontSizeData aaCellAnnoTitle">${listItem.annoText}</span>
-                    <vertical-gridline></vertical-gridline>
-                    <span class="aaCellText aaFontSizeData aaCellBchgBal"></span>
-                  </template>
-                  <vertical-gridline></vertical-gridline>
-                </div>
+  <template if.bind="moverNeeded">
+    <div id="moverDialog${equationSide}" class="aaModal">
+      <div id="moverDialogContent${equationSide}" class="aaPanel aaPanelBoxShadow" style="margin: 0;">
+        <div id="mouseShield${equationSide}" class="aaModal"></div>
+        <div class="aaPanelHeader aaPanelHeaderModule">Row mover</div>
+        <div class="aaPanelBody">
+          <div class="aaGridContainer aaInlineBlock">
+            <div class="aaGridTitleBar" style="font-size: larger;">${equationSide | equationSideConverter:true:false} accounts</div>
+            <div class="aaPanelToolBar">
+              <div style="text-align: center;">
+                <span class="aaFontLabel">Drag & drop any row to desired list position.</span>
               </div>
-            </template>
+            </div>
+            <div id="${equationSide}-mover-row-list"
+                 class="aaGridScrollableRows"
+                 mousemove.trigger="onMouseMove($event)">
+              <template repeat.for="listItem of sideAcctList">
+                <div
+                  class="aaRow"
+                  data-acct-id="${listItem.id}"
+                  mouseenter.trigger="onMoverMouseEnter($event, listItem)"
+                  mouseleave.trigger="onMoverMouseLeave($event, listItem)"
+                  mousedown.trigger="onMoverMouseDown($event)"
+                  mouseup.trigger="onMoverMouseUp($event)">
+                  <div class="aaRowDataCells">
+                    <template if.bind="listItem.isAcct()">
+                      <span class="aaCellText aaFontSizeData aaCellAcctTitle">${listItem.title}</span>
+                      <vertical-gridline></vertical-gridline>
+                      <span class="aaCellText aaFontSizeData aaCellBchgBal">${listItem.bchgList.endingBalance | currencyConverter}</span>
+                    </template>
+                    <template if.bind="listItem.isAnnotation()">
+                      <span class="aaCellText aaFontSizeData aaCellAnnoTitle">${listItem.annoText}</span>
+                      <vertical-gridline></vertical-gridline>
+                      <span class="aaCellText aaFontSizeData aaCellBchgBal"></span>
+                    </template>
+                    <vertical-gridline></vertical-gridline>
+                  </div>
+                </div>
+              </template>
+            </div>
+            <div class="aaGridFooterBar"></div>
           </div>
-          <div class="aaGridFooterBar"></div>
         </div>
-      </div>
-      <div class="aaPanelToolBar">
-        <div style="text-align: center;">
+        <div class="aaPanelToolBar">
+          <div style="text-align: center;">
 
-          <span click.trigger="onMoverDone($event)" class="aaBtn">Done</span>
-          <span click.trigger="onMoverCancel($event)" class="aaBtn" style="margin-left: 4pc;">Cancel</span>
-          <!--
-                    <span click.trigger="onSwapRows($event)" class="aaBtn" style="margin-left: 4pc;">Swap rows</span>
-                    <div id="${equationSide}-CoorY" class="aaFontLabel">*</div>
-          -->
+            <span click.trigger="onMoverDone($event)" class="aaBtn">Done</span>
+            <span click.trigger="onMoverCancel($event)" class="aaBtn" style="margin-left: 4pc;">Cancel</span>
+            <!--
+                      <span click.trigger="onSwapRows($event)" class="aaBtn" style="margin-left: 4pc;">Swap rows</span>
+                      <div id="${equationSide}-CoorY" class="aaFontLabel">*</div>
+            -->
+          </div>
         </div>
       </div>
     </div>
-  </div>
-  </div>
+    </div>
+  </template>
 </template>

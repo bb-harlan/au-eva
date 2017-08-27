@@ -3,7 +3,7 @@ import {Eva} from '../eva';
 import {ModuleTran} from './module-tran';
 import {Bchg} from '../models/bchg';
 //
-@customElement('tran-bchg-cells')
+@customElement('au-tran-bchg-cells')
 @inject(ModuleTran)
 export class TranBchgCells {
     //

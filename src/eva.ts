@@ -84,17 +84,6 @@ export class Eva {
     return String.fromCharCode(0xf111);
   } // FontAwesome fa-circle
   // get ROW_SELECTED_CHAR():string {return String.fromCharCode(0xf192);} // FontAwesome fa-dot-circle
-  equSideText(equSideAbbr: string): string {
-    if (equSideAbbr == this.SIDE_ASSETS) {
-      return 'Assets';
-    }
-    else if (equSideAbbr == this.SIDE_EQUITIES) {
-      return 'Equities';
-    }
-    else {
-      return '?';
-    }
-  }
 
   /*=====================================================
    *  view state info
@@ -141,18 +130,6 @@ export class Eva {
     return this._nextBchgId++;
   }
 
-  formattedCurrency(currencyAmount: number): string {
-    return Intl.NumberFormat("en-US",
-      {style: "decimal",
-        minimumIntegerDigits: 1,
-        minimumFractionDigits: 2,
-        maximumFractionDigits: 2}).format(currencyAmount);
-  }
-
-
-  dataSource = "eva.currencyAmount1";
-  currencyAmount1: number = 1234.56;
-  @bindable currencyAmount2: number = 789.12;
 
   generateTestData() {
     console.log('Generating test data...');

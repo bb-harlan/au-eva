@@ -1,10 +1,9 @@
 body {
   text-align: center;
   /*background-color: #fff;*/
-  /* background-color: #ABABAB; */
+   background-color: #ABABAB;
   /* background-color: #c0c0c0; */
-  background-color: #d0d0d0;
-  background-color: #fff;
+  /*background-color: #d0d0d0;*/
   font-family: Cambria, serif, Serif;
   font-weight: bold;
   font-size: medium;
@@ -39,12 +38,12 @@ h1 {
 .aaFontData {
   font-family: Cambria, serif, Serif;
   font-weight: bold;
-  font-size: medium;
+  font-size: small;
   color: #000;
 }
 
 .aaFontSizeData {
-  font-size: medium;
+  font-size: small;
 }
 
 .aaIconRed {
@@ -168,7 +167,7 @@ h1 {
 .aaForm {
   /*margin-top: 1pc;*/
   text-align: left;
-  font-size: medium;
+  font-size: small;
 }
 
 .aaFormItemLabel {

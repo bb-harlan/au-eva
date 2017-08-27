@@ -1,5 +1,8 @@
 <template>
   <require from="../au-views/vertical-gridline.html"></require>
+  <require from="../au-converters/currency-converter"></require>
+  <require from="../au-converters/equation-side-converter"></require>
+
   <!--
   <require from="../au-views/bchg-selected-row.html"></require>
 -->
@@ -52,13 +55,9 @@
       <template if.bind="eva.selectedAcct.isAcct()">
         <div class="aaForm">
           <table border="0" style="border-collapse: collapse;">
-<!--             <tr>
-              <td class="aaFormItemLabel">ID:</td>
-              <td class="aaFormItemData">${eva.selectedAcct.id}</td>
-            </tr>
- -->            <tr>
+            <tr>
               <td class="aaFormItemLabel">Equation side:</td>
-              <td class="aaFormItemData">${eva.equSideText(eva.selectedAcct.equationSide)}</td>
+              <td class="aaFormItemData">${eva.selectedAcct.equationSide | equationSideConverter:true:true}</td>
             </tr>
             <tr>
               <td class="aaFormItemLabel">Title:</td>
@@ -90,7 +89,8 @@
               <vertical-gridline></vertical-gridline>
               <div class="aaCellText aaFontSizeLabel aaCellTranDate"><span class=" aaSansSerif">Date</span></div>
               <vertical-gridline></vertical-gridline>
-              <div class="aaCellText aaFontSizeLabel aaCellBchgDesc"><span class=" aaSansSerif">Change description</span></div>
+              <div class="aaCellText aaFontSizeLabel aaCellBchgDesc"><span
+                class=" aaSansSerif">Change description</span></div>
               <vertical-gridline></vertical-gridline>
               <div class="aaCellText aaFontSizeLabel aaCellBchgAmt"><span class="aaSansSerif">Change amt</span></div>
               <vertical-gridline></vertical-gridline>
@@ -100,23 +100,27 @@
           </div>
           <div class="aaGridScrollableRows" id="acctModule-${eva.selectedAcct.id}">
             <template repeat.for="bchg of eva.selectedAcct.bchgList">
-              <div id="${bchg.id}" class="aaRow" mouseenter.trigger="onRowEnter($event, bchg)" mouseleave.trigger="onRowLeave($event, bchg)">
+              <div id="${bchg.id}" class="aaRow" mouseenter.trigger="onRowEnter($event, bchg)"
+                   mouseleave.trigger="onRowLeave($event, bchg)">
                 <div class="aaCellRowOps  aaFontSizeLabel">
                   <span class="aaBtn aaBtnHidden" click.delegate="onGoBchg($event, bchg)">
                     <i class="fa fa-chevron-right fa-fw" aria-hidden="true"></i>
                   </span>
                 </div>
                 <vertical-gridline></vertical-gridline>
-                <div class="aaCellText aaCellRowSelectedChar" css="visibility: ${bchg.id == eva.selectedBchg.id ? 'visible' : 'hidden'};">${eva.ROW_SELECTED_CHAR}</div>
+                <div class="aaCellText aaCellRowSelectedChar"
+                     css="visibility: ${bchg.id == eva.selectedBchg.id ? 'visible' : 'hidden'};">
+                  ${eva.ROW_SELECTED_CHAR}
+                </div>
                 <div class="aaRowDataCells">
                   <vertical-gridline></vertical-gridline>
                   <div class="aaCellText aaFontSizeData aaCellTranDate">${bchg.sourceTran.date}</div>
                   <vertical-gridline></vertical-gridline>
                   <div class="aaCellText aaFontSizeData aaCellBchgDesc">${bchg.desc}</div>
                   <vertical-gridline></vertical-gridline>
-                  <div class="aaCellText aaFontSizeData aaCellBchgAmt">${eva.formattedCurrency(bchg.amt)}</div>
+                  <div class="aaCellText aaFontSizeData aaCellBchgAmt">${bchg.amt | currencyConverter}</div>
                   <vertical-gridline></vertical-gridline>
-                  <div class="aaCellText aaFontSizeData aaCellBchgBal">${eva.formattedCurrency(bchg.newBalance)}</div>
+                  <div class="aaCellText aaFontSizeData aaCellBchgBal">${bchg.newBalance | currencyConverter}</div>
                   <vertical-gridline></vertical-gridline>
                 </div>
               </div>
@@ -131,7 +135,8 @@
                 <span class="aaBtn aaBtnHidden"><i class="fa fa-chevron-right fa-fw" aria-hidden="true"></i></span>
               </div>
               <vertical-gridline></vertical-gridline>
-              <div class="aaCellText aaFontData aaCellTranDate"><span class="aaSansSerif aaCellTextEOL">${eva.END_OF_LIST}</span></div>
+              <div class="aaCellText aaFontData aaCellTranDate"><span class="aaSansSerif aaCellTextEOL">${eva.END_OF_LIST}</span>
+              </div>
               <vertical-gridline></vertical-gridline>
               <div class="aaCellText aaFontData aaCellBchgDesc"></div>
               <vertical-gridline></vertical-gridline>
@@ -148,7 +153,8 @@
         <div class="aaForm">
           <template if.bind="!eva.isEditing">
             <span class="aaSansSerif">Annotation:</span>
-            <input class="aaInputText aaCellAnnoTitle aaSansSerif" type="text" value="${eva.selectedAcct.annoText}" disabled>
+            <input class="aaInputText aaCellAnnoTitle aaSansSerif" type="text" value="${eva.selectedAcct.annoText}"
+                   disabled>
             <br>
           </template>
           <template if.bind="eva.isEditing">
@@ -168,7 +174,8 @@
               <span class="aaBtn aaBtnHidden"><i class="fa fa-chevron-right fa-fw" aria-hidden="true"></i></span>
             </div>
             <vertical-gridline></vertical-gridline>
-            <div class="aaCellText aaFontData aaCellTranDate"><span class="aaSansSerif aaCellTextEOL">${eva.END_OF_LIST}</span></div>
+            <div class="aaCellText aaFontData aaCellTranDate"><span
+              class="aaSansSerif aaCellTextEOL">${eva.END_OF_LIST}</span></div>
             <vertical-gridline></vertical-gridline>
             <div class="aaCellText aaFontData aaCellBchgDesc"></div>
             <vertical-gridline></vertical-gridline>

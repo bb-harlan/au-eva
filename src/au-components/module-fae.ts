@@ -1,7 +1,7 @@
-import {customElement} from 'aurelia-framework';
+import {customElement, bindable} from 'aurelia-framework';
 import {Eva} from '../eva';
 
-@customElement('module-fae')
+@customElement('au-module-fae')
 export class ModuleFae {
     //
     eva:Eva = Eva.getInstance();

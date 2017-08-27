@@ -1,5 +1,5 @@
 <template>
-  <require from="../au-views/gh-tran-bchg.html"></require>
+  <require from="../au-views/bchg-grid-header.html"></require>
   <require from="../au-views/vertical-gridline.html"></require>
   <require from="../au-views/tran-bchg-cells-spacer.html"></require>
   <require from="../au-components/tran-bchg-row-data"></require>
@@ -20,7 +20,7 @@
             <div class="aaCellText aaCellRowSelectedChar" style="visibility: hidden;">${eva.ROW_SELECTED_CHAR}</div>
             <vertical-gridline></vertical-gridline>
             <div class="aaCellText aaFontSizeLabel aaCellTranDate">Date</div>
-            <gh-tran-bchg></gh-tran-bchg>
+            <bchg-grid-header></bchg-grid-header>
           </div>
         </div>
         <div class="aaGridScrollableRows" style="height: 33pc;" id="jrnlGridBodyContainer">
@@ -42,7 +42,7 @@
                 <vertical-gridline></vertical-gridline>
                 <div class="aaInlineBlock">
                   <div class="aaInlineBlock" xcss="border-bottom: 1px solid ${eva.GRIDLINE_COLOR};">
-                    <tran-bchg-row-data bchg.bind="tran.bchgList[0]"></tran-bchg>
+                    <au-tran-bchg-row-data bchg.bind="tran.bchgList[0]"></au-tran-bchg-row-data>
                   </div>
 
                   <template repeat.for="bchg of tran.bchgList.slice(1)">
