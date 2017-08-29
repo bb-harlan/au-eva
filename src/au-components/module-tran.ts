@@ -117,7 +117,7 @@ export class ModuleTran {
     alert(`bchg.id: ${bchg ? bchg.id : "End-of-list"} - "Row ops menu" not yet implemented.`);
   }
 
-  onMoverOpen(event) {
+  onMoverDialogOpen(event) {
     alert('"Rearrange list sequence" not yet implemented.');
   }
 

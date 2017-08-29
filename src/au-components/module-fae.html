@@ -5,27 +5,17 @@
   <div class="aaPanel aaPanelBoxShadow">
     <div class="aaPanelHeader aaPanelHeaderModule">The fundamental accounting equation</div>
     <div class="aaPanelBody">
-      <!--<div style="white-space: nowrap;">-->
-        <div class="aaEquSideContainer">
-          <!--<h1 class="text-right">Assets</h1>-->
-          <au-fae-side
-            au-equation-side="${eva.SIDE_ASSETS}"
-              mouseenter.trigger="selectSide(eva.SIDE_ASSETS)"
-              mouseleave.trigger="deselectSide(eva.SIDE_ASSETS)">
-          </au-fae-side>
-        </div>
-        <div class="aaEquSideContainer" style="padding: 0 1pc;">
-          <h1>=</h1>
-        </div>
-        <div class="aaEquSideContainer">
-          <!--<h1 style="text-align: left;">Equities</h1>-->
-          <au-fae-side
-              au-equation-side="${eva.SIDE_EQUITIES}"
-              mouseenter.trigger="selectSide(eva.SIDE_EQUITIES)"
-              mouseleave.trigger="deselectSide(eva.SIDE_EQUITIES)">
-          </au-fae-side>
-        </div>
-      <!--</div>-->
+      <div class="aaEquSideContainer">
+        <au-fae-side equation-side="${eva.SIDE_ASSETS}" mouseenter.trigger="selectSide(eva.SIDE_ASSETS)" mouseleave.trigger="deselectSide(eva.SIDE_ASSETS)">
+        </au-fae-side>
+      </div>
+      <div class="aaEquSideContainer" style="padding: 0 1pc;">
+        <h1>=</h1>
+      </div>
+      <div class="aaEquSideContainer">
+        <au-fae-side equation-side="${eva.SIDE_EQUITIES}" mouseenter.trigger="selectSide(eva.SIDE_EQUITIES)" mouseleave.trigger="deselectSide(eva.SIDE_EQUITIES)">
+        </au-fae-side>
+      </div>
     </div>
   </div>
 </template>

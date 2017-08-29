@@ -19,15 +19,12 @@ export class EquationSide {
         this.faeSide.equationSide = this.value;
         switch (this.faeSide.equationSide) {
             case this.eva.SIDE_ASSETS:
-                this.faeSide.sideHeading = "Asset accounts";
                 this.faeSide.sideAcctList = this.eva.assetList;
                 break;
             case this.eva.SIDE_EQUITIES:
-                this.faeSide.sideHeading = "Equity accounts";
                 this.faeSide.sideAcctList = this.eva.equityList;
                 break;
             default:
-                this.faeSide.sideHeading = "[Logic fault]";
                 this.faeSide.sideAcctList = [] as AcctList;
         }
     }

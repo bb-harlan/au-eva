@@ -5,12 +5,15 @@ import {Acct, Annotation} from '../models/acct';
 
 @customElement('au-fae-side')
 export class FaeSide {
+  //
   eva: Eva = Eva.getInstance();
   @bindable equationSide: string;
-  sideHeading: string;
+  // equationSide: string;
   sideAcctList: AcctList;
-  moverNeeded = true;
-  moverDialog;
+  bindMoverDialog = true;
+  moverDialogModal;
+  moverDialogContent;
+  moverDialogPositionElement;
   mouseIsDown: boolean = false;
   selectedMoverRow: Element = null;
   mouseEventCnt: number = 1;
@@ -18,12 +21,13 @@ export class FaeSide {
   attached() {
     /*
     The au-equation-side custom attribute is used to set this.equationSide to
-    either "A" or "E" which in turn is used by this method to set the properties...
-      sideHeading
+    either "A" or "E" which in turn is used by this method to set the property...
+
       sideAcctList
 
     ...as follows.
     */
+    // console.log(`this.equationSide: "${this.equationSide}";`);
     switch (this.equationSide) {
       case this.eva.SIDE_ASSETS:
         this.sideAcctList = this.eva.assetList;
@@ -34,15 +38,16 @@ export class FaeSide {
       default:
         this.sideAcctList = null;
     }
+    console.log(this.sideAcctList);
     /*
-    * Position modal content
+    * Set references to
+    *     moverDialogModal,
+    *     moverDialogContent,
+    *     moverDialogPositionElement.
     */
-    this.moverDialog = document.getElementById(`moverDialog${this.equationSide}`);
-    let positioningElement = document.getElementById(`moverAnchor-${this.equationSide}`);
-    let moverDialogContent = document.getElementById(`moverDialogContent${this.equationSide}`);
-    moverDialogContent.style.position = "absolute";
-    moverDialogContent.style.top = `${positioningElement.offsetTop}px`;
-    moverDialogContent.style.left = `${positioningElement.offsetLeft}px`;
+    this.moverDialogModal = document.getElementById(`moverDialogModal${this.equationSide}`);
+    this.moverDialogContent = document.getElementById(`moverDialogContent${this.equationSide}`);
+    this.moverDialogPositionElement = document.getElementById(`moverAnchor-${this.equationSide}`);
   }
 
   /*
@@ -88,18 +93,17 @@ export class FaeSide {
     this.eva.selectedModule = this.eva.MODULE_ACCT;
   }
 
-  onMoverOpen(event) {
-    // let moverRowList = document.getElementById(`${this.equationSide}-mover-row-list`);
-    this.moverNeeded = true;
-    this.moverDialog.style.display = "block";
+  onMoverDialogOpen(event) {
+    let moverRowList = document.getElementById(`${this.equationSide}-mover-row-list`);
+    // this.bindMoverDialog = true;
+    this.moverDialogModal.style.display = "block";
   }
 
-  onMoverDone(event) {
+  onMoverDialogDone(event) {
     let moverRowList = document.getElementById(`${this.equationSide}-mover-row-list`);
     for (let i = 0; i < moverRowList.childElementCount; i++) {
       let moverAcctId = moverRowList.children[i].getAttribute("data-acct-id");
       for (let acctItem of this.sideAcctList) {
-        // console.log(`moverRowId: "${moverRowId}"; acctItem.id: "${acctItem.id}"`);
         if (acctItem.id == moverAcctId) {
           acctItem.intraSideSorter = i;
           break;
@@ -107,17 +111,16 @@ export class FaeSide {
       }
     }
     this.sideAcctList.refresh();
-    // console.log(this.sideAcctList);
-    this.moverDialog.style.display = "none";
-    this.moverNeeded = false;
+    this.moverDialogModal.style.display = "none";
+    // this.bindMoverDialog = false;
   }
 
-  onMoverCancel(event) {
-    this.moverDialog.style.display = "none";
-    this.moverNeeded = false;
+  onMoverDialogCancel(event) {
+    this.moverDialogModal.style.display = "none";
+    this.bindMoverDialog = false;
   }
 
-  onMoverMouseDown(event) {
+  onMoveRowMouseDown(event) {
     let targetRow: Element = event.currentTarget as Element;
     // this.logMouseEvent("mouseDown", this.selectedMoverRow, targetRow);
     targetRow.children[0].classList.toggle('aaRowHover', false);
@@ -126,7 +129,7 @@ export class FaeSide {
     this.selectedMoverRow = event.currentTarget;
   }
 
-  onMoverMouseUp(event) {
+  onMoveRowMouseUp(event) {
     let targetRow = event.currentTarget as Element;
     // this.logMouseEvent("mouseUp", this.selectedMoverRow, targetRow);
     targetRow.children[0].classList.toggle('aaDragging', false);
@@ -135,14 +138,14 @@ export class FaeSide {
     this.selectedMoverRow = null;
   }
 
-  onMoverMouseLeave(event, listItem) {
+  onMoveRowMouseLeave(event, listItem) {
     if (!this.mouseIsDown) {
       let targetRow = event.currentTarget as Element;
       targetRow.children[0].classList.toggle('aaRowHover', false);
     }
   }
 
-  onMoverMouseEnter(event, listItem) {
+  onMoveRowMouseEnter(event, listItem) {
     if (!this.mouseIsDown) {
       let targetRow = event.currentTarget as Element;
       targetRow.children[0].classList.toggle('aaRowHover', true);
