@@ -99,8 +99,7 @@ export class Eva {
   //
   /*==========================================================
    *  data model stuff
-   *
-   * */
+   */
   assetList: AcctList = new AcctList(this.SIDE_ASSETS);
   equityList: AcctList = new AcctList(this.SIDE_EQUITIES);
   tranList: TranList = new TranList();

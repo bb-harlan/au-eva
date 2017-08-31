@@ -5,17 +5,16 @@
   <require from="../au-converters/equation-side-converter"></require>
   <require from="../au-components/acct-mover"></require>
 
-  <h1 id="moverAnchor-${equationSide}"
-      css="text-align: ${equationSide == eva.SIDE_ASSETS ? 'right' : 'left'};">${equationSide |
+  <h1 element.ref="moverDialogPositionElement"
+      css="text-align: ${sideAcctList.equationSide == eva.SIDE_ASSETS ? 'right' : 'left'};">${sideAcctList.equationSide |
     equationSideConverter:true:true}</h1>
   <div class="aaGridContainer">
-    <div class="aaGridTitleBar" style="font-size: larger;">${equationSide | equationSideConverter:true:false} accounts
+    <div class="aaGridTitleBar" style="font-size: larger;">${sideAcctList.equationSide | equationSideConverter:true:false} accounts
     </div>
     <div class="aaPanelToolBar">
-      <span click.trigger="onMoverDialogOpen($event)" class="aaBtn">
-         <i class="fa fa-arrows-v fa-fw aaIconBlue" aria-hidden="true"></i> Move rows
-      </span>
-      <au-acct-mover></au-acct-mover>
+      <au-acct-mover
+        side-acct-list.bind="sideAcctList"
+        mover-dialog-position-element.bind="moverDialogPositionElement"></au-acct-mover>
     </div>
     <div id="gridHeader${equationSide}" class="aaGridHeader">
       <div class="aaFontLabel aaRow">
@@ -147,63 +146,4 @@
       <vertical-gridline-spacer></vertical-gridline-spacer>
     </div>
   </div>
-
-  <template if.bind="bindMoverDialog">
-    <div id="moverDialogModal${equationSide}" class="aaModal">
-      <div
-        id="moverDialogContent${equationSide}"
-        class="aaPanel aaPanelBoxShadow"
-        css="position: absolute; top: ${moverDialogPositionElement.offsetTop}px; left: ${moverDialogPositionElement.offsetLeft}px;"
-      >
-        <div class="aaPanelHeader aaPanelHeaderModule">Row mover</div>
-        <div class="aaPanelBody">
-          <div class="aaGridContainer aaInlineBlock">
-            <div class="aaGridTitleBar" style="font-size: larger;">${equationSide | equationSideConverter:true:false}
-              accounts
-            </div>
-            <div class="aaPanelToolBar">
-              <div style="text-align: center;">
-                <span class="aaFontLabel">Drag & drop any row to desired list position.</span>
-              </div>
-            </div>
-            <div id="${equationSide}-mover-row-list"
-                 class="aaGridScrollableRows"
-                 mousemove.trigger="onMouseMove($event)">
-              <template repeat.for="listItem of sideAcctList">
-                <div
-                  class="aaRow"
-                  data-acct-id="${listItem.id}"
-                  mouseenter.trigger="onMoveRowMouseEnter($event, listItem)"
-                  mouseleave.trigger="onMoveRowMouseLeave($event, listItem)"
-                  mousedown.trigger="onMoveRowMouseDown($event)"
-                  mouseup.trigger="onMoveRowMouseUp($event)">
-                  <div class="aaRowDataCells">
-                    <template if.bind="listItem.isAcct()">
-                      <span class="aaCellText aaFontSizeData aaCellAcctTitle">${listItem.title}</span>
-                      <vertical-gridline></vertical-gridline>
-                      <span class="aaCellText aaFontSizeData aaCellBchgBal">${listItem.bchgList.endingBalance | currencyConverter}</span>
-                    </template>
-                    <template if.bind="listItem.isAnnotation()">
-                      <span class="aaCellText aaFontSizeData aaCellAnnoTitle">${listItem.annoText}</span>
-                      <vertical-gridline></vertical-gridline>
-                      <span class="aaCellText aaFontSizeData aaCellBchgBal"></span>
-                    </template>
-                    <vertical-gridline></vertical-gridline>
-                  </div>
-                </div>
-              </template>
-            </div>
-            <div class="aaGridFooterBar"></div>
-          </div>
-        </div>
-        <div class="aaPanelToolBar">
-          <div style="text-align: center;">
-            <span click.trigger="onMoverDialogDone($event)" class="aaBtn">Done</span>
-            <span click.trigger="onMoverDialogCancel($event)" class="aaBtn" style="margin-left: 4pc;">Cancel</span>
-          </div>
-        </div>
-      </div>
-    </div>
-    </div>
-  </template>
 </template>

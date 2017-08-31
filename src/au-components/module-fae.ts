@@ -4,7 +4,7 @@ import {Eva} from '../eva';
 @customElement('au-module-fae')
 export class ModuleFae {
     //
-    eva:Eva = Eva.getInstance();
+    @bindable eva:Eva = Eva.getInstance();
 
     constructor() {
     }

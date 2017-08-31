@@ -6,14 +6,14 @@
     <div class="aaPanelHeader aaPanelHeaderModule">The fundamental accounting equation</div>
     <div class="aaPanelBody">
       <div class="aaEquSideContainer">
-        <au-fae-side equation-side="${eva.SIDE_ASSETS}" mouseenter.trigger="selectSide(eva.SIDE_ASSETS)" mouseleave.trigger="deselectSide(eva.SIDE_ASSETS)">
+        <au-fae-side side-acct-list.bind="eva.assetList" mouseenter.trigger="selectSide(eva.SIDE_ASSETS)" mouseleave.trigger="deselectSide(eva.SIDE_ASSETS)">
         </au-fae-side>
       </div>
       <div class="aaEquSideContainer" style="padding: 0 1pc;">
         <h1>=</h1>
       </div>
       <div class="aaEquSideContainer">
-        <au-fae-side equation-side="${eva.SIDE_EQUITIES}" mouseenter.trigger="selectSide(eva.SIDE_EQUITIES)" mouseleave.trigger="deselectSide(eva.SIDE_EQUITIES)">
+        <au-fae-side side-acct-list.bind="eva.equityList" mouseenter.trigger="selectSide(eva.SIDE_EQUITIES)" mouseleave.trigger="deselectSide(eva.SIDE_EQUITIES)">
         </au-fae-side>
       </div>
     </div>

@@ -14,7 +14,7 @@ export class EquationSideConverter {
       return `${capitalize ? "E" : "e"}quit${plural ? "ies" : "y"}`;
     }
     else {
-      return "[equation side Logic fault]";
+      return "[equation side logic fault]";
     }
   }
 }

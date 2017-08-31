@@ -5,7 +5,7 @@ body {
   /* background-color: #c0c0c0; */
   /*background-color: #d0d0d0;*/
   font-family: Cambria, serif, Serif;
-  font-weight: bold;
+  /*font-weight: bold;*/
   font-size: medium;
   color: #000;
 }
@@ -37,13 +37,14 @@ h1 {
 
 .aaFontData {
   font-family: Cambria, serif, Serif;
-  font-weight: bold;
-  font-size: small;
+  /*font-weight: bold;*/
+  /*font-size: small;*/
+  font-size: medium;
   color: #000;
 }
 
 .aaFontSizeData {
-  font-size: small;
+  font-size: medium;
 }
 
 .aaIconRed {
@@ -290,7 +291,7 @@ h1 {
 
 .aaGridTitleBar {
   padding: 0.25pc;
-  color: #555;
+  color: #333;
   background-color: #b6cbe2;
   border-bottom: 1px solid #999;
   /* -webkit-box-shadow: inset 0px 5px 10px 0px #eee; */

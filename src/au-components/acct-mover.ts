@@ -1,111 +1,77 @@
-import {customElement, bindable, inject} from 'aurelia-framework';
+import {customElement, bindable} from 'aurelia-framework';
 import {Eva} from '../eva';
 import {AcctList} from '../models/acct-list';
 import {Acct, Annotation} from '../models/acct';
-import {FaeSide} from '../au-components/fae-side';
 
 @customElement('au-acct-mover')
-@inject(FaeSide)
 export class AcctMover {
   //
   eva: Eva = Eva.getInstance();
-  faeSide: FaeSide;
-  equationSide: string;
-  sideAcctList: AcctList;
-  moverDialogPositionElement;
+  @bindable equationSide: string;
+  @bindable sideAcctList: AcctList;
+  @bindable moverDialogPositionElement;
 
-  bindMoverDialog = true;
-  moverDialog;
+  sideMoverAcctList: AcctList;
   mouseIsDown: boolean = false;
   selectedMoverRow: Element = null;
-  mouseEventCnt: number = 1;
-  moverDialogModal;
-  //
-  constructor(faeSide: FaeSide) {
-    console.log(`[in constructor] faeSide: ${faeSide};`);
-    console.log(`[in constructor] faeSide.equationSide: ${faeSide.equationSide};`);
-    console.log(`[in constructor] faeSide.sideAcctList: ${faeSide.sideAcctList};`);
-    this.faeSide = faeSide;
-    console.log(`[in constructor] this.faeSide: ${this.faeSide};`);
-    console.log(`[in constructor] this.faeSide.equationSide: ${this.faeSide.equationSide};`);
-    this.equationSide = faeSide.equationSide;
-    this.sideAcctList = faeSide.sideAcctList;
-    this.moverDialogPositionElement = faeSide.moverDialogPositionElement;
-    this.moverDialogModal = document.getElementById(`moverDialogModal2-${this.equationSide}`);
-    console.log(`(in acct-mover.ts):: moverDialogModal.id: "moverDialogModal2-${this.equationSide}";`);
-    console.log(this.moverDialogModal);
-  }
+  moverDialogModal: HTMLElement = null;
+  moverRowList: HTMLElement;
 
 
-
-  attached() {
-    // this.moverDialogModal = document.getElementById(`moverDialogModal2-${this.equationSide}`);
-    // console.log(`(in acct-mover.ts):: moverDialogModal.id: "moverDialogModal2-${this.equationSide}";`);
-    // console.log(this.moverDialogModal);
-  }
-
-  onMoverDialogOpen(event) {
-    // let moverRowList = document.getElementById(`${this.equationSide}-mover-row-list`);
-    this.bindMoverDialog = true;
+  onDialogOpen(event) {
+    this.sideMoverAcctList = new AcctList(this.sideAcctList.equationSide);
+    for (let listItem of this.sideAcctList) {
+      this.sideMoverAcctList.push(listItem);
+    }
     this.moverDialogModal.style.display = "block";
   }
 
-  onMoverDialogDone(event) {
-    let moverRowList = document.getElementById(`${this.equationSide}-mover-row-list`);
-    for (let i = 0; i < moverRowList.childElementCount; i++) {
-      let moverAcctId = moverRowList.children[i].getAttribute("data-acct-id");
-      for (let acctItem of this.sideAcctList) {
-        // console.log(`moverRowId: "${moverRowId}"; acctItem.id: "${acctItem.id}"`);
-        if (acctItem.id == moverAcctId) {
-          acctItem.intraSideSorter = i;
-          break;
-        }
-      }
+  onDialogDone(event) {
+    for (let i = 0; i < this.moverRowList.childElementCount; i++) {
+      let listItem = (<any>this.moverRowList.children[i]).listItem as Acct | Annotation;
+      listItem.intraSideSorter = i;
     }
     this.sideAcctList.refresh();
-    // console.log(this.sideAcctList);
+    this.sideMoverAcctList = null;
     this.moverDialogModal.style.display = "none";
-    this.bindMoverDialog = false;
   }
 
-  onMoverDialogCancel(event) {
+  onDialogCancel(event) {
+    this.sideMoverAcctList = null;
     this.moverDialogModal.style.display = "none";
-    this.bindMoverDialog = false;
   }
 
-  onMoveRowMouseDown(event) {
+  onRowMouseDown(event) {
     let targetRow: Element = event.currentTarget as Element;
-    // this.logMouseEvent("mouseDown", this.selectedMoverRow, targetRow);
     targetRow.children[0].classList.toggle('aaRowHover', false);
     targetRow.children[0].classList.toggle('aaDragging', true);
     this.mouseIsDown = true;
     this.selectedMoverRow = event.currentTarget;
   }
 
-  onMoveRowMouseUp(event) {
+  onRowMouseUp(event) {
     let targetRow = event.currentTarget as Element;
-    // this.logMouseEvent("mouseUp", this.selectedMoverRow, targetRow);
     targetRow.children[0].classList.toggle('aaDragging', false);
     targetRow.children[0].classList.toggle('aaRowHover', true);
     this.mouseIsDown = false;
     this.selectedMoverRow = null;
   }
 
-  onMoveRowMouseLeave(event, listItem) {
+  onRowMouseLeave(event, listItem) {
     if (!this.mouseIsDown) {
       let targetRow = event.currentTarget as Element;
       targetRow.children[0].classList.toggle('aaRowHover', false);
     }
   }
 
-  onMoveRowMouseEnter(event, listItem) {
+  onRowMouseEnter(event, listItem) {
     if (!this.mouseIsDown) {
       let targetRow = event.currentTarget as Element;
       targetRow.children[0].classList.toggle('aaRowHover', true);
     }
   }
 
-  onMouseMove(event) {
+  onListMouseMove(event) {
     if (!this.mouseIsDown || !this.selectedMoverRow) {
       return;
     }
@@ -126,8 +92,4 @@ export class AcctMover {
   elementY(element) {
     return element.getBoundingClientRect().top;
   };
-
-  logMouseEvent(mouseEvent: string, selectedMoverRow: Element, targetRow: Element) {
-    // console.log(`${this.mouseEventCnt++}. mouseEvent: ${mouseEvent}; selectedMoverRow: ${selectedMoverRow ? selectedMoverRow.children[0].innerHTML : "null"}; targetRow: ${targetRow.children[0].innerHTML};`);
-  }
 }

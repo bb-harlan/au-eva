@@ -9,14 +9,11 @@ export class FaeSide {
   eva: Eva = Eva.getInstance();
   @bindable equationSide: string;
   // equationSide: string;
-  sideAcctList: AcctList;
-  bindMoverDialog = true;
-  moverDialogModal;
-  moverDialogContent;
-  moverDialogPositionElement;
-  mouseIsDown: boolean = false;
-  selectedMoverRow: Element = null;
-  mouseEventCnt: number = 1;
+  @bindable sideAcctList: AcctList;
+  moverDialogModal: HTMLElement;
+  moverDialogContent: HTMLElement;
+  moverDialogPositionElement: HTMLElement;
+  // moverRowList: HTMLElement;
 
   attached() {
     /*
@@ -27,8 +24,7 @@ export class FaeSide {
 
     ...as follows.
     */
-    // console.log(`this.equationSide: "${this.equationSide}";`);
-    switch (this.equationSide) {
+    switch (this.sideAcctList.equationSide) {
       case this.eva.SIDE_ASSETS:
         this.sideAcctList = this.eva.assetList;
         break;
@@ -45,9 +41,9 @@ export class FaeSide {
     *     moverDialogContent,
     *     moverDialogPositionElement.
     */
-    this.moverDialogModal = document.getElementById(`moverDialogModal${this.equationSide}`);
-    this.moverDialogContent = document.getElementById(`moverDialogContent${this.equationSide}`);
-    this.moverDialogPositionElement = document.getElementById(`moverAnchor-${this.equationSide}`);
+    // this.moverDialogModal = document.getElementById(`moverDialogModal${this.equationSide}`);
+    // this.moverDialogContent = document.getElementById(`moverDialogContent${this.equationSide}`);
+    // this.moverDialogPositionElement = document.getElementById(`moverAnchor-${this.equationSide}`);
   }
 
   /*
@@ -91,90 +87,5 @@ export class FaeSide {
     this.eva.selectedBchg = null;
     this.eva.selectedAcct = listItem;
     this.eva.selectedModule = this.eva.MODULE_ACCT;
-  }
-
-  onMoverDialogOpen(event) {
-    let moverRowList = document.getElementById(`${this.equationSide}-mover-row-list`);
-    // this.bindMoverDialog = true;
-    this.moverDialogModal.style.display = "block";
-  }
-
-  onMoverDialogDone(event) {
-    let moverRowList = document.getElementById(`${this.equationSide}-mover-row-list`);
-    for (let i = 0; i < moverRowList.childElementCount; i++) {
-      let moverAcctId = moverRowList.children[i].getAttribute("data-acct-id");
-      for (let acctItem of this.sideAcctList) {
-        if (acctItem.id == moverAcctId) {
-          acctItem.intraSideSorter = i;
-          break;
-        }
-      }
-    }
-    this.sideAcctList.refresh();
-    this.moverDialogModal.style.display = "none";
-    // this.bindMoverDialog = false;
-  }
-
-  onMoverDialogCancel(event) {
-    this.moverDialogModal.style.display = "none";
-    this.bindMoverDialog = false;
-  }
-
-  onMoveRowMouseDown(event) {
-    let targetRow: Element = event.currentTarget as Element;
-    // this.logMouseEvent("mouseDown", this.selectedMoverRow, targetRow);
-    targetRow.children[0].classList.toggle('aaRowHover', false);
-    targetRow.children[0].classList.toggle('aaDragging', true);
-    this.mouseIsDown = true;
-    this.selectedMoverRow = event.currentTarget;
-  }
-
-  onMoveRowMouseUp(event) {
-    let targetRow = event.currentTarget as Element;
-    // this.logMouseEvent("mouseUp", this.selectedMoverRow, targetRow);
-    targetRow.children[0].classList.toggle('aaDragging', false);
-    targetRow.children[0].classList.toggle('aaRowHover', true);
-    this.mouseIsDown = false;
-    this.selectedMoverRow = null;
-  }
-
-  onMoveRowMouseLeave(event, listItem) {
-    if (!this.mouseIsDown) {
-      let targetRow = event.currentTarget as Element;
-      targetRow.children[0].classList.toggle('aaRowHover', false);
-    }
-  }
-
-  onMoveRowMouseEnter(event, listItem) {
-    if (!this.mouseIsDown) {
-      let targetRow = event.currentTarget as Element;
-      targetRow.children[0].classList.toggle('aaRowHover', true);
-    }
-  }
-
-  onMouseMove(event) {
-    if (!this.mouseIsDown || !this.selectedMoverRow) {
-      return;
-    }
-    let mouseY = event.clientY;
-    let moverRowList = event.currentTarget;
-    let previousSibling = this.selectedMoverRow.previousElementSibling;
-    if (previousSibling && mouseY < this.selectedMoverRow.getBoundingClientRect().top) {
-      moverRowList.insertBefore(this.selectedMoverRow, previousSibling);
-      return;
-    }
-    let nextSibling = this.selectedMoverRow.nextElementSibling;
-    if (nextSibling && mouseY >= nextSibling.getBoundingClientRect().top) {
-      moverRowList.insertBefore(nextSibling, this.selectedMoverRow);
-      return;
-    }
-  }
-
-  elementY(element) {
-    return element.getBoundingClientRect().top;
-  };
-
-  logMouseEvent(mouseEvent: string, selectedMoverRow: Element, targetRow: Element) {
-    // console.log(`${this.mouseEventCnt++}. mouseEvent: ${mouseEvent}; selectedMoverRow: ${selectedMoverRow ? selectedMoverRow.children[0].innerHTML : "null"}; targetRow: ${targetRow.children[0].innerHTML};`);
   }
 }
