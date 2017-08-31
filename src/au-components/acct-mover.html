@@ -15,7 +15,7 @@
       <div class="aaPanelHeader aaPanelHeaderModule">Row mover</div>
       <div class="aaPanelBody">
         <div class="aaGridContainer aaInlineBlock">
-          <div class="aaGridTitleBar" style="font-size: larger;">${sideAcctList.equationSide | equationSideConverter:true:false}
+          <div class="aaGridTitleBar" style="font-size: larger;">${acctList.equationSide | equationSideConverter:true:false}
             accounts
           </div>
           <div class="aaPanelToolBar">
@@ -26,7 +26,7 @@
           <div element.ref="moverRowList"
                class="aaGridScrollableRows"
                mousemove.trigger="onListMouseMove($event)">
-            <template repeat.for="listItem of sideMoverAcctList">
+            <template repeat.for="listItem of moverAcctList">
               <div
                 class="aaRow"
                 data-acct-id="${listItem.id}"

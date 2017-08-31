@@ -6,14 +6,14 @@
   <require from="../au-components/acct-mover"></require>
 
   <h1 element.ref="moverDialogPositionElement"
-      css="text-align: ${sideAcctList.equationSide == eva.SIDE_ASSETS ? 'right' : 'left'};">${sideAcctList.equationSide |
+      css="text-align: ${acctList.equationSide == eva.SIDE_ASSETS ? 'right' : 'left'};">${acctList.equationSide |
     equationSideConverter:true:true}</h1>
   <div class="aaGridContainer">
-    <div class="aaGridTitleBar" style="font-size: larger;">${sideAcctList.equationSide | equationSideConverter:true:false} accounts
+    <div class="aaGridTitleBar" style="font-size: larger;">${acctList.equationSide | equationSideConverter:true:false} accounts
     </div>
     <div class="aaPanelToolBar">
       <au-acct-mover
-        side-acct-list.bind="sideAcctList"
+        acct-list.bind="acctList"
         mover-dialog-position-element.bind="moverDialogPositionElement"></au-acct-mover>
     </div>
     <div id="gridHeader${equationSide}" class="aaGridHeader">
@@ -36,7 +36,7 @@
       </div>
     </div>
     <div class="aaGridScrollableRows">
-      <template repeat.for="listItem of sideAcctList">
+      <template repeat.for="listItem of acctList">
         <div id="${listItem.id}" class="aaRow" mouseenter.trigger="onRowEnter($event, listItem)"
              mouseleave.trigger="onRowLeave($event, listItem)">
           <template if.bind="listItem.isAcct()">
@@ -96,7 +96,7 @@
           for creating a new account in the list, this end-of-list row provides
           a point to insert a new account at the end of the list.
       -->
-      <div class="aaRow" id="End of equation side ${sideAcctList.equationSide}"
+      <div class="aaRow" id="End of equation side ${acctList.equationSide}"
            mouseenter.trigger="onRowEnter($event, null)" mouseleave.trigger="onRowLeave($event, null)">
         <div class="aaCellRowOps">
           <span class="aaBtn aaBtnHidden" click.delegate="onMenuClick($event, listItem)">
@@ -142,7 +142,7 @@
       <span class="aaCellText aaFontData aaCellAcctTitle" style="text-align: right;"><span
         class="aaSansSerif">Total:</span></span>
       <vertical-gridline-spacer></vertical-gridline-spacer>
-      <span class="aaCellText aaFontData aaCellBchgBal">${sideAcctList.listTotal | currencyConverter}</span>
+      <span class="aaCellText aaFontData aaCellBchgBal">${acctList.listTotal | currencyConverter}</span>
       <vertical-gridline-spacer></vertical-gridline-spacer>
     </div>
   </div>

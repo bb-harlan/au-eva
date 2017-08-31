@@ -9,7 +9,7 @@ export class FaeSide {
   eva: Eva = Eva.getInstance();
   @bindable equationSide: string;
   // equationSide: string;
-  @bindable sideAcctList: AcctList;
+  @bindable acctList: AcctList;
   moverDialogModal: HTMLElement;
   moverDialogContent: HTMLElement;
   moverDialogPositionElement: HTMLElement;
@@ -20,30 +20,20 @@ export class FaeSide {
     The au-equation-side custom attribute is used to set this.equationSide to
     either "A" or "E" which in turn is used by this method to set the property...
 
-      sideAcctList
+      acctList
 
     ...as follows.
     */
-    switch (this.sideAcctList.equationSide) {
+    switch (this.acctList.equationSide) {
       case this.eva.SIDE_ASSETS:
-        this.sideAcctList = this.eva.assetList;
+        this.acctList = this.eva.assetList;
         break;
       case this.eva.SIDE_EQUITIES:
-        this.sideAcctList = this.eva.equityList;
+        this.acctList = this.eva.equityList;
         break;
       default:
-        this.sideAcctList = null;
+        this.acctList = null;
     }
-    console.log(this.sideAcctList);
-    /*
-    * Set references to
-    *     moverDialogModal,
-    *     moverDialogContent,
-    *     moverDialogPositionElement.
-    */
-    // this.moverDialogModal = document.getElementById(`moverDialogModal${this.equationSide}`);
-    // this.moverDialogContent = document.getElementById(`moverDialogContent${this.equationSide}`);
-    // this.moverDialogPositionElement = document.getElementById(`moverAnchor-${this.equationSide}`);
   }
 
   /*

@@ -176,7 +176,7 @@ h1 {
 .aaForm {
   /*margin-top: 1pc;*/
   text-align: left;
-  font-size: small;
+  font-size: medium;
 }
 
 .aaFormItemLabel {
@@ -190,11 +190,13 @@ h1 {
 
 .aaFormItemData {
   padding: 0.30pc 0.5pc 0.20pc 0.5pc;
+  font-size: medium;
 }
 
 .aaFormInputText {
   padding: 1px 0.5pc;
   background-color: #fff;
+  font-size: medium;
 }
 
 .aaFormInputText:disabled {

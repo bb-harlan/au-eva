@@ -8,10 +8,10 @@ export class AcctMover {
   //
   eva: Eva = Eva.getInstance();
   @bindable equationSide: string;
-  @bindable sideAcctList: AcctList;
+  @bindable acctList: AcctList;
   @bindable moverDialogPositionElement;
 
-  sideMoverAcctList: AcctList;
+  moverAcctList: AcctList;
   mouseIsDown: boolean = false;
   selectedMoverRow: Element = null;
   moverDialogModal: HTMLElement = null;
@@ -19,9 +19,9 @@ export class AcctMover {
 
 
   onDialogOpen(event) {
-    this.sideMoverAcctList = new AcctList(this.sideAcctList.equationSide);
-    for (let listItem of this.sideAcctList) {
-      this.sideMoverAcctList.push(listItem);
+    this.moverAcctList = new AcctList(this.acctList.equationSide);
+    for (let listItem of this.acctList) {
+      this.moverAcctList.push(listItem);
     }
     this.moverDialogModal.style.display = "block";
   }
@@ -31,13 +31,13 @@ export class AcctMover {
       let listItem = (<any>this.moverRowList.children[i]).listItem as Acct | Annotation;
       listItem.intraSideSorter = i;
     }
-    this.sideAcctList.refresh();
-    this.sideMoverAcctList = null;
+    this.acctList.refresh();
+    this.moverAcctList = null;
     this.moverDialogModal.style.display = "none";
   }
 
   onDialogCancel(event) {
-    this.sideMoverAcctList = null;
+    this.moverAcctList = null;
     this.moverDialogModal.style.display = "none";
   }
 
