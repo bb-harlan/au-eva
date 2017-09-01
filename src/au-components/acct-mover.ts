@@ -5,9 +5,7 @@ import {Acct, Annotation} from '../models/acct';
 
 @customElement('au-acct-mover')
 export class AcctMover {
-  //
   eva: Eva = Eva.getInstance();
-  @bindable equationSide: string;
   @bindable acctList: AcctList;
   @bindable moverDialogPositionElement;
 
@@ -20,9 +18,7 @@ export class AcctMover {
 
   onDialogOpen(event) {
     this.moverAcctList = new AcctList(this.acctList.equationSide);
-    for (let listItem of this.acctList) {
-      this.moverAcctList.push(listItem);
-    }
+    this.moverAcctList.push(...this.acctList);
     this.moverDialogModal.style.display = "block";
   }
 
@@ -89,6 +85,15 @@ export class AcctMover {
     }
   }
 
+  onListMouseLeave(event) {
+    if (this.mouseIsDown && this.selectedMoverRow) {
+      this.selectedMoverRow.children[0].classList.toggle('aaDragging', false);
+      this.selectedMoverRow.children[0].classList.toggle('aaRowHover', false);
+      this.mouseIsDown = false;
+      this.selectedMoverRow = null;
+      return;
+    }
+  }
   elementY(element) {
     return element.getBoundingClientRect().top;
   };
