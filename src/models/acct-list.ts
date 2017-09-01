@@ -21,13 +21,4 @@ export class AcctList extends Array<Acct | Annotation> {
     }
     this.listTotal = listTotal;
   }
-  // Maybe not needed
-  matchingId(listItem: Acct | Annotation): boolean {
-    return listItem.id == this.idToFind;
-  }
-  // Maybe not needed
-  findById(id: string): Acct | Annotation {
-    this.idToFind = id;
-    return this.find(this.matchingId);
-  }
 }

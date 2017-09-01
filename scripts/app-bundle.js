@@ -225,13 +225,6 @@ define('models/acct-list',["require", "exports", '../models/acct'], function (re
             }
             this.listTotal = listTotal;
         };
-        AcctList.prototype.matchingId = function (listItem) {
-            return listItem.id == this.idToFind;
-        };
-        AcctList.prototype.findById = function (id) {
-            this.idToFind = id;
-            return this.find(this.matchingId);
-        };
         return AcctList;
     }(Array));
     exports.AcctList = AcctList;
