@@ -11,6 +11,11 @@ export class ModuleTran {
   eva: Eva = Eva.getInstance();
   /* will point to eva.selectedTran or a copy of eva.selectedTran for editing */
 
+  moverDialogModal: HTMLElement;
+  moverDialogContent: HTMLElement;
+  moverDialogPositionElement: HTMLElement;
+
+
   onGoJrnl(event) {
     this.eva.selectedBchg = null;
     this.eva.selectedModule = this.eva.MODULE_JRNL;

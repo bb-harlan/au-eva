@@ -4,6 +4,7 @@
   <require from="../au-views/vertical-gridline-spacer.html"></require>
   <require from="../au-views/tran-bchg-cells-spacer.html"></require>
   <require from="../au-components/tran-bchg-row-data"></require>
+  <require from="../au-components/tran-bchg-mover"></require>
   <require from="../au-converters/currency-converter"></require>
 
   <div class="aaPanel aaPanelBoxShadow">
@@ -21,6 +22,9 @@
            <i class="fa fa-minus-circle fa-fw aaIconRed" aria-hidden="true"></i> Delete
       </span>
       <span class="aaToolBarDivider">.</span>
+      <au-tran-bchg-mover
+        tran-bchg-list.bind="eva.selectedTran.bchgList"
+        mover-dialog-position-element.bind="moverDialogPositionElement">></au-tran-bchg-mover>
       <!--
             <div class="btn-group">
               <a class="aaBtn dropdown-toggle" data-toggle="dropdown" click.trigger="onMenuClick($event, eva.selectedAcct)">
@@ -52,7 +56,7 @@
         <span class="aaToolBarDivider">.</span>
       </div>
     </div>
-    <div class="aaPanelBody">
+    <div element.ref="moverDialogPositionElement" class="aaPanelBody">
       <div class="aaForm">
         <table border="0" style="border-collapse: collapse;">
           <!-- <tr>
@@ -150,8 +154,8 @@
           <div class="aaCellText aaCellRowSelectedChar" style="visibility: hidden;">${eva.ROW_SELECTED_CHAR}</div>
           <div class="aaInlineBlock">
             <div class="aaCellText aaFontData aaTranBchgRow2Indent">
-              <input type="text" disabled class="aaFormInputText aaCellBchgDesc aaFontLabel"
-                     style="text-align: right; border-color: transparent;"
+              <input type="text" disabled class="aaCellBchgDesc aaFontLabel"
+                     style="text-align: right; border-color: transparent; background-color: inherit;"
                      value="Net change to assets:">
             </div>
             <vertical-gridline-spacer></vertical-gridline-spacer>
@@ -161,8 +165,8 @@
             </div>
             <vertical-gridline-spacer></vertical-gridline-spacer>
             <div class="aaCellText aaFontData aaTranBchgRow2Indent">
-              <input type="text" disabled class="aaFormInputText aaCellBchgDesc aaFontLabel"
-                     style="text-align: right; border-color: transparent;"
+              <input type="text" disabled class="aaCellBchgDesc aaFontLabel"
+                     style="text-align: right; border-color: transparent; background-color: inherit;"
                      value="Net change to equities:">
             </div>
             <vertical-gridline-spacer></vertical-gridline-spacer>

@@ -1,15 +1,15 @@
 import {customElement, bindable} from 'aurelia-framework';
 import {Eva} from '../eva';
-import {AcctList} from '../models/acct-list';
-import {Acct, Annotation} from '../models/acct';
+import {TranBchgList} from '../models/tran-bchg-list';
+import {Bchg} from '../models/bchg';
 
-@customElement('au-acct-mover')
-export class AcctMover {
+@customElement('au-tran-bchg-mover')
+export class TranBchgMover {
   eva: Eva = Eva.getInstance();
-  @bindable acctList: AcctList;
+  @bindable tranBchgList: TranBchgList;
   @bindable moverDialogPositionElement;
 
-  moverAcctList: AcctList;
+  moverTranBchgList: TranBchgList;
   mouseIsDown: boolean = false;
   selectedMoverRow: Element = null;
   moverDialogModal: HTMLElement = null;
@@ -17,21 +17,22 @@ export class AcctMover {
 
 
   onDialogOpen(event) {
-    this.moverAcctList = new AcctList(this.acctList.equationSide);
-    this.moverAcctList.push(...this.acctList);
+    this.moverTranBchgList = new TranBchgList();
+    this.moverTranBchgList.push(...this.tranBchgList);
+    console.log(this.moverTranBchgList);
     this.moverDialogModal.style.display = "block";
   }
   onDialogDone(event) {
     for (let i = 0; i < this.moverRowList.childElementCount; i++) {
-      let listItem = (<any>this.moverRowList.children[i]).listItem as Acct | Annotation;
-      listItem.intraSideSorter = i;
+      let bchg = (<any>this.moverRowList.children[i]).bchg as Bchg;
+      bchg.intraTranSorter = i;
     }
-    this.acctList.refresh();
-    this.moverAcctList = null;
+    this.tranBchgList.refresh();
+    this.moverTranBchgList = null;
     this.moverDialogModal.style.display = "none";
   }
   onDialogCancel(event) {
-    this.moverAcctList = null;
+    this.moverTranBchgList = null;
     this.moverDialogModal.style.display = "none";
   }
   onRowMouseDown(event) {

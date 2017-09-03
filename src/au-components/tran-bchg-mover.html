@@ -3,6 +3,7 @@
   <require from="../au-views/vertical-gridline-spacer.html"></require>
   <require from="../au-converters/currency-converter"></require>
   <require from="../au-converters/equation-side-converter"></require>
+  <require from="../au-components/tran-bchg-row-data"></require>
 
   <span click.trigger="onDialogOpen($event)" class="aaBtn"><i class="fa fa-arrows-v fa-fw aaIconBlue"
                                                               aria-hidden="true"></i> Move rows</span>
@@ -15,10 +16,7 @@
       <div class="aaPanelHeader aaPanelHeaderModule">Row mover</div>
       <div class="aaPanelBody">
         <div class="aaGridContainer aaInlineBlock">
-          <div class="aaGridTitleBar" style="font-size: larger;">${acctList.equationSide |
-            equationSideConverter:true:false}
-            accounts
-          </div>
+          <div class="aaGridTitleBar" style="font-size: larger;">Account balance changes</div>
           <div class="aaPanelToolBar">
             <div style="text-align: center;">
               <span class="aaFontLabel">Drag & drop any row to desired list position.</span>
@@ -28,25 +26,16 @@
                class="aaGridScrollableRows"
                mousemove.trigger="onListMouseMove($event)"
                mouseleave.trigger="onListMouseLeave($event)">
-            <template repeat.for="listItem of moverAcctList">
+            <template repeat.for="bchg of moverTranBchgList">
               <div
                 class="aaRow"
-                list-item.bind="listItem"
+                bchg.bind="bchg"
                 mouseenter.trigger="onRowMouseEnter($event, listItem)"
                 mouseleave.trigger="onRowMouseLeave($event, listItem)"
                 mousedown.trigger="onRowMouseDown($event)"
                 mouseup.trigger="onRowMouseUp($event)">
                 <div class="aaRowDataCells">
-                  <template if.bind="listItem.isAcct()">
-                    <span class="aaCellText aaFontSizeData aaCellAcctTitle">${listItem.title}</span>
-                    <vertical-gridline></vertical-gridline>
-                    <span class="aaCellText aaFontSizeData aaCellBchgBal">${listItem.bchgList.endingBalance | currencyConverter}</span>
-                  </template>
-                  <template if.bind="listItem.isAnnotation()">
-                    <span class="aaCellText aaFontSizeData aaCellAnnoTitle">${listItem.annoText}</span>
-                    <vertical-gridline></vertical-gridline>
-                    <span class="aaCellText aaFontSizeData aaCellBchgBal"></span>
-                  </template>
+                  <au-tran-bchg-row-data bchg.bind="bchg"></au-tran-bchg-row-data>
                   <vertical-gridline></vertical-gridline>
                 </div>
               </div>
@@ -63,5 +52,4 @@
       </div>
     </div>
   </div>
-
 </template>
