@@ -8,6 +8,8 @@ export class AcctMover {
   eva: Eva = Eva.getInstance();
   @bindable acctList: AcctList;
   @bindable moverDialogPositionElement;
+  moverDialogPositionTop;
+  moverDialogPositionLeft;
 
   moverAcctList: AcctList;
   mouseIsDown: boolean = false;
@@ -19,7 +21,11 @@ export class AcctMover {
   onDialogOpen(event) {
     this.moverAcctList = new AcctList(this.acctList.equationSide);
     this.moverAcctList.push(...this.acctList);
+    let moverDialogPositionProps = this.moverDialogPositionElement.getBoundingClientRect();
+    this.moverDialogPositionTop = moverDialogPositionProps.top;
+    this.moverDialogPositionLeft = moverDialogPositionProps.left;
     this.moverDialogModal.style.display = "block";
+    // console.log(moverDialogPositionProps);
   }
   onDialogDone(event) {
     for (let i = 0; i < this.moverRowList.childElementCount; i++) {

@@ -3,6 +3,7 @@ import {Bchg} from '../models/bchg';
 export class AcctBchgList extends Array<Bchg> {
     //
     endingBalance:number = 0.00;
+    needsRefresh: boolean;
 
     constructor() {
         super();

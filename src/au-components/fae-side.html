@@ -5,16 +5,29 @@
   <require from="../au-converters/equation-side-converter"></require>
   <require from="../au-components/acct-mover"></require>
 
-  <h1 element.ref="moverDialogPositionElement"
+  <h1
       css="text-align: ${acctList.equationSide == eva.SIDE_ASSETS ? 'right' : 'left'};">${acctList.equationSide |
     equationSideConverter:true:true}</h1>
-  <div class="aaGridContainer">
-    <div class="aaGridTitleBar" style="font-size: larger;">${acctList.equationSide | equationSideConverter:true:false} accounts
+  <div  element.ref="moverDialogPositionElement"
+        class="aaGridContainer">
+    <div class="aaGridTitleBar" style="font-size: larger;">${acctList.equationSide | equationSideConverter:true:false}
+      accounts
     </div>
     <div class="aaPanelToolBar">
       <au-acct-mover
         acct-list.bind="acctList"
         mover-dialog-position-element.bind="moverDialogPositionElement"></au-acct-mover>
+      <div class="btn-group">
+        <a class="aaBtn dropdown-toggle" data-toggle="dropdown">
+          <span class="fa fa-bars fa-fw" aria-hidden="true"></span>
+        </a>
+        <ul class="dropdown-menu aaSansSerif">
+          <li><a><i class="fa fa-plus-circle fa-fw aaIconGreen"></i> Insert new account row</a></li>
+          <li><a><i class="fa fa-plus-circle fa-fw aaIconGreen"></i> Insert new annotation row</a></li>
+          <li class="divider"></li>
+          <li><a><i class="fa fa-minus-circle fa-fw aaIconRed"></i> Delete row...</a></li>
+        </ul>
+      </div>
     </div>
     <div id="gridHeader${equationSide}" class="aaGridHeader">
       <div class="aaFontLabel aaRow">
@@ -41,7 +54,7 @@
              mouseleave.trigger="onRowLeave($event, listItem)">
           <template if.bind="listItem.isAcct()">
             <div class="aaCellRowOps">
-              <span class="aaBtn aaBtnHidden" click.delegate="onMenuClick($event, listItem)">
+              <span class="aaBtn aaBtnHidden" click.trigger="onRowOpsOpen($event, listItem)">
                 <i class="fa fa-bars fa-fw" aria-hidden="true"></i>
               </span>
             </div>
@@ -65,7 +78,7 @@
           </template>
           <template if.bind="listItem.isAnnotation()">
             <div class="aaCellRowOps">
-              <span class="aaBtn aaBtnHidden" click.delegate="onMenuClick($event, listItem)">
+              <span class="aaBtn aaBtnHidden" click.delegate="onRowOpsOpen($event, listItem)">
                     <i class="fa fa-bars fa-fw" aria-hidden="true"></i>
                 </span>
             </div>
@@ -99,7 +112,7 @@
       <div class="aaRow" id="End of equation side ${acctList.equationSide}"
            mouseenter.trigger="onRowEnter($event, null)" mouseleave.trigger="onRowLeave($event, null)">
         <div class="aaCellRowOps">
-          <span class="aaBtn aaBtnHidden" click.delegate="onMenuClick($event, listItem)">
+          <span class="aaBtn aaBtnHidden" click.delegate="onRowOpsOpen($event, listItem)">
             <i class="fa fa-bars fa-fw" aria-hidden="true"></i>
           </span>
         </div>
@@ -146,4 +159,29 @@
       <vertical-gridline-spacer></vertical-gridline-spacer>
     </div>
   </div>
+
+
+  <div element.ref="rowOpsMenuModal" class="aaModal" style="background: transparent;">
+    <div element.ref="rowOpsMenuContent"
+         css="display: inline-block;
+         text-align: left;
+         position: fixed;
+         top: ${rowOpsBoundingClientRect.top}px;
+         left: ${rowOpsBoundingClientRect.left}px">
+        <span class="aaBtn" click.delegate="onRowOpsClose($event)">
+            <i class="fa fa-bars fa-fw" aria-hidden="true"></i></span>
+      <div class="btn-group">
+        <a class="aaBtn dropdown-toggle" data-toggle="dropdown">
+          <span class="fa fa-bars fa-fw" aria-hidden="true"></span>
+        </a>
+        <ul class="dropdown-menu aaSansSerif">
+          <li><a><i class="fa fa-plus-circle fa-fw aaIconGreen"></i> Insert new account row</a></li>
+          <li><a><i class="fa fa-plus-circle fa-fw aaIconGreen"></i> Insert new annotation row</a></li>
+          <li class="divider"></li>
+          <li><a><i class="fa fa-minus-circle fa-fw aaIconRed"></i> Delete row...</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
 </template>

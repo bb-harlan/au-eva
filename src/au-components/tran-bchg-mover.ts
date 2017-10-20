@@ -8,6 +8,8 @@ export class TranBchgMover {
   eva: Eva = Eva.getInstance();
   @bindable tranBchgList: TranBchgList;
   @bindable moverDialogPositionElement;
+  moverDialogPositionTop;
+  moverDialogPositionLeft;
 
   moverTranBchgList: TranBchgList;
   mouseIsDown: boolean = false;
@@ -19,8 +21,11 @@ export class TranBchgMover {
   onDialogOpen(event) {
     this.moverTranBchgList = new TranBchgList();
     this.moverTranBchgList.push(...this.tranBchgList);
-    console.log(this.moverTranBchgList);
+    let moverDialogPositionProps = this.moverDialogPositionElement.getBoundingClientRect();
+    this.moverDialogPositionTop = moverDialogPositionProps.top;
+    this.moverDialogPositionLeft = moverDialogPositionProps.left;
     this.moverDialogModal.style.display = "block";
+    // console.log(this.moverTranBchgList);
   }
   onDialogDone(event) {
     for (let i = 0; i < this.moverRowList.childElementCount; i++) {

@@ -302,6 +302,7 @@ h1 {
   font-family: sans-serif, SansSerif;
   font-size: medium;
   letter-spacing: 1px;
+  text-align: center;
 }
 
 .aaGridBchgSubtitleBar {
@@ -344,6 +345,7 @@ h1 {
   overflow-x: hidden;
   overflow-y: scroll;
   white-space: nowrap;
+  background-color: #fff;
 }
 
 .aaGridFooterTotals {

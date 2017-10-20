@@ -7,34 +7,13 @@ import {Acct, Annotation} from '../models/acct';
 export class FaeSide {
   //
   eva: Eva = Eva.getInstance();
-  @bindable equationSide: string;
-  // equationSide: string;
   @bindable acctList: AcctList;
   moverDialogModal: HTMLElement;
   moverDialogContent: HTMLElement;
   moverDialogPositionElement: HTMLElement;
-  // moverRowList: HTMLElement;
-
-  attached() {
-    /*
-    The au-equation-side custom attribute is used to set this.equationSide to
-    either "A" or "E" which in turn is used by this method to set the property...
-
-      acctList
-
-    ...as follows.
-    */
-    switch (this.acctList.equationSide) {
-      case this.eva.SIDE_ASSETS:
-        this.acctList = this.eva.assetList;
-        break;
-      case this.eva.SIDE_EQUITIES:
-        this.acctList = this.eva.equityList;
-        break;
-      default:
-        this.acctList = null;
-    }
-  }
+  rowOpsMenuModal: HTMLElement;
+  rowOpsMenuContent: HTMLElement;
+  rowOpsBoundingClientRect;
 
   /*
    * In the following two mouesenter/mouseleave handlers, the end-of-list
@@ -69,8 +48,12 @@ export class FaeSide {
     event.target.children[5].classList.toggle('aaRowHover', false);
   }
 
-  onMenuClick(event, listItem) {
-    alert('"Row ops menu" not yet implemented.');
+  onRowOpsOpen(event, listItem) {
+    this.rowOpsBoundingClientRect = (event.target as Element).parentElement.getBoundingClientRect();
+    this.rowOpsMenuModal.style.display = "block";
+  }
+  onRowOpsClose(event) {
+    this.rowOpsMenuModal.style.display = "none";
   }
 
   onGoAcct(event, listItem) {
