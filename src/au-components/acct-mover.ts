@@ -28,7 +28,7 @@ export class AcctMover {
     // console.log(moverDialogPositionProps);
   }
   onDialogDone(event) {
-    for (let i = 0; i < this.moverRowList.childElementCount; i++) {
+    for (let i = 0; i < this.moverRowList.childElementCount - 1; i++) {
       let listItem = (<any>this.moverRowList.children[i]).listItem as Acct | Annotation;
       listItem.intraSideSorter = i;
     }
@@ -78,6 +78,9 @@ export class AcctMover {
       return;
     }
     let nextSibling = this.selectedMoverRow.nextElementSibling;
+    if (nextSibling.id == `${this.eva.END_OF_LIST}`) {
+      nextSibling = null;
+    }
     if (nextSibling && mouseY >= nextSibling.getBoundingClientRect().top) {
       moverRowList.insertBefore(nextSibling, this.selectedMoverRow);
       return;

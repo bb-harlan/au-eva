@@ -28,7 +28,7 @@ export class TranBchgMover {
     // console.log(this.moverTranBchgList);
   }
   onDialogDone(event) {
-    for (let i = 0; i < this.moverRowList.childElementCount; i++) {
+    for (let i = 0; i < this.moverRowList.childElementCount - 1; i++) {
       let bchg = (<any>this.moverRowList.children[i]).bchg as Bchg;
       bchg.intraTranSorter = i;
     }
@@ -78,6 +78,9 @@ export class TranBchgMover {
       return;
     }
     let nextSibling = this.selectedMoverRow.nextElementSibling;
+    if (nextSibling.id == `${this.eva.END_OF_LIST}`) {
+      nextSibling = null;
+    }
     if (nextSibling && mouseY >= nextSibling.getBoundingClientRect().top) {
       moverRowList.insertBefore(nextSibling, this.selectedMoverRow);
       return;

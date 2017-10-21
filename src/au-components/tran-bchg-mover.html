@@ -4,6 +4,8 @@
   <require from="../au-converters/currency-converter"></require>
   <require from="../au-converters/equation-side-converter"></require>
   <require from="../au-components/tran-bchg-row-data"></require>
+  <require from="../au-views/tran-bchg-cells-spacer.html"></require>
+
 
   <span click.trigger="onDialogOpen($event)" class="aaBtn"><i class="fa fa-arrows-v fa-fw aaIconBlue"
                                                               aria-hidden="true"></i> Move rows</span>
@@ -43,6 +45,18 @@
             </div>
           </div>
         </template>
+        <!-- End of list row -->
+        <div class="aaRow"  id="${eva.END_OF_LIST}">
+          <div class="aaInlineBlock">
+            <div class="aaInlineBlock aaCellText aaFontData" style="position: absolute;"><span
+              class="aaSansSerif aaCellTextEOL">${eva.END_OF_LIST}</span></div>
+            <tran-bchg-cells-spacer></tran-bchg-cells-spacer>
+            <vertical-gridline-spacer></vertical-gridline-spacer>
+            <tran-bchg-cells-spacer></tran-bchg-cells-spacer>
+            <vertical-gridline></vertical-gridline>
+          </div>
+        </div>
+
       </div>
       <div class="aaGridFooterBar"></div>
     </div>
