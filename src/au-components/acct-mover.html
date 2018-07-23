@@ -15,19 +15,11 @@
            margin-left: 1pc;
            top: ${moverDialogPositionTop}px;
            left: ${moverDialogPositionLeft}px;">
-<!--
-      <div class="aaGridTitleBar" style="font-size: larger;">${acctList.equationSide |
-        equationSideConverter:true:false}
-        accounts mover
-      </div>
--->
-      <div class="aaGridTitleBar" style="font-size: larger;">Move rows</div>
+      <div class="aaGridTitleBar" style="font-size: larger;">Move rows<br><span class="aaFontLabel">&mdash; Drag & drop row(s) to desired list position(s). &mdash;</span></div>
       <div class="aaPanelToolBar">
         <div style="text-align: center;">
           <span click.trigger="onDialogDone($event)" class="aaBtn">Done</span>
           <span click.trigger="onDialogCancel($event)" class="aaBtn" style="margin-left: 4pc;">Cancel</span>
-          <br>
-          <span class="aaFontLabel">&mdash; Drag & drop row(s) to desired list position(s). &mdash;</span>
         </div>
       </div>
       <div

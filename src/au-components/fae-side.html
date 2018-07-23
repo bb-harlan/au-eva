@@ -161,20 +161,26 @@
   </div>
 
 
-  <div element.ref="rowOpsMenuModal" class="aaModal" style="background: transparent;">
+  <div element.ref="rowOpsMenuModal" class="aaModal"
+       style="background: transparent;"
+       click.delegate="onRowOpsCancel($event)">
     <div element.ref="rowOpsMenuContent"
          css="display: inline-block;
          text-align: left;
          position: fixed;
          top: ${rowOpsBoundingClientRect.top}px;
          left: ${rowOpsBoundingClientRect.left}px">
+<!--
         <span class="aaBtn" click.delegate="onRowOpsClose($event)">
             <i class="fa fa-bars fa-fw" aria-hidden="true"></i></span>
+-->
       <div class="btn-group">
+<!--
         <a class="aaBtn dropdown-toggle" data-toggle="dropdown">
           <span class="fa fa-bars fa-fw" aria-hidden="true"></span>
         </a>
-        <ul class="dropdown-menu aaSansSerif">
+-->
+        <ul class="dropdown-menu aaSansSerif" style="display: block;">
           <li><a><i class="fa fa-plus-circle fa-fw aaIconGreen"></i> Insert new account row</a></li>
           <li><a><i class="fa fa-plus-circle fa-fw aaIconGreen"></i> Insert new annotation row</a></li>
           <li class="divider"></li>

@@ -52,8 +52,10 @@ export class FaeSide {
     this.rowOpsBoundingClientRect = (event.target as Element).parentElement.getBoundingClientRect();
     this.rowOpsMenuModal.style.display = "block";
   }
-  onRowOpsClose(event) {
-    this.rowOpsMenuModal.style.display = "none";
+  onRowOpsCancel(event) {
+    if (event.target == this.rowOpsMenuModal){
+      this.rowOpsMenuModal.style.display = "none";
+    }
   }
 
   onGoAcct(event, listItem) {
