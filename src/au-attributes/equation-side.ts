@@ -16,16 +16,16 @@ export class EquationSide {
     }
 
     bind() {
-        this.faeSide.equationSide = this.value;
-        switch (this.faeSide.equationSide) {
-            case this.eva.SIDE_ASSETS:
-                this.faeSide.acctList = this.eva.assetList;
-                break;
-            case this.eva.SIDE_EQUITIES:
-                this.faeSide.acctList = this.eva.equityList;
-                break;
-            default:
-                this.faeSide.acctList = [] as AcctList;
-        }
+        // this.faeSide.equationSide = this.value;
+        // switch (this.faeSide.equationSide) {
+        //     case this.eva.SIDE_ASSETS:
+        //         this.faeSide.acctList = this.eva.assetList;
+        //         break;
+        //     case this.eva.SIDE_EQUITIES:
+        //         this.faeSide.acctList = this.eva.equityList;
+        //         break;
+        //     default:
+        //         this.faeSide.acctList = [] as AcctList;
+        // }
     }
 }

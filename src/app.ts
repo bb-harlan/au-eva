@@ -30,8 +30,8 @@ export class App {
   }
 
   bind() {
-    // this.eva.generateTestData();
-    this.eva.generateExample1Data();
+    this.eva.generateTestData();
+    // this.eva.generateExample1Data();
   }
   onFaeModule(event) {
     this.eva.selectedAcct = null;

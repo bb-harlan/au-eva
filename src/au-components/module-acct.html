@@ -1,11 +1,8 @@
 <template>
-  <require from="../au-views/vertical-gridline.html"></require>
-  <require from="../au-converters/currency-converter"></require>
-  <require from="../au-converters/equation-side-converter"></require>
-
-  <!--
-  <require from="../au-views/bchg-selected-row.html"></require>
--->
+  <require from="au-views/vertical-gridline.html"></require>
+  <require from="au-converters/currency-converter"></require>
+  <require from="au-converters/equation-side-converter"></require>
+  
   <div class="aaPanel aaPanelBoxShadow">
     <div class="aaPanelHeader aaPanelHeaderModule">${eva.selectedAcct.isAcct() ? 'Account' : 'Annotation'}</div>
     <div class="aaPanelToolBar" if.bind="!eva.isEditing">
