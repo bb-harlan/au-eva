@@ -86,7 +86,7 @@ export class Eva {
   // get ROW_SELECTED_CHAR():string {return String.fromCharCode(0xf192);} // FontAwesome fa-dot-circle
 
   /*=====================================================
-   *  view state info
+   *  state info
    */
   selectedModule: string = this.MODULE_FAE;
   selectedAcctList: AcctList = null;
@@ -100,6 +100,7 @@ export class Eva {
   /*==========================================================
    *  data model stuff
    */
+  entityName: string = "";
   assetList: AcctList = new AcctList(this.SIDE_ASSETS);
   equityList: AcctList = new AcctList(this.SIDE_EQUITIES);
   tranList: TranList = new TranList();
@@ -132,6 +133,7 @@ export class Eva {
 
   generateTestData() {
     console.log('Generating test data...');
+    // this.entityName = "<none; programmatically generated test data>";
     /*
      Create some accounts**********************************************************
      */
@@ -200,6 +202,10 @@ export class Eva {
     this.tranList.refresh();
     console.log(`Refreshed tranList`);
     console.log('Generation of test data completed!');
+  }
+
+  generateExample1Data() {
+
   }
 }
 
