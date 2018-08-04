@@ -101,9 +101,9 @@ export class Eva {
    *  data model stuff
    */
   entityName: string = "";
-  assetList: AcctList = new AcctList(this.SIDE_ASSETS);
-  equityList: AcctList = new AcctList(this.SIDE_EQUITIES);
-  tranList: TranList = new TranList();
+  assetList: AcctList = AcctList.create(this.SIDE_ASSETS);
+  equityList: AcctList = AcctList.create(this.SIDE_EQUITIES);
+  tranList: TranList = TranList.create();
   private _nextSorter: number = 1;
   get nextSorter(): number {
     return this._nextSorter++;

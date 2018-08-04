@@ -1,13 +1,18 @@
-import {Bchg} from '../models/bchg';
+import {Bchg} from './bchg';
 //
 export class AcctBchgList extends Array<Bchg> {
     //
     endingBalance:number = 0.00;
     needsRefresh: boolean;
 
-    constructor() {
+    private constructor() {
         super();
     }
+
+    static create() : AcctBchgList {
+      return Object.create(AcctBchgList.prototype);
+    }
+
     refresh():void {
         this.sort((a:Bchg, b:Bchg) => a.compareToInAcct(b));
         let endingBalance = 0.00;

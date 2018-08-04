@@ -11,7 +11,7 @@ export class Tran {
   intraDateSorter: number;
   assetsBchg: number;
   equitiesBchg: number;
-  bchgList: TranBchgList = new TranBchgList();
+  bchgList: TranBchgList = TranBchgList.create();
 
   constructor(id: string, date: string, intraDateSorter: number) {
     this.id = id;

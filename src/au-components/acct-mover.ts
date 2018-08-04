@@ -19,7 +19,7 @@ export class AcctMover {
 
 
   onDialogOpen(event) {
-    this.moverAcctList = new AcctList(this.acctList.equationSide);
+    this.moverAcctList = AcctList.create(this.acctList.equationSide);
     this.moverAcctList.push(...this.acctList);
     let moverDialogPositionProps = this.moverDialogPositionElement.getBoundingClientRect();
     this.moverDialogPositionTop = moverDialogPositionProps.top;

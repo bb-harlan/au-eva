@@ -1,4 +1,4 @@
-import {Acct, Annotation} from '../models/acct';
+import { Acct, Annotation } from '../models/acct';
 
 //
 export class AcctList extends Array<Acct | Annotation> {
@@ -6,10 +6,14 @@ export class AcctList extends Array<Acct | Annotation> {
   listTotal: number;
   idToFind;
 
-  constructor(equationSide: string) {
+  private constructor() {
     super()
-    this.equationSide = equationSide;
   }
+
+  static create(equationSide: string): AcctList {
+    return Object.assign(Object.create(AcctList.prototype), { equationSide });
+  }
+
   refresh(): void {
     this.sort((a, b) => a.compareTo(b));
     let listTotal = 0.00;

@@ -42,7 +42,7 @@ export class Acct extends EquationSideItem {
   //
   title: string;
   normalBalance: number;
-  bchgList: AcctBchgList = new AcctBchgList();
+  bchgList: AcctBchgList = AcctBchgList.create();
 
   constructor(id: string, equationSide: string, intraSideSorter: number, title: string, normalBalance: number) {
     super(id, equationSide, intraSideSorter);

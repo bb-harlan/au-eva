@@ -19,7 +19,7 @@ export class TranBchgMover {
 
 
   onDialogOpen(event) {
-    this.moverTranBchgList = new TranBchgList();
+    this.moverTranBchgList = TranBchgList.create();
     this.moverTranBchgList.push(...this.tranBchgList);
     let moverDialogPositionProps = this.moverDialogPositionElement.getBoundingClientRect();
     this.moverDialogPositionTop = moverDialogPositionProps.top;
