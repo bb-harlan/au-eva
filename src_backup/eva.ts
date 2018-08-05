@@ -199,6 +199,7 @@ export class Eva {
   generateExample1Data() {
     console.log(this.assetList);
     console.log(`value of this.assetList.aTestProperty is "${this.assetList.aTestProperty}"`)
+    this.assetList.aTestMethod();
     this.assetList.refresh();
     this.equityList.refresh();
 

@@ -1,31 +1,25 @@
-import {Bchg} from '../models/bchg';
+import {Bchg} from './bchg';
 //
 export class AcctBchgList extends Array<Bchg> {
   //
   endingBalance: number = 0.00;
   needsRefresh: boolean;
 
-  constructor() {
-    super();
-  }
+    private constructor() {
+        super();
+    }
 
-/*
-  refresh() {
-    this.sort((a:Bchg, b:Bchg) => a.compareToInAcct(b));
-      let endingBalance = 0.00;
-      for (let bchg of this) {
-        endingBalance += bchg.amt;
-        bchg.newBalance = endingBalance;
-      }
-      this.endingBalance = endingBalance;
+    static create() : AcctBchgList {
+      return Object.create(AcctBchgList.prototype);
     }
-*/
-  refresh() {
-    this.sort((a:Bchg, b:Bchg) => a.compareToInAcct(b));
-    this.endingBalance = 0.00;
-    for (let bchg of this) {
-      this.endingBalance += bchg.amt;
-      bchg.newBalance = this.endingBalance;
+
+    refresh():void {
+        this.sort((a:Bchg, b:Bchg) => a.compareToInAcct(b));
+        let endingBalance = 0.00;
+        for (let bchg of this) {
+            endingBalance += bchg.amt;
+            bchg.newBalance = endingBalance;
+        }
+        this.endingBalance = endingBalance;
     }
   }
-}
