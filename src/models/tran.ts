@@ -1,5 +1,5 @@
-import { Bchg } from '../models/bchg';
 import { Eva } from '../eva';
+import { Bchg } from '../models/bchg';
 import { TranBchgList } from '../models/tran-bchg-list';
 
 //
@@ -11,7 +11,7 @@ export class Tran {
   intraDateSorter: number;
   assetsBchg: number;
   equitiesBchg: number;
-  bchgList: TranBchgList = new TranBchgList();
+  bchgList: TranBchgList;
 
   constructor(id: string, date: string, intraDateSorter: number) {
     this.id = id;
@@ -19,6 +19,7 @@ export class Tran {
     this.intraDateSorter = intraDateSorter;
     this.assetsBchg = 0.00;
     this.equitiesBchg = 0.00;
+    this.bchgList = new TranBchgList();
   }
 
   compareTo(b: Tran): number {
@@ -29,7 +30,7 @@ export class Tran {
     )
   }
 
-  refresh(): void {
+  refresh() {
     this.bchgList.sort((a: Bchg, b: Bchg) => a.compareToInTran(b));
     let assetsBchg: number = 0.00;
     let equitiesBchg: number = 0.00;
@@ -46,6 +47,10 @@ export class Tran {
         default:
           throw new Error(`acct.equationSide has invalid value: ${bchg.targetAcct.equationSide}.`);
       }
+     for (bchg of this.bchgList) {
+       console.log(bchg.targetAcct)
+     }
+
       // compute bchgList[0].amt (balancing amt)
       switch (this.bchgList[0].targetAcct.equationSide) {
         case this.eva.SIDE_ASSETS:
@@ -60,8 +65,7 @@ export class Tran {
           throw new Error(`acct.equationSide has invalid value: ${bchg.targetAcct.equationSide}.`);
       }
 
-      // For each bchg in bchgList, refresh targetAddt's bchgList
-      for (bchg of this.bchgList) {
+      for (let bchg of this.bchgList) {
         bchg.targetAcct.bchgList.refresh();
       }
 

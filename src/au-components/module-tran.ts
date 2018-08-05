@@ -101,7 +101,7 @@ export class ModuleTran {
   }
 
   onSaveEdits(event) {
-    // this.eva.selectedTran.refresh();
+    this.eva.selectedTran.refresh();
     this.eva.isEditing = false;
   }
 

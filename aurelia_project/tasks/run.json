@@ -19,7 +19,7 @@
     },
     {
       "name": "watch",
-      "description": "Watches source files for changes and refreshes the app automatically.",
+      "description": "Watches source files for changes and update()es the app automatically.",
       "type": "boolean"
     }
   ]

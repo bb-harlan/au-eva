@@ -104,17 +104,12 @@ export class Eva {
   assetList: AcctList = new AcctList(this.SIDE_ASSETS);
   equityList: AcctList = new AcctList(this.SIDE_EQUITIES);
   tranList: TranList = new TranList();
+  
   private _nextSorter: number = 1;
   get nextSorter(): number {
     return this._nextSorter++;
   }
 
-  /*
-   private _nextId:number = 1;
-   get nextId():number {
-   return this._nextId++;
-   }
-   */
   private _nextAcctId: number = 1;
   get nextAcctId(): number {
     return this._nextAcctId++;
@@ -191,10 +186,8 @@ export class Eva {
     /*
      Refresh equation  sides **********************************************************
      */
-    let sides = [this.assetList, this.equityList];
-    for (let sideList of sides) {
-      sideList.refresh();
-    }
+    this.assetList.refresh();
+    this.equityList.refresh();
     console.log(`Refreshed equation sides`);
     /*
      Refresh journal & transactions **********************************************************
@@ -205,6 +198,11 @@ export class Eva {
   }
 
   generateExample1Data() {
+    console.log(this.assetList);
+    console.log(`value of this.assetList.aTestProperty is "${this.assetList.aTestProperty}"`)
+    this.assetList.aTestMethod();
+    this.assetList.refresh();
+    this.equityList.refresh();
 
   }
 }

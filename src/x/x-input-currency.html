@@ -28,7 +28,7 @@
        console.log("unsanitizedCursorPosition = ", cursorPosition);
        console.log("==========================================");
        */
-      for (i = 0; i < unsanitizedValue.length; i++) {
+      for (let i = 0; i < unsanitizedValue.length; i++) {
         char = unsanitizedValue.substr(i, 1);
         /*
          console.log(i, "char = " + char);
@@ -99,7 +99,7 @@
       event.target.value = formattedCurrencyAmount;
 
       // adjust cursor position for any thousands separaters added by formatting
-      for (i = 0; i <= cursorPosition; i++) {
+      for (let i = 0; i <= cursorPosition; i++) {
         if (formattedCurrencyAmount.substr(i, 1) == ",") {
           cursorPosition++;
         }

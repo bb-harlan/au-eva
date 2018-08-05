@@ -111,7 +111,7 @@ export class InputCurrency {
       if (numericValue < -1e12) {
         numericValue = -1e12;
       }
-      // manually refresh this.externalValue to get one-way binding to refresh; probably not the best way
+      // manually update() this.externalValue to get one-way binding to update(); probably not the best way
       this.externalValue = "";
       // set externalValue
       this.externalValue = this.format(numericValue);

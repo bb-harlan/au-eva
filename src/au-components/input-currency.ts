@@ -119,7 +119,7 @@ export class InputCurrency {
     let char: string;
     let i: number;
     console.log("sanitizedValue = '" + sanitizedValue + "'; cursorPosition = ", cursorPosition);
-    for (i = 0; i < inputElementValue.length; i++) {
+    for (let i = 0; i < inputElementValue.length; i++) {
       char = inputElementValue.substr(i, 1);
       if (i == 0 && char == "-") {
         sanitizedValue += char;
@@ -179,7 +179,7 @@ export class InputCurrency {
     this.formattedCurrencyAmount = this.currencyConverter.toView(this.tempCurrencyAmount);
 
     // adjust cursor position for any digit group separaters added by formatting
-    for (i = 0; i <= cursorPosition; i++) {
+    for (let i = 0; i <= cursorPosition; i++) {
       if (this.formattedCurrencyAmount.substr(i, 1) == ",") {
         cursorPosition++;
       }
