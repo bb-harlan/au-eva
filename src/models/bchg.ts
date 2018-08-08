@@ -3,22 +3,22 @@ import {Tran} from '../models/tran';
 //
 export class Bchg {
     id:string;
-    targetAcct:Acct;
     sourceTran:Tran;
+    targetAcct:Acct;
     intraTranSorter:number;
     desc:string;
     amt:number;
     newBalance:number;
 
     constructor(id:string,
-                targetAcct:Acct,
                 sourceTran:Tran,
+                targetAcct:Acct,
                 intraTranSorter:number,
                 desc:string,
                 amt:number) {
         this.id = id;
-        this.targetAcct = targetAcct;
         this.sourceTran = sourceTran;
+        this.targetAcct = targetAcct;
         this.intraTranSorter = intraTranSorter;
         this.desc = desc;
         this.amt = amt;
@@ -39,8 +39,8 @@ export class Bchg {
     copy () {
       return new Bchg(
         this.id,
-        this.targetAcct,
         this.sourceTran,
+        this.targetAcct,
         this.intraTranSorter,
         this.desc,
         this.amt);

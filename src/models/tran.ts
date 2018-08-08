@@ -9,21 +9,14 @@ export class Tran {
   id: string;
   date: string;
   intraDateSorter: number;
-  assetsBchg: number;
-  equitiesBchg: number;
-<<<<<<< HEAD
-  bchgList: TranBchgList;
-=======
+  assetsBchg: number = 0.00;
+  equitiesBchg: number = 0.00;
   bchgList: TranBchgList = TranBchgList.create();
->>>>>>> d96c0e358cd8e63d51497bb0d7fcedd8bcc544c4
 
   constructor(id: string, date: string, intraDateSorter: number) {
     this.id = id;
     this.date = date;
     this.intraDateSorter = intraDateSorter;
-    this.assetsBchg = 0.00;
-    this.equitiesBchg = 0.00;
-    this.bchgList = new TranBchgList();
   }
 
   compareTo(b: Tran): number {
@@ -51,30 +44,26 @@ export class Tran {
         default:
           throw new Error(`acct.equationSide has invalid value: ${bchg.targetAcct.equationSide}.`);
       }
-     for (bchg of this.bchgList) {
-       console.log(bchg.targetAcct)
-     }
-
-      // compute bchgList[0].amt (balancing amt)
-      switch (this.bchgList[0].targetAcct.equationSide) {
-        case this.eva.SIDE_ASSETS:
-          this.bchgList[0].amt = equitiesBchg - assetsBchg;
-          assetsBchg += this.bchgList[0].amt;
-          break;
-        case this.eva.SIDE_EQUITIES:
-          this.bchgList[0].amt = assetsBchg - equitiesBchg;
-          equitiesBchg += this.bchgList[0].amt;
-          break;
-        default:
-          throw new Error(`acct.equationSide has invalid value: ${bchg.targetAcct.equationSide}.`);
-      }
-
-      for (let bchg of this.bchgList) {
-        bchg.targetAcct.bchgList.refresh();
-      }
-
     }
+    // compute bchgList[0].amt (balancing amt)
+    switch (this.bchgList[0].targetAcct.equationSide) {
+      case this.eva.SIDE_ASSETS:
+        this.bchgList[0].amt = equitiesBchg - assetsBchg;
+        assetsBchg += this.bchgList[0].amt;
+        break;
+      case this.eva.SIDE_EQUITIES:
+        this.bchgList[0].amt = assetsBchg - equitiesBchg;
+        equitiesBchg += this.bchgList[0].amt;
+        break;
+      default:
+        throw new Error(`acct.equationSide has invalid value: ${this.bchgList[0].targetAcct.equationSide}.`);
+    }
+    this.bchgList[0].targetAcct.bchgList.refresh();
     this.assetsBchg = assetsBchg;
     this.equitiesBchg = equitiesBchg;
+
+    /* for (let bchg of this.bchgList) {
+      bchg.targetAcct.bchgList.refresh();
+    } */
   }
 }

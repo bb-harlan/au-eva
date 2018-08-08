@@ -19,8 +19,6 @@ export class InputCurrency {
     this.currencyConverter = currencyConverter;
   }
 
-
-
   currencyAmountChanged(newValue, oldValue) {
     let customEvent = new CustomEvent(
       'inputcurrencycompleted',

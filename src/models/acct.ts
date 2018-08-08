@@ -11,10 +11,10 @@ export abstract class EquationSideItem {
     this.equationSide = equationSide;
     this.intraSideSorter = intraSideSorter;
   }
-  isAcct() {
+  isAcct(): boolean {
     return (this instanceof Acct);
   }
-  isAnnotation() {
+  isAnnotation(): boolean {
     return (this instanceof Annotation);
   }
   compareTo(b: EquationSideItem): number {

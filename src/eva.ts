@@ -24,66 +24,19 @@ export class Eva {
    return Eva._instance || (Eva._instance = new Eva());
    };
    */
-  /*==========================================================
+  
+   /*==========================================================
    * constants simulated by getters
-   *
-   * */
-  get SIDE_ASSETS(): string {
-    return 'A';
-  };
-
-  get SIDE_EQUITIES(): string {
-    return 'E';
-  };
-
-  get MODULE_FAE(): string {
-    return "fae";
-  };
-
-  get MODULE_ACCT(): string {
-    return "acct";
-  };
-
-  get MODULE_BCHG(): string {
-    return "bchg";
-  };
-
-  get MODULE_TRAN(): string {
-    return "tran";
-  };
-
-  get MODULE_JRNL(): string {
-    return "jrnl";
-  };
-
-  get END_OF_LIST(): string {
-    return "- End of list -";
-  };
-
-/*
-  get GRIDLINE_COLOR(): string {
-    return "#ccc";
-  };
-
-  get GRIDLINE_THIN(): string {
-    return "1px";
-  };
-
-  // get GRIDLINE_THICK():string {return "5px";};
-  get GRIDLINE_THICK(): string {
-    return "2px"
-  };
-*/
-
-  get TOOLBAR_BACKGROUND_COLOR(): string {
-    return "#ddd";
-  };
-
-  // get ROW_SELECTED_CHAR():string {return String.fromCharCode(0xf005);} // FontAwesome fa-star
-  get ROW_SELECTED_CHAR(): string {
-    return String.fromCharCode(0xf111);
-  } // FontAwesome fa-circle
-  // get ROW_SELECTED_CHAR():string {return String.fromCharCode(0xf192);} // FontAwesome fa-dot-circle
+   */
+  get SIDE_ASSETS(): string {return 'A';};
+  get SIDE_EQUITIES(): string {return 'E';};
+  get MODULE_FAE(): string {return "fae";};
+  get MODULE_ACCT(): string {return "acct";};
+  get MODULE_BCHG(): string {return "bchg";};
+  get MODULE_TRAN(): string {return "tran";};
+  get MODULE_JRNL(): string {return "jrnl";};
+  get END_OF_LIST(): string {return "- End of list -";};
+  get ROW_SELECTED_CHAR(): string {return String.fromCharCode(0xf111);} // FontAwesome fa-circle
 
   /*=====================================================
    *  state info
@@ -104,86 +57,100 @@ export class Eva {
   assetList: AcctList = AcctList.create(this.SIDE_ASSETS);
   equityList: AcctList = AcctList.create(this.SIDE_EQUITIES);
   tranList: TranList = TranList.create();
+  
   private _nextSorter: number = 1;
-  get nextSorter(): number {
-    return this._nextSorter++;
-  }
-
   private _nextAcctId: number = 1;
-  get nextAcctId(): number {
-    return this._nextAcctId++;
-  }
-
   private _nextTranId: number = 1;
-  get nextTranId(): number {
-    return this._nextTranId++;
-  }
-
   private _nextBchgId: number = 1;
-  get nextBchgId(): number {
-    return this._nextBchgId++;
-  }
+
+  get nextSorter(): number {return this._nextSorter++;}
+  get nextAcctId(): number {return this._nextAcctId++;}
+  get nextTranId(): number {return this._nextTranId++;}
+  get nextBchgId(): number {return this._nextBchgId++;}
 
 
   generateTestData() {
     console.log('Generating test data...');
-    // this.entityName = "<none; programmatically generated test data>";
+    this.entityName = "<programmatically generated test data for testing>";
+
+    let newAnno: Annotation;
+    let newAcct: Acct;
+    let randomAcct: Acct;
+    let newTran: Tran;
+    let newBchg: Bchg;
+    let acctId: string;
+    let annoId: string;
+
     /*
      Create some accounts**********************************************************
      */
+    annoId = `acct${this.nextAcctId}`;
+    newAnno = new Annotation(
+      /*id*/ annoId, 
+      /*equationSide*/ this.SIDE_ASSETS, 
+      /*intraSideSorter*/ 0, 
+      /*title*/ `Test annotation (equationSide: ${this.SIDE_ASSETS}; annoId: ${annoId};)`);
+    this.assetList.push(newAnno);
 
-    let annoId = `anno${this.nextAcctId}`;
-    let annotation: Annotation = new Annotation(annoId, this.SIDE_ASSETS, 0, `Test annotation (equationSide: ${this.SIDE_ASSETS}; annoId: ${annoId};)`);
-    this.assetList.push(annotation);
-
-    let acctId = '';
     for (let intraSideSorter = 15; intraSideSorter > 0; intraSideSorter--) {
       acctId = `acct${this.nextAcctId}`;
-      let assetAcct = new Acct(acctId, this.SIDE_ASSETS, intraSideSorter, `Test account (equationSide: ${this.SIDE_ASSETS}; acctId: ${acctId};)`, 1);
-      this.assetList.push(assetAcct);
+      newAcct = new Acct(
+        /*id*/ acctId, 
+        /*equationSide*/ this.SIDE_ASSETS, 
+        /*intraSideSorter*/ intraSideSorter, 
+        /*title*/ `Test account (equationSide: ${this.SIDE_ASSETS}, acctId: ${acctId};)`, 
+        /*normalBalance*/ 1);
+      this.assetList.push(newAcct);
+
       acctId = `acct${this.nextAcctId}`;
-      let equityAcct = new Acct(acctId, this.SIDE_EQUITIES, intraSideSorter, `Test account (equationSide: ${this.SIDE_EQUITIES}; acctId: ${acctId};)`, 1);
-      this.equityList.push(equityAcct);
+      newAcct = new Acct(
+        /*id*/ acctId, 
+        /*equationSide*/this.SIDE_EQUITIES,
+        /*intraSideSorter*/ intraSideSorter,
+        /*title*/ `Test account (equationSide: ${this.SIDE_EQUITIES}; acctId: ${acctId};)`,
+        /*normalBalance*/ 1);
+      this.equityList.push(newAcct);
     }
     console.log('Created some accounts (order scrambled from normal order)');
     /*
      Create some transactions**********************************************************
      */
-    let bchg1: Bchg;
-    let bchg2: Bchg;
-    let bchgId: string;
+    let filteredAssetAcctList = this.assetList.filter((listItem) => listItem instanceof Acct);
+    let filteredEquityAcctList = this.equityList.filter((listItem) => listItem instanceof Acct);
+    let acctList = filteredAssetAcctList.concat(filteredEquityAcctList);
     for (let i = 1; i <= 50; ++i) {
-      let tranDate: string = (i % 2 ? "2016/02/13" : "2016/02/12");
-      let tran = new Tran(`tran${this.nextTranId}`, tranDate, this.nextSorter);
-      this.tranList.push(tran);
-      let filteredAssetAcctList = this.assetList.filter((listItem) => listItem instanceof Acct);
-      let filteredEquityAcctList = this.equityList.filter((listItem) => listItem instanceof Acct);
-      let acctList = filteredAssetAcctList.concat(filteredEquityAcctList);
-      let randomAcct0 = acctList[(Math.random() * (acctList.length - 1)).toFixed(0)];
-      let bchg0 = new Bchg(
-        `bchg${this.nextBchgId}`,
-        randomAcct0 as Acct,
-        tran,
-        0,
-        `<change desc: bchg #B${this.nextBchgId}; tran #${tran.id}; acct #${randomAcct0.id}; >`,
-        0.00);
-      tran.bchgList.push(bchg0);
-      (randomAcct0 as Acct).bchgList.push(bchg0);
-      let randomAcct1 = acctList[(Math.random() * (acctList.length - 1)).toFixed(0)];
-      let bchg1 = new Bchg(
-        `bchg${this.nextBchgId}`,
-        randomAcct1 as Acct,
-        tran,
-        1,
-        `<change desc: bchg #B${this.nextBchgId}; tran #${tran.id}; acct #${randomAcct1.id}; >`,
-        Math.round(Math.random() * 1000000)/100);
-      tran.bchgList.push(bchg1);
-      (randomAcct1 as Acct).bchgList.push(bchg1);
-      tran.refresh();
+      newTran = new Tran(
+        /*id*/ `tran${this.nextTranId}`, 
+        /*date*/ (i % 2 ? "2016/02/13" : "2016/02/12"), 
+        /*intraDateSorter*/ this.nextSorter);
+      
+      randomAcct = acctList[(Math.random() * (acctList.length - 1)).toFixed(0)];
+      newBchg = new Bchg(
+        /*id*/ `bchg${this.nextBchgId}`,
+        /*sourceTran*/ newTran,
+        /*targetAcct*/ randomAcct,
+        /*intraTranSorter*/ 0,
+        /*desc*/ `<change desc: bchg #B${this.nextBchgId}; tran #${newTran.id}; acct #${randomAcct.id}; >`,
+        /*amt*/ 0.00);
+      newTran.bchgList.push(newBchg);
+      randomAcct.bchgList.push(newBchg);
+      
+      randomAcct = acctList[(Math.random() * (acctList.length - 1)).toFixed(0)];
+      newBchg = new Bchg(
+        /*id*/ `bchg${this.nextBchgId}`,
+        /*sourceTran*/ newTran,
+        /*targetAcct*/ randomAcct,
+        /*intraTranSorter*/ 1,
+        /*desc*/ `<change desc: bchg #B${this.nextBchgId}; tran #${newTran.id}; acct #${randomAcct.id}; >`,
+        /*amt*/ Math.round(Math.random() * 1000000)/100);
+      newTran.bchgList.push(newBchg);
+      randomAcct.bchgList.push(newBchg);
+      newTran.refresh();
+      this.tranList.push(newTran);
     }
     console.log('Created some transactions (order scrambled from normal order)');
     /*
-     Refresh equation  sides **********************************************************
+     Refresh equation sides **********************************************************
      */
     this.assetList.refresh();
     this.equityList.refresh();
@@ -197,11 +164,96 @@ export class Eva {
   }
 
   generateExample1Data() {
-    console.log(this.assetList);
-    console.log(`value of this.assetList.aTestProperty is "${this.assetList.aTestProperty}"`)
+    console.log('\n********************************************\nGenerating example data...');
+    this.entityName = "Rene (an sindividual)";
+
+    let newAnno: Annotation;
+    let newAcct: Acct;
+    let newTran: Tran;
+    let newBchg: Bchg;
+    let targetAcct: Acct;
+
+    newAcct = new Acct(
+      /*id*/ `acct${this.nextAcctId}`, 
+      /*equationSide*/ this.SIDE_ASSETS, 
+      /*intraSideSorter*/ this.nextSorter, 
+      /*title*/ "Pocket money", 
+      /*normalBalance*/ 1);
+      this.assetList.push(newAcct);
+
+    newAcct = new Acct(
+      /*id*/ `acct${this.nextAcctId}`, 
+      /*equationSide*/ this.SIDE_ASSETS, 
+      /*intraSideSorter*/ this.nextSorter, 
+      /*title*/ "Tallahassee Bank - checking account", 
+      /*normalBalance*/ 1);
+    this.assetList.push(newAcct);
+
+    newAcct = new Acct(
+      /*id*/ `acct${this.nextAcctId}`, 
+      /*equationSide*/ this.SIDE_EQUITIES, 
+      /*intraSideSorter*/ this.nextSorter, 
+      /*title*/ "Rene's equity", 
+      /*normalBalance*/ 1);
+    this.equityList.push(newAcct);
+  
+    newTran = new Tran(
+      /*id*/ `tran${this.nextTranId}`, 
+      /*date*/ "2018/08/01", 
+      /*intraDateSorter*/ this.nextSorter);
+
+    targetAcct = this.equityList[0] as Acct;
+    newBchg = new Bchg(
+      /*id*/ `bchg${this.nextBchgId}`,
+      /*sourceTran*/ newTran,
+      /*targetAcct*/ targetAcct,
+      /*intraTranSorter*/ 0,
+      /*desc*/ "Opening position",
+      /*amt*/ 0.00)
+    newTran.bchgList.push(newBchg);
+    targetAcct.bchgList.push(newBchg);
+    
+    targetAcct = this.assetList[0] as Acct;
+    newBchg = new Bchg(
+      /*id*/ `bchg${this.nextBchgId}`,
+      /*sourceTran*/ newTran,
+      /*targetAcct*/ targetAcct,
+      /*intraTranSorter*/ 1,
+      /*desc*/ "Opening position",
+      /*amt*/ 3.00)
+    newTran.bchgList.push(newBchg);
+    targetAcct.bchgList.push(newBchg);
+    
+    targetAcct = this.assetList[1] as Acct;
+    newBchg = new Bchg(
+      /*id*/ `bchg${this.nextBchgId}`,
+      /*sourceTran*/ newTran,
+      /*targetAcct*/ targetAcct,
+      /*intraTranSorter*/ 2,
+      /*desc*/ "Opening position",
+      /*amt*/ 1700.00)
+    newTran.bchgList.push(newBchg);
+    targetAcct.bchgList.push(newBchg);
+
+    this.tranList.push(newTran);  
+
     this.assetList.refresh();
     this.equityList.refresh();
-
+    this.tranList.refresh();
+    
+    console.log("\nAsset accounts:");
+    for (let acct of this.assetList) {
+      console.log(acct);
+    }
+    console.log("\nEquity accounts:");
+    for (let acct of this.equityList) {
+      console.log(acct);
+    }
+    console.log("\nTransactions:");
+    for (let tran of this.tranList) {
+      console.log(tran);
+    }
+    console.log('\nGeneration of example data completed!\n********************************************');
   }
 }
 

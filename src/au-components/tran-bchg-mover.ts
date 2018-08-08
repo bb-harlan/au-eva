@@ -25,7 +25,7 @@ export class TranBchgMover {
     this.moverDialogPositionTop = moverDialogPositionProps.top;
     this.moverDialogPositionLeft = moverDialogPositionProps.left;
     this.moverDialogModal.style.display = "block";
-    // console.log(this.moverTranBchgList);
+    console.log(this.moverTranBchgList);
   }
   onDialogDone(event) {
     for (let i = 0; i < this.moverRowList.childElementCount - 1; i++) {

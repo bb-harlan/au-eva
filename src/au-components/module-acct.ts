@@ -5,7 +5,7 @@ import {AcctList} from '../models/acct-list';
 @customElement('au-module-acct')
 export class ModuleAcct {
 
-    eva:Eva = Eva.getInstance();
+    eva: Eva = Eva.getInstance();
 
     onGoFae(event) {
         this.eva.selectedBchg = null;

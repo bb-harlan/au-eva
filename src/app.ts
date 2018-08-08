@@ -23,7 +23,7 @@ export class App {
    * any components needing its members.
    * ===================================================
    */
-  eva:Eva = Eva.getInstance();
+  eva: Eva = Eva.getInstance();
   classString: string = "import {customElement, bindable} from 'aurelia-framework';\n";
 
   constructor() {

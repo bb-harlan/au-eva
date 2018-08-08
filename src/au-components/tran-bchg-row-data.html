@@ -13,7 +13,7 @@
     <div class="aaInlineBlock">
       <div class="aaCellText aaFontSizeData">
         <input type="text" disabled class="aaFormInputText aaCellAcctTitle" css="vertical-align: middle; border-color: ${eva.GRIDLINE_COLOR};"
-          value.one-way="bchg.targetAcct.title">
+          value.to-view="bchg.targetAcct.title">
         <template if.bind="!eva.isEditing">
           <span class="aaBtn aaBtnHidden" style="vertical-align: middle; border-color: #999;">
             <i class="fa fa-ellipsis-h fa-fw" aria-hidden="true"></i>
@@ -33,7 +33,7 @@
       <div class="aaTranBchgRow2Indent">
         <div class="aaCellText aaFontSizeData">
           <template if.bind="!eva.isEditing">
-            <input type="text" disabled class="aaFormInputText aaCellBchgDesc" value.one-way="bchg.desc">
+            <input type="text" disabled class="aaFormInputText aaCellBchgDesc" value.to-view="bchg.desc">
           </template>
           <template if.bind="eva.isEditing">
             <input type="text" class="aaFormInputText aaCellBchgDesc" value.two-way="bchg.desc">
@@ -41,15 +41,15 @@
         </div>
         <div class="aaCellText aaFontSizeData">
           <template if.bind="!eva.isEditing">
-            <au-input-currency currency-amount.one-way="bchg.amt" is-disabled.one-way="true" classes-string.one-way="'aaFormInputText aaCellBchgAmt'"></au-input-currency>
+            <au-input-currency currency-amount.to-view="bchg.amt" is-disabled.to-view="true" classes-string.to-view="'aaFormInputText aaCellBchgAmt'"></au-input-currency>
           </template>
           <template if.bind="eva.isEditing">
             <template if.bind="bchg.intraTranSorter != 0">
-              <au-input-currency currency-amount.one-way="bchg.amt" is-disabled.one-way="false" classes-string.one-way="'aaFormInputText aaCellBchgAmt'"
+              <au-input-currency currency-amount.to-view="bchg.amt" is-disabled.to-view="false" classes-string.to-view="'aaFormInputText aaCellBchgAmt'"
                 inputcurrencycompleted.delegate="onInputCurrencyCompleted($event)"></au-input-currency>
             </template>
             <template if.bind="bchg.intraTranSorter == 0">
-              <au-input-currency currency-amount.one-way="bchg.amt" is-disabled.one-way="true" classes-string.one-way="'aaFormInputText aaCellBchgAmt aaBchgAmtComputed'"></au-input-currency>
+              <au-input-currency currency-amount.to-view="bchg.amt" is-disabled.to-view="true" classes-string.to-view="'aaFormInputText aaCellBchgAmt aaBchgAmtComputed'"></au-input-currency>
             </template>
           </template>
         </div>
