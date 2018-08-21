@@ -1,20 +1,20 @@
 import {customElement, bindable} from 'aurelia-framework';
-import {Eva} from '../eva';
+import {Eva} from 'eva';
 
 @customElement('au-module-fae')
-export class ModuleFae {
+export class AuModuleFae {
     //
     @bindable eva:Eva = Eva.getInstance();
 
     constructor() {
     }
 
-    selectSide(equationSide) {
-        this.eva.selectedEquSide = equationSide;
+    selectSide(faeSide) {
+        this.eva.selectedFaeSide = faeSide;
     }
 
     deselectSide(event) {
-        this.eva.selectedEquSide = null;
+        this.eva.selectedFaeSide = null;
     }
 
     attached() {

@@ -1,8 +1,8 @@
 import {customElement, inject} from 'aurelia-framework';
-import {Eva} from '../eva';
+import {Eva} from 'eva';
 
 @customElement('au-module-jrnl')
-export class ModuleJrnl {
+export class AuModuleJrnl {
     //
     eva: Eva = Eva.getInstance();
 
@@ -56,7 +56,7 @@ export class ModuleJrnl {
         }
         this.eva.selectedBchg = null;
         this.eva.selectedAcct = null;
-        this.eva.selectedEquSide = null;
+        this.eva.selectedFaeSide = null;
     }
 }
 

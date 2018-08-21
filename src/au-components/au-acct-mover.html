@@ -39,7 +39,7 @@
               <template if.bind="listItem.isAcct()">
                 <span class="aaCellText aaFontSizeData aaCellAcctTitle">${listItem.title}</span>
                 <vertical-gridline></vertical-gridline>
-                <span class="aaCellText aaFontSizeData aaCellBchgBal">${listItem.bchgList.endingBalance | currencyConverter}</span>
+                <span class="aaCellText aaFontSizeData aaCellBchgBal">${listItem.endingBalance | currencyConverter}</span>
               </template>
               <template if.bind="listItem.isAnnotation()">
                 <span class="aaCellText aaFontSizeData aaCellAnnoTitle">${listItem.annoText}</span>

@@ -1,13 +1,12 @@
 import {customElement, bindable} from 'aurelia-framework';
-import {Eva} from '../eva';
-import {AcctList} from '../models/acct-list';
-import {Acct, Annotation} from '../models/acct';
+import {Eva} from 'eva';
+import {FaeSide} from '../models/fae-side';
 
 @customElement('au-fae-side')
-export class FaeSide {
-  //
+export class AuFaeSide {
+  
   eva: Eva = Eva.getInstance();
-  @bindable acctList: AcctList;
+  @bindable faeSide: FaeSide;
   moverDialogModal: HTMLElement;
   moverDialogContent: HTMLElement;
   moverDialogPositionElement: HTMLElement;

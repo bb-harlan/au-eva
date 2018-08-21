@@ -1,9 +1,7 @@
-import {Eva} from './eva';
-import {AcctList} from './models/acct-list';
-import {Acct, Annotation} from './models/acct';
-import {TranList} from './models/tran-list';
-import {Tran} from './models/tran';
-import {Bchg} from './models/bchg';
+import {Eva} from 'eva';
+import {Acct, Annotation} from 'models/acct';
+import {Tran} from 'models/tran';
+import {Bchg} from 'models/bchg';
 
 export class App {
 
@@ -38,14 +36,14 @@ export class App {
     this.eva.selectedBchg = null;
     this.eva.selectedTran = null;
     this.eva.selectedModule = this.eva.MODULE_FAE;
-    this.eva.selectedEquSide = null;
+    this.eva.selectedFaeSide = null;
   }
   onJrnlModule(event) {
     this.eva.selectedAcct = null;
     this.eva.selectedBchg = null;
     this.eva.selectedTran = null;
     this.eva.selectedModule = this.eva.MODULE_JRNL;
-    this.eva.selectedEquSide = null;
+    this.eva.selectedFaeSide = null;
   }
   onMenuClick(event, listItem) {
   }

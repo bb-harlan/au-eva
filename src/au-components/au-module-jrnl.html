@@ -2,7 +2,7 @@
   <require from="../au-views/bchg-grid-header.html"></require>
   <require from="../au-views/vertical-gridline.html"></require>
   <require from="../au-views/tran-bchg-cells-spacer.html"></require>
-  <require from="../au-components/tran-bchg-row-data"></require>
+  <require from="../au-components/au-tran-bchg-row-data"></require>
 
   <div class="aaPanel aaPanelBoxShadow">
     <div class="aaPanelHeader aaPanelHeaderModule">Transaction Journal</div>
@@ -24,7 +24,7 @@
           </div>
         </div>
         <div class="aaGridScrollableRows" style="height: 33pc;" id="jrnlGridBodyContainer">
-          <template repeat.for="tran of eva.tranList">
+          <template repeat.for="tran of eva.jrnl.tranList">
             <div id="${tran.id}" class="aaRow aaRowJrnl" xcss="border-top: 5px solid ${eva.GRIDLINE_COLOR};
                       border-bottom: 5px solid ${eva.GRIDLINE_COLOR};
                       margin: 5px 0;" mouseenter.trigger="onRowEnter($event, tran)" mouseleave.trigger="onRowLeave($event, tran)">

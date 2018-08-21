@@ -49,7 +49,8 @@
               <!-- <div class="aaCellText aaFontSizeData aaCellId">${eva.selectedBchg.targetAcct.id}</div>
               <vertical-gridline></vertical-gridline> -->
               <div class="aaCellText aaFontSizeData aaCellEquSide">
-                ${eva.selectedBchg.targetAcct.equationSide | equationSideConverter:true:true}
+                <!--${eva.selectedBchg.targetAcct.equationSide | equationSideConverter:true:true}-->
+                ${eva.selectedBchg.targetAcct.parentFaeSide.id}
               </div>
               <vertical-gridline></vertical-gridline>
               <div class="aaCellText aaFontSizeData aaCellAcctTitle">${eva.selectedBchg.targetAcct.title}</div>

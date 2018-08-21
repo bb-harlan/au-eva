@@ -1,16 +1,16 @@
 import {valueConverter} from "aurelia-framework";
-import {Eva} from "../eva";
+import {Eva} from "eva";
 
 
 @valueConverter("equationSideConverter")
 export class EquationSideConverter {
   eva: Eva = Eva.getInstance();
 
-  toView(equationSide: string, capitalize: boolean, plural: boolean) {
-    if (equationSide == this.eva.SIDE_ASSETS) {
+  toView(faeSideId: string, capitalize: boolean, plural: boolean) {
+    if (faeSideId == this.eva.SIDE_ID_ASSETS) {
       return `${capitalize ? "A" : "a"}sset${plural ? "s" : ""}`;
     }
-    else if (equationSide == this.eva.SIDE_EQUITIES) {
+    else if (faeSideId == this.eva.SIDE_ID_EQUITIES) {
       return `${capitalize ? "E" : "e"}quit${plural ? "ies" : "y"}`;
     }
     else {

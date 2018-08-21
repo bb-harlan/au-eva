@@ -1,11 +1,12 @@
 <template>
   <require from="../au-views/tran-bchg-cells-spacer.html"></require>
   <require from="../au-views/vertical-gridline.html"></require>
-  <require from="../au-components/input-currency"></require>
+  <require from="../au-components/au-input-currency"></require>
 
   <div class="aaInlineBlock">
 
-    <template if.bind="bchg.targetAcct.equationSide == eva.SIDE_EQUITIES">
+    <template if.bind="bchg.targetAcct.parentFaeSide.id == eva.SIDE_ID_EQUITIES">
+      <!-- put blank space in change-to-asset column -->
       <tran-bchg-cells-spacer></tran-bchg-cells-spacer>
       <vertical-gridline></vertical-gridline>
     </template>
@@ -63,7 +64,8 @@
     <vertical-gridline></vertical-gridline>
   </div>
 
-  <template if.bind="bchg.targetAcct.equationSide == eva.SIDE_ASSETS">
+  <template if.bind="bchg.targetAcct.parentFaeSide.id == eva.faeSideAssets.id">
+    <!-- put blank space in change-to-equity column -->
     <tran-bchg-cells-spacer></tran-bchg-cells-spacer>
     <vertical-gridline></vertical-gridline>
   </template>

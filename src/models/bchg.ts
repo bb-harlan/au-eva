@@ -1,14 +1,14 @@
-import {Acct} from '../models/acct';
-import {Tran} from '../models/tran';
-//
+import {Acct} from './acct';
+import {Tran} from './tran';
+
 export class Bchg {
-    id:string;
-    sourceTran:Tran;
-    targetAcct:Acct;
-    intraTranSorter:number;
-    desc:string;
-    amt:number;
-    newBalance:number;
+    id: string;
+    sourceTran: Tran;
+    targetAcct: Acct;
+    intraTranSorter: number;
+    desc: string;
+    amt: number;
+    newBalance: number = 0.00;
 
     constructor(id:string,
                 sourceTran:Tran,
@@ -22,7 +22,6 @@ export class Bchg {
         this.intraTranSorter = intraTranSorter;
         this.desc = desc;
         this.amt = amt;
-        this.newBalance = 0.00;
     }
 
     compareToInAcct(b:Bchg):number {

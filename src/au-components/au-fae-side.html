@@ -3,14 +3,14 @@
   <require from="../au-views/vertical-gridline-spacer.html"></require>
   <require from="../au-converters/currency-converter"></require>
   <require from="../au-converters/equation-side-converter"></require>
-  <require from="../au-components/acct-mover"></require>
+  <require from="../au-components/au-acct-mover"></require>
 
-  <h1
-      css="text-align: ${acctList.equationSide == eva.SIDE_ASSETS ? 'right' : 'left'};">${acctList.equationSide |
-    equationSideConverter:true:true}</h1>
+  <h1 css="text-align: ${faeSide.id == eva.SIDE_ID_ASSETS ? 'right' : 'left'};">
+    ${faeSide.id}
+  </h1>
   <div  element.ref="moverDialogPositionElement"
         class="aaGridContainer">
-    <div class="aaGridTitleBar" style="font-size: larger;">${acctList.equationSide | equationSideConverter:true:false}
+    <div class="aaGridTitleBar" style="font-size: larger;">${faeSide.id | equationSideConverter:true: false}
       accounts
     </div>
     <div class="aaPanelToolBar">
@@ -49,7 +49,7 @@
       </div>
     </div>
     <div class="aaGridScrollableRows">
-      <template repeat.for="listItem of acctList">
+      <template repeat.for="listItem of faeSide.acctList">
         <div id="${listItem.id}" class="aaRow" mouseenter.trigger="onRowEnter($event, listItem)"
              mouseleave.trigger="onRowLeave($event, listItem)">
           <template if.bind="listItem.isAcct()">
@@ -72,7 +72,7 @@
             <div class="aaRowDataCells">
               <span class="aaCellText aaFontSizeData aaCellAcctTitle">${listItem.title}</span>
               <vertical-gridline></vertical-gridline>
-              <span class="aaCellText aaFontSizeData aaCellBchgBal">${listItem.bchgList.endingBalance | currencyConverter}</span>
+              <span class="aaCellText aaFontSizeData aaCellBchgBal">${listItem.endingBalance | currencyConverter}</span>
               <vertical-gridline></vertical-gridline>
             </div>
           </template>
@@ -109,7 +109,7 @@
           for creating a new account in the list, this end-of-list row provides
           a point to insert a new account at the end of the list.
       -->
-      <div class="aaRow" id="End of equation side ${acctList.equationSide}"
+      <div class="aaRow" id="End of equation side ${faeSide.id}"
            mouseenter.trigger="onRowEnter($event, null)" mouseleave.trigger="onRowLeave($event, null)">
         <div class="aaCellRowOps">
           <span class="aaBtn aaBtnHidden" click.delegate="onRowOpsOpen($event, listItem)">
@@ -136,7 +136,7 @@
     <div class="aaGridFooterBar"></div>
     <!--
     Following is the coding for a row that shows the total of
-    all account balances. It is code with invisible menu and nav buttons
+    all account balances. It is coded with invisible menu and nav buttons
     as horizontal space holders to result in proper horizontal positioning
     of the "Total" label amd the total amt.
     -->
@@ -155,7 +155,7 @@
       <span class="aaCellText aaFontData aaCellAcctTitle" style="text-align: right;"><span
         class="aaFontLabel">Total:</span></span>
       <vertical-gridline-spacer></vertical-gridline-spacer>
-      <span class="aaCellText aaFontData aaCellBchgBal">${acctList.listTotal | currencyConverter}</span>
+      <span class="aaCellText aaFontData aaCellBchgBal">${faeSide.listTotal | currencyConverter}</span>
       <vertical-gridline-spacer></vertical-gridline-spacer>
     </div>
   </div>

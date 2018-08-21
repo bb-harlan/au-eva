@@ -3,8 +3,8 @@
   <require from="../au-views/vertical-gridline.html"></require>
   <require from="../au-views/vertical-gridline-spacer.html"></require>
   <require from="../au-views/tran-bchg-cells-spacer.html"></require>
-  <require from="../au-components/tran-bchg-row-data"></require>
-  <require from="../au-components/tran-bchg-mover"></require>
+  <require from="../au-components/au-tran-bchg-row-data"></require>
+  <require from="../au-components/au-tran-bchg-mover"></require>
   <require from="../au-converters/currency-converter"></require>
 
   <div class="aaPanel aaPanelBoxShadow">
@@ -80,7 +80,6 @@
         <div class="aaGridTitleBar">Account balance changes</div>
         <div class="aaPanelToolBar">
           <au-tran-bchg-mover
-            tran-bchg-list.bind="eva.selectedTran.bchgList"
             mover-dialog-position-element.bind="moverDialogPositionElement"></au-tran-bchg-mover>
         </div>
         <div class="aaGridScrollableRows" id="tranModule-${eva.selectedTran.id}" style="height: 25pc;">
@@ -158,23 +157,23 @@
             <div class="aaCellText aaFontData aaTranBchgRow2Indent">
               <input type="text" disabled class="aaCellBchgDesc aaFontLabel"
                      style="text-align: right; border-color: transparent; background-color: inherit;"
-                     value="Net change to assets:">
+                     value="Total change(s) to assets:">
             </div>
             <vertical-gridline-spacer></vertical-gridline-spacer>
             <div class="aaCellText aaFontData">
               <input type="text" disabled class="aaFormInputText aaCellBchgAmt"
-                     value="${eva.selectedTran.assetsBchg | currencyConverter}">
+                     value="${eva.selectedTran.totalChangesAssets | currencyConverter}">
             </div>
             <vertical-gridline-spacer></vertical-gridline-spacer>
             <div class="aaCellText aaFontData aaTranBchgRow2Indent">
               <input type="text" disabled class="aaCellBchgDesc aaFontLabel"
                      style="text-align: right; border-color: transparent; background-color: inherit;"
-                     value="Net change to equities:">
+                     value="Total change(s) to equities:">
             </div>
             <vertical-gridline-spacer></vertical-gridline-spacer>
             <div class="aaCellText aaFontData">
               <input type="text" disabled class="aaFormInputText aaCellBchgAmt"
-                     value="${eva.selectedTran.equitiesBchg | currencyConverter}">
+                     value="${eva.selectedTran.totalChangesEquities | currencyConverter}">
             </div>
           </div>
           <vertical-gridline-spacer></vertical-gridline-spacer>

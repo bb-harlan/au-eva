@@ -3,7 +3,7 @@
   <require from="../au-views/vertical-gridline-spacer.html"></require>
   <require from="../au-converters/currency-converter"></require>
   <require from="../au-converters/equation-side-converter"></require>
-  <require from="../au-components/tran-bchg-row-data"></require>
+  <require from="../au-components/au-tran-bchg-row-data"></require>
   <require from="../au-views/tran-bchg-cells-spacer.html"></require>
 
 
@@ -29,16 +29,16 @@
            class="aaGridScrollableRows"
            mousemove.trigger="onListMouseMove($event)"
            mouseleave.trigger="onListMouseLeave($event)">
-        <template repeat.for="bchg of moverTranBchgList">
+        <template repeat.for="moverBchg of moverTranBchgList">
           <div
             class="aaRow"
-            bchg.bind="bchg"
+            mover-bchg.bind="moverBchg"
             mouseenter.trigger="onRowMouseEnter($event, listItem)"
             mouseleave.trigger="onRowMouseLeave($event, listItem)"
             mousedown.trigger="onRowMouseDown($event)"
             mouseup.trigger="onRowMouseUp($event)">
             <div class="aaRowDataCells">
-              <au-tran-bchg-row-data bchg.bind="bchg"></au-tran-bchg-row-data>
+              <au-tran-bchg-row-data bchg.bind="moverBchg"></au-tran-bchg-row-data>
               <vertical-gridline></vertical-gridline>
             </div>
           </div>

@@ -1,9 +1,9 @@
 import {customElement, bindable} from 'aurelia-framework';
-import {Eva} from '../eva';
-import {Bchg} from '../models/bchg';
+import {Eva} from 'eva';
+import {Bchg} from 'models/bchg';
 //
 @customElement('au-cell-bchg')
-export class CellBchg {
+export class AuCellBchg {
     //
     eva:Eva = Eva.getInstance();
 

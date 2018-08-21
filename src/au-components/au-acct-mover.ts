@@ -1,43 +1,71 @@
-import {customElement, bindable} from 'aurelia-framework';
-import {Eva} from '../eva';
-import {TranBchgList} from '../models/tran-bchg-list';
-import {Bchg} from '../models/bchg';
+import {customElement, bindable, inject} from 'aurelia-framework';
+import {AuFaeSide} from '../au-components/au-fae-side';
+import {FaeSide} from '../models/fae-side';
+import {Eva} from 'eva';
+import {Acct, Annotation} from 'models/acct';
 
-@customElement('au-tran-bchg-mover')
-export class TranBchgMover {
+@customElement('au-acct-mover')
+@inject(AuFaeSide)
+export class AuAcctMover {
   eva: Eva = Eva.getInstance();
-  @bindable tranBchgList: TranBchgList;
+  @bindable acctList: Array<Acct | Annotation>;
   @bindable moverDialogPositionElement;
   moverDialogPositionTop;
   moverDialogPositionLeft;
+  auFaeSide: AuFaeSide;
 
-  moverTranBchgList: TranBchgList;
+  moverAcctList: Array<Acct | Annotation>;
   mouseIsDown: boolean = false;
   selectedMoverRow: Element = null;
   moverDialogModal: HTMLElement = null;
-  moverRowList: HTMLElement;
+  moverRowList: HTMLElement; // element.ref="moverRowList"
 
-
+  constructor(auFaeSide) {
+    this.auFaeSide = auFaeSide;
+  }
   onDialogOpen(event) {
-    this.moverTranBchgList = TranBchgList.create();
-    this.moverTranBchgList.push(...this.tranBchgList);
+    this.moverAcctList = [];
+    this.moverAcctList.push(...this.auFaeSide.faeSide.acctList);
     let moverDialogPositionProps = this.moverDialogPositionElement.getBoundingClientRect();
     this.moverDialogPositionTop = moverDialogPositionProps.top;
     this.moverDialogPositionLeft = moverDialogPositionProps.left;
     this.moverDialogModal.style.display = "block";
-    console.log(this.moverTranBchgList);
+    // console.log(moverDialogPositionProps);
   }
   onDialogDone(event) {
+    /*
+    In the view an Aurelia repeat loop is coded as follows to create
+    a div for each row of the mover datagrid as follows.
+
+     <template repeat.for="moverAcctListItem of moverAcctList">
+          <div
+            class="aaRow"
+            mover-acct-list-item.bind="moverAcctListItem"
+            /
+            /
+            /
+
+    In that loop note that
+
+      mover-acct-list-item.bind="moverAcctListItem"
+
+    creates a property named moverAcctListItem on each row, a div of type HTMLElement.
+    The value of that property is set to the iterator moverAcctListItem.
+
+    The following for loop uses that moverAcctListItem property
+    to reference the original acct|annotation object and update its intraTranSorter property
+    to reflect its possibly new position in the list as a result of moving.
+    */
+    this.moverAcctList = []; // done with it
     for (let i = 0; i < this.moverRowList.childElementCount - 1; i++) {
-      let bchg = (<any>this.moverRowList.children[i]).bchg as Bchg;
-      bchg.intraTranSorter = i;
+      let listItem = (<any>this.moverRowList.children[i]).listItem as Acct | Annotation;
+      listItem.intraSideSorter = i;
     }
-    this.tranBchgList.refresh();
-    this.moverTranBchgList = null;
+    this.auFaeSide.faeSide.refresh();
     this.moverDialogModal.style.display = "none";
   }
   onDialogCancel(event) {
-    this.moverTranBchgList = null;
+    this.moverAcctList = [];
     this.moverDialogModal.style.display = "none";
   }
   onRowMouseDown(event) {

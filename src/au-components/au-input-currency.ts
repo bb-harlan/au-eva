@@ -1,9 +1,9 @@
 import { customElement, bindable, inject } from 'aurelia-framework';
-import { CurrencyConverter } from '../au-converters/currency-converter';
+import { CurrencyConverter } from 'au-converters/currency-converter';
 //
 @customElement('au-input-currency')
 @inject(Element, CurrencyConverter)
-export class InputCurrency {
+export class AuInputCurrency {
   //
   element: Element;
   inputElement: HTMLInputElement;
