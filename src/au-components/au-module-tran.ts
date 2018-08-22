@@ -20,8 +20,10 @@ export class AuModuleTran {
     this.eva.selectedModule = this.eva.MODULE_JRNL;
   }
   onGoUp(event) {
-    let tranList: Array<Tran> = this.eva.selectedTran.parentJrnl.tranList;
-    let listIndex = tranList.findIndex(this.findIndexTest, this.eva.selectedTran.id);
+    let selectedTranId = this.eva.selectedTran.id;
+    let tranList = this.eva.selectedTran.parentJrnl.tranList;
+    let listIndex = tranList.findIndex(function (tran) {return tran.id === selectedTranId});
+    console.log(`listIndex = ${listIndex}`);
     if (listIndex > 0) {
       this.eva.selectedBchg = null;
       this.eva.selectedTran = tranList[listIndex - 1];
@@ -30,8 +32,10 @@ export class AuModuleTran {
     }
   }
   onGoDown(event) {
-    let tranList: Array<Tran> = this.eva.jrnl.tranList;
-    let listIndex = tranList.findIndex(this.findIndexTest, this.eva.selectedTran.id);
+    let selectedTranId = this.eva.selectedTran.id;
+    let tranList = this.eva.selectedTran.parentJrnl.tranList;
+    let listIndex = tranList.findIndex(function (tran) {return tran.id === selectedTranId});
+    console.log(`listIndex = ${listIndex}`);
     if (listIndex < tranList.length - 1) {
       this.eva.selectedBchg = null;
       this.eva.selectedTran = tranList[listIndex + 1];
@@ -49,9 +53,6 @@ export class AuModuleTran {
     else {
       this.eva.selectedModule = this.eva.MODULE_ACCT;
     }
-  }
-  findIndexTest(listItem) {
-    return (listItem.id == this);
   }
   onRowEnter(event, bchg) {
     if (bchg) {

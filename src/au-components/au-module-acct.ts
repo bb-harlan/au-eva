@@ -1,6 +1,7 @@
 import {customElement} from 'aurelia-framework';
 import {Eva} from 'eva';
 import {Acct, Annotation} from "models/acct";
+import {Tran} from "../models/tran";
 
 @customElement('au-module-acct')
 export class AuModuleAcct {
@@ -11,27 +12,51 @@ export class AuModuleAcct {
     this.eva.selectedBchg = null;
     this.eva.selectedModule = this.eva.MODULE_FAE;
   }
-  getAcctIndex(listItem) {
-    return (listItem.id == this.eva.selectedAcct.id); //returns index, not boolean
-  }
   onGoUp(event) {
-    let selectedAcctIndex = this.eva.selectedAcct.parentFaeSide.acctList.findIndex(this.getAcctIndex);
-    if (selectedAcctIndex > 0) {
-      this.eva.selectedAcct = this.eva.selectedAcct.parentFaeSide.acctList[selectedAcctIndex - 1];
+    let selectedAcctId = this.eva.selectedAcct.id;
+    let acctList = this.eva.selectedAcct.parentFaeSide.acctList;
+    let listIndex = acctList.findIndex(function (acct) {return acct.id === selectedAcctId});
+    if (listIndex > 0) {
       this.eva.selectedBchg = null;
+      this.eva.selectedAcct = acctList[listIndex - 1];
     } else {
       alert('Reached beginning of list.');
     }
   }
   onGoDown(event) {
-    let selectedAcctIndex = this.eva.selectedAcct.parentFaeSide.acctList.findIndex(this.getAcctIndex);
-    if (selectedAcctIndex  < this.eva.selectedAcct.parentFaeSide.acctList.length - 1) {
-      this.eva.selectedAcct = this.eva.selectedAcct.parentFaeSide.acctList[selectedAcctIndex + 1];
+    let selectedAcctId = this.eva.selectedAcct.id;
+    let acctList = this.eva.selectedAcct.parentFaeSide.acctList;
+    let listIndex = acctList.findIndex(function (acct) {return acct.id === selectedAcctId});
+    if (listIndex < acctList.length - 1) {
       this.eva.selectedBchg = null;
-    } else {
+      this.eva.selectedAcct = acctList[listIndex + 1];
+    }
+    else {
       alert('Reached end of list.');
     }
   }
+
+  // getAcctIndex(listItem) {
+  //   return (listItem.id == this.eva.selectedAcct.id); //returns index, not boolean
+  // }
+  // onGoUp(event) {
+  //   let selectedAcctIndex = this.eva.selectedAcct.parentFaeSide.acctList.findIndex(this.getAcctIndex);
+  //   if (selectedAcctIndex > 0) {
+  //     this.eva.selectedAcct = this.eva.selectedAcct.parentFaeSide.acctList[selectedAcctIndex - 1];
+  //     this.eva.selectedBchg = null;
+  //   } else {
+  //     alert('Reached beginning of list.');
+  //   }
+  // }
+  // onGoDown(event) {
+  //   let selectedAcctIndex = this.eva.selectedAcct.parentFaeSide.acctList.findIndex(this.getAcctIndex);
+  //   if (selectedAcctIndex  < this.eva.selectedAcct.parentFaeSide.acctList.length - 1) {
+  //     this.eva.selectedAcct = this.eva.selectedAcct.parentFaeSide.acctList[selectedAcctIndex + 1];
+  //     this.eva.selectedBchg = null;
+  //   } else {
+  //     alert('Reached end of list.');
+  //   }
+  // }
   onGoBchg(event, bchg) {
     this.eva.selectedTran = bchg.sourceTran;
     this.eva.selectedBchg = bchg;
