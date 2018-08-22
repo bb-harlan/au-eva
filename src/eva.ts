@@ -52,7 +52,6 @@ export class Eva {
   entityName: string = "";
   faeSideAssets: FaeSide = new FaeSide(/*id*/ this.SIDE_ID_ASSETS);
   faeSideEquities: FaeSide = new FaeSide(/*id*/ this.SIDE_ID_EQUITIES);
-  // jrnl: Jrnl = new Jrnl();
   jrnl: Jrnl = new Jrnl(/*id*/ this.TRAN_JRNL_ID);
 
   private _nextSorter: number = 1;
@@ -75,7 +74,7 @@ export class Eva {
     let newAnno: Annotation;
     let newAcct: Acct;
     let randomAcct: Acct;
-    let newTran: Tran;
+    let sourceTran: Tran;
     let newBchg: Bchg;
     let acctId: string;
     let annoId: string;
@@ -83,19 +82,19 @@ export class Eva {
     /*
      Create some accounts**********************************************************
      */
-    annoId = `acct${this.nextAcctId}`;
+    annoId = `anno${this.nextAcctId}`;
     newAnno = new Annotation(
       /*id*/ annoId, 
       /*faeSide*/ this.faeSideAssets, 
       /*intraSideSorter*/ 0, 
-      /*title*/ `Test annotation (equationSide: ${this.faeSideAssets}; annoId: ${annoId};)`);
+      /*title*/ `Test annotation (equationSide: ${this.faeSideAssets.id}; annoId: ${annoId};)`);
     this.faeSideAssets.acctList.push(newAnno);
 
     for (let intraSideSorter = 15; intraSideSorter > 0; intraSideSorter--) {
       acctId = `acct${this.nextAcctId}`;
       newAcct = new Acct(
         /*id*/ acctId, 
-        /*faeSide*/ this.faeSideAssets, 
+        /*parentFaeSide*/ this.faeSideAssets,
         /*intraSideSorter*/ intraSideSorter, 
         /*title*/ `Test account (equationSide: ${this.faeSideAssets.id}, acctId: ${acctId};)`, 
         /*normalBalance*/ 1);
@@ -104,7 +103,7 @@ export class Eva {
       acctId = `acct${this.nextAcctId}`;
       newAcct = new Acct(
         /*id*/ acctId, 
-        /*faeSide*/ this.faeSideEquities,
+        /*parentFaeSide*/ this.faeSideEquities,
         /*intraSideSorter*/ intraSideSorter,
         /*title*/ `Test account (equationSide: ${this.faeSideEquities.id}; acctId: ${acctId};)`,
         /*normalBalance*/  1);
@@ -114,52 +113,50 @@ export class Eva {
     /*
      Create some transactions**********************************************************
      */
-    // let filteredAssetAcctList = this.faeSideAssets.acctList.filter((listItem) => listItem instanceof Acct);
-    // let filteredEquityAcctList = this.faeSideEquities.acctList.filter((listItem) => listItem instanceof Acct);
-    // let acctList = filteredAssetAcctList.concat(filteredEquityAcctList);
-    // for (let i = 1; i <= 50; ++i) {
-    //   newTran = new Tran(
-    //     /*id*/ `tran${this.nextTranId}`, 
-    //     /*date*/ (i % 2 ? "2016/02/13" : "2016/02/12"), 
-    //     /*intraDateSorter*/ this.nextSorter);
+    let filteredAssetAcctList = this.faeSideAssets.acctList.filter((listItem) => listItem instanceof Acct);
+    let filteredEquityAcctList = this.faeSideEquities.acctList.filter((listItem) => listItem instanceof Acct);
+    let acctList = filteredAssetAcctList.concat(filteredEquityAcctList);
+    for (let i = 1; i <= 50; ++i) {
+      sourceTran = new Tran(
+        /*id*/ `tran${this.nextTranId}`,
+        /*parentJrnl*/ this.jrnl,
+        /*date*/ (i % 2 ? "2016/02/13" : "2016/02/12"),
+        /*intraDateSorter*/ this.nextSorter);
       
-    //   randomAcct = acctList[(Math.random() * (acctList.length - 1)).toFixed(0)];
-    //   newBchg = new Bchg(
-    //     /*id*/ `bchg${this.nextBchgId}`,
-    //     /*sourceTran*/ newTran,
-    //     /*targetAcct*/ randomAcct,
-    //     /*intraTranSorter*/ 0,
-    //     /*desc*/ `<change desc: bchg #B${this.nextBchgId}; tran #${newTran.id}; acct #${randomAcct.id}; >`,
-    //     /*amt*/ 0.00);
-    //   newTran.bchgList.push(newBchg);
-    //   randomAcct.bchgList.push(newBchg);
+      randomAcct = acctList[(Math.random() * (acctList.length - 1)).toFixed(0)];
+      newBchg = new Bchg(
+        /*id*/ `bchg${this.nextBchgId}`,
+        /*sourceTran*/ sourceTran,
+        /*targetAcct*/ randomAcct,
+        /*intraTranSorter*/ 0,
+        /*desc*/ `<change desc: bchg #B${this.nextBchgId}; tran #${sourceTran.id}; acct #${randomAcct.id}; >`,
+        /*amt*/ 0.00);
+      sourceTran.bchgList.push(newBchg);
+      randomAcct.bchgList.push(newBchg);
       
-    //   randomAcct = acctList[(Math.random() * (acctList.length - 1)).toFixed(0)];
-    //   newBchg = new Bchg(
-    //     /*id*/ `bchg${this.nextBchgId}`,
-    //     /*sourceTran*/ newTran,
-    //     /*targetAcct*/ randomAcct,
-    //     /*intraTranSorter*/ 1,
-    //     /*desc*/ `<change desc: bchg #B${this.nextBchgId}; tran #${newTran.id}; acct #${randomAcct.id}; >`,
-    //     /*amt*/ Math.round(Math.random() * 1000000)/100);
-    //   newTran.bchgList.push(newBchg);
-    //   randomAcct.bchgList.push(newBchg);
-    //   newTran.refresh();
-    //   this.tranJrnl.tranList.push(newTran);
-    // }
-    // console.log('Created some transactions (order scrambled from normal order)');
-    // /*
-    //  Refresh equation sides **********************************************************
-    //  */
-    // this.assetList.refresh();
-    // this.equityList.refresh();
-    // console.log(`Refreshed equation sides`);
-    // /*
-    //  Refresh journal & transactions **********************************************************
-    //  */
-    // this.tranList.refresh();
-    // console.log(`Refreshed tranList`);
-    // console.log('Generation of test data completed!');
+      randomAcct = acctList[(Math.random() * (acctList.length - 1)).toFixed(0)];
+      newBchg = new Bchg(
+        /*id*/ `bchg${this.nextBchgId}`,
+        /*sourceTran*/ sourceTran,
+        /*targetAcct*/ randomAcct,
+        /*intraTranSorter*/ 1,
+        /*desc*/ `<change desc: bchg #B${this.nextBchgId}; tran #${sourceTran.id}; acct #${randomAcct.id}; >`,
+        /*amt*/ Math.round(Math.random() * 1000000)/100);
+      sourceTran.bchgList.push(newBchg);
+      randomAcct.bchgList.push(newBchg);
+      sourceTran.refresh();
+      this.jrnl.tranList.push(sourceTran);
+    }
+    console.log('Created some transactions (order scrambled from normal order)');
+    /*
+     Refresh journal (cascades to refresh all)
+     **********************************************************
+    */
+    this.jrnl.refresh();
+    console.log(this.faeSideAssets);
+    console.log(this.faeSideEquities);
+    console.log(this.jrnl);
+    console.log('Generation of test data completed!');
   }
 
   generateExample1Data() {
@@ -179,7 +176,7 @@ export class Eva {
     */
     newAcct = new Acct(
       /*id*/ `acct${this.nextAcctId}`, 
-      /*faeSide*/ this.faeSideAssets,
+      /*parentFaeSide*/ this.faeSideAssets,
       /*intraSideSorter*/ this.nextSorter, 
       /*title*/ "Pocket money", 
       /*normalBalance*/ 1);
@@ -187,7 +184,7 @@ export class Eva {
 
     newAcct = new Acct(
       /*id*/ `acct${this.nextAcctId}`, 
-      /*faeSide*/ this.faeSideAssets,
+      /*parentFaeSide*/ this.faeSideAssets,
       /*intraSideSorter*/ this.nextSorter, 
       /*title*/ "Tallahassee Bank - checking account", 
       /*normalBalance*/ 1);
@@ -195,7 +192,7 @@ export class Eva {
 
     newAcct = new Acct(
       /*id*/ `acct${this.nextAcctId}`, 
-      /*faeSide*/ this.faeSideEquities,
+      /*parentFaeSide*/ this.faeSideEquities,
       /*intraSideSorter*/ this.nextSorter, 
       /*title*/ "Rene's equity", 
       /*normalBalance*/ 1);
@@ -268,7 +265,7 @@ export class Eva {
       /*sourceTran*/ sourceTran,
       /*targetAcct*/ targetAcct,
       /*intraTranSorter*/ this.nextSorter,
-      /*desc*/ "Cash",
+      /*desc*/ "Cash from ATM withdrawal",
       /*amt*/ 0.00)
     sourceTran.bchgList.push(newBchg);
     targetAcct.bchgList.push(newBchg);
@@ -280,7 +277,7 @@ export class Eva {
       /*targetAcct*/ targetAcct,
       /*intraTranSorter*/ this.nextSorter,
       /*desc*/ "ATM withdrawal",
-      /*amt*/ -50.00)
+      /*amt*/ -100.00)
     sourceTran.bchgList.push(newBchg);
     targetAcct.bchgList.push(newBchg);
 
@@ -291,7 +288,7 @@ export class Eva {
     */
 
 
-    sourceTran.parentJrnl.refresh(); // will cascade to refreshof all objecs
+    sourceTran.parentJrnl.refresh(); // will cascade to refresh all objecs
 
     console.log(this.faeSideAssets);
     console.log(this.faeSideEquities);
