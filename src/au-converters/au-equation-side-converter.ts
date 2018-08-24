@@ -2,8 +2,8 @@ import {valueConverter} from "aurelia-framework";
 import {Eva} from "eva";
 
 
-@valueConverter("equationSideConverter")
-export class EquationSideConverter {
+@valueConverter("auEquationSideConverter")
+export class AuEquationSideConverter {
   eva: Eva = Eva.getInstance();
 
   toView(faeSideId: string, capitalize: boolean, plural: boolean) {

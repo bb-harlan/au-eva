@@ -1,8 +1,8 @@
 <template>
-  <require from="../au-views/vertical-gridline.html"></require>
-  <require from="../au-views/vertical-gridline-spacer.html"></require>
-  <require from="../au-converters/currency-converter"></require>
-  <require from="../au-converters/equation-side-converter"></require>
+  <require from="../au-views/au-vertical-gridline.html"></require>
+  <require from="../au-views/au-vertical-gridline-spacer.html"></require>
+  <require from="../au-converters/au-currency-converter"></require>
+  <require from="../au-converters/au-equation-side-converter"></require>
   <require from="../au-components/au-acct-mover"></require>
 
   <h1 css="text-align: ${faeSide.id == eva.SIDE_ID_ASSETS ? 'right' : 'left'};">
@@ -10,7 +10,7 @@
   </h1>
   <div  element.ref="moverDialogPositionElement"
         class="aaGridContainer">
-    <div class="aaGridTitleBar" style="font-size: larger;">${faeSide.id | equationSideConverter:true: false}
+    <div class="aaGridTitleBar" style="font-size: larger;">${faeSide.id | auEquationSideConverter:true: false}
       accounts
     </div>
     <div class="aaPanelToolBar">
@@ -39,13 +39,13 @@
                       <i class="fa fa-chevron-right fa-fw" aria-hidden="true"></i>
           </span>
         </div>
-        <vertical-gridline></vertical-gridline>
+        <au-vertical-gridline></au-vertical-gridline>
         <div class="aaCellText aaCellRowSelectedChar" style="visibility: hidden;">${eva.ROW_SELECTED_CHAR}</div>
-        <vertical-gridline></vertical-gridline>
+        <au-vertical-gridline></au-vertical-gridline>
         <div class="aaCellText aaFontSizeLabel aaCellAcctTitle"><span class=" aaSansSerif">Title</span></div>
-        <vertical-gridline></vertical-gridline>
+        <au-vertical-gridline></au-vertical-gridline>
         <div class="aaCellText aaFontSizeLabel aaCellBchgBal"><span class=" aaSansSerif">Balance</span></div>
-        <vertical-gridline></vertical-gridline>
+        <au-vertical-gridline></au-vertical-gridline>
       </div>
     </div>
     <div class="aaGridScrollableRows">
@@ -63,17 +63,17 @@
                 <i class="fa fa-chevron-right fa-fw" aria-hidden="true"></i>
               </span>
             </div>
-            <vertical-gridline></vertical-gridline>
+            <au-vertical-gridline></au-vertical-gridline>
             <div class="aaCellText aaCellRowSelectedChar"
                  css="visibility: ${listItem.id == eva.selectedAcct.id ? 'visible' : 'hidden'};">
               ${eva.ROW_SELECTED_CHAR}
             </div>
-            <vertical-gridline></vertical-gridline>
+            <au-vertical-gridline></au-vertical-gridline>
             <div class="aaRowDataCells">
               <span class="aaCellText aaFontSizeData aaCellAcctTitle">${listItem.title}</span>
-              <vertical-gridline></vertical-gridline>
-              <span class="aaCellText aaFontSizeData aaCellBchgBal">${listItem.endingBalance | currencyConverter}</span>
-              <vertical-gridline></vertical-gridline>
+              <au-vertical-gridline></au-vertical-gridline>
+              <span class="aaCellText aaFontSizeData aaCellBchgBal">${listItem.endingBalance | auCurrencyConverter}</span>
+              <au-vertical-gridline></au-vertical-gridline>
             </div>
           </template>
           <template if.bind="listItem.isAnnotation()">
@@ -87,17 +87,17 @@
                 <i class="fa fa-chevron-right fa-fw" aria-hidden="true"></i>
               </span>
             </div>
-            <vertical-gridline></vertical-gridline>
+            <au-vertical-gridline></au-vertical-gridline>
             <div class="aaCellText aaCellRowSelectedChar"
                  css="visibility: ${listItem.id == eva.selectedAcct.id ? 'visible' : 'hidden'};">
               ${eva.ROW_SELECTED_CHAR}
             </div>
-            <vertical-gridline></vertical-gridline>
+            <au-vertical-gridline></au-vertical-gridline>
             <div class="aaRowDataCells">
               <span class="aaCellText aaFontSizeData aaCellAnnoTitle">${listItem.annoText}</span>
-              <vertical-gridline></vertical-gridline>
+              <au-vertical-gridline></au-vertical-gridline>
               <span class="aaCellText aaFontSizeData aaCellBchgBal"></span>
-              <vertical-gridline></vertical-gridline>
+              <au-vertical-gridline></au-vertical-gridline>
             </div>
           </template>
         </div>
@@ -121,15 +121,15 @@
             <i class="fa fa-chevron-right fa-fw" aria-hidden="true"></i>
           </span>
         </div>
-        <vertical-gridline></vertical-gridline>
+        <au-vertical-gridline></au-vertical-gridline>
         <div class="aaCellText aaCellRowSelectedChar" style="visibility: hidden;">${eva.ROW_SELECTED_CHAR}</div>
-        <vertical-gridline></vertical-gridline>
+        <au-vertical-gridline></au-vertical-gridline>
         <div class="aaInlineBlock">
           <span class="aaCellText aaFontData aaCellAcctTitle"><span
             class="aaSansSerif aaCellTextEOL">${eva.END_OF_LIST}</span></span>
-          <vertical-gridline></vertical-gridline>
+          <au-vertical-gridline></au-vertical-gridline>
           <span class="aaCellText aaFontData aaCellBchgBal"></span>
-          <vertical-gridline></vertical-gridline>
+          <au-vertical-gridline></au-vertical-gridline>
         </div>
       </div>
     </div>
@@ -155,7 +155,7 @@
       <span class="aaCellText aaFontData aaCellAcctTitle" style="text-align: right;"><span
         class="aaFontLabel">Total:</span></span>
       <vertical-gridline-spacer></vertical-gridline-spacer>
-      <span class="aaCellText aaFontData aaCellBchgBal">${faeSide.listTotal | currencyConverter}</span>
+      <span class="aaCellText aaFontData aaCellBchgBal">${faeSide.listTotal | auCurrencyConverter}</span>
       <vertical-gridline-spacer></vertical-gridline-spacer>
     </div>
   </div>

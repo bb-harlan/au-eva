@@ -1,22 +1,22 @@
 import { customElement, bindable, inject } from 'aurelia-framework';
-import { CurrencyConverter } from 'au-converters/currency-converter';
+import { AuCurrencyConverter } from 'au-converters/au-currency-converter';
 //
 @customElement('au-input-currency')
-@inject(Element, CurrencyConverter)
+@inject(Element, AuCurrencyConverter)
 export class AuInputCurrency {
   //
   element: Element;
   inputElement: HTMLInputElement;
-  currencyConverter: CurrencyConverter;
+  auCurrencyConverter: AuCurrencyConverter;
 
   @bindable currencyAmount: number;
   @bindable isReadonly: boolean = false;
   @bindable isDisabled: boolean = false;
   @bindable classesString: string;
 
-  constructor(element: Element, currencyConverter: CurrencyConverter) {
+  constructor(element: Element, auCurrencyConverter: AuCurrencyConverter) {
     this.element = element;
-    this.currencyConverter = currencyConverter;
+    this.auCurrencyConverter = auCurrencyConverter;
   }
 
   currencyAmountChanged(newValue, oldValue) {
@@ -174,7 +174,7 @@ export class AuInputCurrency {
     else {
       this.tempCurrencyAmount = parseFloat(sanitizedValue);
     }
-    this.formattedCurrencyAmount = this.currencyConverter.toView(this.tempCurrencyAmount);
+    this.formattedCurrencyAmount = this.auCurrencyConverter.toView(this.tempCurrencyAmount);
 
     // adjust cursor position for any digit group separaters added by formatting
     for (let i = 0; i <= cursorPosition; i++) {

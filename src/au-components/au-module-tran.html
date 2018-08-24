@@ -1,11 +1,11 @@
 <template>
-  <require from="../au-views/bchg-grid-header.html"></require>
-  <require from="../au-views/vertical-gridline.html"></require>
-  <require from="../au-views/vertical-gridline-spacer.html"></require>
-  <require from="../au-views/tran-bchg-cells-spacer.html"></require>
+  <require from="../au-views/au-bchg-grid-header.html"></require>
+  <require from="../au-views/au-vertical-gridline.html"></require>
+  <require from="../au-views/au-vertical-gridline-spacer.html"></require>
+  <require from="../au-views/au-tran-bchg-cells-spacer.html"></require>
   <require from="../au-components/au-tran-bchg-row-data"></require>
   <require from="../au-components/au-tran-bchg-mover"></require>
-  <require from="../au-converters/currency-converter"></require>
+  <require from="../au-converters/au-currency-converter"></require>
 
   <div class="aaPanel aaPanelBoxShadow">
 
@@ -100,11 +100,11 @@
                   </span>
                 </div>
               </template>
-              <vertical-gridline></vertical-gridline>
+              <au-vertical-gridline></au-vertical-gridline>
               <div class="aaCellText aaCellRowSelectedChar"
                    css="visibility: ${bchg.id == eva.selectedBchg.id ? 'visible' : 'hidden'};">${eva.ROW_SELECTED_CHAR}
               </div>
-              <vertical-gridline></vertical-gridline>
+              <au-vertical-gridline></au-vertical-gridline>
               <div class="aaRowDataCells">
                 <au-tran-bchg-row-data bchg.bind="bchg"></au-tran-bchg-row-data>
               </div>
@@ -128,16 +128,16 @@
                   </span>
               </div>
             </template>
-            <vertical-gridline></vertical-gridline>
+            <au-vertical-gridline></au-vertical-gridline>
             <div class="aaCellText aaCellRowSelectedChar" style="visibility: hidden;">${eva.ROW_SELECTED_CHAR}</div>
-            <vertical-gridline></vertical-gridline>
+            <au-vertical-gridline></au-vertical-gridline>
             <div class="aaInlineBlock">
               <div class="aaInlineBlock aaCellText aaFontData" style="position: absolute;"><span
                 class="aaSansSerif aaCellTextEOL">${eva.END_OF_LIST}</span></div>
-              <tran-bchg-cells-spacer></tran-bchg-cells-spacer>
+              <au-tran-bchg-cells-spacer></au-tran-bchg-cells-spacer>
               <vertical-gridline-spacer></vertical-gridline-spacer>
-              <tran-bchg-cells-spacer></tran-bchg-cells-spacer>
-              <vertical-gridline></vertical-gridline>
+              <au-tran-bchg-cells-spacer></au-tran-bchg-cells-spacer>
+              <au-vertical-gridline></au-vertical-gridline>
             </div>
           </div>
 
@@ -162,7 +162,7 @@
             <vertical-gridline-spacer></vertical-gridline-spacer>
             <div class="aaCellText aaFontData">
               <input type="text" disabled class="aaFormInputText aaCellBchgAmt"
-                     value="${eva.selectedTran.totalChangesAssets | currencyConverter}">
+                     value="${eva.selectedTran.totalChangesAssets | auCurrencyConverter}">
             </div>
             <vertical-gridline-spacer></vertical-gridline-spacer>
             <div class="aaCellText aaFontData aaTranBchgRow2Indent">
@@ -173,7 +173,7 @@
             <vertical-gridline-spacer></vertical-gridline-spacer>
             <div class="aaCellText aaFontData">
               <input type="text" disabled class="aaFormInputText aaCellBchgAmt"
-                     value="${eva.selectedTran.totalChangesEquities | currencyConverter}">
+                     value="${eva.selectedTran.totalChangesEquities | auCurrencyConverter}">
             </div>
           </div>
           <vertical-gridline-spacer></vertical-gridline-spacer>

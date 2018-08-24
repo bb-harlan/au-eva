@@ -1,5 +1,5 @@
 <template>
-  <require from="../au-converters/currency-converter"></require>
+  <require from="../au-converters/au-currency-converter"></require>
   <input
     element.ref="inputElement"
     type="text"
@@ -10,6 +10,6 @@
     blur.trigger="onBlur()"
     keydown.trigger="onKeydown($event)"
     input.trigger="onInput()"
-    value.to-view="currencyAmount | currencyConverter"
+    value.to-view="currencyAmount | auCurrencyConverter"
     >
 </template>

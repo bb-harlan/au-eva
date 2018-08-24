@@ -86,7 +86,7 @@ export class Eva {
     newAnno = new Annotation(
       /*id*/ annoId, 
       /*faeSide*/ this.faeSideAssets, 
-      /*intraSideSorter*/ 0, 
+      /*intraSideSorter*/ this.nextSorter,
       /*title*/ `Test annotation (equationSide: ${this.faeSideAssets.id}; annoId: ${annoId};)`);
     this.faeSideAssets.acctList.push(newAnno);
 
@@ -95,7 +95,7 @@ export class Eva {
       newAcct = new Acct(
         /*id*/ acctId, 
         /*parentFaeSide*/ this.faeSideAssets,
-        /*intraSideSorter*/ intraSideSorter, 
+        /*intraSideSorter*/ this.nextSorter,
         /*title*/ `Test account (equationSide: ${this.faeSideAssets.id}, acctId: ${acctId};)`, 
         /*normalBalance*/ 1);
       this.faeSideAssets.acctList.push(newAcct);
@@ -104,7 +104,7 @@ export class Eva {
       newAcct = new Acct(
         /*id*/ acctId, 
         /*parentFaeSide*/ this.faeSideEquities,
-        /*intraSideSorter*/ intraSideSorter,
+        /*intraSideSorter*/ this.nextSorter,
         /*title*/ `Test account (equationSide: ${this.faeSideEquities.id}; acctId: ${acctId};)`,
         /*normalBalance*/  1);
         this.faeSideEquities.acctList.push(newAcct);
@@ -216,7 +216,7 @@ export class Eva {
       /*targetAcct*/ targetAcct,
       /*intraTranSorter*/ this.nextSorter,
       /*desc*/ "Opening position",
-      /*amt*/ 0.00)
+      /*amt*/ 0.00);
     sourceTran.bchgList.push(newBchg);
     targetAcct.bchgList.push(newBchg);
 
@@ -227,7 +227,7 @@ export class Eva {
       /*targetAcct*/ targetAcct,
       /*intraTranSorter*/ this.nextSorter,
       /*desc*/ "Opening position",
-      /*amt*/ 12.00)
+      /*amt*/ 12.00);
     sourceTran.bchgList.push(newBchg);
     targetAcct.bchgList.push(newBchg);
     
@@ -238,7 +238,7 @@ export class Eva {
       /*targetAcct*/ targetAcct,
       /*intraTranSorter*/ this.nextSorter,
       /*desc*/ "Opening position",
-      /*amt*/ 1700.00)
+      /*amt*/ 1700.00);
     sourceTran.bchgList.push(newBchg);
     targetAcct.bchgList.push(newBchg);
     

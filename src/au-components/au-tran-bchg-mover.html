@@ -1,10 +1,10 @@
 <template>
-  <require from="../au-views/vertical-gridline.html"></require>
-  <require from="../au-views/vertical-gridline-spacer.html"></require>
-  <require from="../au-converters/currency-converter"></require>
-  <require from="../au-converters/equation-side-converter"></require>
+  <require from="../au-views/au-vertical-gridline.html"></require>
+  <require from="../au-views/au-vertical-gridline-spacer.html"></require>
+  <require from="../au-converters/au-currency-converter"></require>
+  <require from="../au-converters/au-equation-side-converter"></require>
   <require from="../au-components/au-tran-bchg-row-data"></require>
-  <require from="../au-views/tran-bchg-cells-spacer.html"></require>
+  <require from="../au-views/au-tran-bchg-cells-spacer.html"></require>
 
 
   <span click.trigger="onDialogOpen($event)" class="aaBtn"><i class="fa fa-arrows-v fa-fw aaIconBlue"
@@ -39,7 +39,7 @@
             mouseup.trigger="onRowMouseUp($event)">
             <div class="aaRowDataCells">
               <au-tran-bchg-row-data bchg.bind="moverBchg"></au-tran-bchg-row-data>
-              <vertical-gridline></vertical-gridline>
+              <au-vertical-gridline></au-vertical-gridline>
             </div>
           </div>
         </template>
@@ -48,10 +48,10 @@
           <div class="aaInlineBlock">
             <div class="aaInlineBlock aaCellText aaFontData" style="position: absolute;"><span
               class="aaSansSerif aaCellTextEOL">${eva.END_OF_LIST}</span></div>
-            <tran-bchg-cells-spacer></tran-bchg-cells-spacer>
+            <au-tran-bchg-cells-spacer></au-tran-bchg-cells-spacer>
             <vertical-gridline-spacer></vertical-gridline-spacer>
-            <tran-bchg-cells-spacer></tran-bchg-cells-spacer>
-            <vertical-gridline></vertical-gridline>
+            <au-tran-bchg-cells-spacer></au-tran-bchg-cells-spacer>
+            <au-vertical-gridline></au-vertical-gridline>
           </div>
         </div>
 
@@ -88,7 +88,7 @@
                 mouseup.trigger="onRowMouseUp($event)">
                 <div class="aaRowDataCells">
                   <au-tran-bchg-row-data bchg.bind="bchg"></au-tran-bchg-row-data>
-                  <vertical-gridline></vertical-gridline>
+                  <au-vertical-gridline></au-vertical-gridline>
                 </div>
               </div>
             </template>

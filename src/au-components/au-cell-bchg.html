@@ -1,6 +1,6 @@
 
 <template bindable="isBlank, acctTitle, bchgDesc, bchgAmt, autoBalanceItem, gridlineWidth, gridlineColor">
-  <require from="../au-views/vertical-gridline.html"></require>
+  <require from="../au-views/au-vertical-gridline.html"></require>
   <div css="display: inline-block; border-bottom: 0px solid ${gridlineColor};">
     <template if.bind="!isBlank">
       <template if.bind="!eva.isEditing">
@@ -13,7 +13,7 @@
                    value="${bchgDesc}">
           </div>
 
-          <vertical-gridline></vertical-gridline>
+          <au-vertical-gridline></au-vertical-gridline>
           <template if.bind="autoBalanceItem">
             <div class="aaCellText aaFontData">
 <!--
@@ -56,7 +56,7 @@
                  disabled
                  value="">
         </div>
-        <vertical-gridline></vertical-gridline>
+        <au-vertical-gridline></au-vertical-gridline>
         <div class="aaCellText aaFontData">
           <input type="text"
                  class="aaFormInputText aaCellBchgAmt"

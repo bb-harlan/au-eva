@@ -1,5 +1,5 @@
 <template bindable="bchg">
-  <require from="../au-views/vertical-gridline.html"></require>
+  <require from="../au-views/au-vertical-gridline.html"></require>
   <require from="../au-components/au-input-currency"></require>
   <div class="aaInlineBlock">
     <template if.bind="!eva.isEditing">
@@ -26,7 +26,7 @@
               class="aaFormInputText aaCellBchgDesc"
               value="${bchg.desc}">
         </div>
-        <vertical-gridline></vertical-gridline>
+        <au-vertical-gridline></au-vertical-gridline>
         <div class="aaCellText aaFontSizeData">
           <au-input-currency
             currency-amount.two-way="bchg.amt"
@@ -58,7 +58,7 @@
                    class="aaFormInputText aaCellBchgDesc"
                    value.two-way="bchg.desc">
         </div>
-        <vertical-gridline></vertical-gridline>
+        <au-vertical-gridline></au-vertical-gridline>
         <div class="aaCellText aaFontSizeData">
           <template if.bind="bchg.intraTranSorter == 0">
             <au-input-currency
@@ -75,7 +75,7 @@
         </div>
       </div>
     </template>
-    <vertical-gridline></vertical-gridline>
+    <au-vertical-gridline></au-vertical-gridline>
   </div>
 </template>
 

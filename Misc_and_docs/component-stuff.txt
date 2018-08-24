@@ -2,9 +2,9 @@ module-jrnl.html
 =====================================
 
 ---------------------------------------------------------------
-<require from="../au-views/vertical-gridline.html"></require>
+<require from="../au-views/au-vertical-gridline.html"></require>
 ---------------------------------------------------------------
-<vertical-gridline></vertical-gridline>
+<au-vertical-gridline></au-vertical-gridline>
 
 ---------------------------------------------------------------
 <require from="./tran-bchg"></require>

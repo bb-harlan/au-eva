@@ -1,3 +1,4 @@
+import {AppGlobals} from "./app-globals";
 import {Eva} from 'eva';
 import {Acct, Annotation} from 'models/acct';
 import {Tran} from 'models/tran';
@@ -28,6 +29,10 @@ export class App {
   }
 
   bind() {
+    console.log("********************************");
+    console.log(AppGlobals.A_CONSTANT);
+    AppGlobals.someMethod();
+    console.log("********************************");
     // this.eva.generateTestData();
     this.eva.generateExample1Data();
   }

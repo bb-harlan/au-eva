@@ -1,8 +1,8 @@
 import {valueConverter} from "aurelia-framework";
 // import {Eva} from '../eva';
 
-@valueConverter("currencyConverter")
-export class CurrencyConverter {
+@valueConverter("auCurrencyConverter")
+export class AuCurrencyConverter {
   // eva: Eva = Eva.getInstance();
 
   toView(currencyAmount: number) {
