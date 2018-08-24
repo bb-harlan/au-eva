@@ -12,7 +12,7 @@ export class AuAcctMover {
   @bindable moverDialogPositionElement;
   moverDialogPositionTop;
   moverDialogPositionLeft;
-  auFaeSide: AuFaeSide; 
+  auFaeSide: AuFaeSide;
 
   moverAcctList: Array<Acct | Annotation>;
   mouseIsDown: boolean = false;
