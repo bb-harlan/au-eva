@@ -1,7 +1,7 @@
 <template>
-  <require from="../au-views/au-vertical-gridline.html"></require>
-  <require from="../au-converters/au-currency-converter"></require>
-  <require from="../au-converters/au-equation-side-converter"></require>
+  <require from="au-views/au-vertical-gridline.html"></require>
+  <require from="au-converters/au-currency-converter"></require>
+  <require from="au-converters/au-equation-side-converter"></require>
   <div class="aaPanel aaPanelBoxShadow">
     <div class="aaPanelHeader aaPanelHeaderModule">Account balance change</div>
     <div class="aaPanelToolBar" xstyle="text-align: center;">
@@ -46,14 +46,14 @@
             </div>
             <au-vertical-gridline></au-vertical-gridline>
             <div class="aaRowDataCells">
-              <!-- <div class="aaCellText aaFontSizeData aaCellId">${eva.selectedBchg.targetAcct.id}</div>
+              <!-- <div class="aaCellText aaFontSizeData aaCellId">${app.selectedBchg.targetAcct.id}</div>
               <au-vertical-gridline></au-vertical-gridline> -->
               <div class="aaCellText aaFontSizeData aaCellEquSide">
-                <!--${eva.selectedBchg.targetAcct.equationSide | auEquationSideConverter:true:true}-->
-                ${eva.selectedBchg.targetAcct.parentFaeSide.id}
+                <!--${app.selectedBchg.targetAcct.equationSide | auEquationSideConverter:true:true}-->
+                ${app.selectedBchg.targetAcct.parentFaeSide.id}
               </div>
               <au-vertical-gridline></au-vertical-gridline>
-              <div class="aaCellText aaFontSizeData aaCellAcctTitle">${eva.selectedBchg.targetAcct.title}</div>
+              <div class="aaCellText aaFontSizeData aaCellAcctTitle">${app.selectedBchg.targetAcct.title}</div>
             </div>
           </div>
         </div>
@@ -84,9 +84,9 @@
             </div>
             <au-vertical-gridline></au-vertical-gridline>
             <div class="aaRowDataCells">
-              <!-- <div class="aaCellText aaFontSizeData aaCellId">${eva.selectedBchg.sourceTran.id}</div>
+              <!-- <div class="aaCellText aaFontSizeData aaCellId">${app.selectedBchg.sourceTran.id}</div>
               <au-vertical-gridline></au-vertical-gridline> -->
-              <div class="aaCellText aaFontSizeData aaCellTranDate">${eva.selectedBchg.sourceTran.date}</div>
+              <div class="aaCellText aaFontSizeData aaCellTranDate">${app.selectedBchg.sourceTran.date}</div>
             </div>
           </div>
         </div>
@@ -111,9 +111,9 @@
           </div>
           <div class="aaRow">
             <div class="aaRowDataCells">
-              <div class="aaCellText aaFontSizeData aaCellBchgDesc">${eva.selectedBchg.desc}</div>
+              <div class="aaCellText aaFontSizeData aaCellBchgDesc">${app.selectedBchg.desc}</div>
               <au-vertical-gridline></au-vertical-gridline>
-              <div class="aaCellText aaFontSizeData aaCellBchgAmt">${eva.selectedBchg.amt | auCurrencyConverter}</div>
+              <div class="aaCellText aaFontSizeData aaCellBchgAmt">${app.selectedBchg.amt | auCurrencyConverter}</div>
             </div>
           </div>
         </div>

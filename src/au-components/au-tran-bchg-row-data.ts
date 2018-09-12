@@ -1,18 +1,21 @@
-import { customElement, bindable } from 'aurelia-framework';
-import { Eva } from 'eva';
-import { Bchg } from 'models/bchg';
+import {customElement, bindable, inject} from 'aurelia-framework';
+import {App} from 'app';
+import {Bchg} from 'app-data/models//bchg';
 
 @customElement('au-tran-bchg-row-data')
+@inject(App)
 export class TranBchg {
-    //
-    eva: Eva = Eva.getInstance();
-    @bindable bchg: Bchg;
+  app = null;
+  @bindable bchg: Bchg;
 
-    onInputCurrencyCompleted(event) {
-        this.bchg.amt = event.detail.newCurrencyAmount;
-        this.bchg.sourceTran.refresh();
-    }
+  constructor(app) {
+    this.app = app;
+  }
 
+  onInputCurrencyCompleted(event) {
+    this.bchg.amt = event.detail.newCurrencyAmount;
+    this.bchg.sourceTran.refresh();
+  }
 }
 
 

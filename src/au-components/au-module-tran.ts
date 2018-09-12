@@ -1,65 +1,72 @@
 import {customElement} from 'aurelia-framework';
-import {Eva} from 'eva';
-import {Tran} from 'models/tran';
-import {Bchg} from 'models/bchg';
-import {Jrnl} from '../models/jrnl';
+import {inject} from 'aurelia-framework';
+import {App} from "app";
 
-//
 @customElement('au-module-tran')
+@inject(App)
 export class AuModuleTran {
-  //
-  eva: Eva = Eva.getInstance();
-
+  app = null;
   moverDialogModal: HTMLElement;
   moverDialogContent: HTMLElement;
   moverDialogPositionElement: HTMLElement;
 
+  constructor(app) {
+    this.app = app;
+  }
 
   onGoJrnl(event) {
-    this.eva.selectedBchg = null;
-    this.eva.selectedModule = this.eva.MODULE_JRNL;
+    this.app.selectedBchg = null;
+    this.app.selectedModule = this.app.MODULE_JRNL;
   }
+
   onGoUp(event) {
-    let selectedTranId = this.eva.selectedTran.id;
-    let tranList = this.eva.selectedTran.parentJrnl.tranList;
-    let listIndex = tranList.findIndex(function (tran) {return tran.id === selectedTranId});
+    let selectedTranId = this.app.selectedTran.id;
+    let tranList = this.app.selectedTran.parentJrnl.tranList;
+    let listIndex = tranList.findIndex(function (tran) {
+      return tran.id === selectedTranId;
+    });
     console.log(`listIndex = ${listIndex}`);
     if (listIndex > 0) {
-      this.eva.selectedBchg = null;
-      this.eva.selectedTran = tranList[listIndex - 1];
+      this.app.selectedBchg = null;
+      this.app.selectedTran = tranList[listIndex - 1];
     } else {
       alert('Reached beginning of list.');
     }
   }
+
   onGoDown(event) {
-    let selectedTranId = this.eva.selectedTran.id;
-    let tranList = this.eva.selectedTran.parentJrnl.tranList;
-    let listIndex = tranList.findIndex(function (tran) {return tran.id === selectedTranId});
+    let selectedTranId = this.app.selectedTran.id;
+    let tranList = this.app.selectedTran.parentJrnl.tranList;
+    let listIndex = tranList.findIndex(function (tran) {
+      return tran.id === selectedTranId;
+    });
     console.log(`listIndex = ${listIndex}`);
     if (listIndex < tranList.length - 1) {
-      this.eva.selectedBchg = null;
-      this.eva.selectedTran = tranList[listIndex + 1];
+      this.app.selectedBchg = null;
+      this.app.selectedTran = tranList[listIndex + 1];
     }
     else {
       alert('Reached end of list.');
     }
   }
+
   onGoBchg(event, bchg) {
-    this.eva.selectedBchg = bchg;
-    this.eva.selectedAcct = bchg.targetAcct;
-    if (this.eva.showingModuleBchg) {
-      this.eva.selectedModule = this.eva.MODULE_BCHG;
+    this.app.selectedBchg = bchg;
+    this.app.selectedAcct = bchg.targetAcct;
+    if (this.app.showingModuleBchg) {
+      this.app.selectedModule = this.app.MODULE_BCHG;
     }
     else {
-      this.eva.selectedModule = this.eva.MODULE_ACCT;
+      this.app.selectedModule = this.app.MODULE_ACCT;
     }
   }
+
   onRowEnter(event, bchg) {
     if (bchg) {
       if (bchg.intraTranSorter >= 1) {
         event.target.children[0].children[0].style.visibility = 'visible';
       }
-      else if (!this.eva.isEditing) {
+      else if (!this.app.isEditing) {
         event.target.children[0].children[0].style.visibility = 'visible';
       }
     }
@@ -68,19 +75,20 @@ export class AuModuleTran {
       event.target.children[0].children[0].style.visibility = 'visible';
     }
     event.target.children[4].classList.toggle('aaRowHover', true);
-/*
-    if (!bchg && this.eva.isEditing) {
-      // end-of-list item
-      event.target.children[0].children[0].style.visibility = 'visible';
-    }
-*/
+    /*
+        if (!bchg && this.app.isEditing) {
+          // end-of-list item
+          event.target.children[0].children[0].style.visibility = 'visible';
+        }
+    */
   }
+
   onRowLeave(event, bchg) {
     if (bchg) {
       if (bchg.intraTranSorter >= 1) {
         event.target.children[0].children[0].style.visibility = 'hidden';
       }
-      else if (!this.eva.isEditing) {
+      else if (!this.app.isEditing) {
         event.target.children[0].children[0].style.visibility = 'hidden';
       }
     }
@@ -89,34 +97,43 @@ export class AuModuleTran {
     }
     event.target.children[4].classList.toggle('aaRowHover', false);
   }
+
   onEdit(event) {
-    this.eva.isEditing = true;
+    this.app.isEditing = true;
   }
+
   onSaveEdits(event) {
-    this.eva.selectedTran.refresh();
-    this.eva.isEditing = false;
+    this.app.selectedTran.computeBalancingBchgAmt(this.app.data.SIDE_ID_ASSETS, this.app.data.SIDE_ID_EQUITIES);
+    this.app.selectedTran.refresh();
+    this.app.isEditing = false;
   }
+
   onCancelEdits(event) {
-    document.getElementById('tranModule-' + this.eva.selectedTran.id).classList.toggle('aaRowHover', false);
-    this.eva.isEditing = false;
+    document.getElementById('tranModule-' + this.app.selectedTran.id).classList.toggle('aaRowHover', false);
+    this.app.isEditing = false;
   }
+
   onDelete(event) {
     alert('"Delete transaction" not yet implemented.');
   }
+
   onPickAcct(event, bchg) {
     alert(`bchg.id: ${bchg.id} - "Acct picker dialog" not yet implemented.`);
   }
+
   onMenuClick(event, bchg) {
     alert(`bchg.id: ${bchg ? bchg.id : "End-of-list"} - "Row ops menu" not yet implemented.`);
   }
+
   onMoverDialogOpen(event) {
     alert('"Rearrange list sequence" not yet implemented.');
   }
+
   attached() {
     let hyperLink: Element = document.getElementById('scrollToSelected');
-    if (this.eva.selectedBchg) {
-      hyperLink.innerHTML = `#${this.eva.selectedBchg.id}`;
-      hyperLink.setAttribute("href", `#${this.eva.selectedBchg.id}`);
+    if (this.app.selectedBchg) {
+      hyperLink.innerHTML = `#${this.app.selectedBchg.id}`;
+      hyperLink.setAttribute("href", `#${this.app.selectedBchg.id}`);
       // hyperLink.click();
       document.getElementById('scrollToSelected').click();
     } else {

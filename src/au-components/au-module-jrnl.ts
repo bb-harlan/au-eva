@@ -1,62 +1,69 @@
 import {customElement, inject} from 'aurelia-framework';
-import {Eva} from 'eva';
+import {App} from 'app';
 
 @customElement('au-module-jrnl')
+@inject(App)
 export class AuModuleJrnl {
-    //
-    eva: Eva = Eva.getInstance();
+  //
+  app = null;
 
-    onRowEnter(event, tran) {
-        event.target.children[0].children[0].style.visibility = 'visible';
-        event.target.children[4].classList.toggle('aaRowHover', true);
-    }
+  constructor(app) {
+    this.app = app;
+  }
 
-    onRowLeave(event, tran) {
-        event.target.children[0].children[0].style.visibility = 'hidden';
-        event.target.children[4].classList.toggle('aaRowHover', false);
-    }
-    onGoTran(event, tran) {
-        this.eva.selectedBchg = null;
-        this.eva.selectedTran = tran;
-        this.eva.selectedModule = this.eva.MODULE_TRAN;
-    }
-    onNewTran(event) {
-        alert('"New transaction" dialog not yet implemented.');
-    }
+  onRowEnter(event, tran) {
+    event.target.children[0].children[0].style.visibility = 'visible';
+    event.target.children[4].classList.toggle('aaRowHover', true);
+  }
 
+  onRowLeave(event, tran) {
+    event.target.children[0].children[0].style.visibility = 'hidden';
+    event.target.children[4].classList.toggle('aaRowHover', false);
+  }
+
+  onGoTran(event, tran) {
+    this.app.selectedBchg = null;
+    this.app.selectedTran = tran;
+    this.app.selectedModule = this.app.MODULE_TRAN;
+  }
+
+  onNewTran(event) {
+    alert('"New transaction" dialog not yet implemented.');
+  }
+
+  /*
+   selectSide(equationSide) {
+   this.app.selectedEquationSide = equationSide;
+   }
+   deselectSide(event) {
+   this.app.selectedEquationSide = null;
+   }
+   */
+  attached() {
     /*
-     selectSide(equationSide) {
-     this.eva.selectedEquationSide = equationSide;
-     }
-     deselectSide(event) {
-     this.eva.selectedEquationSide = null;
+     let hyperLink:Element = document.getElementById('scrollToSelected');
+     if (this.app.selectedTran) {
+     hyperLink.innerHTML = `#${this.app.selectedTran.id}`;
+     hyperLink.setAttribute("href", `#${this.app.selectedTran.id}`);
+     // hyperLink.click();
+     document.getElementById('scrollToSelected').click();
+     } else {
+     hyperLink.innerHTML = "#";
+     hyperLink.setAttribute("href", `#`);
      }
      */
-    attached() {
-        /*
-         let hyperLink:Element = document.getElementById('scrollToSelected');
-         if (this.eva.selectedTran) {
-         hyperLink.innerHTML = `#${this.eva.selectedTran.id}`;
-         hyperLink.setAttribute("href", `#${this.eva.selectedTran.id}`);
-         // hyperLink.click();
-         document.getElementById('scrollToSelected').click();
-         } else {
-         hyperLink.innerHTML = "#";
-         hyperLink.setAttribute("href", `#`);
-         }
-         */
-        if (this.eva.selectedTran) {
-            document.getElementById('scrollToSelected').innerHTML = `#${this.eva.selectedTran.id}`;
-            document.getElementById('scrollToSelected').setAttribute("href", `#${this.eva.selectedTran.id}`);
-            // hyperLink.click();
-            document.getElementById('scrollToSelected').click();
-        } else {
-            document.getElementById('scrollToSelected').innerHTML = "#";
-            document.getElementById('scrollToSelected').setAttribute("href", `#`);
-        }
-        this.eva.selectedBchg = null;
-        this.eva.selectedAcct = null;
-        this.eva.selectedFaeSide = null;
+    if (this.app.selectedTran) {
+      document.getElementById('scrollToSelected').innerHTML = `#${this.app.selectedTran.id}`;
+      document.getElementById('scrollToSelected').setAttribute("href", `#${this.app.selectedTran.id}`);
+      // hyperLink.click();
+      document.getElementById('scrollToSelected').click();
+    } else {
+      document.getElementById('scrollToSelected').innerHTML = "#";
+      document.getElementById('scrollToSelected').setAttribute("href", `#`);
     }
+    this.app.selectedBchg = null;
+    this.app.selectedAcct = null;
+    this.app.selectedFaeSide = null;
+  }
 }
 

@@ -1,28 +1,27 @@
 import {customElement, bindable, inject} from 'aurelia-framework';
-import {AuFaeSide} from '../au-components/au-fae-side';
-import {FaeSide} from '../models/fae-side';
-import {Eva} from 'eva';
-import {Acct, Annotation} from 'models/acct';
+import {App} from 'app';
+import {AuFaeSide} from 'au-components/au-fae-side';
+import {Acct, Annotation} from 'app-data/models//acct';
 
 @customElement('au-acct-mover')
-@inject(AuFaeSide)
+@inject(App, AuFaeSide)
 export class AuAcctMover {
-  eva: Eva = Eva.getInstance();
+  app;
   @bindable acctList: Array<Acct | Annotation>;
   @bindable moverDialogPositionElement;
   moverDialogPositionTop;
   moverDialogPositionLeft;
   auFaeSide: AuFaeSide;
-
   moverAcctList: Array<Acct | Annotation>;
   mouseIsDown: boolean = false;
   selectedMoverRow: Element = null;
   moverDialogModal: HTMLElement = null;
   moverRowList: HTMLElement; // element.ref="moverRowList"
-
-  constructor(auFaeSide) {
+  constructor(app, auFaeSide) {
+    this.app = app;
     this.auFaeSide = auFaeSide;
   }
+
   onDialogOpen(event) {
     this.moverAcctList = [];
     this.moverAcctList.push(...this.auFaeSide.faeSide.acctList);
@@ -32,6 +31,7 @@ export class AuAcctMover {
     this.moverDialogModal.style.display = "block";
     // console.log(moverDialogPositionProps);
   }
+
   onDialogDone(event) {
     /*
     In the view an Aurelia repeat loop is coded as follows to create
@@ -64,10 +64,12 @@ export class AuAcctMover {
     this.auFaeSide.faeSide.refresh();
     this.moverDialogModal.style.display = "none";
   }
+
   onDialogCancel(event) {
     this.moverAcctList = [];
     this.moverDialogModal.style.display = "none";
   }
+
   onRowMouseDown(event) {
     let targetRow: Element = event.currentTarget as Element;
     targetRow.children[0].classList.toggle('aaRowHover', false);
@@ -75,6 +77,7 @@ export class AuAcctMover {
     this.mouseIsDown = true;
     this.selectedMoverRow = event.currentTarget;
   }
+
   onRowMouseUp(event) {
     let targetRow = event.currentTarget as Element;
     targetRow.children[0].classList.toggle('aaDragging', false);
@@ -82,18 +85,21 @@ export class AuAcctMover {
     this.mouseIsDown = false;
     this.selectedMoverRow = null;
   }
+
   onRowMouseLeave(event, listItem) {
     if (!this.mouseIsDown) {
       let targetRow = event.currentTarget as Element;
       targetRow.children[0].classList.toggle('aaRowHover', false);
     }
   }
+
   onRowMouseEnter(event, listItem) {
     if (!this.mouseIsDown) {
       let targetRow = event.currentTarget as Element;
       targetRow.children[0].classList.toggle('aaRowHover', true);
     }
   }
+
   onListMouseMove(event) {
     if (!this.mouseIsDown || !this.selectedMoverRow) {
       return;
@@ -106,7 +112,7 @@ export class AuAcctMover {
       return;
     }
     let nextSibling = this.selectedMoverRow.nextElementSibling;
-    if (nextSibling.id == `${this.eva.END_OF_LIST}`) {
+    if (nextSibling.id == `${this.app.END_OF_LIST}`) {
       nextSibling = null;
     }
     if (nextSibling && mouseY >= nextSibling.getBoundingClientRect().top) {
@@ -114,6 +120,7 @@ export class AuAcctMover {
       return;
     }
   }
+
   onListMouseLeave(event) {
     if (this.mouseIsDown && this.selectedMoverRow) {
       this.selectedMoverRow.children[0].classList.toggle('aaDragging', false);
@@ -123,6 +130,7 @@ export class AuAcctMover {
       return;
     }
   }
+
   elementY(element) {
     return element.getBoundingClientRect().top;
   };

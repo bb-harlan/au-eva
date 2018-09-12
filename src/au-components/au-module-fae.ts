@@ -1,35 +1,37 @@
-import {customElement, bindable} from 'aurelia-framework';
-import {Eva} from 'eva';
+import {customElement, bindable, inject} from 'aurelia-framework';
+import {App} from 'app';
 
 @customElement('au-module-fae')
+@inject(App)
 export class AuModuleFae {
-    //
-    @bindable eva:Eva = Eva.getInstance();
+  //
+  app = null;
 
-    constructor() {
-    }
+  constructor(app) {
+    this.app = app;
+  }
 
-    selectSide(faeSide) {
-        this.eva.selectedFaeSide = faeSide;
-    }
+  selectSide(faeSide) {
+    this.app.selectedFaeSide = faeSide;
+  }
 
-    deselectSide(event) {
-        this.eva.selectedFaeSide = null;
-    }
+  deselectSide(event) {
+    this.app.selectedFaeSide = null;
+  }
 
-    attached() {
-        let hyperLink:Element = document.getElementById('scrollToSelected');
-        if (this.eva.selectedAcct) {
-            hyperLink.innerHTML = `#${this.eva.selectedAcct.id}`;
-            hyperLink.setAttribute("href", `#${this.eva.selectedAcct.id}`);
-            // hyperLink.click();
-            document.getElementById('scrollToSelected').click();
-        } else {
-            hyperLink.innerHTML = "#";
-            hyperLink.setAttribute("href", `#`);
-        }
-        this.eva.selectedBchg = null;
-        this.eva.selectedTran = null;
+  attached() {
+    let hyperLink: Element = document.getElementById('scrollToSelected');
+    if (this.app.selectedAcct) {
+      hyperLink.innerHTML = `#${this.app.selectedAcct.id}`;
+      hyperLink.setAttribute("href", `#${this.app.selectedAcct.id}`);
+      // hyperLink.click();
+      document.getElementById('scrollToSelected').click();
+    } else {
+      hyperLink.innerHTML = "#";
+      hyperLink.setAttribute("href", `#`);
     }
+    this.app.selectedBchg = null;
+    this.app.selectedTran = null;
+  }
 }
 

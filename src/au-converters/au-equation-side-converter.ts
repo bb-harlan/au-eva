@@ -1,16 +1,21 @@
-import {valueConverter} from "aurelia-framework";
-import {Eva} from "eva";
-
+import {inject, valueConverter} from "aurelia-framework";
+import {App} from 'app';
+import {AuFaeSide} from "au-components/au-fae-side";
 
 @valueConverter("auEquationSideConverter")
+@inject(App)
 export class AuEquationSideConverter {
-  eva: Eva = Eva.getInstance();
+  app = null;
+
+  constructor(app) {
+    this.app = app;
+  }
 
   toView(faeSideId: string, capitalize: boolean, plural: boolean) {
-    if (faeSideId == this.eva.SIDE_ID_ASSETS) {
+    if (faeSideId == this.app.data.SIDE_ID_ASSETS) {
       return `${capitalize ? "A" : "a"}sset${plural ? "s" : ""}`;
     }
-    else if (faeSideId == this.eva.SIDE_ID_EQUITIES) {
+    else if (faeSideId == this.app.data.SIDE_ID_EQUITIES) {
       return `${capitalize ? "E" : "e"}quit${plural ? "ies" : "y"}`;
     }
     else {

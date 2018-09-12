@@ -1,11 +1,11 @@
-import {customElement, bindable} from 'aurelia-framework';
-import {Eva} from 'eva';
-import {FaeSide} from '../models/fae-side';
+import {customElement, bindable, inject} from 'aurelia-framework';
+import {App} from 'app';
+import {FaeSide} from 'app-data/models//fae-side';
 
 @customElement('au-fae-side')
+@inject(App)
 export class AuFaeSide {
-  
-  eva: Eva = Eva.getInstance();
+  app = null;
   @bindable faeSide: FaeSide;
   moverDialogModal: HTMLElement;
   moverDialogContent: HTMLElement;
@@ -25,6 +25,10 @@ export class AuFaeSide {
    * event.target.children[0] is the menu buttom.
    * event.target.children[1] is the nav buttom.
    */
+  constructor(app) {
+    this.app = app;
+  }
+
   onRowEnter(event, listItem) {
     if (listItem) {
       event.target.children[0].children[0].style.visibility = 'visible';
@@ -51,15 +55,16 @@ export class AuFaeSide {
     this.rowOpsBoundingClientRect = (event.target as Element).parentElement.getBoundingClientRect();
     this.rowOpsMenuModal.style.display = "block";
   }
+
   onRowOpsCancel(event) {
-    if (event.target == this.rowOpsMenuModal){
+    if (event.target == this.rowOpsMenuModal) {
       this.rowOpsMenuModal.style.display = "none";
     }
   }
 
   onGoAcct(event, listItem) {
-    this.eva.selectedBchg = null;
-    this.eva.selectedAcct = listItem;
-    this.eva.selectedModule = this.eva.MODULE_ACCT;
+    this.app.selectedBchg = null;
+    this.app.selectedAcct = listItem;
+    this.app.selectedModule = this.app.MODULE_ACCT;
   }
 }

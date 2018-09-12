@@ -1,8 +1,8 @@
 <template bindable="bchg">
-  <require from="../au-views/au-vertical-gridline.html"></require>
-  <require from="../au-components/au-input-currency"></require>
+  <require from="au-views/au-vertical-gridline.html"></require>
+  <require from="au-components/au-input-currency"></require>
   <div class="aaInlineBlock">
-    <template if.bind="!eva.isEditing">
+    <template if.bind="!app.isEditing">
       <div class="aaInlineBlock aaCellText aaFontSizeData">
         <input
           type="text"
@@ -36,7 +36,7 @@
       </div>
     </template>
 
-    <template if.bind="eva.isEditing">
+    <template if.bind="app.isEditing">
       <div class="aaInlineBlock aaCellText aaFontSizeData">
         <input type="text"
                disabled

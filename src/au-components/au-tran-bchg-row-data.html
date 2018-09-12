@@ -1,11 +1,11 @@
 <template>
-  <require from="../au-views/au-tran-bchg-cells-spacer.html"></require>
-  <require from="../au-views/au-vertical-gridline.html"></require>
-  <require from="../au-components/au-input-currency"></require>
+  <require from="au-views/au-tran-bchg-cells-spacer.html"></require>
+  <require from="au-views/au-vertical-gridline.html"></require>
+  <require from="au-components/au-input-currency"></require>
 
   <div class="aaInlineBlock">
 
-    <template if.bind="bchg.targetAcct.parentFaeSide.id == eva.SIDE_ID_EQUITIES">
+    <template if.bind="bchg.targetAcct.parentFaeSide.id == app.data.SIDE_ID_EQUITIES">
       <!-- put blank space in change-to-asset column -->
       <au-tran-bchg-cells-spacer></au-tran-bchg-cells-spacer>
       <au-vertical-gridline></au-vertical-gridline>
@@ -13,58 +13,65 @@
 
     <div class="aaInlineBlock">
       <div class="aaCellText aaFontSizeData">
-        <input type="text" disabled class="aaFormInputText aaCellAcctTitle" css="vertical-align: middle; border-color: ${eva.GRIDLINE_COLOR};"
-          value.to-view="bchg.targetAcct.title">
-        <template if.bind="!eva.isEditing">
+        <input type="text" disabled class="aaFormInputText aaCellAcctTitle"
+               css="vertical-align: middle; border-color: ${eva.GRIDLINE_COLOR};"
+               value.to-view="bchg.targetAcct.title">
+        <template if.bind="!app.isEditing">
           <span class="aaBtn aaBtnHidden" style="vertical-align: middle; border-color: #999;">
             <i class="fa fa-ellipsis-h fa-fw" aria-hidden="true"></i>
           </span>
         </template>
-        <template if.bind="eva.isEditing">
+        <template if.bind="app.isEditing">
           <input type="button"
                  class="aaBtn"
                  click.delegate="moduleTran.onPickAcct($event, bchg)"
                  style="vertical-align: middle; border-color: #999; font-family: FontAwesome;"
                  value="&#xf141;">
-          <span class="aaBtn" click.delegate="moduleTran.onPickAcct($event, bchg)" style="vertical-align: middle; border-color: #999;">
+          <span class="aaBtn" click.delegate="moduleTran.onPickAcct($event, bchg)"
+                style="vertical-align: middle; border-color: #999;">
             <i class="fa fa-ellipsis-h fa-fw" aria-hidden="true"></i>
           </span>
         </template>
       </div>
       <div class="aaTranBchgRow2Indent">
         <div class="aaCellText aaFontSizeData">
-          <template if.bind="!eva.isEditing">
+          <template if.bind="!app.isEditing">
             <input type="text" disabled class="aaFormInputText aaCellBchgDesc" value.to-view="bchg.desc">
           </template>
-          <template if.bind="eva.isEditing">
+          <template if.bind="app.isEditing">
             <input type="text" class="aaFormInputText aaCellBchgDesc" value.two-way="bchg.desc">
           </template>
         </div>
         <div class="aaCellText aaFontSizeData">
-          <template if.bind="!eva.isEditing">
-            <au-input-currency currency-amount.to-view="bchg.amt" is-disabled.to-view="true" classes-string.to-view="'aaFormInputText aaCellBchgAmt'"></au-input-currency>
+          <template if.bind="!app.isEditing">
+            <au-input-currency currency-amount.to-view="bchg.amt" is-disabled.to-view="true"
+                               classes-string.to-view="'aaFormInputText aaCellBchgAmt'"></au-input-currency>
           </template>
-          <template if.bind="eva.isEditing">
+          <template if.bind="app.isEditing">
             <template if.bind="bchg.intraTranSorter != 0">
-              <au-input-currency currency-amount.to-view="bchg.amt" is-disabled.to-view="false" classes-string.to-view="'aaFormInputText aaCellBchgAmt'"
-                inputcurrencycompleted.delegate="onInputCurrencyCompleted($event)"></au-input-currency>
+              <au-input-currency currency-amount.to-view="bchg.amt" is-disabled.to-view="false"
+                                 classes-string.to-view="'aaFormInputText aaCellBchgAmt'"
+                                 inputcurrencycompleted.delegate="onInputCurrencyCompleted($event)"></au-input-currency>
             </template>
             <template if.bind="bchg.intraTranSorter == 0">
-              <au-input-currency currency-amount.to-view="bchg.amt" is-disabled.to-view="true" classes-string.to-view="'aaFormInputText aaCellBchgAmt aaBchgAmtComputed'"></au-input-currency>
+              <au-input-currency currency-amount.to-view="bchg.amt" is-disabled.to-view="true"
+                                 classes-string.to-view="'aaFormInputText aaCellBchgAmt aaBchgAmtComputed'"></au-input-currency>
             </template>
           </template>
         </div>
       </div>
-      <template if.bind="eva.selectedModule == eva.MODULE_TRAN && bchg.intraTranSorter == 0 && eva.isEditing">
+      <template if.bind="app.selectedModule == app.MODULE_TRAN && bchg.intraTranSorter == 0 && app.isEditing">
         <div style="text-align: right;">
-          <div class="aaCellText aaFontLabel">NOTE: The change amount in this first row is automatically computed to balance the transaction.</div>
+          <div class="aaCellText aaFontLabel">NOTE: The change amount in this first row is automatically computed to
+            balance the transaction.
+          </div>
         </div>
       </template>
     </div>
     <au-vertical-gridline></au-vertical-gridline>
   </div>
 
-  <template if.bind="bchg.targetAcct.parentFaeSide.id == eva.faeSideAssets.id">
+  <template if.bind="bchg.targetAcct.parentFaeSide.id == app.data.faeSideAssets.id">
     <!-- put blank space in change-to-equity column -->
     <au-tran-bchg-cells-spacer></au-tran-bchg-cells-spacer>
     <au-vertical-gridline></au-vertical-gridline>

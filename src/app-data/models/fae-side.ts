@@ -2,7 +2,7 @@ import { Acct, Annotation } from './acct';
 
 //
 export class FaeSide {
-  id: string;   // eva.SIDE_ID_ASSETS or eva.SIDE_ID_EQUITIES
+  id: string;   // data.SIDE_ID_ASSETS or data.SIDE_ID_EQUITIES
   acctList: Array<Acct | Annotation> = [];
   listTotal: number = 0.00;
   

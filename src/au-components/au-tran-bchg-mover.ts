@@ -1,15 +1,13 @@
-import {customElement, bindable} from 'aurelia-framework';
-import {Eva} from 'eva';
-import {Tran} from 'models/tran';
-import {Bchg} from 'models/bchg';
+import {customElement, bindable, inject} from 'aurelia-framework';
+import {App} from 'app';
+import {Bchg} from 'app-data/models//bchg';
 
 @customElement('au-tran-bchg-mover')
+@inject(App)
 export class AuTranBchgMover {
-  eva: Eva = Eva.getInstance();
-
+  app = null;
   /* data properties */
   moverTranBchgList: Array<Bchg>;
-
   /* view properties */
   @bindable moverDialogPositionElement;
   moverDialogPositionTop;
@@ -18,17 +16,20 @@ export class AuTranBchgMover {
   selectedMoverRow: Element = null;
   moverDialogModal: HTMLElement = null;
   moverRowList: HTMLElement; //<div element.ref="moverRowList"
-
+  constructor(app) {
+    this.app = app;
+  }
 
   onDialogOpen(event) {
     this.moverTranBchgList = [];
-    this.moverTranBchgList.push(...this.eva.selectedTran.bchgList);
+    this.moverTranBchgList.push(...this.app.selectedTran.bchgList);
     console.log(this.moverTranBchgList);
     let moverDialogPositionProps = this.moverDialogPositionElement.getBoundingClientRect();
     this.moverDialogPositionTop = moverDialogPositionProps.top;
     this.moverDialogPositionLeft = moverDialogPositionProps.left;
     this.moverDialogModal.style.display = "block";
   }
+
   onDialogDone(event) {
     /*
     In the view an Aurelia repeat loop is coded as follows to create
@@ -58,13 +59,15 @@ export class AuTranBchgMover {
       let moverBchg = (<any>this.moverRowList.children[i]).moverBchg as Bchg;
       moverBchg.intraTranSorter = i;
     }
-    this.eva.selectedTran.refresh();
+    this.app.selectedTran.refresh();
     this.moverDialogModal.style.display = "none";
   }
+
   onDialogCancel(event) {
     this.moverTranBchgList = []; //done with it
     this.moverDialogModal.style.display = "none";
   }
+
   onRowMouseDown(event) {
     let targetRow: Element = event.currentTarget as Element;
     targetRow.children[0].classList.toggle('aaRowHover', false);
@@ -72,6 +75,7 @@ export class AuTranBchgMover {
     this.mouseIsDown = true;
     this.selectedMoverRow = event.currentTarget;
   }
+
   onRowMouseUp(event) {
     let targetRow = event.currentTarget as Element;
     targetRow.children[0].classList.toggle('aaDragging', false);
@@ -79,18 +83,21 @@ export class AuTranBchgMover {
     this.mouseIsDown = false;
     this.selectedMoverRow = null;
   }
+
   onRowMouseLeave(event, listItem) {
     if (!this.mouseIsDown) {
       let targetRow = event.currentTarget as Element;
       targetRow.children[0].classList.toggle('aaRowHover', false);
     }
   }
+
   onRowMouseEnter(event, listItem) {
     if (!this.mouseIsDown) {
       let targetRow = event.currentTarget as Element;
       targetRow.children[0].classList.toggle('aaRowHover', true);
     }
   }
+
   onListMouseMove(event) {
     if (!this.mouseIsDown || !this.selectedMoverRow) {
       return;
@@ -103,7 +110,7 @@ export class AuTranBchgMover {
       return;
     }
     let nextSibling = this.selectedMoverRow.nextElementSibling;
-    if (nextSibling.id == `${this.eva.END_OF_LIST}`) {
+    if (nextSibling.id == `${this.app.END_OF_LIST}`) {
       nextSibling = null;
     }
     if (nextSibling && mouseY >= nextSibling.getBoundingClientRect().top) {
@@ -111,6 +118,7 @@ export class AuTranBchgMover {
       return;
     }
   }
+
   onListMouseLeave(event) {
     if (this.mouseIsDown && this.selectedMoverRow) {
       this.selectedMoverRow.children[0].classList.toggle('aaDragging', false);
@@ -120,6 +128,7 @@ export class AuTranBchgMover {
       return;
     }
   }
+
   elementY(element) {
     return element.getBoundingClientRect().top;
   };

@@ -1,9 +1,9 @@
 
 <template bindable="isBlank, acctTitle, bchgDesc, bchgAmt, autoBalanceItem, gridlineWidth, gridlineColor">
-  <require from="../au-views/au-vertical-gridline.html"></require>
+  <require from="au-views/au-vertical-gridline.html"></require>
   <div css="display: inline-block; border-bottom: 0px solid ${gridlineColor};">
     <template if.bind="!isBlank">
-      <template if.bind="!eva.isEditing">
+      <template if.bind="!app.isEditing">
         <div class="aaCellText aaFontData aaCellAcctTitle aaInlineBlock">${acctTitle}</div>
         <div css="display: block; position: relative; border-top: 1px solid ${gridlineColor};">
           <div class="aaCellText aaFontData">

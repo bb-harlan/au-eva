@@ -1,13 +1,10 @@
 import {customElement, bindable, inject} from 'aurelia-framework';
-import {Eva} from 'eva';
 import {AuModuleTran} from './au-module-tran';
-import {Bchg} from 'models/bchg';
-//
+import {Bchg} from 'app-data/models//bchg';
+
 @customElement('au-tran-bchg-cells')
 @inject(AuModuleTran)
 export class AuTranBchgCells {
-    //
-    eva: Eva = Eva.getInstance();
     moduleTran: AuModuleTran;
     @bindable bchg: Bchg;
 

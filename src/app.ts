@@ -1,55 +1,88 @@
-import {AppGlobals} from "./app-globals";
-import {Eva} from 'eva';
-import {Acct, Annotation} from 'models/acct';
-import {Tran} from 'models/tran';
-import {Bchg} from 'models/bchg';
+import {Data} from "app-data/data";
 
 export class App {
-
-  /*
-   * ===================================================
-   * The Eva class is designed as a singleton class,
-   * an instance of which can be obtained by any component
-   * with a call to the static method Eva.getInstance().
-   * That is....
-   *
-   * The following call to Eva.getInstance()
-   * is the first call to that static method and will create the first
-   * and only instance of that class. Any subsequent calls to that static method
-   * in Aurelia components will return that already-existing instance.
-   *
-   * Thus, this class gives this application intra-global scope for
-   * any components needing its members.
-   * ===================================================
+  /*==========================================================
+   * constants simulated by getters
+   *==========================================================
    */
-  eva: Eva = Eva.getInstance();
-  classString: string = "import {customElement, bindable} from 'aurelia-framework';\n";
-
-  constructor() {
+  get SIDE_ID_ASSETS() {
+    return 'Assets';
   }
+
+  get SIDE_ID_EQUITIES(): string {
+    return 'Equities';
+  }
+
+  get TRAN_JRNL_ID() {
+    return 'Journal';
+  }
+
+  get MODULE_FAE() {
+    return "fae";
+  }
+
+  get MODULE_ACCT() {
+    return "acct";
+  }
+
+  get MODULE_BCHG() {
+    return "bchg";
+  }
+
+  get MODULE_TRAN() {
+    return "tran";
+  }
+
+  get MODULE_JRNL() {
+    return "jrnl";
+  }
+
+  get END_OF_LIST() {
+    return "- End of list -";
+  }
+
+  get ROW_SELECTED_CHAR() {
+    return String.fromCharCode(0xf111); // FontAwesome fa-circle
+  }
+
+  /*=====================================================
+   *  UI state/control
+   *=====================================================
+   */
+  selectedModule = this.MODULE_FAE;
+  selectedFaeSide = null;
+  selectedAcct = null;
+  selectedTran = null;
+  selectedBchg = null;
+  showingModuleBchg = true;
+  isEditing = false;
+  /*=====================================================
+   *  Reference to entity's accounting data
+   *=====================================================
+   */
+  data = new Data();
 
   bind() {
-    console.log("********************************");
-    console.log(AppGlobals.A_CONSTANT);
-    AppGlobals.someMethod();
-    console.log("********************************");
-    // this.eva.generateTestData();
-    this.eva.generateExample1Data();
+    // this.data.generateTestData();
+    this.data.generateExample1Data();
   }
+
   onFaeModule(event) {
-    this.eva.selectedAcct = null;
-    this.eva.selectedBchg = null;
-    this.eva.selectedTran = null;
-    this.eva.selectedModule = this.eva.MODULE_FAE;
-    this.eva.selectedFaeSide = null;
+    this.selectedAcct = null;
+    this.selectedBchg = null;
+    this.selectedTran = null;
+    this.selectedModule = this.MODULE_FAE;
+    this.selectedFaeSide = null;
   }
+
   onJrnlModule(event) {
-    this.eva.selectedAcct = null;
-    this.eva.selectedBchg = null;
-    this.eva.selectedTran = null;
-    this.eva.selectedModule = this.eva.MODULE_JRNL;
-    this.eva.selectedFaeSide = null;
+    this.selectedAcct = null;
+    this.selectedBchg = null;
+    this.selectedTran = null;
+    this.selectedModule = this.MODULE_JRNL;
+    this.selectedFaeSide = null;
   }
+
   onMenuClick(event, listItem) {
   }
 }

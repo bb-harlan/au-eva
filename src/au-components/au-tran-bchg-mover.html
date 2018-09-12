@@ -1,10 +1,10 @@
 <template>
-  <require from="../au-views/au-vertical-gridline.html"></require>
-  <require from="../au-views/au-vertical-gridline-spacer.html"></require>
-  <require from="../au-converters/au-currency-converter"></require>
-  <require from="../au-converters/au-equation-side-converter"></require>
-  <require from="../au-components/au-tran-bchg-row-data"></require>
-  <require from="../au-views/au-tran-bchg-cells-spacer.html"></require>
+  <require from="au-views/au-vertical-gridline.html"></require>
+  <require from="au-views/au-vertical-gridline-spacer.html"></require>
+  <require from="au-converters/au-currency-converter"></require>
+  <require from="au-converters/au-equation-side-converter"></require>
+  <require from="au-components/au-tran-bchg-row-data"></require>
+  <require from="au-views/au-tran-bchg-cells-spacer.html"></require>
 
 
   <span click.trigger="onDialogOpen($event)" class="aaBtn"><i class="fa fa-arrows-v fa-fw aaIconBlue"
@@ -44,10 +44,10 @@
           </div>
         </template>
         <!-- End of list row -->
-        <div class="aaRow"  id="${eva.END_OF_LIST}">
+        <div class="aaRow"  id="${app.END_OF_LIST}">
           <div class="aaInlineBlock">
             <div class="aaInlineBlock aaCellText aaFontData" style="position: absolute;"><span
-              class="aaSansSerif aaCellTextEOL">${eva.END_OF_LIST}</span></div>
+              class="aaSansSerif aaCellTextEOL">${app.END_OF_LIST}</span></div>
             <au-tran-bchg-cells-spacer></au-tran-bchg-cells-spacer>
             <vertical-gridline-spacer></vertical-gridline-spacer>
             <au-tran-bchg-cells-spacer></au-tran-bchg-cells-spacer>
