@@ -1,4 +1,5 @@
 <template>
+  <require from="au-views/au-icon-nav-right.html"></require>
   <require from="au-views/au-vertical-gridline.html"></require>
   <require from="au-views/au-vertical-gridline-spacer.html"></require>
   <require from="au-converters/au-currency-converter"></require>
@@ -18,7 +19,7 @@
         acct-list.bind="acctList"
         mover-dialog-position-element.bind="moverDialogPositionElement"></au-acct-mover>
       <div class="btn-group">
-        <a class="aaBtn dropdown-toggle" data-toggle="dropdown">
+        <a class="aaBtn mdropdown-toggle" data-toggle="dropdown">
           <span class="fa fa-bars fa-fw" aria-hidden="true"></span>
         </a>
         <ul class="dropdown-menu aaSansSerif">
@@ -30,77 +31,64 @@
       </div>
     </div>
     <div id="gridHeader${equationSide}" class="aaGridHeader">
-      <div class="aaFontLabel aaRow">
-        <div class="aaFontLabel aaCellRowOps" click.delegate="onMoverDialogOpen($event)">
-          <!--<span class="aaBtn"><i class="fa fa-arrows-v fa-fw aaIconBlue" aria-hidden="true"></i></span>-->
+      <div class="aaFontLabel aaRow" style="background-color: #eee;">
+        <div class="aaRowOps" style="visibility: hidden;">
+          <button type="button" class="aaBtn" click.trigger="onRowOpsOpen($event, listItem)">
+            <i class="fa fa-bars fa-fw" aria-hidden="true"></i>
+          </button>
+          <button type="button" class="aaBtn" click.delegate="onGoAcct($event, listItem)">
+            <au-icon-nav-right></au-icon-nav-right>
+          </button>
         </div>
-        <div class="aaCellRowOps ">
-          <span class="aaBtn aaBtnHidden">
-                      <i class="fa fa-chevron-right fa-fw" aria-hidden="true"></i>
-          </span>
+        <div class="aaRowData aaRowBgColorNonData">
+          <au-vertical-gridline></au-vertical-gridline>
+          <div class="aaCellText aaFontSizeLabel aaCellAcctTitle"><span class=" aaSansSerif">Title</span></div>
+          <au-vertical-gridline></au-vertical-gridline>
+          <div class="aaCellText aaFontSizeLabel aaCellBchgBal"><span class=" aaSansSerif">Balance</span></div>
+          <au-vertical-gridline></au-vertical-gridline>
         </div>
-        <au-vertical-gridline></au-vertical-gridline>
-        <div class="aaCellText aaCellRowSelectedChar" style="visibility: hidden;">${app.ROW_SELECTED_CHAR}</div>
-        <au-vertical-gridline></au-vertical-gridline>
-        <div class="aaCellText aaFontSizeLabel aaCellAcctTitle"><span class=" aaSansSerif">Title</span></div>
-        <au-vertical-gridline></au-vertical-gridline>
-        <div class="aaCellText aaFontSizeLabel aaCellBchgBal"><span class=" aaSansSerif">Balance</span></div>
-        <au-vertical-gridline></au-vertical-gridline>
       </div>
     </div>
     <div class="aaGridScrollableRows">
       <template repeat.for="listItem of faeSide.acctList">
-        <div id="${listItem.id}" class="aaRow" mouseenter.trigger="onRowEnter($event, listItem)"
+        <div id="${listItem.id}" class="aaRow aaBgColorToolbar"
+             style="background-color: #ddd;"
+             mouseenter.trigger="onRowEnter($event, listItem)"
              mouseleave.trigger="onRowLeave($event, listItem)">
           <template if.bind="listItem.isAcct()">
-            <div class="aaCellRowOps">
-              <span class="aaBtn aaBtnHidden" click.trigger="onRowOpsOpen($event, listItem)">
+            <div class="aaRowOps">
+              <button type="button" class="aaBtn" click.trigger="onRowOpsOpen($event, listItem)">
                 <i class="fa fa-bars fa-fw" aria-hidden="true"></i>
-              </span>
-            </div>
-            <div class="aaCellRowOps">
-              <span class="aaBtn aaBtnHidden" click.delegate="onGoAcct($event, listItem)">
-                <i class="fa fa-chevron-right fa-fw" aria-hidden="true"></i>
-              </span>
+              </button>
+              <button type="button" class="aaBtn" click.delegate="onGoAcct($event, listItem)">
+                <au-icon-nav-right></au-icon-nav-right>
+              </button>
             </div>
             <au-vertical-gridline></au-vertical-gridline>
-            <div
-              class="aaCellText aaCellRowSelectedChar"
-              css="visibility: ${listItem.id == app.selectedAcct.id ? 'visible' : 'hidden'};">
-              ${app.ROW_SELECTED_CHAR}
-            </div>
-            <au-vertical-gridline></au-vertical-gridline>
-            <div class="aaRowDataCells">
+            <div class="aaRowData aaRowBgColorData ${listItem.id == app.selectedAcct.id ? 'aaMostRecentlySelectedRow' : ''}">
               <span class="aaCellText aaFontSizeData aaCellAcctTitle">${listItem.title}</span>
               <au-vertical-gridline></au-vertical-gridline>
               <span
                 class="aaCellText aaFontSizeData aaCellBchgBal">${listItem.endingBalance | auCurrencyConverter}</span>
-              <au-vertical-gridline></au-vertical-gridline>
             </div>
+            <au-vertical-gridline></au-vertical-gridline>
           </template>
           <template if.bind="listItem.isAnnotation()">
-            <div class="aaCellRowOps">
-              <span class="aaBtn aaBtnHidden" click.delegate="onRowOpsOpen($event, listItem)">
-                    <i class="fa fa-bars fa-fw" aria-hidden="true"></i>
-                </span>
-            </div>
-            <div class="aaCellRowOps">
-              <span class="aaBtn aaBtnHidden" click.delegate="onGoAcct($event, listItem)">
-                <i class="fa fa-chevron-right fa-fw" aria-hidden="true"></i>
-              </span>
+            <div class="aaRowOps">
+              <button type="button" class="aaBtn" click.trigger="onRowOpsOpen($event, listItem)">
+                <i class="fa fa-bars fa-fw" aria-hidden="true"></i>
+              </button>
+              <button type="button" class="aaBtn" click.delegate="onGoAcct($event, listItem)">
+                <au-icon-nav-right></au-icon-nav-right>
+              </button>
             </div>
             <au-vertical-gridline></au-vertical-gridline>
-            <div class="aaCellText aaCellRowSelectedChar"
-                 css="visibility: ${listItem.id == app.selectedAcct.id ? 'visible' : 'hidden'};">
-              ${app.ROW_SELECTED_CHAR}
-            </div>
-            <au-vertical-gridline></au-vertical-gridline>
-            <div class="aaRowDataCells">
+            <div class="aaRowData aaRowBgColorData ${listItem.id == app.selectedAcct.id ? 'aaMostRecentlySelectedRow' : ''}"">
               <span class="aaCellText aaFontSizeData aaCellAnnoTitle">${listItem.annoText}</span>
               <au-vertical-gridline></au-vertical-gridline>
               <span class="aaCellText aaFontSizeData aaCellBchgBal"></span>
-              <au-vertical-gridline></au-vertical-gridline>
             </div>
+            <au-vertical-gridline></au-vertical-gridline>
           </template>
         </div>
       </template>
@@ -111,54 +99,56 @@
           for creating a new account in the list, this end-of-list row provides
           a point to insert a new account at the end of the list.
       -->
-      <div class="aaRow" id="End of equation side ${faeSide.id}"
-           mouseenter.trigger="onRowEnter($event, null)" mouseleave.trigger="onRowLeave($event, null)">
-        <div class="aaCellRowOps">
-          <span class="aaBtn aaBtnHidden" click.delegate="onRowOpsOpen($event, listItem)">
-            <i class="fa fa-bars fa-fw" aria-hidden="true"></i>
-          </span>
-        </div>
-        <div class="aaCellRowOps">
-          <span class="aaBtn aaBtnHidden">
-            <i class="fa fa-chevron-right fa-fw" aria-hidden="true"></i>
-          </span>
+      <div id="End of equation side ${faeSide.id}"
+           class="aaRow aaRowBgColorNonData"
+           mouseenter.trigger="onRowEnter($event, null)"
+           mouseleave.trigger="onRowLeave($event, null)">
+        <div class="aaRowOps">
+          <button type="button" class="aaBtn" click.trigger="onRowOpsOpen($event, listItem)">
+            <span class="fa fa-bars fa-fw" aria-hidden="true"></span>
+          </button>
+          <button type="button" class="aaBtn aaHidden">
+            <au-icon-nav-right></au-icon-nav-right>
+          </button>
         </div>
         <au-vertical-gridline></au-vertical-gridline>
-        <div class="aaCellText aaCellRowSelectedChar" style="visibility: hidden;">${app.ROW_SELECTED_CHAR}</div>
-        <au-vertical-gridline></au-vertical-gridline>
-        <div class="aaInlineBlock">
+        <div class="aaRowData aaRowBgColorNonData">
           <span class="aaCellText aaFontData aaCellAcctTitle"><span
             class="aaSansSerif aaCellTextEOL">${app.END_OF_LIST}</span></span>
-          <au-vertical-gridline></au-vertical-gridline>
+          <au-vertical-gridline-spacer></au-vertical-gridline-spacer>
           <span class="aaCellText aaFontData aaCellBchgBal"></span>
-          <au-vertical-gridline></au-vertical-gridline>
         </div>
+        <au-vertical-gridline></au-vertical-gridline>
       </div>
     </div>
     <div class="aaGridFooterBar"></div>
-    <!--
-    Following is the coding for a row that shows the total of
-    all account balances. It is coded with invisible menu and nav buttons
-    as horizontal space holders to result in proper horizontal positioning
-    of the "Total" label amd the total amt.
-    -->
   </div>
-  <div class="aaGridTotals">
-    <div class="aaRowTotals">
-      <div class="aaCellRowOps">
-        <span class="aaBtn aaBtnHidden"><i class="fa fa-bars fa-fw" aria-hidden="true"></i></span>
+  <!--
+  Following is the coding for a row that shows the total of
+  all account balances. It is coded with invisible menu and nav buttons
+  as horizontal space holders to result in proper horizontal positioning
+  of the "Total" label amd the total amt.
+  -->
+  </div>
+  <!--<div class="aaGridTotals">-->
+    <div class="aaGridContainer" style="border-color: transparent;">
+    <div class="aaRow" style="border-bottom-color: transparent; background-color: transparent;">
+      <div class="aaRowOps">
+        <button type="button" class="aaBtn">
+          <span class="fa fa-bars fa-fw" aria-hidden="true"></span>
+        </button>
+        <button type="button" class="aaBtn">
+          <au-icon-nav-right></au-icon-nav-right>
+        </button>
       </div>
-      <div class="aaCellRowOps">
-        <span class="aaBtn aaBtnHidden"><i class="fa fa-chevron-right fa-fw" aria-hidden="true"></i></span>
+      <au-vertical-gridline-spacer></au-vertical-gridline-spacer>
+      <div class="aaRowData">
+        <span class="aaCellText aaFontData aaCellAcctTitle" style="text-align: right;"><span
+          class="aaFontLabel">Total:</span></span>
+        <au-vertical-gridline-spacer></au-vertical-gridline-spacer>
+        <span class="aaCellText aaFontData aaCellBchgBal">${faeSide.listTotal | auCurrencyConverter}</span>
       </div>
-      <vertical-gridline-spacer></vertical-gridline-spacer>
-      <div class="aaCellText aaCellRowSelectedChar" style="visibility: hidden;">${app.ROW_SELECTED_CHAR}</div>
-      <vertical-gridline-spacer></vertical-gridline-spacer>
-      <span class="aaCellText aaFontData aaCellAcctTitle" style="text-align: right;"><span
-        class="aaFontLabel">Total:</span></span>
-      <vertical-gridline-spacer></vertical-gridline-spacer>
-      <span class="aaCellText aaFontData aaCellBchgBal">${faeSide.listTotal | auCurrencyConverter}</span>
-      <vertical-gridline-spacer></vertical-gridline-spacer>
+      <au-vertical-gridline-spacer></au-vertical-gridline-spacer>
     </div>
   </div>
 

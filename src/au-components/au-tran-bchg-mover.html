@@ -37,7 +37,7 @@
             mouseleave.trigger="onRowMouseLeave($event, listItem)"
             mousedown.trigger="onRowMouseDown($event)"
             mouseup.trigger="onRowMouseUp($event)">
-            <div class="aaRowDataCells">
+            <div class="aaRowData">
               <au-tran-bchg-row-data bchg.bind="moverBchg"></au-tran-bchg-row-data>
               <au-vertical-gridline></au-vertical-gridline>
             </div>
@@ -49,7 +49,7 @@
             <div class="aaInlineBlock aaCellText aaFontData" style="position: absolute;"><span
               class="aaSansSerif aaCellTextEOL">${app.END_OF_LIST}</span></div>
             <au-tran-bchg-cells-spacer></au-tran-bchg-cells-spacer>
-            <vertical-gridline-spacer></vertical-gridline-spacer>
+            <au-vetical-gridline-spacer></vertical-gridline-spacer>
             <au-tran-bchg-cells-spacer></au-tran-bchg-cells-spacer>
             <au-vertical-gridline></au-vertical-gridline>
           </div>
@@ -86,7 +86,7 @@
                 mouseleave.trigger="onRowMouseLeave($event, listItem)"
                 mousedown.trigger="onRowMouseDown($event)"
                 mouseup.trigger="onRowMouseUp($event)">
-                <div class="aaRowDataCells">
+                <div class="aaRowData">
                   <au-tran-bchg-row-data bchg.bind="bchg"></au-tran-bchg-row-data>
                   <au-vertical-gridline></au-vertical-gridline>
                 </div>

@@ -1,4 +1,6 @@
 <template>
+  <require from="au-views/au-icon-nav-left.html"></require>
+  <require from="au-views/au-icon-nav-left-left.html"></require>
   <require from="au-views/au-bchg-grid-header.html"></require>
   <require from="au-views/au-vertical-gridline.html"></require>
   <require from="au-views/au-vertical-gridline-spacer.html"></require>
@@ -7,13 +9,33 @@
   <require from="au-components/au-tran-bchg-mover"></require>
   <require from="au-converters/au-currency-converter"></require>
 
+  <template if.bind="app.selectedModuleMode == app.MODULE_MODE_NAVIGATING">
+    <p>${app.MODULE_MODE_NAVIGATING}<span style="font-family: FontAwesome; font-size: small;">&#xf054;</span><span
+      style="font-family: FontAwesome; font-size: small; letter-spacing: -0.2em;">${app.NAV_RIGHT_CHAR}${app.NAV_RIGHT_CHAR}</span>
+    </p>
+    <p>${app.MODULE_MODE_NAVIGATING}<span style="font-family: FontAwesome; font-size: small;">${"&#xf054;"}</span><span
+      style="font-family: FontAwesome; font-size: small; letter-spacing: -0.2em;">&#xf053;&#xf053;</span></p>
+    <p>${app.MODULE_MODE_NAVIGATING}<span
+      style="font-family: FontAwesome; font-size: small;">${app.NAV_RIGHT_CHAR}</span><span
+      style="font-family: FontAwesome; font-size: small; letter-spacing: -0.2em;">${app.NAV_RIGHT_CHAR}${app.NAV_RIGHT_CHAR}</span>
+    </p>
+  </template>
+  <template if.bind="app.selectedModuleMode == app.MODULE_MODE_EDITING">
+    <p>${app.MODULE_MODE_EDITING}</p>
+  </template>
+  <template if.bind="app.selectedModuleMode == app.MODULE_MODE_MOVING_ROWS">
+    <p>${app.MODULE_MODE_MOVING_ROWS}</p>
+  </template>
   <div class="aaPanel aaPanelBoxShadow">
 
     <div class="aaPanelHeader aaPanelHeaderModule">Transaction</div>
     <div class="aaPanelToolBar" if.bind="!app.isEditing">
-      <span click.trigger="onGoUp($event)" class="aaBtn"><i class="fa fa-chevron-up fa-fw" aria-hidden="true"></i></span>
-      <span click.trigger="onGoDown($event)" class="aaBtn"><i class="fa fa-chevron-down fa-fw" aria-hidden="true"></i></span>
-      <span click.trigger="onGoJrnl($event)" class="aaBtn">Transaction journal <i class="fa fa-chevron-right fa-fw" aria-hidden="true"></i></span>
+      <span click.trigger="onGoUp($event)" class="aaBtn"><i class="fa fa-chevron-up fa-fw"
+                                                            aria-hidden="true"></i></span>
+      <span click.trigger="onGoDown($event)" class="aaBtn"><i class="fa fa-chevron-down fa-fw"
+                                                              aria-hidden="true"></i></span>
+      <span click.trigger="onGoJrnl($event)" class="aaBtn">Transaction journal <i class="fa fa-chevron-right fa-fw"
+                                                                                  aria-hidden="true"></i></span>
       <span class="aaToolBarDivider">.</span>
       <span click.trigger="onEdit($event)" class="aaBtn">
            <i class="fa fa-pencil-square-o fa-fw aaIconBlue" aria-hidden="true"></i> Edit
@@ -42,7 +64,7 @@
     </div>
     <div class="aaPanelToolBar" if.bind="app.isEditing">
       <div style="text-align: left;">
-        <div  class="aaInlineBlock" style="visibility: hidden;">
+        <div class="aaInlineBlock" style="visibility: hidden;">
           <span class="aaBtn"><i class="fa fa-chevron-up fa-fw" aria-hidden="true"></i></span>
           <span class="aaBtn"><i class="fa fa-chevron-down fa-fw" aria-hidden="true"></i></span>
           <span class="aaBtn">Transaction journal <i class="fa fa-chevron-right fa-fw" aria-hidden="true"></i></span>
@@ -76,7 +98,8 @@
         </table>
       </div>
 
-      <div element.ref="moverDialogPositionElement" class="aaGridContainer">
+      <div element.ref="moverDialogPositionElement"
+           class="aaGridContainer">
         <div class="aaGridTitleBar">Account balance changes</div>
         <div class="aaPanelToolBar">
           <au-tran-bchg-mover
@@ -84,101 +107,119 @@
         </div>
         <div class="aaGridScrollableRows" id="tranModule-${app.selectedTran.id}" style="height: 25pc;">
           <template repeat.for="bchg of app.selectedTran.bchgList">
-            <div class="aaRow" mouseenter.trigger="onRowEnter($event, bchg)"
+            <div class="aaRow"
+                 mouseenter.trigger="onRowEnter($event, bchg)"
                  mouseleave.trigger="onRowLeave($event, bchg)">
               <template if.bind="!app.isEditing">
                 <div class="aaCellRowOps">
-                  <span class="aaBtn aaBtnHidden" click.delegate="onGoBchg($event, bchg)">
-                    <i class="fa fa-chevron-left fa-fw" aria-hidden="true"></i>
+                  <span class="aaBtn aaHidden" click.delegate="showBchgInAcct($event, bchg)">
+                    <au-icon-nav-left-left></au-icon-nav-left-left>
                   </span>
+                  <span class="aaBtn aaHidden" click.delegate="showBchgDetail($event, bchg)">
+                    <au-icon-nav-left></au-icon-nav-left>
+                  </span>
+                  <au-vertical-gridline></au-vertical-gridline>
+                  <div class="aaCellText aaCellRowSelectedChar"
+                       css="visibility: ${bchg.id == app.selectedBchg.id ? 'visible' : 'hidden'};">
+                    ${app.ROW_SELECTED_CHAR}
+                  </div>
+                  <au-vertical-gridline></au-vertical-gridline>
                 </div>
               </template>
-              <template if.bind="app.isEditing">
-                <div class="aaCellRowOps">
-                  <span class="aaBtn aaBtnHidden" click.delegate="onMenuClick($event, bchg)">
-                    <i class="fa fa-bars fa-fw" aria-hidden="true"></i>
-                  </span>
-                </div>
-              </template>
-              <au-vertical-gridline></au-vertical-gridline>
-              <div class="aaCellText aaCellRowSelectedChar"
-                   css="visibility: ${bchg.id == app.selectedBchg.id ? 'visible' : 'hidden'};">${app.ROW_SELECTED_CHAR}
-              </div>
-              <au-vertical-gridline></au-vertical-gridline>
-              <div class="aaRowDataCells">
+              <!--
+                            <template if.bind="app.isEditing">
+                              <div class="aaCellRowOps">
+                                <span class="aaBtn aaHidden" click.delegate="onMenuClick($event, bchg)">
+                                  <i class="fa fa-bars fa-fw" aria-hidden="true"></i>
+                                </span>
+                              </div>
+                            </template>
+                            <au-vertical-gridline></au-vertical-gridline>
+                            <div class="aaCellText aaCellRowSelectedChar"
+                                 css="visibility: ${bchg.id == app.selectedBchg.id ? 'visible' : 'hidden'};">${app.ROW_SELECTED_CHAR}
+                            </div>
+                            <au-vertical-gridline></au-vertical-gridline>
+              -->
+              <div class="aaRowData">
                 <au-tran-bchg-row-data bchg.bind="bchg"></au-tran-bchg-row-data>
               </div>
             </div>
           </template>
 
           <!-- End of list row -->
-          <div class="aaRow" mouseenter.trigger="onRowEnter($event, null)"
-               mouseleave.trigger="onRowLeave($event, null)">
-            <template if.bind="!app.isEditing">
-              <div class="aaCellRowOps">
-                <span class="aaBtn aaBtnHidden">
+          <template if.bind="!app.isEditing">
+            <div class="aaRow">
+              <template if.bind="!app.isEditing">
+                <div class="aaCellRowOps">
+                  <span class="aaBtn aaHidden">
+                    <au-icon-nav-left-left></au-icon-nav-left-left>
+                  </span>
+                </div>
+                <div class="aaCellRowOps">
+                  <span class="aaBtn aaHidden">
+                    <au-icon-nav-left></au-icon-nav-left>
+                  </span>
+                </div>
+              </template>
+              <template if.bind="app.isEditing">
+                <div class="aaCellRowOps">
+                <span class="aaBtn aaHidden" click.delegate="onMenuClick($event, bchg)">
                     <i class="fa fa-bars fa-fw" aria-hidden="true"></i>
                   </span>
-              </div>
-            </template>
-            <template if.bind="app.isEditing">
-              <div class="aaCellRowOps">
-                <span class="aaBtn aaBtnHidden" click.delegate="onMenuClick($event, bchg)">
-                    <i class="fa fa-bars fa-fw" aria-hidden="true"></i>
-                  </span>
-              </div>
-            </template>
-            <au-vertical-gridline></au-vertical-gridline>
-            <div class="aaCellText aaCellRowSelectedChar" style="visibility: hidden;">${app.ROW_SELECTED_CHAR}</div>
-            <au-vertical-gridline></au-vertical-gridline>
-            <div class="aaInlineBlock">
-              <div class="aaInlineBlock aaCellText aaFontData" style="position: absolute;"><span
-                class="aaSansSerif aaCellTextEOL">${app.END_OF_LIST}</span></div>
-              <au-tran-bchg-cells-spacer></au-tran-bchg-cells-spacer>
-              <vertical-gridline-spacer></vertical-gridline-spacer>
-              <au-tran-bchg-cells-spacer></au-tran-bchg-cells-spacer>
+                </div>
+              </template>
               <au-vertical-gridline></au-vertical-gridline>
+              <div class="aaCellText aaCellRowSelectedChar" style="visibility: hidden;">${app.ROW_SELECTED_CHAR}</div>
+              <au-vertical-gridline></au-vertical-gridline>
+              <div class="aaInlineBlock">
+                <div class="aaInlineBlock aaCellText aaFontData" style="position: absolute;"><span
+                  class="aaSansSerif aaCellTextEOL">${app.END_OF_LIST}</span></div>
+                <au-tran-bchg-cells-spacer></au-tran-bchg-cells-spacer>
+                <au-vertical-gridline-spacer></au-vertical-gridline-spacer>
+                <au-tran-bchg-cells-spacer></au-tran-bchg-cells-spacer>
+                <au-vertical-gridline></au-vertical-gridline>
+              </div>
             </div>
-          </div>
-
+          </template>
         </div>
         <div class="aaGridFooterBar"></div>
       </div>
+    </div>
 
-      <!-- net change amt for eash side -->
-      <div class="aaGridContainer" style="margin-top: 1pc; border-color: transparent;">
-        <div class="aaRowTotals">
-          <div class="aaCellRowOps">
-            <span class="aaBtn aaBtnHidden"><i class="fa fa-bars fa-fw" aria-hidden="true"></i></span>
-          </div>
-          <vertical-gridline-spacer></vertical-gridline-spacer>
-          <div class="aaCellText aaCellRowSelectedChar" style="visibility: hidden;">${app.ROW_SELECTED_CHAR}</div>
-          <div class="aaInlineBlock">
-            <div class="aaCellText aaFontData aaTranBchgRow2Indent">
-              <input type="text" disabled class="aaCellBchgDesc aaFontLabel"
-                     style="text-align: right; border-color: transparent; background-color: inherit;"
-                     value="Total change(s) to assets:">
-            </div>
-            <vertical-gridline-spacer></vertical-gridline-spacer>
-            <div class="aaCellText aaFontData">
-              <input type="text" disabled class="aaFormInputText aaCellBchgAmt"
-                     value="${app.selectedTran.totalChangesAssets | auCurrencyConverter}">
-            </div>
-            <vertical-gridline-spacer></vertical-gridline-spacer>
-            <div class="aaCellText aaFontData aaTranBchgRow2Indent">
-              <input type="text" disabled class="aaCellBchgDesc aaFontLabel"
-                     style="text-align: right; border-color: transparent; background-color: inherit;"
-                     value="Total change(s) to equities:">
-            </div>
-            <vertical-gridline-spacer></vertical-gridline-spacer>
-            <div class="aaCellText aaFontData">
-              <input type="text" disabled class="aaFormInputText aaCellBchgAmt"
-                     value="${app.selectedTran.totalChangesEquities | auCurrencyConverter}">
-            </div>
-          </div>
-          <vertical-gridline-spacer></vertical-gridline-spacer>
+    <!-- net change amt for eash side -->
+    <div class="aaGridContainer" style="border-color: transparent;">
+      <div class="aaRowTotals">
+        <div class="aaCellRowOps">
+          <span class="aaBtn aaHidden"><i class="fa fa-bars fa-fw" aria-hidden="true"></i></span>
         </div>
+        <au-vertical-gridline-spacer></au-vertical-gridline-spacer>
+        <div class="aaCellText aaCellRowSelectedChar" style="visibility: hidden;">${app.ROW_SELECTED_CHAR}</div>
+        <div class="aaInlineBlock">
+          <div class="aaCellText aaFontData aaTranBchgRow2Indent">
+            <input type="text" disabled class="aaCellBchgDesc aaFontLabel"
+                   style="text-align: right; border-color: transparent; background-color: inherit;"
+                   value="Total change(s) to assets:">
+          </div>
+          <au-vertical-gridline-spacer></au-vertical-gridline-spacer>
+          <div class="aaCellText aaFontData">
+            <input type="text" disabled class="aaFormInputText aaCellBchgAmt"
+                   value="${app.selectedTran.totalChangesAssets | auCurrencyConverter}">
+          </div>
+          <au-vertical-gridline-spacer></au-vertical-gridline-spacer>
+          <div class="aaCellText aaFontData aaTranBchgRow2Indent">
+            <input type="text" disabled class="aaCellBchgDesc aaFontLabel"
+                   style="text-align: right; border-color: transparent; background-color: inherit;"
+                   value="Total change(s) to equities:">
+          </div>
+          <au-vertical-gridline-spacer></au-vertical-gridline-spacer>
+          <div class="aaCellText aaFontData">
+            <input type="text" disabled class="aaFormInputText aaCellBchgAmt"
+                   value="${app.selectedTran.totalChangesEquities | auCurrencyConverter}">
+          </div>
+        </div>
+        <au-vertical-gridline-spacer></au-vertical-gridline-spacer>
       </div>
     </div>
+  </div>
   </div>
 </template>

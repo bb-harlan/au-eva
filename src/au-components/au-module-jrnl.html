@@ -30,7 +30,7 @@
                       margin: 5px 0;" mouseenter.trigger="onRowEnter($event, tran)"
                  mouseleave.trigger="onRowLeave($event, tran)">
               <div class="aaCellRowOps">
-                <span class="aaBtn aaBtnHidden" click.delegate="onGoTran($event, tran)">
+                <span class="aaBtn aaHidden" click.delegate="onGoTran($event, tran)">
                     <i class="fa fa-chevron-left fa-fw" aria-hidden="true"></i>
                   </span>
               </div>
@@ -39,7 +39,7 @@
                    css="visibility: ${tran.id == app.selectedTran.id ? 'visible' : 'hidden'};">${app.ROW_SELECTED_CHAR}
               </div>
               <au-vertical-gridline></au-vertical-gridline>
-              <div class="aaRowDataCells">
+              <div class="aaRowData">
                 <div class="aaCellText aaFontData aaCellTranDate">${tran.date}</div>
                 <au-vertical-gridline></au-vertical-gridline>
                 <div class="aaInlineBlock">

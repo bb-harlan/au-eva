@@ -1,20 +1,21 @@
 <template>
+  <require from="au-views/au-icon-nav-left.html"></require>
+  <require from="au-views/au-icon-nav-right.html"></require>
+  <require from="au-views/au-vertical-gridline.html"></require>
   <require from="au-views/au-vertical-gridline.html"></require>
   <require from="au-converters/au-currency-converter"></require>
   <require from="au-converters/au-equation-side-converter"></require>
   <div class="aaPanel aaPanelBoxShadow">
     <div class="aaPanelHeader aaPanelHeaderModule">Account balance change</div>
-    <div class="aaPanelToolBar" xstyle="text-align: center;">
-      <span class="aaToolBarDivider">.</span>
-      <span click.trigger="onEdit($event)"
+    <div class="aaPanelToolBar" style="text-align: center;">
+      <button type="button" click.trigger="onGoAcct($event)"
             class="aaBtn">
-           <i class="fa fa-pencil-square-o fa-fw aaIconBlue" aria-hidden="true"></i> Edit
-      </span>
-      <span click.trigger="onDelete($event)"
-            class="aaBtn" style="margin-left: 1pc;">
-           <i class="fa fa-minus-circle fa-fw aaIconRed" aria-hidden="true"></i> Delete
-      </span>
+        <au-icon-nav-left></au-icon-nav-left> Show in target account
+      </button>
       <span class="aaToolBarDivider">.</span>
+      <button type="button" click.trigger="onGoTran($event)"
+            class="aaBtn">Show in source transaction <au-icon-nav-right></au-icon-nav-right>
+      </button>
     </div>
     <div class="aaPanelBody">
       <div style="text-align: center;">
@@ -24,7 +25,7 @@
           <div class="aaGridHeader">
             <div class="aaFontLabel aaRow">
               <div class="aaCellRowOps aaFontSizeLabel">
-                <span class="aaBtn aaBtnHidden">
+                <span class="aaBtn aaHidden">
                   <i class="fa fa-chevron-left fa-fw aaIconGreen" aria-hidden="true"></i>
                 </span>
               </div>
@@ -45,7 +46,7 @@
                   </span>
             </div>
             <au-vertical-gridline></au-vertical-gridline>
-            <div class="aaRowDataCells">
+            <div class="aaRowData">
               <!-- <div class="aaCellText aaFontSizeData aaCellId">${app.selectedBchg.targetAcct.id}</div>
               <au-vertical-gridline></au-vertical-gridline> -->
               <div class="aaCellText aaFontSizeData aaCellEquSide">
@@ -65,7 +66,7 @@
           <div class="aaGridHeader">
             <div class="aaFontLabel aaRow">
               <div class="aaCellRowOps aaFontSizeLabel">
-                <span class="aaBtn aaBtnHidden">
+                <span class="aaBtn aaHidden">
                   <i class="fa fa-chevron-right fa-fw aaIconGreen" aria-hidden="true"></i>
                 </span>
               </div>
@@ -83,7 +84,7 @@
                   </span>
             </div>
             <au-vertical-gridline></au-vertical-gridline>
-            <div class="aaRowDataCells">
+            <div class="aaRowData">
               <!-- <div class="aaCellText aaFontSizeData aaCellId">${app.selectedBchg.sourceTran.id}</div>
               <au-vertical-gridline></au-vertical-gridline> -->
               <div class="aaCellText aaFontSizeData aaCellTranDate">${app.selectedBchg.sourceTran.date}</div>
@@ -110,7 +111,7 @@
             </div>
           </div>
           <div class="aaRow">
-            <div class="aaRowDataCells">
+            <div class="aaRowData">
               <div class="aaCellText aaFontSizeData aaCellBchgDesc">${app.selectedBchg.desc}</div>
               <au-vertical-gridline></au-vertical-gridline>
               <div class="aaCellText aaFontSizeData aaCellBchgAmt">${app.selectedBchg.amt | auCurrencyConverter}</div>

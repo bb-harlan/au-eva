@@ -65,29 +65,26 @@ export class AuModuleAcct {
   //     alert('Reached end of list.');
   //   }
   // }
-  onGoBchg(event, bchg) {
+  showBchgDetail(event, bchg) {
     this.app.selectedTran = bchg.sourceTran;
     this.app.selectedBchg = bchg;
-    if (this.app.showingModuleBchg) {
-      this.app.selectedModule = this.app.MODULE_BCHG;
-    }
-    else {
-      this.app.selectedModule = this.app.MODULE_TRAN;
-    }
+    this.app.selectedModule = this.app.MODULE_BCHG;
   }
 
-  onRowEnter(event, bchg) {
-    if (!this.app.isEditing) {
-      event.target.children[3].classList.toggle('aaRowHover', true);
-      event.target.children[0].children[0].style.visibility = 'visible';
-    }
+  showBchgInTran(event, bchg) {
+    this.app.selectedTran = bchg.sourceTran;
+    this.app.selectedBchg = bchg;
+    this.app.selectedModule = this.app.MODULE_TRAN;
   }
 
-  onRowLeave(event, bchg) {
-    if (!this.app.isEditing) {
-      event.target.children[3].classList.toggle('aaRowHover', false);
-      event.target.children[0].children[0].style.visibility = 'hidden';
-    }
+  onRowEnter(event, listItem) {
+    event.target.children[0].style.visibility = 'visible';
+    event.target.children[1].classList.toggle('aaRowHover', true);
+  }
+
+  onRowLeave(event, listItem) {
+    event.target.children[0].style.visibility = 'hidden';
+    event.target.children[1].classList.toggle('aaRowHover', false);
   }
 
   onEdit(event) {

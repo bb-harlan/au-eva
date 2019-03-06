@@ -30,25 +30,13 @@ export class AuFaeSide {
   }
 
   onRowEnter(event, listItem) {
-    if (listItem) {
-      event.target.children[0].children[0].style.visibility = 'visible';
-      event.target.children[1].children[0].style.visibility = 'visible';
-    }
-    else {
-      event.target.children[0].children[0].style.visibility = 'visible';
-    }
-    event.target.children[5].classList.toggle('aaRowHover', true);
+    event.target.children[0].style.visibility = 'visible';
+    event.target.children[2].classList.toggle('aaRowHover', true);
   }
 
   onRowLeave(event, listItem) {
-    if (listItem) {
-      event.target.children[0].children[0].style.visibility = 'hidden';
-      event.target.children[1].children[0].style.visibility = 'hidden';
-    }
-    else {
-      event.target.children[0].children[0].style.visibility = 'hidden';
-    }
-    event.target.children[5].classList.toggle('aaRowHover', false);
+    event.target.children[0].style.visibility = 'hidden';
+    event.target.children[2].classList.toggle('aaRowHover', false);
   }
 
   onRowOpsOpen(event, listItem) {

@@ -42,29 +42,45 @@ export class App {
   }
 
   get ROW_SELECTED_CHAR() {
-    return String.fromCharCode(0xf111); // FontAwesome fa-circle
+    // return String.fromCharCode(0xf111); // FontAwesome fa-circle
+    return "&#xf111;" // FontAwesome fa-circle
   }
+  get NAV_RIGHT_CHAR() {
+    return String.fromCharCode(0xf054); // FontAwesome
+  }
+
+  get MODULE_MODE_NAVIGATING() {
+    return "navigating";
+  }
+  get MODULE_MODE_EDITING() {
+    return "editing";
+  }
+  get MODULE_MODE_MOVING_ROWS() {
+    return "moving rows";
+  }
+
 
   /*=====================================================
    *  UI state/control
    *=====================================================
    */
   selectedModule = this.MODULE_FAE;
+  selectedModuleMode = this.MODULE_MODE_NAVIGATING;
   selectedFaeSide = null;
   selectedAcct = null;
   selectedTran = null;
   selectedBchg = null;
-  showingModuleBchg = true;
   isEditing = false;
+
   /*=====================================================
-   *  Reference to entity's accounting data
+   *  Reference to  accounting entity's data
    *=====================================================
    */
   data = new Data();
 
   bind() {
-    // this.data.generateTestData();
-    this.data.generateExample1Data();
+    this.data.generateTestData();
+    // this.data.generateExample1Data();
   }
 
   onFaeModule(event) {
