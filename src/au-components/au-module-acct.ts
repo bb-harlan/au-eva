@@ -79,12 +79,12 @@ export class AuModuleAcct {
 
   onRowEnter(event, listItem) {
     event.target.children[0].style.visibility = 'visible';
-    event.target.children[1].classList.toggle('aaRowHover', true);
+    event.target.children[2].classList.toggle('aaRowHover', true);
   }
 
   onRowLeave(event, listItem) {
     event.target.children[0].style.visibility = 'hidden';
-    event.target.children[1].classList.toggle('aaRowHover', false);
+    event.target.children[2].classList.toggle('aaRowHover', false);
   }
 
   onEdit(event) {

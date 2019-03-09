@@ -68,13 +68,11 @@
         </div>
       </template>
     </div>
-    <au-vertical-gridline></au-vertical-gridline>
   </div>
 
   <template if.bind="bchg.targetAcct.parentFaeSide.id == app.data.faeSideAssets.id">
     <!-- put blank space in change-to-equity column -->
-    <au-tran-bchg-cells-spacer></au-tran-bchg-cells-spacer>
     <au-vertical-gridline></au-vertical-gridline>
+    <au-tran-bchg-cells-spacer></au-tran-bchg-cells-spacer>
   </template>
-
 </template>

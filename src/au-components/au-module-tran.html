@@ -1,4 +1,7 @@
 <template>
+  <require from="au-views/au-icon-nav-right.html"></require>
+  <require from="au-views/au-icon-nav-up.html"></require>
+  <require from="au-views/au-icon-nav-down.html"></require>
   <require from="au-views/au-icon-nav-left.html"></require>
   <require from="au-views/au-icon-nav-left-left.html"></require>
   <require from="au-views/au-bchg-grid-header.html"></require>
@@ -10,15 +13,6 @@
   <require from="au-converters/au-currency-converter"></require>
 
   <template if.bind="app.selectedModuleMode == app.MODULE_MODE_NAVIGATING">
-    <p>${app.MODULE_MODE_NAVIGATING}<span style="font-family: FontAwesome; font-size: small;">&#xf054;</span><span
-      style="font-family: FontAwesome; font-size: small; letter-spacing: -0.2em;">${app.NAV_RIGHT_CHAR}${app.NAV_RIGHT_CHAR}</span>
-    </p>
-    <p>${app.MODULE_MODE_NAVIGATING}<span style="font-family: FontAwesome; font-size: small;">${"&#xf054;"}</span><span
-      style="font-family: FontAwesome; font-size: small; letter-spacing: -0.2em;">&#xf053;&#xf053;</span></p>
-    <p>${app.MODULE_MODE_NAVIGATING}<span
-      style="font-family: FontAwesome; font-size: small;">${app.NAV_RIGHT_CHAR}</span><span
-      style="font-family: FontAwesome; font-size: small; letter-spacing: -0.2em;">${app.NAV_RIGHT_CHAR}${app.NAV_RIGHT_CHAR}</span>
-    </p>
   </template>
   <template if.bind="app.selectedModuleMode == app.MODULE_MODE_EDITING">
     <p>${app.MODULE_MODE_EDITING}</p>
@@ -30,73 +24,64 @@
 
     <div class="aaPanelHeader aaPanelHeaderModule">Transaction</div>
     <div class="aaPanelToolBar" if.bind="!app.isEditing">
-      <span click.trigger="onGoUp($event)" class="aaBtn"><i class="fa fa-chevron-up fa-fw"
-                                                            aria-hidden="true"></i></span>
-      <span click.trigger="onGoDown($event)" class="aaBtn"><i class="fa fa-chevron-down fa-fw"
-                                                              aria-hidden="true"></i></span>
-      <span click.trigger="onGoJrnl($event)" class="aaBtn">Transaction journal <i class="fa fa-chevron-right fa-fw"
-                                                                                  aria-hidden="true"></i></span>
-      <span class="aaToolBarDivider">.</span>
-      <span click.trigger="onEdit($event)" class="aaBtn">
-           <i class="fa fa-pencil-square-o fa-fw aaIconBlue" aria-hidden="true"></i> Edit
-      </span>
-      <span click.trigger="onDelete($event)" class="aaBtn" style="margin-left: 1pc;">
-           <i class="fa fa-minus-circle fa-fw aaIconRed" aria-hidden="true"></i> Delete
-      </span>
-      <span class="aaToolBarDivider">.</span>
+      <button type="button"
+              class="aaBtn"
+              click.trigger="onGoUp($event)">
+        <au-icon-nav-up></au-icon-nav-up>
+      </button>
+      <button type="button"
+              class="aaBtn"
+              click.trigger="onGoDown($event)">
+        <au-icon-nav-down></au-icon-nav-down>
+      </button>
+      <button type="button"
+              class="aaBtn"
+              click.trigger="onGoJrnl($event)">
+        Transaction journal
+        <au-icon-nav-right></au-icon-nav-right>
+      </button>
       <!--
-            <div class="btn-group">
-              <a class="aaBtn dropdown-toggle" data-toggle="dropdown" click.trigger="onMenuClick($event, app.selectedAcct)">
-                <span class="fa fa-bars fa-fw" aria-hidden="true"></span>
-              </a>
-              <ul class="dropdown-menu aaSansSerif">
-                <li><a><i class="fa fa-plus-circle fa-fw aaIconGreen"></i> Insert new account row</a></li>
-                <li><a><i class="fa fa-plus-circle fa-fw aaIconGreen"></i> Insert new annotation row</a></li>
-                <li class="divider"></li>
-                <li><a><i class="fa fa-minus-circle fa-fw aaIconRed"></i> Delete row...</a></li>
-                <li class="divider"></li>
-                <li><a><i class="fa fa-arrows-v fa-fw aaIconBlue"></i> Re-position row...</a>
-                </li>
-              </ul>
+       <span class="aaToolBarDivider">.</span>
+       <span click.trigger="onEdit($event)" class="aaBtn">
+            <i class="fa fa-pencil-square-o fa-fw aaIconBlue" aria-hidden="true"></i> Edit
+       </span>
+       <span click.trigger="onDelete($event)" class="aaBtn" style="margin-left: 1pc;">
+            <i class="fa fa-minus-circle fa-fw aaIconRed" aria-hidden="true"></i> Delete
+       </span>
+       <span class="aaToolBarDivider">.</span>
+       -->
+    </div>
+    <!--
+        <div class="aaPanelToolBar" if.bind="app.isEditing">
+          <div style="text-align: left;">
+            <div class="aaInlineBlock" style="visibility: hidden;">
+              <span class="aaBtn"><i class="fa fa-chevron-up fa-fw" aria-hidden="true"></i></span>
+              <span class="aaBtn"><i class="fa fa-chevron-down fa-fw" aria-hidden="true"></i></span>
+              <span class="aaBtn">Transaction journal <i class="fa fa-chevron-right fa-fw" aria-hidden="true"></i></span>
             </div>
-      -->
-
-    </div>
-    <div class="aaPanelToolBar" if.bind="app.isEditing">
-      <div style="text-align: left;">
-        <div class="aaInlineBlock" style="visibility: hidden;">
-          <span class="aaBtn"><i class="fa fa-chevron-up fa-fw" aria-hidden="true"></i></span>
-          <span class="aaBtn"><i class="fa fa-chevron-down fa-fw" aria-hidden="true"></i></span>
-          <span class="aaBtn">Transaction journal <i class="fa fa-chevron-right fa-fw" aria-hidden="true"></i></span>
+            <span class="aaToolBarDivider">.</span>
+            <span click.trigger="onSaveEdits($event)" class="aaBtn">Save</span>
+            <span click.trigger="onCancelEdits($event)" class="aaBtn" style="margin-left: 3em;">Cancel</span>
+            <span class="aaToolBarDivider">.</span>
+          </div>
         </div>
-        <span class="aaToolBarDivider">.</span>
-        <span click.trigger="onSaveEdits($event)" class="aaBtn">Save</span>
-        <span click.trigger="onCancelEdits($event)" class="aaBtn" style="margin-left: 3em;">Cancel</span>
-        <span class="aaToolBarDivider">.</span>
-      </div>
-    </div>
+    -->
     <div class="aaPanelBody">
-      <div class="aaForm">
-        <table border="0" style="border-collapse: collapse;">
-          <!-- <tr>
-            <td class="aaFormItemLabel">ID:</td>
-            <td class="aaFormItemData">${app.selectedTran.id}</td>
-          </tr> -->
-          <tr>
-            <td class="aaFormItemLabel">Date:</td>
-            <template if.bind="!app.isEditing">
-              <td class="aaFormItemData">
-                <input type="text" disabled class="aaFormInputText aaCellTranDate" value="${app.selectedTran.date}">
-              </td>
-            </template>
-            <template if.bind="app.isEditing">
-              <td class="aaFormItemData">
-                <input type="text" class="aaFormInputText aaCellTranDate" value="${app.selectedTran.date}">
-              </td>
-            </template>
-          </tr>
-        </table>
-      </div>
+      <table border="0" style="border-collapse: collapse;">
+        <tr>
+          <td class="aaFormItemLabel">Date:</td>
+          <template if.bind="!app.isEditing">
+            <td class="aaFormItemData">
+              <input type="text" disabled class="aaFormInputText aaCellTranDate" value="${app.selectedTran.date}">
+            </td>
+          </template>
+          <template if.bind="app.isEditing">
+            <td class="aaFormItemData">
+              <input type="text" class="aaFormInputText aaCellTranDate" value="${app.selectedTran.date}">
+            </td>
+          </template>
+        </tr>
+      </table>
 
       <div element.ref="moverDialogPositionElement"
            class="aaGridContainer">
@@ -107,78 +92,56 @@
         </div>
         <div class="aaGridScrollableRows" id="tranModule-${app.selectedTran.id}" style="height: 25pc;">
           <template repeat.for="bchg of app.selectedTran.bchgList">
-            <div class="aaRow"
+            <div class="aaRow aaBgColorToolbar"
                  mouseenter.trigger="onRowEnter($event, bchg)"
                  mouseleave.trigger="onRowLeave($event, bchg)">
               <template if.bind="!app.isEditing">
-                <div class="aaCellRowOps">
-                  <span class="aaBtn aaHidden" click.delegate="showBchgInAcct($event, bchg)">
+                <div class="aaRowOps">
+                  <span class="aaBtn" click.delegate="showBchgInAcct($event, bchg)">
                     <au-icon-nav-left-left></au-icon-nav-left-left>
                   </span>
-                  <span class="aaBtn aaHidden" click.delegate="showBchgDetail($event, bchg)">
+                  <span class="aaBtn" click.delegate="showBchgDetail($event, bchg)">
                     <au-icon-nav-left></au-icon-nav-left>
                   </span>
-                  <au-vertical-gridline></au-vertical-gridline>
-                  <div class="aaCellText aaCellRowSelectedChar"
-                       css="visibility: ${bchg.id == app.selectedBchg.id ? 'visible' : 'hidden'};">
-                    ${app.ROW_SELECTED_CHAR}
-                  </div>
-                  <au-vertical-gridline></au-vertical-gridline>
                 </div>
               </template>
-              <!--
-                            <template if.bind="app.isEditing">
-                              <div class="aaCellRowOps">
-                                <span class="aaBtn aaHidden" click.delegate="onMenuClick($event, bchg)">
-                                  <i class="fa fa-bars fa-fw" aria-hidden="true"></i>
-                                </span>
-                              </div>
-                            </template>
-                            <au-vertical-gridline></au-vertical-gridline>
-                            <div class="aaCellText aaCellRowSelectedChar"
-                                 css="visibility: ${bchg.id == app.selectedBchg.id ? 'visible' : 'hidden'};">${app.ROW_SELECTED_CHAR}
-                            </div>
-                            <au-vertical-gridline></au-vertical-gridline>
-              -->
-              <div class="aaRowData">
+              <au-vertical-gridline></au-vertical-gridline>
+              <div class="aaRowData aaRowBgColorData ${bchg.id == app.selectedBchg.id ? 'aaMostRecentlySelectedRow' : ''}">
                 <au-tran-bchg-row-data bchg.bind="bchg"></au-tran-bchg-row-data>
               </div>
+              <au-vertical-gridline></au-vertical-gridline>
             </div>
           </template>
 
           <!-- End of list row -->
           <template if.bind="!app.isEditing">
-            <div class="aaRow">
+            <div class="aaRow aaRowBgColorNonData">
               <template if.bind="!app.isEditing">
-                <div class="aaCellRowOps">
+                <div class="aaRowOps">
                   <span class="aaBtn aaHidden">
                     <au-icon-nav-left-left></au-icon-nav-left-left>
                   </span>
-                </div>
-                <div class="aaCellRowOps">
                   <span class="aaBtn aaHidden">
                     <au-icon-nav-left></au-icon-nav-left>
                   </span>
                 </div>
               </template>
               <template if.bind="app.isEditing">
-                <div class="aaCellRowOps">
+                <div class="aaRowOps">
                 <span class="aaBtn aaHidden" click.delegate="onMenuClick($event, bchg)">
                     <i class="fa fa-bars fa-fw" aria-hidden="true"></i>
                   </span>
                 </div>
               </template>
               <au-vertical-gridline></au-vertical-gridline>
-              <div class="aaCellText aaCellRowSelectedChar" style="visibility: hidden;">${app.ROW_SELECTED_CHAR}</div>
-              <au-vertical-gridline></au-vertical-gridline>
-              <div class="aaInlineBlock">
+              <div class="aaRowData aaRowBgColorNonData">
                 <div class="aaInlineBlock aaCellText aaFontData" style="position: absolute;"><span
                   class="aaSansSerif aaCellTextEOL">${app.END_OF_LIST}</span></div>
                 <au-tran-bchg-cells-spacer></au-tran-bchg-cells-spacer>
                 <au-vertical-gridline-spacer></au-vertical-gridline-spacer>
                 <au-tran-bchg-cells-spacer></au-tran-bchg-cells-spacer>
-                <au-vertical-gridline></au-vertical-gridline>
               </div>
+              <au-vertical-gridline></au-vertical-gridline>
             </div>
           </template>
         </div>
@@ -189,7 +152,7 @@
     <!-- net change amt for eash side -->
     <div class="aaGridContainer" style="border-color: transparent;">
       <div class="aaRowTotals">
-        <div class="aaCellRowOps">
+        <div class="aaRowOps">
           <span class="aaBtn aaHidden"><i class="fa fa-bars fa-fw" aria-hidden="true"></i></span>
         </div>
         <au-vertical-gridline-spacer></au-vertical-gridline-spacer>

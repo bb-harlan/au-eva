@@ -1,4 +1,5 @@
 <template>
+  <require from="au-views/au-icon-nav-left.html"></require>
   <require from="au-views/au-bchg-grid-header.html"></require>
   <require from="au-views/au-vertical-gridline.html"></require>
   <require from="au-views/au-tran-bchg-cells-spacer.html"></require>
@@ -25,21 +26,22 @@
         </div>
         <div class="aaGridScrollableRows" style="height: 33pc;" id="jrnlGridBodyContainer">
           <template repeat.for="tran of app.data.jrnl.tranList">
-            <div id="${tran.id}" class="aaRow aaRowJrnl" xcss="border-top: 5px solid ${eva.GRIDLINE_COLOR};
+            <div id="${tran.id}"
+                 class="aaRow aaRowJrnl aaRowBgColorToolbar"
+                 xcss="border-top: 5px solid ${eva.GRIDLINE_COLOR};
                       border-bottom: 5px solid ${eva.GRIDLINE_COLOR};
-                      margin: 5px 0;" mouseenter.trigger="onRowEnter($event, tran)"
+                      margin: 5px 0;"
+                 mouseenter.trigger="onRowEnter($event, tran)"
                  mouseleave.trigger="onRowLeave($event, tran)">
-              <div class="aaCellRowOps">
-                <span class="aaBtn aaHidden" click.delegate="onGoTran($event, tran)">
-                    <i class="fa fa-chevron-left fa-fw" aria-hidden="true"></i>
-                  </span>
+              <div class="aaRowOps aaHidden">
+                <button type="button"
+                        class="aaBtn"
+                        click.delegate="onGoTran($event, tran)">
+                  <au-icon-nav-left></au-icon-nav-left>
+                </button>
               </div>
               <au-vertical-gridline></au-vertical-gridline>
-              <div class="aaCellText aaCellRowSelectedChar"
-                   css="visibility: ${tran.id == app.selectedTran.id ? 'visible' : 'hidden'};">${app.ROW_SELECTED_CHAR}
-              </div>
-              <au-vertical-gridline></au-vertical-gridline>
-              <div class="aaRowData">
+              <div class="aaRowData aaRowBgColorData">
                 <div class="aaCellText aaFontData aaCellTranDate">${tran.date}</div>
                 <au-vertical-gridline></au-vertical-gridline>
                 <div class="aaInlineBlock">
@@ -52,18 +54,9 @@
                       <tran-bchg-row-data bchg.bind="bchg"></tran-bchg-row-data>
                     </div>
                   </template>
-                  <!-- 
-                  <div class="aaSubRow">
-                    <div class="aaInlineBlock">
-                      <au-tran-bchg-cells-spacer></au-tran-bchg-cells-spacer>
-                      <au-vertical-gridline></au-vertical-gridline>
-                      <au-tran-bchg-cells-spacer></au-tran-bchg-cells-spacer>
-                      <au-vertical-gridline></au-vertical-gridline>
-                    </div>
-                  </div>
- -->
                 </div>
               </div>
+              <au-vertical-gridline></au-vertical-gridline>
             </div>
           </template>
         </div>

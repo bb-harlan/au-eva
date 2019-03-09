@@ -30,8 +30,7 @@
            mousemove.trigger="onListMouseMove($event)"
            mouseleave.trigger="onListMouseLeave($event)">
         <template repeat.for="moverBchg of moverTranBchgList">
-          <div
-            class="aaRow"
+          <div class="aaRow"
             mover-bchg.bind="moverBchg"
             mouseenter.trigger="onRowMouseEnter($event, listItem)"
             mouseleave.trigger="onRowMouseLeave($event, listItem)"
@@ -45,14 +44,14 @@
         </template>
         <!-- End of list row -->
         <div class="aaRow"  id="${app.END_OF_LIST}">
-          <div class="aaInlineBlock">
+          <div class="aaRowData aaRowBgColorNonData">
             <div class="aaInlineBlock aaCellText aaFontData" style="position: absolute;"><span
               class="aaSansSerif aaCellTextEOL">${app.END_OF_LIST}</span></div>
             <au-tran-bchg-cells-spacer></au-tran-bchg-cells-spacer>
-            <au-vetical-gridline-spacer></vertical-gridline-spacer>
+            <au-vertical-gridline-spacer></au-vertical-gridline-spacer>
             <au-tran-bchg-cells-spacer></au-tran-bchg-cells-spacer>
-            <au-vertical-gridline></au-vertical-gridline>
           </div>
+          <au-vertical-gridline></au-vertical-gridline>
         </div>
 
       </div>

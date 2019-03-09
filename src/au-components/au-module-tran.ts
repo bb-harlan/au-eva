@@ -62,7 +62,16 @@ export class AuModuleTran {
     this.app.selectedModule = this.app.MODULE_ACCT;
   }
 
-  onRowEnter(event, bchg) {
+  onRowEnter(event, listItem) {
+    event.target.children[0].style.visibility = 'visible';
+    event.target.children[2].classList.toggle('aaRowHover', true);
+  }
+
+  onRowLeave(event, listItem) {
+    event.target.children[0].style.visibility = 'hidden';
+    event.target.children[2].classList.toggle('aaRowHover', false);
+  }
+  /*onRowEnter(event, bchg) {
     if (bchg) {
       if (bchg.intraTranSorter >= 1) {
         event.target.children[0].children[0].style.visibility = 'visible';
@@ -73,12 +82,12 @@ export class AuModuleTran {
       }
     }
     event.target.children[1].classList.toggle('aaRowHover', true);
-    /*
+    /!*
         if (!bchg && this.app.isEditing) {
           // end-of-list item
           event.target.children[0].children[0].style.visibility = 'visible';
         }
-    */
+    *!/
   }
 
   onRowLeave(event, bchg) {
@@ -94,7 +103,7 @@ export class AuModuleTran {
     }
     event.target.children[4].classList.toggle('aaRowHover', false);
   }
-
+*/
   onEdit(event) {
     this.app.isEditing = true;
   }

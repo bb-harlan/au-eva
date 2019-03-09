@@ -287,6 +287,7 @@ h1 {
   padding: 0.25pc;
   color: #333;
   background-color: #b6cbe2;
+  /*background-color: #EDF2F7;*/
   border-bottom: 1px solid #999;
   /* -webkit-box-shadow: inset 0px 5px 10px 0px #eee; */
   /* -moz-box-shadow: inset 0px 5px 10px 0px #eee; */
@@ -313,6 +314,7 @@ h1 {
 
 .aaGridFooterBar {
   background-color: #b6cbe2;
+  /*background-color: #EDF2F7;*/
   border-top: 1px solid #999;
   padding-bottom: 0.5pc;
   margin: 0;
@@ -430,17 +432,6 @@ h1 {
   font-size: 0;
   visibility: hidden;
 }
-
-.aaCellRowSelectedChar {
-  display: inline-block;
-  padding-top: 6px;
-  white-space: nowrap;
-  overflow: hidden;
-  font-family: FontAwesome;
-  font-size: small;
-  color: #09f;
-}
-
 .aaCellRowOpsFiller {
   display: inline-block;
   /*padding: 0 0.35pc;*/
@@ -486,8 +477,8 @@ h1 {
 .aaCellTranDate {
   display: inline-block;
   width: 7pc;
-  /*text-align: center;*/
-  text-align: left;
+  text-align: center;
+  /*text-align: left;*/
 }
 
 .aaCellBchgDesc {

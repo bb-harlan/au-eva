@@ -22,35 +22,17 @@
         <!--Target account-->
         <div class="aaGridContainer aaInlineBlock" style="margin-right: 1pc;">
           <div class="aaGridTitleBar">Target account</div>
-          <div class="aaGridHeader">
+          <div class="aaGridHeader aaRowBgColorNonData">
             <div class="aaFontLabel aaRow">
-              <div class="aaCellRowOps aaFontSizeLabel">
-                <span class="aaBtn aaHidden">
-                  <i class="fa fa-chevron-left fa-fw aaIconGreen" aria-hidden="true"></i>
-                </span>
-              </div>
-              <au-vertical-gridline></au-vertical-gridline>
-              <!-- <div class="aaCellText aaFontSizeLabel aaCellId"><span class=" aaSansSerif">ID</span></div>
-              <au-vertical-gridline></au-vertical-gridline> -->
               <div class="aaCellText aaFontSizeLabel aaCellEquSide"><span class=" aaSansSerif">Equation side</span>
               </div>
               <au-vertical-gridline></au-vertical-gridline>
               <div class="aaCellText aaFontSizeLabel aaCellAcctTitle"><span class=" aaSansSerif">Title</span></div>
             </div>
           </div>
-          <div class="aaRow">
-            <div class="aaCellRowOps  aaFontSizeLabel">
-                  <span class="aaBtn"
-                        click.delegate="onGoAcct($event)">
-                    <i class="fa fa-chevron-left fa-fw" aria-hidden="true"></i>
-                  </span>
-            </div>
-            <au-vertical-gridline></au-vertical-gridline>
+          <div class="aaRow" style="border-bottom-style: none;">
             <div class="aaRowData">
-              <!-- <div class="aaCellText aaFontSizeData aaCellId">${app.selectedBchg.targetAcct.id}</div>
-              <au-vertical-gridline></au-vertical-gridline> -->
               <div class="aaCellText aaFontSizeData aaCellEquSide">
-                <!--${app.selectedBchg.targetAcct.equationSide | auEquationSideConverter:true:true}-->
                 ${app.selectedBchg.targetAcct.parentFaeSide.id}
               </div>
               <au-vertical-gridline></au-vertical-gridline>
@@ -63,54 +45,31 @@
           <div class="aaGridTitleBar">
             Source transaction
           </div>
-          <div class="aaGridHeader">
+          <div class="aaGridHeader aaRowBgColorNonData">
             <div class="aaFontLabel aaRow">
-              <div class="aaCellRowOps aaFontSizeLabel">
-                <span class="aaBtn aaHidden">
-                  <i class="fa fa-chevron-right fa-fw aaIconGreen" aria-hidden="true"></i>
-                </span>
-              </div>
-              <au-vertical-gridline></au-vertical-gridline>
-              <!-- <div class="aaCellText aaFontSizeLabel aaCellId"><span class="aaSansSerif">ID</span></div>
-              <au-vertical-gridline></au-vertical-gridline> -->
               <div class="aaCellText aaFontSizeLabel aaCellTranDate"><span class=" aaSansSerif">Date</span></div>
             </div>
           </div>
-          <div class="aaRow">
-            <div class="aaCellRowOps  aaFontSizeLabel">
-                  <span class="aaBtn"
-                        click.delegate="onGoTran($event)">
-                    <i class="fa fa-chevron-right fa-fw" aria-hidden="true"></i>
-                  </span>
-            </div>
-            <au-vertical-gridline></au-vertical-gridline>
+          <div class="aaRow" style="border-bottom-style: none;">
             <div class="aaRowData">
-              <!-- <div class="aaCellText aaFontSizeData aaCellId">${app.selectedBchg.sourceTran.id}</div>
-              <au-vertical-gridline></au-vertical-gridline> -->
               <div class="aaCellText aaFontSizeData aaCellTranDate">${app.selectedBchg.sourceTran.date}</div>
             </div>
           </div>
         </div>
       </div>
       <div style="margin-top: 2pc; text-align: center;">
-        <!--
-                  <span click.trigger="onGoAcct($event)"
-                        class="aaBtn">
-                    <i class="fa fa-chevron-left fa-fw" aria-hidden="true"></i> Show in target account
-                  </span>
-        -->
         <!--Balance change-->
         <div class="aaGridContainer aaInlineBlock" style="margin-top: 0;">
           <!--Balance change-->
           <div class="aaGridTitleBar">Balance change</div>
-          <div class="aaGridHeader">
+          <div class="aaGridHeader aaRowBgColorNonData">
             <div class="aaFontLabel aaRow">
               <div class="aaCellText aaFontSizeLabel aaCellBchgDesc"><span class=" aaSansSerif">Description</span></div>
               <au-vertical-gridline></au-vertical-gridline>
               <div class="aaCellText aaFontSizeLabel aaCellBchgAmt"><span class=" aaSansSerif">Amount</span></div>
             </div>
           </div>
-          <div class="aaRow">
+          <div class="aaRow" style="border-bottom-style: none;">
             <div class="aaRowData">
               <div class="aaCellText aaFontSizeData aaCellBchgDesc">${app.selectedBchg.desc}</div>
               <au-vertical-gridline></au-vertical-gridline>

@@ -27,12 +27,17 @@
         <au-icon-nav-down></au-icon-nav-down>
       </button>
       <span class="aaToolBarDivider">.</span>
-      <span click.trigger="onEdit($event)" class="aaBtn">
-           <i class="fa fa-pencil-square-o fa-fw aaIconBlue" aria-hidden="true"></i> Edit
-      </span>
-      <span click.trigger="onDelete($event)" class="aaBtn" style="margin-left: 1pc;">
-           <i class="fa fa-minus-circle fa-fw aaIconRed" aria-hidden="true"></i> Delete
-      </span>
+      <button type="button"
+              class="aaBtn"
+              click.trigger="onEdit($event)">
+           <span class="fa fa-pencil-square-o fa-fw aaIconBlue" aria-hidden="true"></span> Edit
+      </button>
+      <button type="button"
+              class="aaBtn"
+              style="margin-left: 1pc;"
+              click.trigger="onDelete($event)">
+           <span class="fa fa-minus-circle fa-fw aaIconRed" aria-hidden="true"></span> Delete
+      </button>
       <span class="aaToolBarDivider">.</span>
       <!--
       <div class="btn-group">
@@ -54,8 +59,13 @@
     <div class="aaPanelToolBar" if.bind="app.isEditing">
       <div style="text-align: left;">
         <span class="aaToolBarDivider">.</span>
-        <span click.trigger="onSaveEdits($event)" class="aaBtn">Save</span>
-        <span click.trigger="onCancelEdits($event)" class="aaBtn" style="margin-left: 3pc;">Cancel</span>
+        <button type="button"
+                class="aaBtn"
+                click.trigger="onSaveEdits($event)" >Save</button>
+        <button type="button"
+                class="aaBtn"
+                style="margin-left: 3pc;"
+                click.trigger="onCancelEdits($event)" >Cancel</button>
         <span class="aaToolBarDivider">.</span>
       </div>
     </div>
@@ -87,25 +97,16 @@
           <div class="aaGridTitleBar">Balance changes</div>
           <div class="aaGridHeader">
             <div class="aaFontLabel aaRow aaRowBgColorNonData">
-              <!--
-                            <div class="aaCellRowOps aaFontSizeLabel">
-                              <span class="aaBtn" click.trigger="onNewTran($event, app.selectedAcct)">
-                                <i class="fa fa-plus-circle fa-fw aaIconGreen" aria-hidden="true"></i>
-                              </span>
-                            </div>
-              -->
-              <div class="aaRowOps  aaFontSizeLabel aaHidden">
-                  <span class="aaBtn aaHidden">
-                    <i class="fa fa-chevron-right fa-fw" aria-hidden="true"></i>
-                  </span>
+              <div class="aaRowOps aaFontSizeLabel aaHidden">
+                <button type="button" class="aaBtn" click.delegate="showBchgDetail($event, bchg)">
+                  <au-icon-nav-right></au-icon-nav-right>
+                </button>
+                <button type="button" class="aaBtn" click.delegate="showBchgInTran($event, bchg)">
+                  <au-icon-nav-right-right></au-icon-nav-right-right>
+                </button>
               </div>
-              <div class="aaCellRowOps  aaFontSizeLabel">
-                  <span class="aaBtn aaHidden">
-                    <i class="fa fa-angle-double-right fa-fw" aria-hidden="true"></i>
-                  </span>
-              </div>
+              <au-vertical-gridline></au-vertical-gridline>
               <aaRowData>
-                <au-vertical-gridline></au-vertical-gridline>
                 <div class="aaCellText aaFontSizeLabel aaCellTranDate"><span class=" aaSansSerif">Date</span></div>
                 <au-vertical-gridline></au-vertical-gridline>
                 <div class="aaCellText aaFontSizeLabel aaCellBchgDesc"><span
@@ -115,8 +116,8 @@
                 <au-vertical-gridline></au-vertical-gridline>
                 <div class="aaCellText aaFontSizeLabel aaCellBchgBal"><span class=" aaSansSerif">New balance</span>
                 </div>
-                <au-vertical-gridline></au-vertical-gridline>
               </aaRowData>
+              <au-vertical-gridline></au-vertical-gridline>
             </div>
           </div>
           <div class="aaGridScrollableRows" id="acctModule-${app.selectedAcct.id}">
@@ -133,8 +134,8 @@
                     <au-icon-nav-right-right></au-icon-nav-right-right>
                   </button>
                 </div>
-                <div class="aaRowData aaRowBgColorData">
-                  <au-vertical-gridline></au-vertical-gridline>
+                <au-vertical-gridline></au-vertical-gridline>
+                <div class="aaRowData aaRowBgColorData ${bchg.id == app.selectedBchg.id ? 'aaMostRecentlySelectedRow' : ''}">
                   <div class="aaCellText aaFontSizeData aaCellTranDate">${bchg.sourceTran.date}</div>
                   <au-vertical-gridline></au-vertical-gridline>
                   <div class="aaCellText aaFontSizeData aaCellBchgDesc">${bchg.desc}</div>
@@ -142,8 +143,8 @@
                   <div class="aaCellText aaFontSizeData aaCellBchgAmt">${bchg.amt | auCurrencyConverter}</div>
                   <au-vertical-gridline></au-vertical-gridline>
                   <div class="aaCellText aaFontSizeData aaCellBchgBal">${bchg.newBalance | auCurrencyConverter}</div>
-                  <au-vertical-gridline></au-vertical-gridline>
                 </div>
+                <au-vertical-gridline></au-vertical-gridline>
               </div>
             </template>
             <!--
@@ -195,8 +196,9 @@
               <span class="aaBtn aaHidden"><i class="fa fa-chevron-right fa-fw" aria-hidden="true"></i></span>
             </div>
             <au-vertical-gridline></au-vertical-gridline>
-            <div class="aaCellText aaFontData aaCellTranDate"><span
-              class="aaSansSerif aaCellTextEOL">${app.END_OF_LIST}</span></div>
+            <div class="aaCellText aaFontData aaCellTranDate">
+              <span class="aaSansSerif aaCellTextEOL">${app.END_OF_LIST}</span>
+            </div>
             <au-vertical-gridline></au-vertical-gridline>
             <div class="aaCellText aaFontData aaCellBchgDesc"></div>
             <au-vertical-gridline></au-vertical-gridline>
