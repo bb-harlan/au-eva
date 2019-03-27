@@ -10,27 +10,11 @@
     <div class="aaPanelBody">
       <div class="aaGridContainer">
         <div class="aaGridTitleBar">Transactions</div>
-        <div class="aaGridHeader aaFontLabel">
-          <div class="aaRow aaFontLabel">
-            <div class="aaCellRowOps" click.delegate="onNewTran($event)">
-              <span class="aaBtn">
-                <i class="fa fa-plus-circle fa-fw aaIconGreen" aria-hidden="true"></i>
-              </span>
-            </div>
-            <au-vertical-gridline></au-vertical-gridline>
-            <div class="aaCellText aaCellRowSelectedChar" style="visibility: hidden;">${app.ROW_SELECTED_CHAR}</div>
-            <au-vertical-gridline></au-vertical-gridline>
-            <div class="aaCellText aaFontSizeLabel aaCellTranDate">Date</div>
-            <bchg-grid-header></bchg-grid-header>
-          </div>
-        </div>
         <div class="aaGridScrollableRows" style="height: 33pc;" id="jrnlGridBodyContainer">
           <template repeat.for="tran of app.data.jrnl.tranList">
             <div id="${tran.id}"
-                 class="aaRow aaRowJrnl aaRowBgColorToolbar"
-                 xcss="border-top: 5px solid ${eva.GRIDLINE_COLOR};
-                      border-bottom: 5px solid ${eva.GRIDLINE_COLOR};
-                      margin: 5px 0;"
+                 class="aaRow aaRowBgColorToolbar"
+                 style="border-bottom-width: 0;"
                  mouseenter.trigger="onRowEnter($event, tran)"
                  mouseleave.trigger="onRowLeave($event, tran)">
               <div class="aaRowOps aaHidden">
@@ -41,20 +25,34 @@
                 </button>
               </div>
               <au-vertical-gridline></au-vertical-gridline>
-              <div class="aaRowData aaRowBgColorData">
-                <div class="aaCellText aaFontData aaCellTranDate">${tran.date}</div>
-                <au-vertical-gridline></au-vertical-gridline>
-                <div class="aaInlineBlock">
-                  <div class="aaInlineBlock" xcss="border-bottom: 1px solid ${eva.GRIDLINE_COLOR};">
-                    <au-tran-bchg-row-data bchg.bind="tran.bchgList[0]"></au-tran-bchg-row-data>
-                  </div>
-
-                  <template repeat.for="bchg of tran.bchgList.slice(1)">
-                    <div class="aaSubRow">
-                      <tran-bchg-row-data bchg.bind="bchg"></tran-bchg-row-data>
-                    </div>
-                  </template>
+              <div class="aaRowData aaRowBgColorData ${tran.id == app.selectedTran.id ? 'aaMostRecentlySelectedRow' : ''}"
+                 css="${tran.id == app.selectedTran.id ? 'xborder-bottom-width: 0; padding-bottom: 2px;' : ''}">
+                <div class="aaRow">
+                  <span class="aaFormItemLabel">Date:</span><div class="aaCellText aaFontData"><input type="text" disabled class="aaFormInputText aaCellTranDate" value="${tran.date}"></div>
                 </div>
+                <template repeat.for="bchg of tran.bchgList">
+                  <div class="aaRow">
+                    <!--                    ${bchg.targetAcct.title}-->
+                    <au-tran-bchg-row-data bchg.bind="bchg"></au-tran-bchg-row-data>
+                  </div>
+                </template>
+              </div>
+              <au-vertical-gridline></au-vertical-gridline>
+            </div>
+            <!-- End of tran -->
+            <div class="aaRow aaRowBgColorNonData">
+              <div class="aaRowOps">
+                <span class="aaBtn aaHidden">
+                    <au-icon-nav-left></au-icon-nav-left>
+                  </span>
+              </div>
+              <au-vertical-gridline></au-vertical-gridline>
+              <div class="aaRowData aaRowBgColorNonData">
+                <div class="aaInlineBlock aaCellText aaFontData" style="position: absolute;"><span
+                  class="aaSansSerif aaCellTextEOL">&nbsp;</span></div>
+                <au-tran-bchg-cells-spacer></au-tran-bchg-cells-spacer>
+                <au-vertical-gridline-spacer></au-vertical-gridline-spacer>
+                <au-tran-bchg-cells-spacer></au-tran-bchg-cells-spacer>
               </div>
               <au-vertical-gridline></au-vertical-gridline>
             </div>
