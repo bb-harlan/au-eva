@@ -87,20 +87,25 @@
            class="aaGridContainer">
         <div class="aaGridTitleBar">Account balance changes</div>
         <div class="aaPanelToolBar">
+          <button type="button"
+                  class="aaBtn"
+                  click.trigger="onEditRows($event)">
+            <span class="fa fa-pencil-square-o fa-fw aaIconBlue" aria-hidden="true"></span> Edit rows...
+          </button>
           <au-tran-bchg-mover
             mover-dialog-position-element.bind="moverDialogPositionElement"></au-tran-bchg-mover>
         </div>
         <div class="aaGridScrollableRows" id="tranModule-${app.selectedTran.id}" style="height: 25pc;">
           <template repeat.for="bchg of app.selectedTran.bchgList">
-            <div class="aaRow aaBgColorToolbar"
+            <div class="aaRow aaRowBgColorToolbar"
                  mouseenter.trigger="onRowEnter($event, bchg)"
                  mouseleave.trigger="onRowLeave($event, bchg)">
               <template if.bind="!app.isEditing">
                 <div class="aaRowOps">
-                  <span class="aaBtn" click.delegate="showBchgInAcct($event, bchg)">
+                  <span class="aaBtn aaBtnInRowOps" click.delegate="showBchgInAcct($event, bchg)">
                     <au-icon-nav-left-left></au-icon-nav-left-left>
                   </span>
-                  <span class="aaBtn" click.delegate="showBchgDetail($event, bchg)">
+                  <span class="aaBtn aaBtnInRowOps" click.delegate="showBchgDetail($event, bchg)">
                     <au-icon-nav-left></au-icon-nav-left>
                   </span>
                 </div>
@@ -121,14 +126,14 @@
                   <span class="aaBtn aaHidden">
                     <au-icon-nav-left-left></au-icon-nav-left-left>
                   </span>
-                  <span class="aaBtn aaHidden">
+                  <span class="aaBtn aaBtnInRowOps aaHidden">
                     <au-icon-nav-left></au-icon-nav-left>
                   </span>
                 </div>
               </template>
               <template if.bind="app.isEditing">
                 <div class="aaRowOps">
-                <span class="aaBtn aaHidden" click.delegate="onMenuClick($event, bchg)">
+                <span class="aaBtn aaBtnInRowOps aaHidden" click.delegate="onMenuClick($event, bchg)">
                     <i class="fa fa-bars fa-fw" aria-hidden="true"></i>
                   </span>
                 </div>
@@ -153,7 +158,17 @@
     <div class="aaGridContainer" style="border-color: transparent;">
       <div class="aaRowTotals">
         <div class="aaRowOps">
+          <div class="aaRowOps">
+                  <span class="aaBtn aaBtnInRowOps" click.delegate="showBchgInAcct($event, bchg)">
+                    <au-icon-nav-left-left></au-icon-nav-left-left>
+                  </span>
+            <span class="aaBtn aaBtnInRowOps" click.delegate="showBchgDetail($event, bchg)">
+                    <au-icon-nav-left></au-icon-nav-left>
+                  </span>
+          </div>
+<!--
           <span class="aaBtn aaHidden"><i class="fa fa-bars fa-fw" aria-hidden="true"></i></span>
+-->
         </div>
         <au-vertical-gridline-spacer></au-vertical-gridline-spacer>
         <div class="aaCellText aaCellRowSelectedChar" style="visibility: hidden;">${app.ROW_SELECTED_CHAR}</div>

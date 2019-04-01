@@ -15,9 +15,15 @@
       accounts
     </div>
     <div class="aaPanelToolBar">
+      <button type="button"
+              class="aaBtn"
+              click.trigger="onEditRows($event)">
+        <span class="fa fa-pencil-square-o fa-fw aaIconBlue" aria-hidden="true"></span> Edit rows...
+      </button>
       <au-acct-mover
         acct-list.bind="acctList"
         mover-dialog-position-element.bind="moverDialogPositionElement"></au-acct-mover>
+<!--
       <div class="btn-group">
         <a class="aaBtn mdropdown-toggle" data-toggle="dropdown">
           <span class="fa fa-bars fa-fw" aria-hidden="true"></span>
@@ -29,14 +35,12 @@
           <li><a><i class="fa fa-minus-circle fa-fw aaIconRed"></i> Delete row...</a></li>
         </ul>
       </div>
+-->
     </div>
-    <div id="gridHeader${equationSide}" class="aaGridHeader">
-      <div class="aaFontLabel aaRow" style="background-color: #eee;">
-        <div class="aaRowOps" style="visibility: hidden;">
-          <button type="button" class="aaBtn" click.trigger="onRowOpsOpen($event, listItem)">
-            <i class="fa fa-bars fa-fw" aria-hidden="true"></i>
-          </button>
-          <button type="button" class="aaBtn" click.delegate="onGoAcct($event, listItem)">
+    <divx id="gridHeader${equationSide}" class="aaGridHeader">
+      <div class="aaRow aaFontLabel aaRowBgColorNonData">
+        <div class="aaRowOps aaHidden">
+          <button type="button" class="aaBtn aaBtnInRowOps" click.delegate="onGoAcct($event, listItem)">
             <au-icon-nav-right></au-icon-nav-right>
           </button>
         </div>
@@ -48,19 +52,15 @@
           <au-vertical-gridline></au-vertical-gridline>
         </div>
       </div>
-    </div>
+    </divx>
     <div class="aaGridScrollableRows">
       <template repeat.for="listItem of faeSide.acctList">
-        <div id="${listItem.id}" class="aaRow aaBgColorToolbar"
-             style="background-color: #ddd;"
+        <div id="${listItem.id}" class="aaRow aaRowBgColorToolbar"
              mouseenter.trigger="onRowEnter($event, listItem)"
              mouseleave.trigger="onRowLeave($event, listItem)">
           <template if.bind="listItem.isAcct()">
             <div class="aaRowOps">
-              <button type="button" class="aaBtn" click.trigger="onRowOpsOpen($event, listItem)">
-                <i class="fa fa-bars fa-fw" aria-hidden="true"></i>
-              </button>
-              <button type="button" class="aaBtn" click.delegate="onGoAcct($event, listItem)">
+              <button type="button" class="aaBtn aaBtnInRowOps" click.delegate="onGoAcct($event, listItem)">
                 <au-icon-nav-right></au-icon-nav-right>
               </button>
             </div>
@@ -75,10 +75,7 @@
           </template>
           <template if.bind="listItem.isAnnotation()">
             <div class="aaRowOps">
-              <button type="button" class="aaBtn" click.trigger="onRowOpsOpen($event, listItem)">
-                <i class="fa fa-bars fa-fw" aria-hidden="true"></i>
-              </button>
-              <button type="button" class="aaBtn" click.delegate="onGoAcct($event, listItem)">
+              <button type="button" class="aaBtn aaBtnInRowOps" click.delegate="onGoAcct($event, listItem)">
                 <au-icon-nav-right></au-icon-nav-right>
               </button>
             </div>
@@ -104,9 +101,6 @@
            mouseenter.trigger="onRowEnter($event, null)"
            mouseleave.trigger="onRowLeave($event, null)">
         <div class="aaRowOps">
-          <button type="button" class="aaBtn" click.trigger="onRowOpsOpen($event, listItem)">
-            <span class="fa fa-bars fa-fw" aria-hidden="true"></span>
-          </button>
           <button type="button" class="aaBtn aaHidden">
             <au-icon-nav-right></au-icon-nav-right>
           </button>
@@ -134,9 +128,6 @@
     <div class="aaGridContainer" style="border-color: transparent;">
     <div class="aaRow" style="border-bottom-color: transparent; background-color: transparent;">
       <div class="aaRowOps">
-        <button type="button" class="aaBtn">
-          <span class="fa fa-bars fa-fw" aria-hidden="true"></span>
-        </button>
         <button type="button" class="aaBtn">
           <au-icon-nav-right></au-icon-nav-right>
         </button>

@@ -134,6 +134,9 @@ export class AuModuleTran {
   onMoverDialogOpen(event) {
     alert('"Rearrange list sequence" not yet implemented.');
   }
+  onEditRows(event) {
+    alert('Not yet implemented.')
+  }
 
   attached() {
     let hyperLink: Element = document.getElementById('scrollToSelected');

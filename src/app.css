@@ -237,6 +237,9 @@ h1 {
   font-weight: normal;
   font-size: small;
 }
+.aaBtnInRowOps {
+  margin-top: 0.25pc;
+}
 
 .aaHidden {
   visibility: hidden;
@@ -324,13 +327,15 @@ h1 {
   /* box-shadow: inset 0px 5px 10px 0px #eee; */
 }
 
-.aaGridHeaderaaTool {
+/*
+.aaGridHeader {
   color: #666;
   background-color: #ddd;
   white-space: nowrap;
   font-weight: normal;
-  /*border-bottom: 2px solid #ccc;*/
+  !*border-bottom: 2px solid #ccc;*!
 }
+*/
 
 .aaGridScrollableRows {
   margin: 0;
@@ -350,7 +355,7 @@ h1 {
 .aaRow {
   position: relative;
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   margin: 0;
   text-align: left;
   white-space: nowrap;
@@ -596,4 +601,8 @@ h1 {
   -webkit-box-shadow: 0px 0px 2px 2px #6D99C5 inset;
   -moz-box-shadow: 0px 0px 2px 2px #6D99C5 inset;
   box-shadow: 0 0 2px 2px #6D99C5 inset;
+}
+.aaMostRecentlySelectedRow2 {
+  border-bottom-size: 0;
+  padding-bottom: 2px;
 }

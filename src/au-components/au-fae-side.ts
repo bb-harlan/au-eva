@@ -28,31 +28,29 @@ export class AuFaeSide {
   constructor(app) {
     this.app = app;
   }
-
   onRowEnter(event, listItem) {
     event.target.children[0].style.visibility = 'visible';
     event.target.children[2].classList.toggle('aaRowHover', true);
   }
-
   onRowLeave(event, listItem) {
     event.target.children[0].style.visibility = 'hidden';
     event.target.children[2].classList.toggle('aaRowHover', false);
   }
-
   onRowOpsOpen(event, listItem) {
     this.rowOpsBoundingClientRect = (event.target as Element).parentElement.getBoundingClientRect();
     this.rowOpsMenuModal.style.display = "block";
   }
-
   onRowOpsCancel(event) {
     if (event.target == this.rowOpsMenuModal) {
       this.rowOpsMenuModal.style.display = "none";
     }
   }
-
   onGoAcct(event, listItem) {
     this.app.selectedBchg = null;
     this.app.selectedAcct = listItem;
     this.app.selectedModule = this.app.MODULE_ACCT;
+  }
+  onEditRows(event) {
+    alert('Not yet implemented.')
   }
 }

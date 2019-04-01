@@ -14,7 +14,8 @@
       <button type="button"
               class="aaBtn"
               click.trigger="onGoFae($event)">
-        <au-icon-nav-left></au-icon-nav-left>Assets = Equities
+        <au-icon-nav-left></au-icon-nav-left>
+        Assets = Equities
       </button>
       <button type="button"
               class="aaBtn"
@@ -30,13 +31,13 @@
       <button type="button"
               class="aaBtn"
               click.trigger="onEdit($event)">
-           <span class="fa fa-pencil-square-o fa-fw aaIconBlue" aria-hidden="true"></span> Edit
+        <span class="fa fa-pencil-square-o fa-fw aaIconBlue" aria-hidden="true"></span> Edit
       </button>
       <button type="button"
               class="aaBtn"
               style="margin-left: 1pc;"
               click.trigger="onDelete($event)">
-           <span class="fa fa-minus-circle fa-fw aaIconRed" aria-hidden="true"></span> Delete
+        <span class="fa fa-minus-circle fa-fw aaIconRed" aria-hidden="true"></span> Delete
       </button>
       <span class="aaToolBarDivider">.</span>
       <!--
@@ -61,11 +62,13 @@
         <span class="aaToolBarDivider">.</span>
         <button type="button"
                 class="aaBtn"
-                click.trigger="onSaveEdits($event)" >Save</button>
+                click.trigger="onSaveEdits($event)">Save
+        </button>
         <button type="button"
                 class="aaBtn"
                 style="margin-left: 3pc;"
-                click.trigger="onCancelEdits($event)" >Cancel</button>
+                click.trigger="onCancelEdits($event)">Cancel
+        </button>
         <span class="aaToolBarDivider">.</span>
       </div>
     </div>
@@ -95,30 +98,28 @@
 
         <div class="aaGridContainer">
           <div class="aaGridTitleBar">Balance changes</div>
-          <div class="aaGridHeader">
-            <div class="aaFontLabel aaRow aaRowBgColorNonData">
-              <div class="aaRowOps aaFontSizeLabel aaHidden">
-                <button type="button" class="aaBtn" click.delegate="showBchgDetail($event, bchg)">
-                  <au-icon-nav-right></au-icon-nav-right>
-                </button>
-                <button type="button" class="aaBtn" click.delegate="showBchgInTran($event, bchg)">
-                  <au-icon-nav-right-right></au-icon-nav-right-right>
-                </button>
-              </div>
-              <au-vertical-gridline></au-vertical-gridline>
-              <aaRowData>
-                <div class="aaCellText aaFontSizeLabel aaCellTranDate"><span class=" aaSansSerif">Date</span></div>
-                <au-vertical-gridline></au-vertical-gridline>
-                <div class="aaCellText aaFontSizeLabel aaCellBchgDesc"><span
-                  class=" aaSansSerif">Change description</span></div>
-                <au-vertical-gridline></au-vertical-gridline>
-                <div class="aaCellText aaFontSizeLabel aaCellBchgAmt"><span class="aaSansSerif">Change amt</span></div>
-                <au-vertical-gridline></au-vertical-gridline>
-                <div class="aaCellText aaFontSizeLabel aaCellBchgBal"><span class=" aaSansSerif">New balance</span>
-                </div>
-              </aaRowData>
-              <au-vertical-gridline></au-vertical-gridline>
+          <div class="aaFontLabel aaRow aaRowBgColorNonData">
+            <div class="aaRowOps aaFontSizeLabel aaHidden">
+              <button type="button" class="aaBtn" click.delegate="showBchgDetail($event, bchg)">
+                <au-icon-nav-right></au-icon-nav-right>
+              </button>
+              <button type="button" class="aaBtn" click.delegate="showBchgInTran($event, bchg)">
+                <au-icon-nav-right-right></au-icon-nav-right-right>
+              </button>
             </div>
+            <au-vertical-gridline></au-vertical-gridline>
+            <aaRowData>
+              <div class="aaCellText aaFontSizeLabel aaCellTranDate"><span class=" aaSansSerif">Date</span></div>
+              <au-vertical-gridline></au-vertical-gridline>
+              <div class="aaCellText aaFontSizeLabel aaCellBchgDesc"><span
+                class=" aaSansSerif">Change description</span></div>
+              <au-vertical-gridline></au-vertical-gridline>
+              <div class="aaCellText aaFontSizeLabel aaCellBchgAmt"><span class="aaSansSerif">Change amt</span></div>
+              <au-vertical-gridline></au-vertical-gridline>
+              <div class="aaCellText aaFontSizeLabel aaCellBchgBal"><span class=" aaSansSerif">New balance</span>
+              </div>
+            </aaRowData>
+            <au-vertical-gridline></au-vertical-gridline>
           </div>
           <div class="aaGridScrollableRows" id="acctModule-${app.selectedAcct.id}">
             <template repeat.for="bchg of app.selectedAcct.bchgList">
@@ -127,15 +128,16 @@
                    mouseenter.trigger="onRowEnter($event, bchg)"
                    mouseleave.trigger="onRowLeave($event, bchg)">
                 <div class="aaRowOps  aaFontSizeLabel">
-                  <button type="button" class="aaBtn" click.delegate="showBchgDetail($event, bchg)">
+                  <button type="button" class="aaBtn aaBtnInRowOps" click.delegate="showBchgDetail($event, bchg)">
                     <au-icon-nav-right></au-icon-nav-right>
                   </button>
-                  <button type="button" class="aaBtn" click.delegate="showBchgInTran($event, bchg)">
+                  <button type="button" class="aaBtn aaBtnInRowOps" click.delegate="showBchgInTran($event, bchg)">
                     <au-icon-nav-right-right></au-icon-nav-right-right>
                   </button>
                 </div>
                 <au-vertical-gridline></au-vertical-gridline>
-                <div class="aaRowData aaRowBgColorData ${bchg.id == app.selectedBchg.id ? 'aaMostRecentlySelectedRow' : ''}">
+                <div
+                  class="aaRowData aaRowBgColorData ${bchg.id == app.selectedBchg.id ? 'aaMostRecentlySelectedRow' : ''}">
                   <div class="aaCellText aaFontSizeData aaCellTranDate">${bchg.sourceTran.date}</div>
                   <au-vertical-gridline></au-vertical-gridline>
                   <div class="aaCellText aaFontSizeData aaCellBchgDesc">${bchg.desc}</div>

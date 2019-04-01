@@ -19,16 +19,15 @@
                  mouseleave.trigger="onRowLeave($event, tran)">
               <div class="aaRowOps aaHidden">
                 <button type="button"
-                        class="aaBtn"
+                        class="aaBtn aaBtnInRowOps"
                         click.delegate="onGoTran($event, tran)">
                   <au-icon-nav-left></au-icon-nav-left>
                 </button>
               </div>
               <au-vertical-gridline></au-vertical-gridline>
-              <div class="aaRowData aaRowBgColorData ${tran.id == app.selectedTran.id ? 'aaMostRecentlySelectedRow' : ''}"
-                 css="${tran.id == app.selectedTran.id ? 'xborder-bottom-width: 0; padding-bottom: 2px;' : ''}">
+              <div class="aaRowData aaRowBgColorData ${tran.id == app.selectedTran.id ? 'aaMostRecentlySelectedRow aaMostRecentlySelectedRow2' : ''}">
                 <div class="aaRow">
-                  <span class="aaFormItemLabel">Date:</span><div class="aaCellText aaFontData"><input type="text" disabled class="aaFormInputText aaCellTranDate" value="${tran.date}"></div>
+                  <span class="aaFormItemLabel aaCellText">Date:</span><div class="aaCellText aaFontData"><input type="text" disabled class="aaFormInputText aaCellTranDate" value="${tran.date}"></div>
                 </div>
                 <template repeat.for="bchg of tran.bchgList">
                   <div class="aaRow">
@@ -57,6 +56,23 @@
               <au-vertical-gridline></au-vertical-gridline>
             </div>
           </template>
+          <!-- End of tran -->
+          <div class="aaRow aaRowBgColorNonData">
+            <div class="aaRowOps">
+                <span class="aaBtn aaHidden">
+                    <au-icon-nav-left></au-icon-nav-left>
+                  </span>
+            </div>
+            <au-vertical-gridline></au-vertical-gridline>
+            <div class="aaRowData aaRowBgColorNonData">
+              <div class="aaInlineBlock aaCellText aaFontData" style="position: absolute;"><span
+                class="aaSansSerif aaCellTextEOL">${app.END_OF_LIST}</span></div>
+              <au-tran-bchg-cells-spacer></au-tran-bchg-cells-spacer>
+              <au-vertical-gridline-spacer></au-vertical-gridline-spacer>
+              <au-tran-bchg-cells-spacer></au-tran-bchg-cells-spacer>
+            </div>
+            <au-vertical-gridline></au-vertical-gridline>
+          </div>
         </div>
         <div class="aaGridFooterBar"></div>
       </div>
