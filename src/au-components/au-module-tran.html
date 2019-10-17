@@ -4,6 +4,8 @@
   <require from="au-views/au-icon-nav-down.html"></require>
   <require from="au-views/au-icon-nav-left.html"></require>
   <require from="au-views/au-icon-nav-left-left.html"></require>
+  <require from="au-views/au-icon-edit.html"></require>
+  <require from="au-views/au-icon-row-mover.html"></require>
   <require from="au-views/au-bchg-grid-header.html"></require>
   <require from="au-views/au-vertical-gridline.html"></require>
   <require from="au-views/au-vertical-gridline-spacer.html"></require>
@@ -43,7 +45,7 @@
       <!--
        <span class="aaToolBarDivider">.</span>
        <span click.trigger="onEdit($event)" class="aaBtn">
-            <i class="fa fa-pencil-square-o fa-fw aaIconBlue" aria-hidden="true"></i> Edit
+            <au-icon-edit></au-icon-edit> Edit
        </span>
        <span click.trigger="onDelete($event)" class="aaBtn" style="margin-left: 1pc;">
             <i class="fa fa-minus-circle fa-fw aaIconRed" aria-hidden="true"></i> Delete
@@ -87,13 +89,18 @@
            class="aaGridContainer">
         <div class="aaGridTitleBar">Account balance changes</div>
         <div class="aaPanelToolBar">
-          <button type="button"
-                  class="aaBtn"
-                  click.trigger="onEditRows($event)">
+          <button
+            type="button"
+            class="aaBtn"
+            click.trigger="onEditRows($event)">
             <span class="fa fa-pencil-square-o fa-fw aaIconBlue" aria-hidden="true"></span> Edit rows...
           </button>
-          <au-tran-bchg-mover
-            mover-dialog-position-element.bind="moverDialogPositionElement"></au-tran-bchg-mover>
+          <button
+            type="button"
+            class="aaBtn"
+            click.trigger="app.viewmodelTranBchgMover.openDialog($event, moverDialogPositionElement)">
+            <au-icon-row-mover></au-icon-row-mover>Move rows...
+          </button>
         </div>
         <div class="aaGridScrollableRows" id="tranModule-${app.selectedTran.id}" style="height: 25pc;">
           <template repeat.for="bchg of app.selectedTran.bchgList">
@@ -200,4 +207,6 @@
     </div>
   </div>
   </div>
+
+  <au-tran-bchg-mover view-model.ref="modalTranBchgMover"></au-tran-bchg-mover>
 </template>
