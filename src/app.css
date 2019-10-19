@@ -47,6 +47,9 @@ h1 {
   font-size: medium;
 }
 
+.aaIconBlack {
+  color: #000;
+}
 .aaIconRed {
   /*color: #D9534F;*/
   color: #e00;
@@ -372,20 +375,6 @@ h1 {
 .aaRowBgColorNonData {
   background-color: #eee;
 }
-
-.aaRowJrnl {
-  border-bottom: 0.5pc solid #ccc;
-}
-
-.aaSubRow {
-  position: relative;
-  margin: 0;
-  text-align: left;
-  white-space: nowrap;
-  font-size: 0;
-  border-top: 1px solid #ccc;
-}
-
 .aaRowTotals {
   position: relative;
   display: flex;
@@ -396,30 +385,21 @@ h1 {
   white-space: nowrap;
   font-size: 0;
 }
-
 .aaRowHover {
   /*background-color: #d9e5f2 !important;*/
   /*background-color: #dbe6f0 !important;*/
   cursor: default;
   background-color: #edf2f7 !important;
 }
-
-.aaRowBchgTop {
-  margin-top: 0.5pc;
-  border-top: 3px solid #ccc;
-}
-
 .aaRowData {
   display: inline-block;
   vertical-align: top;
   }
-
 .aaCellId {
   display: inline-block;
   width: 3pc;
   text-align: left;
 }
-
 .aaCellRowOps {
   display: inline-block;
   vertical-align: middle;
@@ -558,7 +538,14 @@ h1 {
   height: 100%; /* Full height */
   overflow: auto; /* Enable scroll if needed */
   background-color: rgb(0, 0, 0); /* Fallback color */
-  background-color: rgba(0, 0, 0, 0.4); /* Black w/ opacity */
+  background-color: rgba(0, 0, 0, 0.6); /* Black w/ opacity */
+}
+.aaModalContent {
+  border: 1px solid #58b;
+  border-radius: 0.25pc;
+  background-clip: border-box;
+  overflow: hidden;
+  position: absolute;
 }
 .aaDragRow {
   /* margin: 2pc;  */
@@ -600,7 +587,7 @@ h1 {
 .aaMostRecentlySelectedRow {
   -webkit-box-shadow: 0px 0px 2px 2px #6D99C5 inset;
   -moz-box-shadow: 0px 0px 2px 2px #6D99C5 inset;
-  box-shadow: 0 0 2px 2px #6D99C5 inset;
+  box-shadow: 0 0 3px 3px #6D99C5 inset;
 }
 .aaMostRecentlySelectedRow2 {
   border-bottom-size: 0;
