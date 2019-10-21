@@ -2,41 +2,30 @@ import {customElement, bindable, inject} from 'aurelia-framework';
 import {App} from 'app';
 import {Bchg} from 'app-data/models/bchg';
 
-@customElement('au-tran-bchg-mover')
+@customElement('au-tran-bchg-acct-picker')
 @inject(App)
-export class AuTranBchgMover {
-  /* @injected item(s) */
-  app: App;
-
+export class AuTranBchgAcctPicker {
+  app = null;
   /* data properties */
   moverTranBchgList: Array<Bchg>;
-
   /* view properties */
   mouseIsDown: boolean = false;
   selectedMoverRow: Element = null;
-
-  /* ref properties */
-  moverDialogModal: HTMLElement; //<div element.ref="moverDialogModal"
-  moverDialogContent: HTMLElement; // <div element.ref = "moverDialogContent" ...
+  moverDialogModal: HTMLElement = null;
   moverRowList: HTMLElement; //<div element.ref="moverRowList"
-
-  constructor(app: App) {
+  constructor(app) {
     this.app = app;
   }
 
-  openDialog(event, moverProxyCoordinateTop: HTMLElement, moverProxyCoordinateLeft: HTMLElement) {
-    console.log (moverProxyCoordinateTop);
-    console.log (moverProxyCoordinateLeft);
-    // make copy of bchgList for mover
+  onDialogOpen(event, moverDialogPositionElement, bchg) {
+    alert(bchg.targetAcct.title);
+    alert(this.app.data.faeSideEquities.acctList[0].title);
+    bchg.targetAcct = this.app.data.faeSideEquities.acctList[0]; // test
+    bchg.sourceTran.refresh(); // test
+    return;
     this.moverTranBchgList = [];
     this.moverTranBchgList.push(...this.app.selectedTran.bchgList);
-
-    // postion moverDialogContent
-    let proxyPositionProps = moverProxyCoordinateTop.getBoundingClientRect();
-    this.moverDialogContent.style.top = `${proxyPositionProps.top}px`;
-    proxyPositionProps = moverProxyCoordinateLeft.getBoundingClientRect();
-    this.moverDialogContent.style.left = `${proxyPositionProps.left}px`;
-
+    let moverDialogPositionProps = moverDialogPositionElement.getBoundingClientRect();
     this.moverDialogModal.style.display = "block";
   }
 

@@ -7,6 +7,12 @@ export class AuModuleFae {
   //
   app = null;
 
+  /*=====================================================
+   *  reference(s)
+   *=====================================================
+   */
+  viewmodelAcctMover; // <au-acct-mover view-model.ref="viewmodelAcctMover"></au-acct-mover>
+
   constructor(app) {
     this.app = app;
   }

@@ -6,18 +6,10 @@
   <require from="au-components/au-tran-bchg-row-data"></require>
   <require from="au-views/au-tran-bchg-cells-spacer.html"></require>
 
-
-  <span click.trigger="onDialogOpen($event)" class="aaBtn"><i class="fa fa-arrows-v fa-fw aaIconBlue"
-                                                              aria-hidden="true"></i> Move rows...</span>
-
   <div element.ref="moverDialogModal" class="aaModal">
     <div
-      class="aaGridContainer aaInlineBlock aaPanelBoxShadow"
-      css="position: absolute;
-           margin-top: 0;
-           margin-left: 1pc;
-           top: ${moverDialogPositionTop}px;
-           left: ${moverDialogPositionLeft}px;">
+      element.ref = "moverDialogContent"
+      class="aaModalContent aaInlineBlock aaPanelBoxShadow">
       <div class="aaGridTitleBar" style="font-size: larger;">Move rows<br><span class="aaFontLabel">&mdash; Drag & drop row(s) to desired list position(s). &mdash;</span></div>
       <div class="aaPanelToolBar">
         <div style="text-align: center;">

@@ -1,35 +1,39 @@
 import {customElement, bindable, inject} from 'aurelia-framework';
 import {App} from 'app';
-import {AuFaeSide} from 'au-components/au-fae-side';
-import {Acct, Annotation} from 'app-data/models//acct';
+import {Acct, Annotation} from 'app-data/models/acct';
+import {FaeSide} from 'app-data/models/fae-side';
 
 @customElement('au-acct-mover')
-@inject(App, AuFaeSide)
+@inject(App, FaeSide)
 export class AuAcctMover {
   app;
-  @bindable acctList: Array<Acct | Annotation>;
-  @bindable moverDialogPositionElement;
-  moverDialogPositionTop;
-  moverDialogPositionLeft;
-  auFaeSide: AuFaeSide;
+  faeSide: FaeSide;
   moverAcctList: Array<Acct | Annotation>;
   mouseIsDown: boolean = false;
   selectedMoverRow: Element = null;
-  moverDialogModal: HTMLElement = null;
-  moverRowList: HTMLElement; // element.ref="moverRowList"
-  constructor(app, auFaeSide) {
+
+  moverDialogModal: HTMLElement; // <div element.ref="moverDialogModal" class="aaModal">
+  moverDialogContent: HTMLElement; // <div element.ref = "moverDialogContent" ...
+  moverRowList: HTMLElement; //  <div element.ref="moverRowList" class="aaGridScrollableRows" ...
+
+  constructor(app: App) {
     this.app = app;
-    this.auFaeSide = auFaeSide;
   }
 
-  onDialogOpen(event) {
+  onDialogOpen(event, moverProxyCoordinates: HTMLElement, faeSide: FaeSide) {
+    this.faeSide = faeSide;
+
+    // make copy of acctList for mover
     this.moverAcctList = [];
-    this.moverAcctList.push(...this.auFaeSide.faeSide.acctList);
-    let moverDialogPositionProps = this.moverDialogPositionElement.getBoundingClientRect();
-    this.moverDialogPositionTop = moverDialogPositionProps.top;
-    this.moverDialogPositionLeft = moverDialogPositionProps.left;
+    this.moverAcctList.push(...faeSide.acctList);
+
+    // postion moverDialogContent
+    let moverDialogPositionProps = moverProxyCoordinates.getBoundingClientRect();
+    this.moverDialogContent.style.top = `${moverDialogPositionProps.top}px`;
+    this.moverDialogContent.style.left = `${moverDialogPositionProps.left}px`;
+
+    // show modal dialog
     this.moverDialogModal.style.display = "block";
-    // console.log(moverDialogPositionProps);
   }
 
   onDialogDone(event) {
@@ -61,7 +65,7 @@ export class AuAcctMover {
       let listItem = (<any>this.moverRowList.children[i]).listItem as Acct | Annotation;
       listItem.intraSideSorter = i;
     }
-    this.auFaeSide.faeSide.refresh();
+    this.faeSide.refresh();
     this.moverDialogModal.style.display = "none";
   }
 

@@ -4,6 +4,7 @@
   <require from="au-views/au-icon-nav-down.html"></require>
   <require from="au-views/au-icon-nav-right.html"></require>
   <require from="au-views/au-icon-nav-right-right.html"></require>
+  <require from="au-views/au-icon-edit.html"></require>
   <require from="au-views/au-vertical-gridline.html"></require>
   <require from="au-converters/au-currency-converter"></require>
   <require from="au-converters/au-equation-side-converter"></require>
@@ -31,7 +32,7 @@
       <button type="button"
               class="aaBtn"
               click.trigger="onEdit($event)">
-        <span class="fa fa-pencil-square-o fa-fw aaIconBlue" aria-hidden="true"></span> Edit
+        <au-icon-edit></au-icon-edit> Edit
       </button>
       <button type="button"
               class="aaBtn"

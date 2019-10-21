@@ -1,15 +1,21 @@
 import {customElement, bindable, inject} from 'aurelia-framework';
+import {FaeSide} from 'app-data/models/fae-side';
 import {App} from 'app';
-import {FaeSide} from 'app-data/models//fae-side';
+import {AuModuleFae} from 'au-components/au-module-fae';
 
 @customElement('au-fae-side')
-@inject(App)
+@inject(App, AuModuleFae)
 export class AuFaeSide {
-  app = null;
+  app: App;
+  auModuleFae: AuModuleFae;
   @bindable faeSide: FaeSide;
-  moverDialogModal: HTMLElement;
-  moverDialogContent: HTMLElement;
-  moverDialogPositionElement: HTMLElement;
+
+  /*=====================================================
+    *  references
+    *=====================================================
+    */
+  moverProxyCoordinates: HTMLElement; // <div class="aaRowData aaRowBgColorNonData"  element.ref="moverProxyCoordinates">
+
   rowOpsMenuModal: HTMLElement;
   rowOpsMenuContent: HTMLElement;
   rowOpsBoundingClientRect;
@@ -25,31 +31,38 @@ export class AuFaeSide {
    * event.target.children[0] is the menu buttom.
    * event.target.children[1] is the nav buttom.
    */
-  constructor(app) {
+  constructor(app, auModuleFae) {
     this.app = app;
+    this.auModuleFae = auModuleFae;
   }
+
   onRowEnter(event, listItem) {
     event.target.children[0].style.visibility = 'visible';
     event.target.children[2].classList.toggle('aaRowHover', true);
   }
+
   onRowLeave(event, listItem) {
     event.target.children[0].style.visibility = 'hidden';
     event.target.children[2].classList.toggle('aaRowHover', false);
   }
+
   onRowOpsOpen(event, listItem) {
     this.rowOpsBoundingClientRect = (event.target as Element).parentElement.getBoundingClientRect();
     this.rowOpsMenuModal.style.display = "block";
   }
+
   onRowOpsCancel(event) {
     if (event.target == this.rowOpsMenuModal) {
       this.rowOpsMenuModal.style.display = "none";
     }
   }
+
   onGoAcct(event, listItem) {
     this.app.selectedBchg = null;
     this.app.selectedAcct = listItem;
     this.app.selectedModule = this.app.MODULE_ACCT;
   }
+
   onEditRows(event) {
     alert('Not yet implemented.')
   }

@@ -101,6 +101,16 @@ export class App {
 
   onMenuClick(event, listItem) {
   }
+
+  /*=====================================================
+   *  references to dialog view-models
+   *=====================================================
+   */
+/*
+// <au-acct-mover view-model.ref="viewmodelAcctMover"></au-acct-mover>
+  viewmodelAcctMover;
+*/
+
 }
 
 

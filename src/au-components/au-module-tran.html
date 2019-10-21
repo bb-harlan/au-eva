@@ -85,8 +85,9 @@
         </tr>
       </table>
 
-      <div element.ref="moverDialogPositionElement"
-           class="aaGridContainer">
+      <div
+        element.ref="moverProxyCoordinateTop"
+        class="aaGridContainer">
         <div class="aaGridTitleBar">Account balance changes</div>
         <div class="aaPanelToolBar">
           <button
@@ -98,7 +99,7 @@
           <button
             type="button"
             class="aaBtn"
-            click.trigger="app.viewmodelTranBchgMover.openDialog($event, moverDialogPositionElement)">
+            click.trigger="viewmodelTranBchgMover.openDialog($event, moverProxyCoordinateTop, moverProxyCoordinateLeft)">
             <au-icon-row-mover></au-icon-row-mover>Move rows...
           </button>
         </div>
@@ -146,7 +147,7 @@
                 </div>
               </template>
               <au-vertical-gridline></au-vertical-gridline>
-              <div class="aaRowData aaRowBgColorNonData">
+              <div element.ref="moverProxyCoordinateLeft" class="aaRowData aaRowBgColorNonData">
                 <div class="aaInlineBlock aaCellText aaFontData" style="position: absolute;"><span
                   class="aaSansSerif aaCellTextEOL">${app.END_OF_LIST}</span></div>
                 <au-tran-bchg-cells-spacer></au-tran-bchg-cells-spacer>
@@ -208,5 +209,5 @@
   </div>
   </div>
 
-  <au-tran-bchg-mover view-model.ref="modalTranBchgMover"></au-tran-bchg-mover>
+  <au-tran-bchg-mover view-model.ref="viewmodelTranBchgMover"></au-tran-bchg-mover>
 </template>

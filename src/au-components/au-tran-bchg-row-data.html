@@ -1,6 +1,7 @@
 <template>
   <require from="au-views/au-tran-bchg-cells-spacer.html"></require>
   <require from="au-views/au-vertical-gridline.html"></require>
+  <require from="au-views/au-icon-ellipsis.html"></require>
   <require from="au-components/au-input-currency"></require>
 
   <div class="aaInlineBlock">
@@ -16,6 +17,12 @@
         <input type="text" disabled class="aaFormInputText aaCellAcctTitle"
                css="vertical-align: middle; border-color: ${eva.GRIDLINE_COLOR};"
                value.to-view="bchg.targetAcct.title">
+        <button type="button"
+                class="aaBtn"
+                click.trigger="auTranBchgAcctPicker.onDialogOpen($event, bchg)">
+          <au-icon-ellipsis></au-icon-ellipsis>
+        </button>
+
         <template if.bind="!app.isEditing">
           <span class="aaBtn aaHidden" style="vertical-align: middle; border-color: #999;">
             <i class="fa fa-ellipsis-h fa-fw" aria-hidden="true"></i>

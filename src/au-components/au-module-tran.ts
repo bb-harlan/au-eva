@@ -1,14 +1,21 @@
 import {customElement} from 'aurelia-framework';
 import {inject} from 'aurelia-framework';
 import {App} from "app";
+import {AuTranBchgMover} from "./au-tran-bchg-mover";
 
 @customElement('au-module-tran')
 @inject(App)
 export class AuModuleTran {
-  app = null;
-  moverDialogModal: HTMLElement;
-  moverDialogContent: HTMLElement;
-  moverDialogPositionElement: HTMLElement;
+  // @injected item(s)
+  app: App;
+
+  /*=====================================================
+   *  references
+   *=====================================================
+   */
+  moverProxyCoordinateTop: HTMLElement; // <div element.ref="moverProxyCoordinateTop" ...
+  moverProxyCoordinateLeft: HTMLElement; // <div element.ref="moverProxyCoordinateLeft" ...
+  viewmodelTranBchgMover; // <au-tran-bchg-mover view-model.ref="viewmodelTranBchgMover"></au-tran-bchg-mover>
 
   constructor(app) {
     this.app = app;
@@ -25,7 +32,6 @@ export class AuModuleTran {
     let listIndex = tranList.findIndex(function (tran) {
       return tran.id === selectedTranId;
     });
-    console.log(`listIndex = ${listIndex}`);
     if (listIndex > 0) {
       this.app.selectedBchg = null;
       this.app.selectedTran = tranList[listIndex - 1];
@@ -40,12 +46,10 @@ export class AuModuleTran {
     let listIndex = tranList.findIndex(function (tran) {
       return tran.id === selectedTranId;
     });
-    console.log(`listIndex = ${listIndex}`);
     if (listIndex < tranList.length - 1) {
       this.app.selectedBchg = null;
       this.app.selectedTran = tranList[listIndex + 1];
-    }
-    else {
+    } else {
       alert('Reached end of list.');
     }
   }
@@ -71,6 +75,7 @@ export class AuModuleTran {
     event.target.children[0].style.visibility = 'hidden';
     event.target.children[2].classList.toggle('aaRowHover', false);
   }
+
   /*onRowEnter(event, bchg) {
     if (bchg) {
       if (bchg.intraTranSorter >= 1) {
@@ -134,6 +139,7 @@ export class AuModuleTran {
   onMoverDialogOpen(event) {
     alert('"Rearrange list sequence" not yet implemented.');
   }
+
   onEditRows(event) {
     alert('Not yet implemented.')
   }
