@@ -24,23 +24,23 @@ export class AuTranBchgMover {
     this.app = app;
   }
 
-  openDialog(event, moverProxyCoordinateTop: HTMLElement, moverProxyCoordinateLeft: HTMLElement) {
-    console.log (moverProxyCoordinateTop);
-    console.log (moverProxyCoordinateLeft);
+  dialogOpen(event, proxyForMoverPositionTop: HTMLElement, proxyForMoverPositionLeft: HTMLElement) {
+    console.log (proxyForMoverPositionTop);
+    console.log (proxyForMoverPositionLeft);
     // make copy of bchgList for mover
     this.moverTranBchgList = [];
     this.moverTranBchgList.push(...this.app.selectedTran.bchgList);
 
     // postion moverDialogContent
-    let proxyPositionProps = moverProxyCoordinateTop.getBoundingClientRect();
+    let proxyPositionProps = proxyForMoverPositionTop.getBoundingClientRect();
     this.moverDialogContent.style.top = `${proxyPositionProps.top}px`;
-    proxyPositionProps = moverProxyCoordinateLeft.getBoundingClientRect();
+    proxyPositionProps = proxyForMoverPositionLeft.getBoundingClientRect();
     this.moverDialogContent.style.left = `${proxyPositionProps.left}px`;
 
     this.moverDialogModal.style.display = "block";
   }
 
-  onDialogDone(event) {
+  dialogDone(event) {
     /*
     In the view an Aurelia repeat loop is coded as follows to create
     a div for each row of the mover datagrid as follows.
@@ -73,7 +73,7 @@ export class AuTranBchgMover {
     this.moverDialogModal.style.display = "none";
   }
 
-  onDialogCancel(event) {
+  dialogCancel(event) {
     this.moverTranBchgList = []; //done with it
     this.moverDialogModal.style.display = "none";
   }

@@ -1,10 +1,11 @@
 import {customElement, bindable, inject} from 'aurelia-framework';
 import {App} from 'app';
+import {AuModuleFae} from 'au-components/au-module-fae';
 import {Acct, Annotation} from 'app-data/models/acct';
 import {FaeSide} from 'app-data/models/fae-side';
 
 @customElement('au-acct-mover')
-@inject(App, FaeSide)
+@inject(App, AuModuleFae)
 export class AuAcctMover {
   app;
   faeSide: FaeSide;
@@ -20,7 +21,7 @@ export class AuAcctMover {
     this.app = app;
   }
 
-  onDialogOpen(event, moverProxyCoordinates: HTMLElement, faeSide: FaeSide) {
+  dialogOpen(event, proxyForMoverPosition: HTMLElement, faeSide: FaeSide) {
     this.faeSide = faeSide;
 
     // make copy of acctList for mover
@@ -28,7 +29,7 @@ export class AuAcctMover {
     this.moverAcctList.push(...faeSide.acctList);
 
     // postion moverDialogContent
-    let moverDialogPositionProps = moverProxyCoordinates.getBoundingClientRect();
+    let moverDialogPositionProps = proxyForMoverPosition.getBoundingClientRect();
     this.moverDialogContent.style.top = `${moverDialogPositionProps.top}px`;
     this.moverDialogContent.style.left = `${moverDialogPositionProps.left}px`;
 
@@ -36,7 +37,7 @@ export class AuAcctMover {
     this.moverDialogModal.style.display = "block";
   }
 
-  onDialogDone(event) {
+  dialogDone(event) {
     /*
     In the view an Aurelia repeat loop is coded as follows to create
     a div for each row of the mover datagrid as follows.
@@ -69,7 +70,7 @@ export class AuAcctMover {
     this.moverDialogModal.style.display = "none";
   }
 
-  onDialogCancel(event) {
+  dialogCancel(event) {
     this.moverAcctList = [];
     this.moverDialogModal.style.display = "none";
   }

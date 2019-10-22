@@ -17,7 +17,7 @@ export class AuTranBchgAcctPicker {
     this.app = app;
   }
 
-  onDialogOpen(event, moverDialogPositionElement, bchg) {
+  dialogOpen(event, moverDialogPositionElement, bchg) {
     alert(bchg.targetAcct.title);
     alert(this.app.data.faeSideEquities.acctList[0].title);
     bchg.targetAcct = this.app.data.faeSideEquities.acctList[0]; // test
@@ -29,7 +29,7 @@ export class AuTranBchgAcctPicker {
     this.moverDialogModal.style.display = "block";
   }
 
-  onDialogDone(event) {
+  dialogDone(event) {
     /*
     In the view an Aurelia repeat loop is coded as follows to create
     a div for each row of the mover datagrid as follows.
@@ -62,7 +62,7 @@ export class AuTranBchgAcctPicker {
     this.moverDialogModal.style.display = "none";
   }
 
-  onDialogCancel(event) {
+  dialogCancel(event) {
     this.moverTranBchgList = []; //done with it
     this.moverDialogModal.style.display = "none";
   }

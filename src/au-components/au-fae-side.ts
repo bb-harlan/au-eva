@@ -14,7 +14,7 @@ export class AuFaeSide {
     *  references
     *=====================================================
     */
-  moverProxyCoordinates: HTMLElement; // <div class="aaRowData aaRowBgColorNonData"  element.ref="moverProxyCoordinates">
+  proxyForMoverPositions: HTMLElement; // <div class="aaRowData aaRowBgColorNonData"  element.ref="proxyForMoverPositions">
 
   rowOpsMenuModal: HTMLElement;
   rowOpsMenuContent: HTMLElement;

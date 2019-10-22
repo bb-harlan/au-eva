@@ -86,7 +86,7 @@
       </table>
 
       <div
-        element.ref="moverProxyCoordinateTop"
+        element.ref="proxyForMoverPositionTop"
         class="aaGridContainer">
         <div class="aaGridTitleBar">Account balance changes</div>
         <div class="aaPanelToolBar">
@@ -99,7 +99,7 @@
           <button
             type="button"
             class="aaBtn"
-            click.trigger="viewmodelTranBchgMover.openDialog($event, moverProxyCoordinateTop, moverProxyCoordinateLeft)">
+            click.trigger="viewmodelTranBchgMover.dialogOpen($event, proxyForMoverPositionTop, proxyForMoverPositionLeft)">
             <au-icon-row-mover></au-icon-row-mover>Move rows...
           </button>
         </div>
@@ -147,7 +147,7 @@
                 </div>
               </template>
               <au-vertical-gridline></au-vertical-gridline>
-              <div element.ref="moverProxyCoordinateLeft" class="aaRowData aaRowBgColorNonData">
+              <div element.ref="proxyForMoverPositionLeft" class="aaRowData aaRowBgColorNonData">
                 <div class="aaInlineBlock aaCellText aaFontData" style="position: absolute;"><span
                   class="aaSansSerif aaCellTextEOL">${app.END_OF_LIST}</span></div>
                 <au-tran-bchg-cells-spacer></au-tran-bchg-cells-spacer>
