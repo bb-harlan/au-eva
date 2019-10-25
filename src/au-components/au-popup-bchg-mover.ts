@@ -1,77 +1,80 @@
 import {customElement, bindable, inject} from 'aurelia-framework';
 import {App} from 'app';
-import {AuModuleFae} from 'au-components/au-module-fae';
-import {Acct, Annotation} from 'app-data/models/acct';
-import {FaeSide} from 'app-data/models/fae-side';
+import {Bchg} from 'app-data/models/bchg';
 
-@customElement('au-acct-mover')
-@inject(App, AuModuleFae)
-export class AuAcctMover {
-  app;
-  faeSide: FaeSide;
-  moverAcctList: Array<Acct | Annotation>;
+@customElement('au-popup-bchg-mover')
+@inject(App)
+export class AuPopupBchgMover {
+  /* @injected item(s) */
+  app: App;
+
+  /* data properties */
+  moverTranBchgList: Array<Bchg>;
+
+  /* view properties */
   mouseIsDown: boolean = false;
   selectedMoverRow: Element = null;
 
-  moverDialogModal: HTMLElement; // <div element.ref="moverDialogModal" class="aaModal">
+  /* ref properties */
+  moverDialogModal: HTMLElement; //<div element.ref="moverDialogModal"
   moverDialogContent: HTMLElement; // <div element.ref = "moverDialogContent" ...
-  moverRowList: HTMLElement; //  <div element.ref="moverRowList" class="aaGridScrollableRows" ...
+  moverRowList: HTMLElement; //<div element.ref="moverRowList"
 
   constructor(app: App) {
     this.app = app;
   }
 
-  dialogOpen(event, proxyForMoverPosition: HTMLElement, faeSide: FaeSide) {
-    this.faeSide = faeSide;
-
-    // make copy of acctList for mover
-    this.moverAcctList = [];
-    this.moverAcctList.push(...faeSide.acctList);
+  open(event, proxyForMoverPositionTop: HTMLElement, proxyForMoverPositionLeft: HTMLElement) {
+    console.log (proxyForMoverPositionTop);
+    console.log (proxyForMoverPositionLeft);
+    // make copy of bchgList for mover
+    this.moverTranBchgList = [];
+    this.moverTranBchgList.push(...this.app.selectedTran.bchgList);
 
     // postion moverDialogContent
-    let moverDialogPositionProps = proxyForMoverPosition.getBoundingClientRect();
-    this.moverDialogContent.style.top = `${moverDialogPositionProps.top}px`;
-    this.moverDialogContent.style.left = `${moverDialogPositionProps.left}px`;
+    let proxyPositionProps = proxyForMoverPositionTop.getBoundingClientRect();
+    this.moverDialogContent.style.top = `${proxyPositionProps.top}px`;
+    proxyPositionProps = proxyForMoverPositionLeft.getBoundingClientRect();
+    this.moverDialogContent.style.left = `${proxyPositionProps.left}px`;
 
-    // show modal dialog
     this.moverDialogModal.style.display = "block";
   }
 
-  dialogDone(event) {
+  done(event) {
     /*
     In the view an Aurelia repeat loop is coded as follows to create
     a div for each row of the mover datagrid as follows.
 
-     <template repeat.for="moverAcctListItem of moverAcctList">
-          <div
-            class="aaRow"
-            mover-acct-list-item.bind="moverAcctListItem"
-            /
-            /
-            /
+      <template repeat.for="moverBchg of moverTranBchgList">
+        <div
+        class="aaRow"
+        bchg.bind="bchg"
+        /
+        /
+        /
 
     In that loop note that
 
-      mover-acct-list-item.bind="moverAcctListItem"
+        mover-bchg.bind="moverBchg"
 
-    creates a property named moverAcctListItem on each row, a div of type HTMLElement.
-    The value of that property is set to the iterator moverAcctListItem.
+    creates a property named moverBchg on each row, a div of type HTMLElement.
+    The value of that property is set to the iterator moverBchg.
 
-    The following for loop uses that moverAcctListItem property
-    to reference the original acct|annotation object and update its intraTranSorter property
+    The following for loop uses that moverBchg property
+    to reference the original bchg object and update its intraTranSorter property
     to reflect its possibly new position in the list as a result of moving.
     */
-    this.moverAcctList = []; // done with it
+    this.moverTranBchgList = []; //done with it
     for (let i = 0; i < this.moverRowList.childElementCount - 1; i++) {
-      let listItem = (<any>this.moverRowList.children[i]).listItem as Acct | Annotation;
-      listItem.intraSideSorter = i;
+      let moverBchg = (<any>this.moverRowList.children[i]).moverBchg as Bchg;
+      moverBchg.intraTranSorter = i;
     }
-    this.faeSide.refresh();
+    this.app.selectedTran.refresh();
     this.moverDialogModal.style.display = "none";
   }
 
-  dialogCancel(event) {
-    this.moverAcctList = [];
+  cancel(event) {
+    this.moverTranBchgList = []; //done with it
     this.moverDialogModal.style.display = "none";
   }
 

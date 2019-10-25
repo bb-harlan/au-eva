@@ -1,7 +1,7 @@
 import {customElement} from 'aurelia-framework';
 import {inject} from 'aurelia-framework';
 import {App} from "app";
-import {AuTranBchgMover} from "./au-tran-bchg-mover";
+import {AuPopupBchgMover} from "au-components/au-popup-bchg-mover";
 
 @customElement('au-module-tran')
 @inject(App)
@@ -15,7 +15,7 @@ export class AuModuleTran {
    */
   proxyForMoverPositionTop: HTMLElement; // <div element.ref="proxyForMoverPositionTop" ...
   proxyForMoverPositionLeft: HTMLElement; // <div element.ref="proxyForMoverPositionLeft" ...
-  viewmodelTranBchgMover; // <au-tran-bchg-mover view-model.ref="viewmodelTranBchgMover"></au-tran-bchg-mover>
+  viewmodelPopupBchgMover; // <au-popup-bchg-mover view-model.ref="viewmodelPopupBchgMover></au-popup-bchg-mover>
 
   constructor(app) {
     this.app = app;

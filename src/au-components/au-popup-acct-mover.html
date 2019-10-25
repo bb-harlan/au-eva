@@ -5,7 +5,7 @@
   <require from="au-converters/au-currency-converter"></require>
   <require from="au-converters/au-equation-side-converter"></require>
 
-  <!--<button type="button" class="aaBtn" click.trigger="dialogOpen($event)">
+  <!--<button type="button" class="aaBtn" click.trigger="open($event)">
     <au-icon-row-mover></au-icon-row-mover>Move rows...
   </button>
 -->
@@ -16,8 +16,8 @@
       <div class="aaGridTitleBar" style="font-size: larger;">Move rows<br><span class="aaFontLabel">&mdash; Drag & drop row(s) to desired list position(s). &mdash;</span></div>
       <div class="aaPanelToolBar">
         <div style="text-align: center;">
-          <button type="button" class="aaBtn" click.trigger="dialogDone($event)">Done</button>
-          <button type="button" class="aaBtn" style="margin-left: 4pc;" click.trigger="dialogCancel($event)">Cancel</button>
+          <button type="button" class="aaBtn" click.trigger="done($event)">Done</button>
+          <button type="button" class="aaBtn" style="margin-left: 4pc;" click.trigger="cancel($event)">Cancel</button>
         </div>
       </div>
       <div

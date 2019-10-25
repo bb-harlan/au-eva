@@ -11,7 +11,7 @@ export class AuModuleFae {
    *  reference(s)
    *=====================================================
    */
-  viewmodelAcctMover; // <au-acct-mover view-model.ref="viewmodelAcctMover"></au-acct-mover>
+  viewmodelPopupAcctMover; // <au-popup-acct-mover view-model.ref="viewmodelPopupAcctMover"></au-popup-acct-mover>
 
   constructor(app) {
     this.app = app;

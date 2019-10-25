@@ -6,7 +6,7 @@
   <require from="au-views/au-vertical-gridline-spacer.html"></require>
   <require from="au-converters/au-currency-converter"></require>
   <require from="au-converters/au-equation-side-converter"></require>
-  <require from="au-components/au-acct-mover"></require>
+  <require from="au-components/au-popup-acct-mover"></require>
 
   <h1 css="text-align: ${faeSide.id == app.data.SIDE_ID_ASSETS ? 'right' : 'left'};">
     ${faeSide.id}
@@ -25,7 +25,7 @@
       <button
         type="button"
         class="aaBtn"
-        click.trigger="auModuleFae.viewmodelAcctMover.dialogOpen($event, proxyForMoverPosition, faeSide)">
+        click.trigger="auModuleFae.viewmodelPopupAcctMover.open($event, proxyForMoverPosition, faeSide)">
         <au-icon-row-mover></au-icon-row-mover>Move rows...
       </button>
 <!--

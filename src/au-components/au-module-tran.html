@@ -11,7 +11,7 @@
   <require from="au-views/au-vertical-gridline-spacer.html"></require>
   <require from="au-views/au-tran-bchg-cells-spacer.html"></require>
   <require from="au-components/au-tran-bchg-row-data"></require>
-  <require from="au-components/au-tran-bchg-mover"></require>
+  <require from="au-components/au-popup-bchg-mover"></require>
   <require from="au-converters/au-currency-converter"></require>
 
   <template if.bind="app.selectedModuleMode == app.MODULE_MODE_NAVIGATING">
@@ -99,7 +99,7 @@
           <button
             type="button"
             class="aaBtn"
-            click.trigger="viewmodelTranBchgMover.dialogOpen($event, proxyForMoverPositionTop, proxyForMoverPositionLeft)">
+            click.trigger="viewmodelPopupBchgMover.open($event, proxyForMoverPositionTop, proxyForMoverPositionLeft)">
             <au-icon-row-mover></au-icon-row-mover>Move rows...
           </button>
         </div>
@@ -209,5 +209,5 @@
   </div>
   </div>
 
-  <au-tran-bchg-mover view-model.ref="viewmodelTranBchgMover"></au-tran-bchg-mover>
+  <au-popup-bchg-mover view-model.ref="viewmodelPopupBchgMover"></au-popup-bchg-mover>
 </template>

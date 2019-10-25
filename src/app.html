@@ -5,8 +5,8 @@
   <require from="au-components/au-module-bchg"></require>
   <require from="au-components/au-module-tran"></require>
   <require from="au-components/au-module-jrnl"></require>
-  <require from="au-components/au-acct-mover"></require>
-  <require from="au-components/au-tran-bchg-mover"></require>
+  <require from="au-components/au-popup-acct-mover"></require>
+  <require from="au-components/au-popup-bchg-mover"></require>
 
   <a
     element.ref="hyperLinker"
@@ -71,7 +71,4 @@
     <au-module-tran if.bind="selectedModule == MODULE_TRAN"></au-module-tran>
     <au-module-jrnl if.bind="selectedModule == MODULE_JRNL"></au-module-jrnl>
   </div>
-
-  <au-acct-mover view-model.ref="viewmodelAcctMover"></au-acct-mover>
-
 </template>

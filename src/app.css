@@ -200,12 +200,14 @@ h1 {
   padding: 1px 0.5pc;
   background-color: #fff;
   font-size: medium;
+  cursor: inherit; /* for when dragging row in mover */
 }
 
 .aaFormInputText:disabled {
   /*border-color: transparent;*/
   border-style: solid;
   border-color: #ccc;
+  cursor: inherit; /* for when dragging row in mover */
 }
 
 .aaInlineBlock {
