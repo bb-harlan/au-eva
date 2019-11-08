@@ -9,6 +9,7 @@ export class AuModuleTran {
   // @injected item(s)
   app: App;
 
+
   /*=====================================================
    *  references
    *=====================================================
@@ -109,8 +110,14 @@ export class AuModuleTran {
     event.target.children[4].classList.toggle('aaRowHover', false);
   }
 */
-  onEdit(event) {
-    this.app.isEditing = true;
+  tranNew(event) {
+    alert('Not yet implemented.');
+  }
+  tranEdit(event) {
+    alert('Not yet implemented.');
+  }
+  tranDelete(event) {
+    alert('Not yet implemented.');
   }
 
   onSaveEdits(event) {
@@ -154,6 +161,10 @@ export class AuModuleTran {
     } else {
       hyperLink.innerHTML = "#";
     }
+  }
+
+  acctPicked(message) {
+   console.log(message);
   }
 }
 

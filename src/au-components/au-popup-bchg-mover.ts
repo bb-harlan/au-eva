@@ -120,9 +120,11 @@ export class AuPopupBchgMover {
       return;
     }
     let nextSibling = this.selectedMoverRow.nextElementSibling;
+/*
     if (nextSibling.id == `${this.app.END_OF_LIST}`) {
       nextSibling = null;
     }
+*/
     if (nextSibling && mouseY >= nextSibling.getBoundingClientRect().top) {
       moverRowList.insertBefore(nextSibling, this.selectedMoverRow);
       return;

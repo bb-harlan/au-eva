@@ -13,6 +13,7 @@ export class AuPopupAcctMover {
   mouseIsDown: boolean = false;
   selectedMoverRow: Element = null;
 
+  // refs
   moverDialogModal: HTMLElement; // <div element.ref="moverDialogModal" class="aaModal">
   moverDialogContent: HTMLElement; // <div element.ref = "moverDialogContent" ...
   moverRowList: HTMLElement; //  <div element.ref="moverRowList" class="aaGridScrollableRows" ...
@@ -117,9 +118,11 @@ export class AuPopupAcctMover {
       return;
     }
     let nextSibling = this.selectedMoverRow.nextElementSibling;
+/*
     if (nextSibling.id == `${this.app.END_OF_LIST}`) {
       nextSibling = null;
     }
+*/
     if (nextSibling && mouseY >= nextSibling.getBoundingClientRect().top) {
       moverRowList.insertBefore(nextSibling, this.selectedMoverRow);
       return;

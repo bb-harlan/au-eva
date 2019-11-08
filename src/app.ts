@@ -59,6 +59,15 @@ export class App {
     return "moving rows";
   }
 
+  /*=====================================================
+   *  references
+   *=====================================================
+   */
+  viewmodelModuleFAE; // <au-module-fae view-model.ref="viewmodelModuleFAE" if.bind="selectedModule == MODULE_FAE"></au-module-fae>
+  viewmodelModuleAcct; // <au-module-acct view-model.ref="viewmodelModuleAcct" ...></au-module-fae>
+  viewmodelModuleBchg; // <au-module-bchg view-model.ref="viewmodelModuleBchg" ...></au-module-fae>
+  viewmodelModuleTran; // <au-module-tran view-model.ref="viewmodelModuleTran" ...></au-module-fae>
+  viewmodelModuleJrnl; // <au-module-jrnl view-model.ref="viewmodelModuleJrnl ...></au-module-fae>
 
   /*=====================================================
    *  UI state/control

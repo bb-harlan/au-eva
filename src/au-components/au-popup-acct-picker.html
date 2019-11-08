@@ -1,0 +1,20 @@
+<template>
+  <require from="au-converters/au-equation-side-converter"></require>
+
+  <div element.ref="pickerDialogModal" class="aaModal">
+    <div
+      class="aaGridContainer aaInlineBlock aaPanelBoxShadow"
+      css="position: absolute;">
+      <div
+        class="aaGridTitleBar"
+        style="font-size: larger;">Target account picker
+      </div>
+      <div class="aaPanelToolBar">
+        <div style="text-align: center;">
+          <span click.trigger="picked($event)" class="aaBtn">Pick target account</span>
+        </div>
+      </div>
+      <div class="aaGridFooterBar"></div>
+    </div>
+  </div>
+</template>

@@ -129,7 +129,7 @@ h1 {
   display: inline-block;
   border: 1px solid #58b;
   border-radius: 0.5pc;
-  background-color: #fff;
+  background-color: #eee;
   background-clip: border-box;
   overflow: hidden;
   font-size: medium;
@@ -165,7 +165,7 @@ h1 {
 .aaPanelToolBar {
   padding: 0.25pc 1pc;
   white-space: nowrap;
-  background-color: #ddd;
+  background-color: #fff;
   text-align: left;
   border-bottom: 1px solid #999;
 }
@@ -173,7 +173,7 @@ h1 {
 .aaPanelBody {
   padding: 1pc;
   white-space: nowrap;
-  background-color: #fff;
+  background-color: #eee;
 }
 
 .aaForm {
@@ -207,6 +207,7 @@ h1 {
   /*border-color: transparent;*/
   border-style: solid;
   border-color: #ccc;
+  background-color: transparent;
   cursor: inherit; /* for when dragging row in mover */
 }
 
@@ -349,7 +350,7 @@ h1 {
   overflow-x: hidden;
   overflow-y: scroll;
   white-space: nowrap;
-  background-color: #fff;
+  background-color: #ccc;
 }
 
 .aaGridFooterTotals {
@@ -369,7 +370,7 @@ h1 {
   cursor: default;
 }
 .aaRowBgColorToolbar {
-  background-color: #ddd;
+  background-color: #fff;
 }
 .aaRowBgColorData {
   background-color: #fff;
@@ -396,6 +397,7 @@ h1 {
 .aaRowData {
   display: inline-block;
   vertical-align: top;
+  background-color: #eee;
   }
 .aaCellId {
   display: inline-block;
