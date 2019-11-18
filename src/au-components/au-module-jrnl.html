@@ -17,14 +17,14 @@
                  style="border-bottom-width: 0;"
                  mouseenter.trigger="onRowEnter($event, tran)"
                  mouseleave.trigger="onRowLeave($event, tran)">
-              <div class="aaRowOps aaHidden">
+              <div class="aaRowOps aaBgColorToolbar">
                 <button type="button"
-                        class="aaBtn aaBtnInRowOps"
+                        class="aaBtn"
                         click.delegate="onGoTran($event, tran)">
                   <au-icon-nav-left></au-icon-nav-left>
                 </button>
               </div>
-              <au-vertical-gridline></au-vertical-gridline>
+              <div class="aaVerticalGridline"></div>
               <div class="aaRowData aaRowBgColorData ${tran.id == app.selectedTran.id ? 'aaMostRecentlySelectedRow aaMostRecentlySelectedRow2' : ''}">
                 <div class="aaRow" style="align-items: center;">
                   <span class="aaFormItemLabel aaCellText">Date:</span><div class="aaCellText aaFontData"><input type="text" disabled class="aaFormInputText aaCellTranDate" value="${tran.date}"></div>
@@ -36,16 +36,16 @@
                   </div>
                 </template>
               </div>
-              <au-vertical-gridline></au-vertical-gridline>
+              <div class="aaVerticalGridline"></div>
             </div>
             <!-- End of tran -->
             <div class="aaRow xaaRowBgColorNonData" style="background-color: #ccc;">
-              <div class="aaRowOps" style="background-color: inherit;">
+              <div class="aaRowOps aaBgColorToolbar" style="background-color: inherit;">
                 <span class="aaBtn aaHidden">
                     <au-icon-nav-left></au-icon-nav-left>
                   </span>
               </div>
-              <au-vertical-gridline></au-vertical-gridline>
+              <div class="aaVerticalGridline"></div>
               <div class="aaRowData xaaRowBgColorNonData" style="background-color: inherit;">
                 <div class="aaInlineBlock aaCellText aaFontData" style="position: absolute;"><span
                   class="aaSansSerif aaCellTextEOL">&nbsp;</span></div>
@@ -53,17 +53,17 @@
                 <au-vertical-gridline-spacer></au-vertical-gridline-spacer>
                 <au-tran-bchg-cells-spacer></au-tran-bchg-cells-spacer>
               </div>
-              <au-vertical-gridline></au-vertical-gridline>
+              <div class="aaVerticalGridline"></div>
             </div>
           </template>
           <!-- End of tran -->
           <div class="aaRow aaRowBgColorNonData">
-            <div class="aaRowOps">
+            <div class="aaRowOps aaBgColorToolbar">
                 <span class="aaBtn aaHidden">
                     <au-icon-nav-left></au-icon-nav-left>
                   </span>
             </div>
-            <au-vertical-gridline></au-vertical-gridline>
+            <div class="aaVerticalGridline"></div>
             <div class="aaRowData aaRowBgColorNonData">
               <div class="aaInlineBlock aaCellText aaFontData" style="position: absolute;"><span
                 class="aaSansSerif aaCellTextEOL">${app.END_OF_LIST}</span></div>
@@ -71,7 +71,7 @@
               <au-vertical-gridline-spacer></au-vertical-gridline-spacer>
               <au-tran-bchg-cells-spacer></au-tran-bchg-cells-spacer>
             </div>
-            <au-vertical-gridline></au-vertical-gridline>
+            <div class="aaVerticalGridline"></div>
           </div>
         </div>
         <div class="aaGridFooterBar"></div>

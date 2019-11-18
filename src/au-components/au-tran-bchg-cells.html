@@ -26,7 +26,7 @@
               class="aaFormInputText aaCellBchgDesc"
               value="${bchg.desc}">
         </div>
-        <au-vertical-gridline></au-vertical-gridline>
+        <div class="aaVerticalGridline"></div>
         <div class="aaCellText aaFontSizeData">
           <au-input-currency
             currency-amount.two-way="bchg.amt"
@@ -58,7 +58,7 @@
                    class="aaFormInputText aaCellBchgDesc"
                    value.two-way="bchg.desc">
         </div>
-        <au-vertical-gridline></au-vertical-gridline>
+        <div class="aaVerticalGridline"></div>
         <div class="aaCellText aaFontSizeData">
           <template if.bind="bchg.intraTranSorter == 0">
             <au-input-currency
@@ -75,7 +75,7 @@
         </div>
       </div>
     </template>
-    <au-vertical-gridline></au-vertical-gridline>
+    <div class="aaVerticalGridline"></div>
   </div>
 </template>
 

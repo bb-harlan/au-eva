@@ -4,12 +4,12 @@
   <require from="au-views/au-icon-ellipsis.html"></require>
   <require from="au-components/au-input-currency"></require>
 
-  <div class="aaInlineBlock">
+  <div class="aaInlineFlex">
 
     <template if.bind="bchg.targetAcct.parentFaeSide.id == app.data.SIDE_ID_EQUITIES">
       <!-- put blank space in change-to-asset column -->
       <au-tran-bchg-cells-spacer></au-tran-bchg-cells-spacer>
-      <au-vertical-gridline></au-vertical-gridline>
+      <div class="aaVerticalGridline"></div>
     </template>
 
     <div class="aaInlineBlock">
@@ -75,11 +75,10 @@
         </div>
       </template>
     </div>
+    <template if.bind="bchg.targetAcct.parentFaeSide.id == app.data.faeSideAssets.id">
+      <!-- put blank space in change-to-equity column -->
+      <div class="aaVerticalGridline"></div>
+      <au-tran-bchg-cells-spacer></au-tran-bchg-cells-spacer>
+    </template>
   </div>
-
-  <template if.bind="bchg.targetAcct.parentFaeSide.id == app.data.faeSideAssets.id">
-    <!-- put blank space in change-to-equity column -->
-    <au-vertical-gridline></au-vertical-gridline>
-    <au-tran-bchg-cells-spacer></au-tran-bchg-cells-spacer>
-  </template>
 </template>

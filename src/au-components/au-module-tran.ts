@@ -68,30 +68,30 @@ export class AuModuleTran {
   }
 
   onRowEnter(event, listItem) {
-    event.target.children[0].style.visibility = 'visible';
-    event.target.children[2].classList.toggle('aaRowHover', true);
+    event.target.children[0].children[0].classList.toggle('aaRowOpsHover', true);
+    event.target.children[2].classList.toggle('aaRowDataHover', true);
   }
 
   onRowLeave(event, listItem) {
-    event.target.children[0].style.visibility = 'hidden';
-    event.target.children[2].classList.toggle('aaRowHover', false);
+    event.target.children[0].children[0].classList.toggle('aaRowOpsHover', false);
+    event.target.children[2].classList.toggle('aaRowDataHover', false);
   }
 
   /*onRowEnter(event, bchg) {
     if (bchg) {
       if (bchg.intraTranSorter >= 1) {
-        event.target.children[0].children[0].style.visibility = 'visible';
+        event.target.children[0].classList.toggle('aaRowOpsHover', true);
         event.target.children[0].children[1].style.visibility = 'visible';
       }
       else if (!this.app.isEditing) {
-        event.target.children[0].children[0].style.visibility = 'visible';
+        event.target.children[0].classList.toggle('aaRowOpsHover', true);
       }
     }
-    event.target.children[1].classList.toggle('aaRowHover', true);
+    event.target.children[1].classList.toggle('aaRowDataHover', true);
     /!*
         if (!bchg && this.app.isEditing) {
           // end-of-list item
-          event.target.children[0].children[0].style.visibility = 'visible';
+          event.target.children[0].classList.toggle('aaRowOpsHover', true);
         }
     *!/
   }
@@ -99,15 +99,15 @@ export class AuModuleTran {
   onRowLeave(event, bchg) {
     if (bchg) {
       if (bchg.intraTranSorter >= 1) {
-        event.target.children[0].children[0].style.visibility = 'hidden';
+        event.target.children[0].classList.toggle('aaRowOpsHover', false);
         event.target.children[0].children[1].style.visibility = 'hidden';
-        event.target.children[1].classList.toggle('aaRowHover', false);
+        event.target.children[1].classList.toggle('aaRowDataHover', false);
       }
     }
     else {
-      event.target.children[0].children[0].style.visibility = 'hidden';
+      event.target.children[0].classList.toggle('aaRowOpsHover', false);
     }
-    event.target.children[4].classList.toggle('aaRowHover', false);
+    event.target.children[4].classList.toggle('aaRowDataHover', false);
   }
 */
   tranNew(event) {
@@ -127,7 +127,7 @@ export class AuModuleTran {
   }
 
   onCancelEdits(event) {
-    document.getElementById('tranModule-' + this.app.selectedTran.id).classList.toggle('aaRowHover', false);
+    document.getElementById('tranModule-' + this.app.selectedTran.id).classList.toggle('aaRowDataHover', false);
     this.app.isEditing = false;
   }
 

@@ -78,32 +78,32 @@ export class AuModuleAcct {
   }
 
   onRowEnter(event, listItem) {
-    event.target.children[0].style.visibility = 'visible';
-    event.target.children[2].classList.toggle('aaRowHover', true);
+    event.target.children[0].children[0].classList.toggle('aaRowOpsHover', true);
+    event.target.children[2].classList.toggle('aaRowDataHover', true);
   }
 
   onRowLeave(event, listItem) {
-    event.target.children[0].style.visibility = 'hidden';
-    event.target.children[2].classList.toggle('aaRowHover', false);
+    event.target.children[0].children[0].classList.toggle('aaRowOpsHover', false);
+    event.target.children[2].classList.toggle('aaRowDataHover', false);
   }
 
   onEdit(event) {
     if (this.app.selectedAcct.isAcct()) {
-      document.getElementById('acctModule-' + this.app.selectedAcct.id).classList.toggle('aaRowHover', true);
+      document.getElementById('acctModule-' + this.app.selectedAcct.id).classList.toggle('aaRowDataHover', true);
     }
     this.app.isEditing = true;
   }
 
   onSaveEdits(event) {
     if (this.app.selectedAcct.isAcct()) {
-      document.getElementById('acctModule-' + this.app.selectedAcct.id).classList.toggle('aaRowHover', false);
+      document.getElementById('acctModule-' + this.app.selectedAcct.id).classList.toggle('aaRowDataHover', false);
     }
     this.app.isEditing = false;
   }
 
   onCancelEdits(event) {
     if (this.app.selectedAcct.isAcct()) {
-      document.getElementById('acctModule-' + this.app.selectedAcct.id).classList.toggle('aaRowHover', false);
+      document.getElementById('acctModule-' + this.app.selectedAcct.id).classList.toggle('aaRowDataHover', false);
     }
     this.app.isEditing = false;
   }

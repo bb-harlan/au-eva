@@ -12,13 +12,13 @@ export class AuModuleJrnl {
   }
 
   onRowEnter(event, tran) {
-    event.target.children[0].children[0].style.visibility = 'visible';
-    event.target.children[2].classList.toggle('aaRowHover', true);
+    event.target.children[0].classList.toggle('aaRowOpsHover', true);
+    event.target.children[2].classList.toggle('aaRowDataHover', true);
   }
 
   onRowLeave(event, tran) {
-    event.target.children[0].children[0].style.visibility = 'hidden';
-    event.target.children[2].classList.toggle('aaRowHover', false);
+    event.target.children[0].classList.toggle('aaRowOpsHover', false);
+    event.target.children[2].classList.toggle('aaRowDataHover', false);
   }
 
   onGoTran(event, tran) {

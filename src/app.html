@@ -14,7 +14,7 @@
     href="#"
     style="position: absolute; top: -10pc;">#</a>
 
-  <div class="aaPanelContainer" css="margin: 0.5pc 0; visibility: ${isEditing ? 'hidden' : 'visible'}">
+  <div class="aaPanelContainer" css="visibility: ${isEditing ? 'hidden' : 'visible'}">
     <div class="aaPanel aaPanelBoxShadow" style="font-size: small;">
       <div class="aaPanelHeader">Navigation map</div>
       <div class="aaPanelBody" style="padding: 0.5pc;">
@@ -64,6 +64,7 @@
       </div>
     </div>
   </div>
+  <!--<br>-->
   <div class="aaPanelContainer">
     <au-module-fae view-model.ref="viewmodelModuleFAE" if.bind="selectedModule == MODULE_FAE"></au-module-fae>
     <au-module-acct view-model.ref="viewmodelModuleAcct" if.bind="selectedModule == MODULE_ACCT"></au-module-acct>

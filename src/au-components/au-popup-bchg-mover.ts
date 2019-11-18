@@ -80,7 +80,7 @@ export class AuPopupBchgMover {
 
   onRowMouseDown(event) {
     let targetRow: Element = event.currentTarget as Element;
-    targetRow.children[0].classList.toggle('aaRowHover', false);
+    targetRow.children[0].classList.toggle('aaRowDataHover', false);
     targetRow.children[0].classList.toggle('aaDragging', true);
     this.mouseIsDown = true;
     this.selectedMoverRow = event.currentTarget;
@@ -89,7 +89,7 @@ export class AuPopupBchgMover {
   onRowMouseUp(event) {
     let targetRow = event.currentTarget as Element;
     targetRow.children[0].classList.toggle('aaDragging', false);
-    targetRow.children[0].classList.toggle('aaRowHover', true);
+    targetRow.children[0].classList.toggle('aaRowDataHover', true);
     this.mouseIsDown = false;
     this.selectedMoverRow = null;
   }
@@ -97,14 +97,14 @@ export class AuPopupBchgMover {
   onRowMouseLeave(event, listItem) {
     if (!this.mouseIsDown) {
       let targetRow = event.currentTarget as Element;
-      targetRow.children[0].classList.toggle('aaRowHover', false);
+      targetRow.children[0].classList.toggle('aaRowDataHover', false);
     }
   }
 
   onRowMouseEnter(event, listItem) {
     if (!this.mouseIsDown) {
       let targetRow = event.currentTarget as Element;
-      targetRow.children[0].classList.toggle('aaRowHover', true);
+      targetRow.children[0].classList.toggle('aaRowDataHover', true);
     }
   }
 
@@ -134,7 +134,7 @@ export class AuPopupBchgMover {
   onListMouseLeave(event) {
     if (this.mouseIsDown && this.selectedMoverRow) {
       this.selectedMoverRow.children[0].classList.toggle('aaDragging', false);
-      this.selectedMoverRow.children[0].classList.toggle('aaRowHover', false);
+      this.selectedMoverRow.children[0].classList.toggle('aaRowDataHover', false);
       this.mouseIsDown = false;
       this.selectedMoverRow = null;
       return;

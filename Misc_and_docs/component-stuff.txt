@@ -4,7 +4,7 @@ module-jrnl.html
 ---------------------------------------------------------------
 <require from="../au-views/au-vertical-gridline.html"></require>
 ---------------------------------------------------------------
-<au-vertical-gridline></au-vertical-gridline>
+<div class="aaVerticalGridline"></div>
 
 ---------------------------------------------------------------
 <require from="./tran-bchg"></require>

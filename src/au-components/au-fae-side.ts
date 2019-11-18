@@ -37,13 +37,13 @@ export class AuFaeSide {
   }
 
   onRowEnter(event, listItem) {
-    event.target.children[0].style.visibility = 'visible';
-    event.target.children[2].classList.toggle('aaRowHover', true);
+    event.target.children[0].children[0].classList.toggle('aaRowOpsHover', true);
+    event.target.children[2].classList.toggle('aaRowDataHover', true);
   }
 
   onRowLeave(event, listItem) {
-    event.target.children[0].style.visibility = 'hidden';
-    event.target.children[2].classList.toggle('aaRowHover', false);
+    event.target.children[0].children[0].classList.toggle('aaRowOpsHover', false);
+    event.target.children[2].classList.toggle('aaRowDataHover', false);
   }
 
   onRowOpsOpen(event, listItem) {

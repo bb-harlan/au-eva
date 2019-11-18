@@ -26,7 +26,7 @@
             <div class="aaFontLabel aaRow">
               <div class="aaCellText aaFontSizeLabel aaCellEquSide"><span class=" aaSansSerif">Equation side</span>
               </div>
-              <au-vertical-gridline></au-vertical-gridline>
+              <div class="aaVerticalGridline"></div>
               <div class="aaCellText aaFontSizeLabel aaCellAcctTitle"><span class=" aaSansSerif">Title</span></div>
             </div>
           </div>
@@ -35,7 +35,7 @@
               <div class="aaCellText aaFontSizeData aaCellEquSide">
                 ${app.selectedBchg.targetAcct.parentFaeSide.id}
               </div>
-              <au-vertical-gridline></au-vertical-gridline>
+              <div class="aaVerticalGridline"></div>
               <div class="aaCellText aaFontSizeData aaCellAcctTitle">${app.selectedBchg.targetAcct.title}</div>
             </div>
           </div>
@@ -65,14 +65,14 @@
           <div class="aaGridHeader aaRowBgColorNonData">
             <div class="aaFontLabel aaRow">
               <div class="aaCellText aaFontSizeLabel aaCellBchgDesc"><span class=" aaSansSerif">Description</span></div>
-              <au-vertical-gridline></au-vertical-gridline>
+              <div class="aaVerticalGridline"></div>
               <div class="aaCellText aaFontSizeLabel aaCellBchgAmt"><span class=" aaSansSerif">Amount</span></div>
             </div>
           </div>
           <div class="aaRow" style="border-bottom-style: none;">
             <div class="aaRowData">
               <div class="aaCellText aaFontSizeData aaCellBchgDesc">${app.selectedBchg.desc}</div>
-              <au-vertical-gridline></au-vertical-gridline>
+              <div class="aaVerticalGridline"></div>
               <div class="aaCellText aaFontSizeData aaCellBchgAmt">${app.selectedBchg.amt | auCurrencyConverter}</div>
             </div>
           </div>

@@ -2,8 +2,12 @@
   <require from="au-views/au-icon-nav-right.html"></require>
   <require from="au-views/au-icon-edit.html"></require>
   <require from="au-views/au-icon-row-mover.html"></require>
+  <require from="au-views/au-icon-new.html"></require>
+  <require from="au-views/au-icon-delete.html"></require>
+<!--
   <require from="au-views/au-vertical-gridline.html"></require>
   <require from="au-views/au-vertical-gridline-spacer.html"></require>
+-->
   <require from="au-converters/au-currency-converter"></require>
   <require from="au-converters/au-equation-side-converter"></require>
   <require from="au-components/au-popup-acct-mover"></require>
@@ -20,77 +24,88 @@
         type="button"
         class="aaBtn"
         click.trigger="onEditRows($event)">
-        <au-icon-edit></au-icon-edit> Edit rows...
+        <au-icon-edit></au-icon-edit>
+        Edit rows...
       </button>
       <button
         type="button"
         class="aaBtn"
         click.trigger="auModuleFae.viewmodelPopupAcctMover.open($event, proxyForMoverPosition, faeSide)">
-        <au-icon-row-mover></au-icon-row-mover>Move rows...
+        <au-icon-row-mover></au-icon-row-mover>
+        Move rows...
       </button>
-<!--
-      <div class="btn-group">
-        <a class="aaBtn mdropdown-toggle" data-toggle="dropdown">
-          <span class="fa fa-bars fa-fw" aria-hidden="true"></span>
-        </a>
-        <ul class="dropdown-menu aaSansSerif">
-          <li><a><i class="fa fa-plus-circle fa-fw aaIconGreen"></i> Insert new account row</a></li>
-          <li><a><i class="fa fa-plus-circle fa-fw aaIconGreen"></i> Insert new annotation row</a></li>
-          <li class="divider"></li>
-          <li><a><i class="fa fa-minus-circle fa-fw aaIconRed"></i> Delete row...</a></li>
-        </ul>
-      </div>
--->
+      <!--
+            <div class="btn-group">
+              <a class="aaBtn mdropdown-toggle" data-toggle="dropdown">
+                <span class="fa fa-bars fa-fw" aria-hidden="true"></span>
+              </a>
+              <ul class="dropdown-menu aaSansSerif">
+                <li><a><i class="fa fa-plus-circle fa-fw aaIconGreen"></i> Insert new account row</a></li>
+                <li><a><i class="fa fa-plus-circle fa-fw aaIconGreen"></i> Insert new annotation row</a></li>
+                <li class="divider"></li>
+                <li><a><i class="fa fa-minus-circle fa-fw aaIconRed"></i> Delete row...</a></li>
+              </ul>
+            </div>
+      -->
     </div>
-    <divx id="gridHeader${equationSide}" class="aaGridHeader">
-      <div class="aaRow aaFontLabel aaRowBgColorNonData">
-        <div class="aaRowOps aaHidden">
-          <button type="button" class="aaBtn aaBtnInRowOps" click.delegate="onGoAcct($event, listItem)">
-            <au-icon-nav-right></au-icon-nav-right>
-          </button>
-        </div>
-        <div class="aaRowData aaRowBgColorNonData"  element.ref="proxyForMoverPosition">
-          <au-vertical-gridline></au-vertical-gridline>
-          <div class="aaCellText aaFontSizeLabel aaCellAcctTitle"><span class=" aaSansSerif">Title</span></div>
-          <au-vertical-gridline></au-vertical-gridline>
-          <div class="aaCellText aaFontSizeLabel aaCellBchgBal"><span class=" aaSansSerif">Balance</span></div>
-          <au-vertical-gridline></au-vertical-gridline>
-        </div>
+    <div class="aaRow aaFontLabel aaRowBgColorNonData">
+      <div class="aaRowOps aaHidden">
+        <button type="button" class="aaBtn" click.delegate="onGoAcct($event, listItem)">
+          <au-icon-nav-right></au-icon-nav-right>
+        </button>
       </div>
-    </divx>
+      <div class="aaVerticalGridline"></div>
+      <div class="aaRowData aaRowBgColorNonData" element.ref="proxyForMoverPosition">
+        <div class="aaCellText aaFontSizeLabel aaCellAcctTitle"><span class=" aaSansSerif">Title</span></div>
+        <div class="aaVerticalGridline"></div>
+        <div class="aaCellText aaFontSizeLabel aaCellBchgBal"><span class=" aaSansSerif">Balance</span></div>
+        <div class="aaVerticalGridline"></div>
+      </div>
+    </div>
     <div class="aaGridScrollableRows">
       <template repeat.for="listItem of faeSide.acctList">
-        <div id="${listItem.id}" class="aaRow aaRowBgColorToolbar"
+        <div id="${listItem.id}"
+             class="aaRow"
              mouseenter.trigger="onRowEnter($event, listItem)"
              mouseleave.trigger="onRowLeave($event, listItem)">
           <template if.bind="listItem.isAcct()">
-            <div class="aaRowOps">
-              <button type="button" class="aaBtn aaBtnInRowOps" click.delegate="onGoAcct($event, listItem)">
-                <au-icon-nav-right></au-icon-nav-right>
-              </button>
+            <div class="aaRowOps aaBgColorToolbar">
+              <div class="aaRowOpsOpacity">
+                <button type="button" class="aaBtn" click.delegate="onGoAcct($event, listItem)">
+                  <au-icon-nav-right></au-icon-nav-right>
+                </button>
+              </div>
             </div>
-            <au-vertical-gridline></au-vertical-gridline>
-            <div class="aaRowData aaRowBgColorData ${listItem.id == app.selectedAcct.id ? 'aaMostRecentlySelectedRow' : ''}">
+<!--
+            <div class="aaVerticalGridline"></div>
+-->
+            <div class="aaVerticalGridline"></div>
+            <div
+              class="aaRowData aaRowBgColorData ${listItem.id == app.selectedAcct.id ? 'aaMostRecentlySelectedRow' : ''}">
               <span class="aaCellText aaFontSizeData aaCellAcctTitle">${listItem.title}</span>
-              <au-vertical-gridline></au-vertical-gridline>
+<!--
+              <div class="aaVerticalGridline"></div>
+-->
+              <div class="aaVerticalGridline"></div>
               <span
                 class="aaCellText aaFontSizeData aaCellBchgBal">${listItem.endingBalance | auCurrencyConverter}</span>
             </div>
-            <au-vertical-gridline></au-vertical-gridline>
+            <div class="aaVerticalGridline"></div>
           </template>
           <template if.bind="listItem.isAnnotation()">
-            <div class="aaRowOps">
-              <button type="button" class="aaBtn aaBtnInRowOps" click.delegate="onGoAcct($event, listItem)">
+            <div class="aaRowOps aaBgColorToolbar">
+              <button type="button" class="aaBtn" click.delegate="onGoAcct($event, listItem)">
                 <au-icon-nav-right></au-icon-nav-right>
               </button>
             </div>
-            <au-vertical-gridline></au-vertical-gridline>
-            <div class="aaRowData aaRowBgColorData ${listItem.id == app.selectedAcct.id ? 'aaMostRecentlySelectedRow' : ''}">
+            <div class="aaVerticalGridline"></div>
+            <div
+              class="aaRowData aaRowBgColorData ${listItem.id == app.selectedAcct.id ? 'aaMostRecentlySelectedRow' : ''}">
               <span class="aaCellText aaFontSizeData aaCellAnnoTitle">${listItem.annoText}</span>
-              <au-vertical-gridline></au-vertical-gridline>
+              <div class="aaVerticalGridline"></div>
               <span class="aaCellText aaFontSizeData aaCellBchgBal"></span>
             </div>
-            <au-vertical-gridline></au-vertical-gridline>
+            <div class="aaVerticalGridline"></div>
           </template>
         </div>
       </template>
@@ -105,19 +120,19 @@
            class="aaRow aaRowBgColorNonData"
            mouseenter.trigger="onRowEnter($event, null)"
            mouseleave.trigger="onRowLeave($event, null)">
-        <div class="aaRowOps">
+        <div class="aaRowOps aaBgColorToolbar">
           <button type="button" class="aaBtn aaHidden">
             <au-icon-nav-right></au-icon-nav-right>
           </button>
         </div>
-        <au-vertical-gridline></au-vertical-gridline>
+        <div class="aaVerticalGridline"></div>
         <div class="aaRowData aaRowBgColorNonData">
           <span class="aaCellText aaFontData aaCellAcctTitle"><span
             class="aaSansSerif aaCellTextEOL">${app.END_OF_LIST}</span></span>
-          <au-vertical-gridline-spacer></au-vertical-gridline-spacer>
+          <div class="aaVerticalGridlineSpacer"></div>
           <span class="aaCellText aaFontData aaCellBchgBal"></span>
         </div>
-        <au-vertical-gridline></au-vertical-gridline>
+        <div class="aaVerticalGridline"></div>
       </div>
     </div>
     <div class="aaGridFooterBar"></div>
@@ -130,21 +145,21 @@
   -->
   </div>
   <!--<div class="aaGridTotals">-->
-    <div class="aaGridContainer" style="border-color: transparent;">
+  <div class="aaGridContainer" style="border-color: transparent; background-color: transparent;">
     <div class="aaRow" style="border-bottom-color: transparent; background-color: transparent;">
-      <div class="aaRowOps">
+      <div class="aaRowOps aaHidden">
         <button type="button" class="aaBtn">
           <au-icon-nav-right></au-icon-nav-right>
         </button>
       </div>
-      <au-vertical-gridline-spacer></au-vertical-gridline-spacer>
+      <div class="aaVerticalGridlineSpacer"></div>
       <div class="aaRowData">
         <span class="aaCellText aaFontData aaCellAcctTitle" style="text-align: right;"><span
           class="aaFontLabel">Total:</span></span>
-        <au-vertical-gridline-spacer></au-vertical-gridline-spacer>
+        <div class="aaVerticalGridlineSpacer"></div>
         <span class="aaCellText aaFontData aaCellBchgBal">${faeSide.listTotal | auCurrencyConverter}</span>
       </div>
-      <au-vertical-gridline-spacer></au-vertical-gridline-spacer>
+      <div class="aaVerticalGridlineSpacer"></div>
     </div>
   </div>
 
