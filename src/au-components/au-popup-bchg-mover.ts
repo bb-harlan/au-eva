@@ -1,15 +1,17 @@
 import {customElement, bindable, inject} from 'aurelia-framework';
 import {App} from 'app';
+import {AuModuleTran} from 'au-components/au-module-tran';
 import {Bchg} from 'app-data/models/bchg';
 
 @customElement('au-popup-bchg-mover')
-@inject(App)
+@inject(App, AuModuleTran)
 export class AuPopupBchgMover {
   /* @injected item(s) */
   app: App;
+  auModuleTran: AuModuleTran;
 
   /* data properties */
-  moverTranBchgList: Array<Bchg>;
+  moverTranBchgList: Array<Bchg> = [];
 
   /* view properties */
   mouseIsDown: boolean = false;
@@ -20,18 +22,20 @@ export class AuPopupBchgMover {
   moverDialogContent: HTMLElement; // <div element.ref = "moverDialogContent" ...
   moverRowList: HTMLElement; //<div element.ref="moverRowList"
 
-  constructor(app: App) {
+  constructor(app: App, auModuleTran: AuModuleTran) {
     this.app = app;
+    this.auModuleTran = auModuleTran;
   }
 
   open(event, proxyForMoverPositionTop: HTMLElement, proxyForMoverPositionLeft: HTMLElement) {
+/*
     console.log (proxyForMoverPositionTop);
     console.log (proxyForMoverPositionLeft);
+*/
     // make copy of bchgList for mover
-    this.moverTranBchgList = [];
-    this.moverTranBchgList.push(...this.app.selectedTran.bchgList);
+    this.moverTranBchgList.push(...this.auModuleTran.clonedTran.bchgList);
 
-    // postion moverDialogContent
+    // position moverDialogContent
     let proxyPositionProps = proxyForMoverPositionTop.getBoundingClientRect();
     this.moverDialogContent.style.top = `${proxyPositionProps.top}px`;
     proxyPositionProps = proxyForMoverPositionLeft.getBoundingClientRect();
@@ -48,7 +52,7 @@ export class AuPopupBchgMover {
       <template repeat.for="moverBchg of moverTranBchgList">
         <div
         class="aaRow"
-        bchg.bind="bchg"
+         mover-bchg.bind="moverBchg"
         /
         /
         /
@@ -64,12 +68,13 @@ export class AuPopupBchgMover {
     to reference the original bchg object and update its intraTranSorter property
     to reflect its possibly new position in the list as a result of moving.
     */
-    this.moverTranBchgList = []; //done with it
-    for (let i = 0; i < this.moverRowList.childElementCount - 1; i++) {
+    for (let i = 0; i <= this.moverRowList.childElementCount - 1; i++) {
       let moverBchg = (<any>this.moverRowList.children[i]).moverBchg as Bchg;
       moverBchg.intraTranSorter = i;
+      // console.log (`${moverBchg.intraTranSorter}; ${moverBchg.targetAcct.title}`);
     }
-    this.app.selectedTran.refresh();
+    this.moverTranBchgList = []; //done with it
+    this.auModuleTran.clonedTran.refresh();
     this.moverDialogModal.style.display = "none";
   }
 
@@ -120,11 +125,6 @@ export class AuPopupBchgMover {
       return;
     }
     let nextSibling = this.selectedMoverRow.nextElementSibling;
-/*
-    if (nextSibling.id == `${this.app.END_OF_LIST}`) {
-      nextSibling = null;
-    }
-*/
     if (nextSibling && mouseY >= nextSibling.getBoundingClientRect().top) {
       moverRowList.insertBefore(nextSibling, this.selectedMoverRow);
       return;

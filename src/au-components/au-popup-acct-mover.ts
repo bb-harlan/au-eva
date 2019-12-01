@@ -63,7 +63,7 @@ export class AuPopupAcctMover {
     to reflect its possibly new position in the list as a result of moving.
     */
     this.moverAcctList = []; // done with it
-    for (let i = 0; i < this.moverRowList.childElementCount - 1; i++) {
+    for (let i = 0; i <= this.moverRowList.childElementCount - 1; i++) {
       let listItem = (<any>this.moverRowList.children[i]).listItem as Acct | Annotation;
       listItem.intraSideSorter = i;
     }

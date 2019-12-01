@@ -200,13 +200,20 @@ h1 {
   padding: 1px 0.5pc;
   background-color: #fff;
   font-size: medium;
+  border-style: inset;
+  border-color: #ccc;
   cursor: inherit; /* for when dragging row in mover */
 }
 
 .aaFormInputText:disabled {
   /*border-color: transparent;*/
   border-style: solid;
-  border-color: #ccc;
+  background-color: transparent;
+  cursor: inherit; /* for when dragging row in mover */
+}
+.aaFormInputText:read-only {
+  /*border-color: transparent;*/
+  border-style: solid;
   background-color: transparent;
   cursor: inherit; /* for when dragging row in mover */
 }
@@ -365,7 +372,7 @@ h1 {
   background-color: #fff;
 }
 .aaRowBgColorData {
-  background-color: #fff;
+  background-color: #eee;
 }
 .aaRowBgColorNonData {
   background-color: #eee;
@@ -424,7 +431,7 @@ h1 {
   white-space: nowrap;
   font-size: 0;
   cursor: default;
-  background-color: #eee;
+  /*background-color: #eee;*/
   }
 .aaRowDataHover {
   cursor: default;
@@ -536,6 +543,7 @@ h1 {
   margin-left: 3pc;
 }
 
+/*
 .aaVerticalGridline1 {
   display: inline-block;
   position: absolute;
@@ -550,12 +558,13 @@ h1 {
   width: 1px;
   visibility: hidden;
 }
+*/
 .aaVerticalGridline {
   display: inline-block;
   width: 1px;
   align-self: stretch;
   background-color: #ccc;
-  background-color: red;
+  /*background-color: red;*/
   overflow: hidden;
   font-size: small;
 }

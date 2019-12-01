@@ -5,16 +5,18 @@
   <require from="au-components/au-input-currency"></require>
 
   <div class="aaInlineFlex">
-
+    <!-- spacer if equities side -->
     <template if.bind="bchg.targetAcct.parentFaeSide.id == app.data.SIDE_ID_EQUITIES">
       <!-- put blank space in change-to-asset column -->
       <au-tran-bchg-cells-spacer></au-tran-bchg-cells-spacer>
       <div class="aaVerticalGridline"></div>
     </template>
 
+    <!-- bchg data cells -->
     <div class="aaInlineBlock">
+      <!-- cell for target account title -->
       <div class="aaCellText aaFontSizeData">
-        <input type="text" disabled class="aaFormInputText aaCellAcctTitle"
+        <input type="text" readonly class="aaFormInputText aaCellAcctTitle"
                css="vertical-align: middle; border-color: ${eva.GRIDLINE_COLOR};"
                value.to-view="bchg.targetAcct.title">
         <button type="button"
@@ -41,27 +43,29 @@
         </template>
       </div>
       <div class="aaTranBchgRow2Indent">
+        <!-- cell for bchg desc -->
         <div class="aaCellText aaFontSizeData">
           <template if.bind="!app.isEditing">
-            <input type="text" disabled class="aaFormInputText aaCellBchgDesc" value.to-view="bchg.desc">
+            <input type="text" readonly class="aaFormInputText aaCellBchgDesc" value.to-view="bchg.desc">
           </template>
           <template if.bind="app.isEditing">
             <input type="text" class="aaFormInputText aaCellBchgDesc" value.two-way="bchg.desc">
           </template>
         </div>
+        <!-- cell for bchg amt -->
         <div class="aaCellText aaFontSizeData">
           <template if.bind="!app.isEditing">
-            <au-input-currency currency-amount.to-view="bchg.amt" is-disabled.to-view="true"
+            <au-input-currency currency-amount.to-view="bchg.amt" is-readonly.to-view="true"
                                classes-string.to-view="'aaFormInputText aaCellBchgAmt'"></au-input-currency>
           </template>
           <template if.bind="app.isEditing">
             <template if.bind="bchg.intraTranSorter != 0">
-              <au-input-currency currency-amount.to-view="bchg.amt" is-disabled.to-view="false"
+              <au-input-currency currency-amount.to-view="bchg.amt" is-readonly.to-view="false"
                                  classes-string.to-view="'aaFormInputText aaCellBchgAmt'"
                                  inputcurrencycompleted.delegate="onInputCurrencyCompleted($event)"></au-input-currency>
             </template>
             <template if.bind="bchg.intraTranSorter == 0">
-              <au-input-currency currency-amount.to-view="bchg.amt" is-disabled.to-view="true"
+              <au-input-currency currency-amount.to-view="bchg.amt" is-readonly.to-view="true"
                                  classes-string.to-view="'aaFormInputText aaCellBchgAmt aaBchgAmtComputed'"></au-input-currency>
             </template>
           </template>
@@ -75,6 +79,8 @@
         </div>
       </template>
     </div>
+
+    <!-- spacer if assets side -->
     <template if.bind="bchg.targetAcct.parentFaeSide.id == app.data.faeSideAssets.id">
       <!-- put blank space in change-to-equity column -->
       <div class="aaVerticalGridline"></div>

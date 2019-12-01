@@ -13,40 +13,52 @@
         <div class="aaGridScrollableRows" style="height: 33pc;" id="jrnlGridBodyContainer">
           <template repeat.for="tran of app.data.jrnl.tranList">
             <div id="${tran.id}"
-                 class="aaRow aaRowBgColorToolbar"
-                 style="border-bottom-width: 0;"
+                 class="aaRow"
+                 style="border-bottom: none;"
                  mouseenter.trigger="onRowEnter($event, tran)"
                  mouseleave.trigger="onRowLeave($event, tran)">
-              <div class="aaRowOps aaBgColorToolbar">
-                <button type="button"
-                        class="aaBtn"
-                        click.delegate="onGoTran($event, tran)">
-                  <au-icon-nav-left></au-icon-nav-left>
-                </button>
-              </div>
-              <div class="aaVerticalGridline"></div>
-              <div class="aaRowData aaRowBgColorData ${tran.id == app.selectedTran.id ? 'aaMostRecentlySelectedRow aaMostRecentlySelectedRow2' : ''}">
-                <div class="aaRow" style="align-items: center;">
-                  <span class="aaFormItemLabel aaCellText">Date:</span><div class="aaCellText aaFontData"><input type="text" disabled class="aaFormInputText aaCellTranDate" value="${tran.date}"></div>
+              <div class="aaRowOps aaBgColorToolbar aaFontSizeLabel"
+                   style="border-bottom: 1px solid #ccc;">
+
+                <div class="aaRowOpsOpacity">
+                    <span class="aaBtn"
+                          click.delegate="onGoTran($event, tran)">
+                      <au-icon-nav-left></au-icon-nav-left>
+                    </span>
                 </div>
-                <template repeat.for="bchg of tran.bchgList">
-                  <div class="aaRow">
-                    <!--                    ${bchg.targetAcct.title}-->
-                    <au-tran-bchg-row-data bchg.bind="bchg"></au-tran-bchg-row-data>
-                  </div>
-                </template>
+              </div>
+              <!--</template>-->
+              <div class="aaVerticalGridline"></div>
+              <div style="display: inline-flex; flex-direction: column; align-items: flex-start; justify-content: flex-start">
+                <div class="aaRowBgColorData"
+                     style="display: inline-flex; align-items: center; justify-content: center; border-bottom: 1px solid #ccc;">
+                  <span class="aaFormItemLabel aaCellText">Date:</span>
+                  <div class="aaCellText aaFontData"><input type="text" disabled class="aaFormInputText aaCellTranDate"
+                                                            value="${tran.date}"></div>
+                </div>
+                <div class="aaRowBgColorData"
+                     style="display: flex; flex-direction: column; align-items: flex-start; justify-content: flex-start">
+                  <template repeat.for="bchg of tran.bchgList">
+                    <div class="aaRow">
+                      <div
+                        class="aaRowData ${bchg.id == app.selectedBchg.id ? 'aaMostRecentlySelectedRow' : ''}">
+                        <au-tran-bchg-row-data bchg.bind="bchg"></au-tran-bchg-row-data>
+                      </div>
+                    </div>
+                  </template>
+                </div>
               </div>
               <div class="aaVerticalGridline"></div>
             </div>
             <!-- End of tran -->
-            <div class="aaRow xaaRowBgColorNonData" style="background-color: #ccc;">
+            <div class="aaRow" style="background-color: #ccc;">
               <div class="aaRowOps aaBgColorToolbar" style="background-color: inherit;">
                 <span class="aaBtn aaHidden">
                     <au-icon-nav-left></au-icon-nav-left>
                   </span>
               </div>
               <div class="aaVerticalGridline"></div>
-              <div class="aaRowData xaaRowBgColorNonData" style="background-color: inherit;">
+              <div class="aaRowData" style="background-color: inherit;">
                 <div class="aaInlineBlock aaCellText aaFontData" style="position: absolute;"><span
                   class="aaSansSerif aaCellTextEOL">&nbsp;</span></div>
                 <au-tran-bchg-cells-spacer></au-tran-bchg-cells-spacer>
@@ -56,23 +68,6 @@
               <div class="aaVerticalGridline"></div>
             </div>
           </template>
-          <!-- End of tran -->
-          <div class="aaRow aaRowBgColorNonData">
-            <div class="aaRowOps aaBgColorToolbar">
-                <span class="aaBtn aaHidden">
-                    <au-icon-nav-left></au-icon-nav-left>
-                  </span>
-            </div>
-            <div class="aaVerticalGridline"></div>
-            <div class="aaRowData aaRowBgColorNonData">
-              <div class="aaInlineBlock aaCellText aaFontData" style="position: absolute;"><span
-                class="aaSansSerif aaCellTextEOL">${app.END_OF_LIST}</span></div>
-              <au-tran-bchg-cells-spacer></au-tran-bchg-cells-spacer>
-              <au-vertical-gridline-spacer></au-vertical-gridline-spacer>
-              <au-tran-bchg-cells-spacer></au-tran-bchg-cells-spacer>
-            </div>
-            <div class="aaVerticalGridline"></div>
-          </div>
         </div>
         <div class="aaGridFooterBar"></div>
       </div>

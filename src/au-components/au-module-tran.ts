@@ -1,14 +1,19 @@
 import {customElement} from 'aurelia-framework';
 import {inject} from 'aurelia-framework';
 import {App} from "app";
+import {Bchg} from 'app-data/models/bchg';
+import {Tran} from 'app-data/models/tran';
 import {AuPopupBchgMover} from "au-components/au-popup-bchg-mover";
 
 @customElement('au-module-tran')
 @inject(App)
 export class AuModuleTran {
+  editingTran = false;
+  clonedTran: Tran;
+
+
   // @injected item(s)
   app: App;
-
 
   /*=====================================================
    *  references
@@ -17,7 +22,6 @@ export class AuModuleTran {
   proxyForMoverPositionTop: HTMLElement; // <div element.ref="proxyForMoverPositionTop" ...
   proxyForMoverPositionLeft: HTMLElement; // <div element.ref="proxyForMoverPositionLeft" ...
   viewmodelPopupBchgMover; // <au-popup-bchg-mover view-model.ref="viewmodelPopupBchgMover></au-popup-bchg-mover>
-
   constructor(app) {
     this.app = app;
   }
@@ -69,70 +73,63 @@ export class AuModuleTran {
 
   onRowEnter(event, listItem) {
     event.target.children[0].children[0].classList.toggle('aaRowOpsHover', true);
-    event.target.children[2].classList.toggle('aaRowDataHover', true);
+    if (true || listItem) {
+      event.target.children[2].classList.toggle('aaRowDataHover', true);
+    }
   }
-
   onRowLeave(event, listItem) {
     event.target.children[0].children[0].classList.toggle('aaRowOpsHover', false);
-    event.target.children[2].classList.toggle('aaRowDataHover', false);
+    if (true || listItem) {
+      event.target.children[2].classList.toggle('aaRowDataHover', false);
+    }
   }
 
-  /*onRowEnter(event, bchg) {
-    if (bchg) {
-      if (bchg.intraTranSorter >= 1) {
-        event.target.children[0].classList.toggle('aaRowOpsHover', true);
-        event.target.children[0].children[1].style.visibility = 'visible';
-      }
-      else if (!this.app.isEditing) {
-        event.target.children[0].classList.toggle('aaRowOpsHover', true);
-      }
-    }
-    event.target.children[1].classList.toggle('aaRowDataHover', true);
-    /!*
-        if (!bchg && this.app.isEditing) {
-          // end-of-list item
-          event.target.children[0].classList.toggle('aaRowOpsHover', true);
-        }
-    *!/
+  rowNew(event, listItem) {
+    alert(`Insert before "${listItem ? listItem.targetAcct.title : null}" not yet implemented.`);
+  }
+  rowDelete(event, listItem) {
+    alert("Not yet imolemented");
   }
 
-  onRowLeave(event, bchg) {
-    if (bchg) {
-      if (bchg.intraTranSorter >= 1) {
-        event.target.children[0].classList.toggle('aaRowOpsHover', false);
-        event.target.children[0].children[1].style.visibility = 'hidden';
-        event.target.children[1].classList.toggle('aaRowDataHover', false);
-      }
-    }
-    else {
-      event.target.children[0].classList.toggle('aaRowOpsHover', false);
-    }
-    event.target.children[4].classList.toggle('aaRowDataHover', false);
-  }
-*/
+
   tranNew(event) {
     alert('Not yet implemented.');
   }
   tranEdit(event) {
-    alert('Not yet implemented.');
+    /*alert('Not yet implemented.');*/
+    this.clonedTran = new Tran(
+      /*id*/ this.app.selectedTran.id,
+      /*parentJrnl*/ this.app.selectedTran.parentJrnl,
+      /*date*/ this.app.selectedTran.date,
+      /*intraDateSorter*/ this.app.selectedTran.intraDateSorter);
+    this.clonedTran.totalChangesAssets = this.app.selectedTran.totalChangesAssets;
+    this.clonedTran.totalChangesEquities = this.app.selectedTran.totalChangesEquities;
+    this.clonedTran.bchgList = [];
+    let clonedBchg: Bchg;
+    for (let bchg of this.app.selectedTran.bchgList) {
+      clonedBchg = new Bchg(
+        /*id*/ bchg.id,
+        /*sourceTran*/ this.clonedTran,
+        /*targetAcct*/ bchg.targetAcct,
+        /*intraTranSorter*/ bchg.intraTranSorter,
+        /*desc*/ bchg.desc,
+        /*amt*/ bchg.amt);
+      this.clonedTran.bchgList.push(clonedBchg);
+    }
+
+    this.editingTran = true;
   }
   tranDelete(event) {
     alert('Not yet implemented.');
   }
 
-  onSaveEdits(event) {
+  saveEdits(event) {
     this.app.selectedTran.computeBalancingBchgAmt(this.app.data.SIDE_ID_ASSETS, this.app.data.SIDE_ID_EQUITIES);
     this.app.selectedTran.refresh();
-    this.app.isEditing = false;
+    this.editingTran = false;
   }
-
-  onCancelEdits(event) {
-    document.getElementById('tranModule-' + this.app.selectedTran.id).classList.toggle('aaRowDataHover', false);
-    this.app.isEditing = false;
-  }
-
-  onDelete(event) {
-    alert('"Delete transaction" not yet implemented.');
+  cancelEdits(event) {
+    this.editingTran = false;
   }
 
   onPickAcct(event, bchg) {
@@ -164,7 +161,7 @@ export class AuModuleTran {
   }
 
   acctPicked(message) {
-   console.log(message);
+    console.log(message);
   }
 }
 

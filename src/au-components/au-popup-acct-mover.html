@@ -29,7 +29,7 @@
             mouseleave.trigger="onRowMouseLeave($event, listItem)"
             mousedown.trigger="onRowMouseDown($event)"
             mouseup.trigger="onRowMouseUp($event)">
-            <div class="aaRowData">
+            <div class="aaRowData aaRowBgColorData">
               <template if.bind="listItem.isAcct()">
                 <span class="aaCellText aaFontSizeData aaCellAcctTitle">${listItem.title}</span>
                 <div class="aaVerticalGridline"></div>
