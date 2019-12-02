@@ -2,6 +2,7 @@
   <require from="au-views/au-tran-bchg-cells-spacer.html"></require>
   <require from="au-views/au-vertical-gridline.html"></require>
   <require from="au-views/au-icon-ellipsis.html"></require>
+  <require from="au-views/au-icon-balance-scale.html"></require>
   <require from="au-components/au-input-currency"></require>
 
   <div class="aaInlineFlex">
@@ -23,6 +24,11 @@
                 class="aaBtn"
                 click.trigger="auTranBchgAcctPicker.open($event, bchg)">
           <au-icon-ellipsis></au-icon-ellipsis>
+        </button>
+        <button type="button"
+                class="aaBtn"
+                click.trigger="auTranBchgAcctPicker.open($event, bchg)">
+          <au-icon-balance-scale></au-icon-balance-scale>
         </button>
 
         <template if.bind="!app.isEditing">
