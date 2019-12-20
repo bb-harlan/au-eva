@@ -7,7 +7,7 @@
     <div class="aaPanelBody">
       <div class="aaEquSideContainer">
         <au-fae-side
-          fae-side.bind="app.data.faeSideAssets"
+          fae-side.one-way="app.data.faeSideAssets"
           mouseenter.trigger="selectSide(app.data.faeSideAssets)"
           mouseleave.trigger="deselectSide()">
         </au-fae-side>
@@ -17,7 +17,7 @@
       </div>
       <div class="aaEquSideContainer">
         <au-fae-side
-          fae-side.bind="app.data.faeSideEquities"
+          fae-side.one-way="app.data.faeSideEquities"
           mouseenter.trigger="selectSide(app.data.faeSideEquities)"
           mouseleave.trigger="deselectSide()">
         </au-fae-side>

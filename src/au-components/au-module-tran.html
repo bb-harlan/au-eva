@@ -73,7 +73,7 @@
           <div class="aaGridTitleBar">Account balance changes</div>
           <div class="aaGridScrollableRows" id="tranModule-${app.selectedTran.id}" style="height: 25pc;">
             <template repeat.for="bchg of app.selectedTran.bchgList">
-              <div class="aaRow"
+              <div class="aaRow" style="border-bottom-width: 2px;"
                    mouseenter.trigger="onRowEnter($event, bchg)"
                    mouseleave.trigger="onRowLeave($event, bchg)">
                 <div class="aaRowOps aaBgColorToolbar aaFontSizeLabel">
@@ -199,7 +199,7 @@
           </div>
           <div class="aaGridScrollableRows" xid="tranModule-${app.selectedTran.id}" style="height: 25pc;">
             <template repeat.for="bchg of clonedTran.bchgList">
-              <div class="aaRow"
+              <div class="aaRow" style="border-bottom-width: 2px;"
                    mouseenter.trigger="onRowEnter($event, bchg)"
                    mouseleave.trigger="onRowLeave($event, bchg)">
                 <div class="aaRowOps aaBgColorToolbar aaFontSizeLabel">
@@ -374,7 +374,7 @@
           </div>
           <div class="aaGridScrollableRows" id="tranModule-${app.selectedTran.id}" style="height: 25pc;">
             <template repeat.for="bchg of app.selectedTran.bchgList">
-              <div class="aaRow"
+              <div class="aaRow" style="border-bottom-width: 2px;"
                    mouseenter.trigger="onRowEnter($event, bchg)"
                    mouseleave.trigger="onRowLeave($event, bchg)">
                 <template if.bind="!app.isEditing">
@@ -391,7 +391,7 @@
                 </template>
                 <div class="aaVerticalGridline"></div>
                 <div
-                  class="aaRowData aaRowBgColorData ${bchg.id == app.selectedBchg.id ? 'aaMostRecentlySelectedRow' : ''}">
+                    class="aaRowData aaRowBgColorData ${bchg.id == app.selectedBchg.id ? 'aaMostRecentlySelectedRow' : ''}">
                   <au-tran-bchg-row-data bchg.bind="bchg"></au-tran-bchg-row-data>
                 </div>
                 <div class="aaVerticalGridline"></div>

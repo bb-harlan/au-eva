@@ -37,32 +37,27 @@ h1 {
 
 .aaFontData {
   font-family: Cambria, serif, Serif;
-  /*font-weight: bold;*/
-  /*font-size: small;*/
+  font-weight: normal;
   font-size: medium;
   color: #000;
 }
 
 .aaFontSizeData {
   font-size: medium;
+  font-weight: normal;
 }
 
 .aaIconBlack {
   color: #000;
 }
 .aaIconRed {
-  /*color: #D9534F;*/
   color: #e00;
 }
-
 .aaIconGreen {
-  /*color: #5CB85C;*/
-  color: #0b0;
+  color: #0c0;
 }
-
 .aaIconBlue {
-  /*color: #58b;*/
-  color: #00e;
+  color: #00a;
 }
 
 .aaAppToolBar {
@@ -200,7 +195,9 @@ h1 {
   padding: 1px 0.5pc;
   background-color: #fff;
   font-size: medium;
-  border-style: inset;
+  font-wieght: normal;
+  border-style: solid;
+  border-width: 1px;
   border-color: #ccc;
   cursor: inherit; /* for when dragging row in mover */
 }
@@ -213,7 +210,7 @@ h1 {
 }
 .aaFormInputText:read-only {
   /*border-color: transparent;*/
-  border-style: solid;
+  /*border-style: solid;*/
   background-color: transparent;
   cursor: inherit; /* for when dragging row in mover */
 }
@@ -386,7 +383,6 @@ h1 {
   margin: 0;
   text-align: left;
   white-space: nowrap;
-  /*font-size: 0;*/ /*not needed for display: flex*/
   border-bottom: 1px solid #ccc;
   cursor: default;
 }
@@ -398,7 +394,6 @@ h1 {
   margin: 0;
   text-align: left;
   white-space: nowrap;
-  font-size: 0;
 }
 .aaRowOps {
   display: inline-flex;
@@ -406,7 +401,6 @@ h1 {
   white-space: nowrap;
   overflow: hidden;
   padding-top: 0.25pc;
-  font-size: 0;
   align-self: stretch;
 }
 .aaRowOpsOpacity {
@@ -429,9 +423,7 @@ h1 {
   margin: 0;
   text-align: left;
   white-space: nowrap;
-  font-size: 0;
   cursor: default;
-  /*background-color: #eee;*/
   }
 .aaRowDataHover {
   cursor: default;
@@ -448,7 +440,6 @@ h1 {
   align-items: center; /* vertical axis */
   white-space: nowrap;
   overflow: hidden;
-  font-size: 0;
   width: 2.5pc;
   text-align: center;
 }
@@ -494,18 +485,18 @@ h1 {
 }
 
 .aaCellTranDate {
-  width: 7pc;
+  width: 7rem;
   text-align: center;
   /*text-align: left;*/
 }
 
 .aaCellBchgDesc {
-  width: 25pc;
+  width: 25rem;
   text-align: left;
 }
 
 .aaCellBchgAmt {
-  width: 8pc;
+  width: 8rem;
   text-align: right;
 }
 
@@ -515,7 +506,7 @@ h1 {
 }
 
 .aaCellBchgBal {
-  width: 8pc;
+  width: 8rem;
   text-align: right;
 }
 

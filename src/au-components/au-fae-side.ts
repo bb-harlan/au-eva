@@ -1,5 +1,6 @@
 import {customElement, bindable, inject} from 'aurelia-framework';
 import {FaeSide} from 'app-data/models/fae-side';
+import {Acct, Annotation} from 'app-data/models/acct';
 import {App} from 'app';
 import {AuModuleFae} from 'au-components/au-module-fae';
 

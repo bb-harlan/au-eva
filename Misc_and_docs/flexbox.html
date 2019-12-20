@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>flexbox</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.4.0/css/font-awesome.min.css">
+  <style>
+
+    .aaVerticalGridline {
+      display: inline-block;
+      width: 1px;
+      align-self: stretch;
+      background-color: #ccc;
+      overflow: hidden;
+      font-size: small;
+    }
+
+    .aaBtn {
+      display: inline-block;
+      color: #333;
+      /*padding: 0.25pc 0.35pc;*/
+      padding: 2px 0.25pc;
+      margin: 0;
+      text-align: left;
+      white-space: nowrap;
+      vertical-align: top;
+      -webkit-user-select: none;
+      -moz-user-select: none;
+      -ms-user-select: none;
+      user-select: none;
+      background-image: none;
+      border: 1px solid transparent;
+      border-radius: 0.25pc;
+      background-clip: border-box;
+      background-color: transparent;
+      font-family: sans-serif, SansSerif;
+      font-weight: normal;
+      font-size: small;
+    }
+
+    .aaBtn:hover {
+      border-color: #333;
+      cursor: pointer;
+    }
+
+    .aaCellBorder {
+      border: 0.05rem solid #ccc;
+    }
+    .aaBchgCells {
+      display: inline-flex;
+      flex-direction: column;
+      align-items: flex-start;
+      padding: 0.4rem;
+    }
+
+    .aaBchgCellsRow {
+      display: inline-flex;
+      flex-direction: row;
+      align-items: center;
+    }
+
+    .aaBchgCellsRowSeparation {
+      margin-bottom: 0.4em; /* space between rows */
+    }
+
+    .aaBchgAcctContainer {
+      display: inline-flex;
+      flex-direction: row;
+      align-items: stretch;
+    }
+    .aaCellText {
+      display: inline-block;
+      padding: 0.30pc 0.5pc 0.20pc 0.5pc;
+      vertical-align: top;
+      white-space: nowrap;
+      overflow: hidden;
+    }
+    .aaCellAcctTitle {
+      text-align: left;
+      width: 25rem;
+    }
+    .aaCellAcctLookup {
+      display: inline-flex;
+      flex-direction: row;
+      align-self: stretch;
+      align-items: center;
+      background-color: #fff;
+    }
+    .aaBtnAcctLookup {
+      padding: 1px 2px;
+      margin: 0 2px;
+    }
+    .aaCellBchgDesc {
+      text-align: left;
+      width: 25rem;
+    }
+    .aaCellBchgAmt {
+      text-align: right;
+      width: 12ch;
+    }
+  </style>
+
+</head>
+<body style="margin: 2pc; background-color: #eee;">
+<button type="button">#<span class="fa fa-ellipsis-h fa-fw" aria-hidden="true"></span></button>
+<h2>Bchg cells</h2>
+<div class="aaBchgCells aaCellBorder">
+
+  <!-- 1st row -->
+  <div class="aaBchgCellsRow aaBchgCellsRowSeparation">
+
+    <!-- target account -->
+    <div class="aaBchgAcctContainer aaCellBorder">
+      <div class="aaCellText aaCellAcctTitle">
+        &lt;Target account&gt;
+      </div>
+      <div class="aaCellAcctLookup">
+        <div class="aaVerticalGridline"></div>
+        <button type="button" class="aaBtn aaBtnAcctLookup">
+          <span class="fa fa-ellipsis-h fa-fw" aria-hidden="true"></span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 2nd row -->
+  <div class="aaBchgCellsRow">
+
+    <!-- change description -->
+    <div class="aaCellText aaCellBchgDesc aaCellBorder">
+      &lt;Change description&gt;
+    </div>
+    <!-- change amount -->
+    <div class="aaCellText aaCellBchgAmt aaCellBorder" style="margin-left: 1rem;">
+      -9,999,999.99
+    </div>
+    <div>
+
+    </div>
+  </div>
+</div>
+</body>
+</html>
