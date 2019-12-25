@@ -29,17 +29,19 @@ h1 {
   font-weight: normal;
   font-size: small;
 }
-
+.aaFontBold {
+  font-weight: bold;
+}
 .aaFontSizeLabel {
   font-size: small;
   background-color: transparent;
 }
 
 .aaFontData {
+  color: #000;
   font-family: Cambria, serif, Serif;
   font-weight: normal;
   font-size: medium;
-  color: #000;
 }
 
 .aaFontSizeData {
@@ -154,7 +156,7 @@ h1 {
 
 .aaPanelHeaderModule {
   font-size: 150%;
-  letter-spacing: 2px;
+  letter-spacing: 3px;
 }
 
 .aaPanelToolBar {
@@ -459,7 +461,29 @@ h1 {
   font-weight: bold;
 }
 
-.aaCellText {
+.aaCellBorder {
+  border: 0.05pc solid #ccc;
+}
+.aaBchgCells {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 0.4pc;
+}
+.aaBchgCellsRow {
+  display: inline-flex;
+  flex-direction: row;
+  align-items: center;
+}
+.aaBchgCellsRowSeparation {
+  margin-bottom: 0.4em; /* space between rows */
+}
+.aaBchgAcctContainer {
+  display: inline-flex;
+  flex-direction: row;
+  align-items: stretch;
+}
+.aaCell {
   display: inline-block;
   padding: 0.30pc 0.5pc 0.20pc 0.5pc;
   vertical-align: top;
@@ -485,19 +509,19 @@ h1 {
 }
 
 .aaCellTranDate {
-  width: 7rem;
+  width: 7pc;
   text-align: center;
   /*text-align: left;*/
 }
 
 .aaCellBchgDesc {
-  width: 25rem;
+  width: 25pc;
   text-align: left;
 }
 
 .aaCellBchgAmt {
-  width: 8rem;
   text-align: right;
+  width: 7pc;
 }
 
 .aaAutoBalanceItem {
@@ -506,7 +530,7 @@ h1 {
 }
 
 .aaCellBchgBal {
-  width: 8rem;
+  width: 7pc;
   text-align: right;
 }
 

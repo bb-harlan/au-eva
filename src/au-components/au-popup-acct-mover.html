@@ -31,14 +31,14 @@
             mouseup.trigger="onRowMouseUp($event)">
             <div class="aaRowData aaRowBgColorData">
               <template if.bind="listItem.isAcct()">
-                <span class="aaCellText aaFontSizeData aaCellAcctTitle">${listItem.title}</span>
+                <span class="aaCell aaFontSizeData aaCellAcctTitle">${listItem.title}</span>
                 <div class="aaVerticalGridline"></div>
-                <span class="aaCellText aaFontSizeData aaCellBchgBal">${listItem.endingBalance | auCurrencyConverter}</span>
+                <span class="aaCell aaFontSizeData aaCellBchgBal">${listItem.endingBalance | auCurrencyConverter}</span>
               </template>
               <template if.bind="listItem.isAnnotation()">
-                <span class="aaCellText aaFontSizeData aaCellAnnoTitle">${listItem.annoText}</span>
+                <span class="aaCell aaFontSizeData aaCellAnnoTitle">${listItem.annoText}</span>
                 <div class="aaVerticalGridline"></div>
-                <span class="aaCellText aaFontSizeData aaCellBchgBal"></span>
+                <span class="aaCell aaFontSizeData aaCellBchgBal"></span>
               </template>
               <div class="aaVerticalGridline"></div>
             </div>
@@ -47,10 +47,10 @@
 <!--
         <div class="aaRow" id="${app.END_OF_LIST}">
           <div class="aaRowData aaRowBgColorNonData">
-                <span class="aaCellText aaFontData aaCellAcctTitle"><span
+                <span class="aaCell aaFontData aaCellAcctTitle"><span
                   class="aaSansSerif aaCellTextEOL">${app.END_OF_LIST}</span></span>
             <div class="aaVerticalGridline"></div>
-            <span class="aaCellText aaFontData aaCellBchgBal"></span>
+            <span class="aaCell aaFontData aaCellBchgBal"></span>
             <div class="aaVerticalGridline"></div>
           </div>
         </div>

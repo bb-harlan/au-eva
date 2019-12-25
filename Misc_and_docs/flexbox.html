@@ -6,6 +6,11 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.4.0/css/font-awesome.min.css">
   <style>
 
+    .aaFontLabel {
+      font-family: sans-serif, SansSerif;
+      font-weight: normal;
+      font-size: small;
+    }
     .aaVerticalGridline {
       display: inline-block;
       width: 1px;
@@ -46,6 +51,7 @@
     .aaCellBorder {
       border: 0.05rem solid #ccc;
     }
+
     .aaBchgCells {
       display: inline-flex;
       flex-direction: column;
@@ -62,13 +68,12 @@
     .aaBchgCellsRowSeparation {
       margin-bottom: 0.4em; /* space between rows */
     }
-
     .aaBchgAcctContainer {
       display: inline-flex;
       flex-direction: row;
       align-items: stretch;
     }
-    .aaCellText {
+    .aaCell {
       display: inline-block;
       padding: 0.30pc 0.5pc 0.20pc 0.5pc;
       vertical-align: top;
@@ -96,23 +101,20 @@
     }
     .aaCellBchgAmt {
       text-align: right;
-      width: 12ch;
+      width: 6rem;
     }
   </style>
 
 </head>
 <body style="margin: 2pc; background-color: #eee;">
-<button type="button">#<span class="fa fa-ellipsis-h fa-fw" aria-hidden="true"></span></button>
 <h2>Bchg cells</h2>
-<div class="aaBchgCells aaCellBorder">
-
+<div class="aaBchgCells">
   <!-- 1st row -->
   <div class="aaBchgCellsRow aaBchgCellsRowSeparation">
-
     <!-- target account -->
     <div class="aaBchgAcctContainer aaCellBorder">
-      <div class="aaCellText aaCellAcctTitle">
-        &lt;Target account&gt;
+      <div class="aaCell aaCellAcctTitle">
+        <span class="aaFontLabel">Target account</span>
       </div>
       <div class="aaCellAcctLookup">
         <div class="aaVerticalGridline"></div>
@@ -122,20 +124,15 @@
       </div>
     </div>
   </div>
-
   <!-- 2nd row -->
   <div class="aaBchgCellsRow">
-
     <!-- change description -->
-    <div class="aaCellText aaCellBchgDesc aaCellBorder">
-      &lt;Change description&gt;
+    <div class="aaCell aaCellBchgDesc aaCellBorder">
+      <span class="aaFontLabel">Change description</span>
     </div>
     <!-- change amount -->
-    <div class="aaCellText aaCellBchgAmt aaCellBorder" style="margin-left: 1rem;">
-      -9,999,999.99
-    </div>
-    <div>
-
+    <div class="aaCell aaCellBchgAmt aaCellBorder" style="margin-left: 1rem;">
+      <span class="aaFontLabel">Change amount xxxxxx</span>
     </div>
   </div>
 </div>

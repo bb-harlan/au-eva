@@ -56,9 +56,9 @@
       </div>
       <div class="aaVerticalGridline"></div>
       <div class="aaRowData aaRowBgColorNonData" element.ref="proxyForMoverPosition">
-        <div class="aaCellText aaCellAcctTitle"><span class="aaFontLabel">Title</span></div>
+        <div class="aaCell aaCellAcctTitle"><span class="aaFontLabel aaFontBold">Title</span></div>
         <div class="aaVerticalGridline"></div>
-        <div class="aaCellText aaCellBchgBal"><span class="aaFontLabel">Balance</span></div>
+        <div class="aaCell aaCellBchgBal"><span class="aaFontLabel aaFontBold">Balance</span></div>
         <div class="aaVerticalGridline"></div>
       </div>
     </div>
@@ -79,10 +79,10 @@
             <div class="aaVerticalGridline"></div>
             <div
               class="aaRowData aaRowBgColorData ${listItem.id == app.selectedAcct.id ? 'aaMostRecentlySelectedRow' : ''}">
-              <span class="aaCellText aaCellAcctTitle">${listItem.title}</span>
+              <span class="aaCell aaCellAcctTitle">${listItem.title}</span>
               <div class="aaVerticalGridline"></div>
               <span
-                class="aaCellText aaCellBchgBal">${listItem.endingBalance | auCurrencyConverter}</span>
+                class="aaCell aaCellBchgBal">${listItem.endingBalance | auCurrencyConverter}</span>
             </div>
             <div class="aaVerticalGridline"></div>
           </template>
@@ -95,9 +95,9 @@
             <div class="aaVerticalGridline"></div>
             <div
               class="aaRowData aaRowBgColorData ${listItem.id == app.selectedAcct.id ? 'aaMostRecentlySelectedRow' : ''}">
-              <span class="aaCellText aaCellAnnoTitle">${listItem.annoText}</span>
+              <span class="aaCell aaCellAnnoTitle">${listItem.annoText}</span>
               <div class="aaVerticalGridline"></div>
-              <span class="aaCellText aaCellBchgBal"></span>
+              <span class="aaCell aaCellBchgBal"></span>
             </div>
             <div class="aaVerticalGridline"></div>
           </template>
@@ -121,10 +121,10 @@
         </div>
         <div class="aaVerticalGridline"></div>
         <div class="aaRowData aaRowBgColorNonData">
-          <span class="aaCellText aaCellAcctTitle"><span
+          <span class="aaCell aaCellAcctTitle"><span
             class="aaSansSerif aaCellTextEOL">${app.END_OF_LIST}</span></span>
           <div class="aaVerticalGridlineSpacer"></div>
-          <span class="aaCellText aaCellBchgBal"></span>
+          <span class="aaCell aaCellBchgBal"></span>
         </div>
         <div class="aaVerticalGridline"></div>
       </div>
@@ -148,10 +148,10 @@
       </div>
       <div class="aaVerticalGridlineSpacer"></div>
       <div class="aaRowData">
-        <span class="aaCellText aaCellAcctTitle" style="text-align: right;"><span
+        <span class="aaCell aaCellAcctTitle" style="text-align: right;"><span
           class="aaFontLabel">Total:</span></span>
         <div class="aaVerticalGridlineSpacer"></div>
-        <span class="aaCellText aaCellBchgBal">${faeSide.listTotal | auCurrencyConverter}</span>
+        <span class="aaCell aaCellBchgBal">${faeSide.listTotal | auCurrencyConverter}</span>
       </div>
       <div class="aaVerticalGridlineSpacer"></div>
     </div>

@@ -99,8 +99,8 @@
 
         <div class="aaGridContainer">
           <div class="aaGridTitleBar">Balance changes</div>
-          <div class="aaFontLabel aaRow aaRowBgColorNonData">
-            <div class="aaRowOps aaFontSizeLabel aaHidden">
+          <div class="aaRow aaRowBgColorNonData">
+            <div class="aaRowOps aaFontLabel aaHidden">
               <button type="button" class="aaBtn" click.delegate="showBchgDetail($event, bchg)">
                 <au-icon-nav-right></au-icon-nav-right>
               </button>
@@ -110,14 +110,13 @@
             </div>
             <div class="aaVerticalGridline"></div>
             <div class="aaRowData">
-              <div class="aaCellText aaFontSizeLabel aaCellTranDate"><span class=" aaSansSerif">Date</span></div>
+              <div class="aaCell aaCellTranDate"><span class="aaFontLabel aaFontBold">Date</span></div>
               <div class="aaVerticalGridline"></div>
-              <div class="aaCellText aaFontSizeLabel aaCellBchgDesc"><span
-                class=" aaSansSerif">Change description</span></div>
+              <div class="aaCell aaCellBchgDesc"><span class="aaFontLabel aaFontBold">Change description</span></div>
               <div class="aaVerticalGridline"></div>
-              <div class="aaCellText aaFontSizeLabel aaCellBchgAmt"><span class="aaSansSerif">Change amount</span></div>
+              <div class="aaCell aaFontSizeLabel aaCellBchgAmt"><span class="aaFontLabel aaFontBold">Change amount</span></div>
               <div class="aaVerticalGridline"></div>
-              <div class="aaCellText aaFontSizeLabel aaCellBchgBal"><span class=" aaSansSerif">New balance</span>
+              <div class="aaCell aaFontSizeLabel aaCellBchgBal"><span class="aaFontLabel aaFontBold">New balance</span>
               </div>
             </div>
             <div class="aaVerticalGridline"></div>
@@ -141,13 +140,13 @@
                 <div class="aaVerticalGridline"></div>
                 <div
                   class="aaRowData aaRowBgColorData ${bchg.id == app.selectedBchg.id ? 'aaMostRecentlySelectedRow' : ''}">
-                  <div class="aaCellText aaFontSizeData aaCellTranDate">${bchg.sourceTran.date}</div>
+                  <div class="aaCell aaFontSizeData aaCellTranDate">${bchg.sourceTran.date}</div>
                   <div class="aaVerticalGridline"></div>
-                  <div class="aaCellText aaFontSizeData aaCellBchgDesc">${bchg.desc}</div>
+                  <div class="aaCell aaFontSizeData aaCellBchgDesc">${bchg.desc}</div>
                   <div class="aaVerticalGridline"></div>
-                  <div class="aaCellText aaFontSizeData aaCellBchgAmt">${bchg.amt | auCurrencyConverter}</div>
+                  <div class="aaCell aaFontSizeData aaCellBchgAmt">${bchg.amt | auCurrencyConverter}</div>
                   <div class="aaVerticalGridline"></div>
-                  <div class="aaCellText aaFontSizeData aaCellBchgBal">${bchg.newBalance | auCurrencyConverter}</div>
+                  <div class="aaCell aaFontSizeData aaCellBchgBal">${bchg.newBalance | auCurrencyConverter}</div>
                 </div>
                 <div class="aaVerticalGridline"></div>
               </div>
@@ -162,14 +161,14 @@
                 <span class="aaBtn aaHidden"><i class="fa fa-chevron-right fa-fw" aria-hidden="true"></i></span>
               </div>
               <div class="aaVerticalGridline"></div>
-              <div class="aaCellText aaFontData aaCellTranDate"><span class="aaSansSerif aaCellTextEOL">${app.END_OF_LIST}</span>
+              <div class="aaCell aaFontData aaCellTranDate"><span class="aaSansSerif aaCellTextEOL">${app.END_OF_LIST}</span>
               </div>
               <div class="aaVerticalGridline"></div>
-              <div class="aaCellText aaFontData aaCellBchgDesc"></div>
+              <div class="aaCell aaFontData aaCellBchgDesc"></div>
               <div class="aaVerticalGridline"></div>
-              <div class="aaCellText aaFontData aaCellBchgAmt"></div>
+              <div class="aaCell aaFontData aaCellBchgAmt"></div>
               <div class="aaVerticalGridline"></div>
-              <div class="aaCellText aaFontData aaCellBchgBal"></div>
+              <div class="aaCell aaFontData aaCellBchgBal"></div>
               <div class="aaVerticalGridline"></div>
             </div>
           </div>
@@ -201,15 +200,15 @@
               <span class="aaBtn aaHidden"><i class="fa fa-chevron-right fa-fw" aria-hidden="true"></i></span>
             </div>
             <div class="aaVerticalGridline"></div>
-            <div class="aaCellText aaFontData aaCellTranDate">
+            <div class="aaCell aaFontData aaCellTranDate">
               <span class="aaSansSerif aaCellTextEOL">${app.END_OF_LIST}</span>
             </div>
             <div class="aaVerticalGridline"></div>
-            <div class="aaCellText aaFontData aaCellBchgDesc"></div>
+            <div class="aaCell aaFontData aaCellBchgDesc"></div>
             <div class="aaVerticalGridline"></div>
-            <div class="aaCellText aaFontData aaCellBchgAmt"></div>
+            <div class="aaCell aaFontData aaCellBchgAmt"></div>
             <div class="aaVerticalGridline"></div>
-            <div class="aaCellText aaFontData aaCellBchgBal"></div>
+            <div class="aaCell aaFontData aaCellBchgBal"></div>
             <div class="aaVerticalGridline"></div>
           </div>
         </div>

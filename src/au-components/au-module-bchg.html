@@ -24,19 +24,19 @@
           <div class="aaGridTitleBar">Target account</div>
           <div class="aaGridHeader aaRowBgColorNonData">
             <div class="aaFontLabel aaRow">
-              <div class="aaCellText aaFontSizeLabel aaCellEquSide"><span class=" aaSansSerif">Equation side</span>
+              <div class="aaCell aaCellEquSide"><span class="aaFontLabel aaFontBold">Equation side</span>
               </div>
               <div class="aaVerticalGridline"></div>
-              <div class="aaCellText aaFontSizeLabel aaCellAcctTitle"><span class=" aaSansSerif">Title</span></div>
+              <div class="aaCell aaCellAcctTitle"><span class="aaFontLabel aaFontBold">Title</span></div>
             </div>
           </div>
-          <div class="aaRow" style="border-bottom-style: none;">
+          <div class="aaRow aaRowBgColorNonData" style="border-bottom-style: none;">
             <div class="aaRowData">
-              <div class="aaCellText aaFontSizeData aaCellEquSide">
+              <div class="aaCell aaFontSizeData aaCellEquSide">
                 ${app.selectedBchg.targetAcct.parentFaeSide.id}
               </div>
               <div class="aaVerticalGridline"></div>
-              <div class="aaCellText aaFontSizeData aaCellAcctTitle">${app.selectedBchg.targetAcct.title}</div>
+              <div class="aaCell aaFontSizeData aaCellAcctTitle">${app.selectedBchg.targetAcct.title}</div>
             </div>
           </div>
         </div>
@@ -47,12 +47,12 @@
           </div>
           <div class="aaGridHeader aaRowBgColorNonData">
             <div class="aaFontLabel aaRow">
-              <div class="aaCellText aaFontSizeLabel aaCellTranDate"><span class=" aaSansSerif">Date</span></div>
+              <div class="aaCell aaCellTranDate"><span class="aaFontLabel aaFontBold">Date</span></div>
             </div>
           </div>
-          <div class="aaRow" style="border-bottom-style: none;">
+          <div class="aaRow aaRowBgColorNonData" style="border-bottom-style: none;">
             <div class="aaRowData">
-              <div class="aaCellText aaFontSizeData aaCellTranDate">${app.selectedBchg.sourceTran.date}</div>
+              <div class="aaCell aaFontSizeData aaCellTranDate">${app.selectedBchg.sourceTran.date}</div>
             </div>
           </div>
         </div>
@@ -64,16 +64,16 @@
           <div class="aaGridTitleBar">Balance change</div>
           <div class="aaGridHeader aaRowBgColorNonData">
             <div class="aaFontLabel aaRow">
-              <div class="aaCellText aaFontSizeLabel aaCellBchgDesc"><span class=" aaSansSerif">Change description</span></div>
+              <div class="aaCell aaCellBchgDesc"><span class="aaFontLabel aaFontBold">Change description</span></div>
               <div class="aaVerticalGridline"></div>
-              <div class="aaCellText aaFontSizeLabel aaCellBchgAmt"><span class=" aaSansSerif">Change amount</span></div>
+              <div class="aaCell aaCellBchgAmt"><span class="aaFontLabel aaFontBold">Change amount</span></div>
             </div>
           </div>
-          <div class="aaRow" style="border-bottom-style: none;">
+          <div class="aaRow aaRowBgColorNonData" style="border-bottom-style: none;">
             <div class="aaRowData">
-              <div class="aaCellText aaFontSizeData aaCellBchgDesc">${app.selectedBchg.desc}</div>
+              <div class="aaCell aaCellBchgDesc">${app.selectedBchg.desc}</div>
               <div class="aaVerticalGridline"></div>
-              <div class="aaCellText aaFontSizeData aaCellBchgAmt">${app.selectedBchg.amt | auCurrencyConverter}</div>
+              <div class="aaCell aaCellBchgAmt">${app.selectedBchg.amt | auCurrencyConverter}</div>
             </div>
           </div>
         </div>

@@ -4,9 +4,9 @@
   <div css="display: inline-block; border-bottom: 0px solid ${gridlineColor};">
     <template if.bind="!isBlank">
       <template if.bind="!app.isEditing">
-        <div class="aaCellText aaFontData aaCellAcctTitle aaInlineBlock">${acctTitle}</div>
+        <div class="aaCell aaFontData aaCellAcctTitle aaInlineBlock">${acctTitle}</div>
         <div css="display: block; position: relative; border-top: 1px solid ${gridlineColor};">
-          <div class="aaCellText aaFontData">
+          <div class="aaCell aaFontData">
             <input type="text"
                    disabled
                    class="aaFormInputText aaCellBchgDesc"
@@ -15,7 +15,7 @@
 
           <div class="aaVerticalGridline"></div>
           <template if.bind="autoBalanceItem">
-            <div class="aaCellText aaFontData">
+            <div class="aaCell aaFontData">
 <!--
               <input type="text"
                      disabled
@@ -30,7 +30,7 @@
             </div>
           </template>
           <template if.bind="!autoBalanceItem">
-            <div class="aaCellText aaFontData">
+            <div class="aaCell aaFontData">
 <!--
               <input type="text"
                      disabled
@@ -47,9 +47,9 @@
     </template>
 
     <template if.bind="isBlank">
-      <div class="aaCellText aaFontData aaCellAcctTitle aaInlineBlock">&nbsp;</div>
+      <div class="aaCell aaFontData aaCellAcctTitle aaInlineBlock">&nbsp;</div>
       <div css="display: block; position: relative; border-top: 1px solid transparent;">
-        <div class="aaCellText aaFontData">
+        <div class="aaCell aaFontData">
           <input type="text"
                  class="aaFormInputText aaCellBchgDesc"
                  style="border-color: transparent;"
@@ -57,7 +57,7 @@
                  value="">
         </div>
         <div class="aaVerticalGridline"></div>
-        <div class="aaCellText aaFontData">
+        <div class="aaCell aaFontData">
           <input type="text"
                  class="aaFormInputText aaCellBchgAmt"
                  style="border-color: transparent;"

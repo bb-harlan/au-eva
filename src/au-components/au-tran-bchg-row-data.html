@@ -16,7 +16,7 @@
     <!-- bchg data cells -->
     <div class="aaInlineBlock">
       <!-- cell for target account title -->
-      <div class="aaCellText aaFontSizeData">
+      <div class="aaCell aaFontSizeData">
         <input type="text" readonly class="aaFormInputText aaCellAcctTitle"
                css="vertical-align: middle; border-color: ${eva.GRIDLINE_COLOR};"
                value.to-view="bchg.targetAcct.title">
@@ -50,7 +50,7 @@
       </div>
       <div class="aaTranBchgRow2Indent">
         <!-- cell for bchg desc -->
-        <div class="aaCellText aaFontSizeData">
+        <div class="aaCell aaFontSizeData">
           <template if.bind="!app.isEditing">
             <input type="text" readonly class="aaFormInputText aaCellBchgDesc" value.to-view="bchg.desc">
           </template>
@@ -59,7 +59,7 @@
           </template>
         </div>
         <!-- cell for bchg amt -->
-        <div class="aaCellText aaFontSizeData">
+        <div class="aaCell aaFontSizeData">
           <template if.bind="!app.isEditing">
             <au-input-currency currency-amount.to-view="bchg.amt" is-readonly.to-view="true"
                                classes-string.to-view="'aaFormInputText aaCellBchgAmt'"></au-input-currency>
@@ -79,7 +79,7 @@
       </div>
       <template if.bind="app.selectedModule == app.MODULE_TRAN && bchg.intraTranSorter == 0 && app.isEditing">
         <div style="text-align: right;">
-          <div class="aaCellText aaFontLabel">NOTE: The change amount in this first row is automatically computed to
+          <div class="aaCell aaFontLabel">NOTE: The change amount in this first row is automatically computed to
             balance the transaction.
           </div>
         </div>
