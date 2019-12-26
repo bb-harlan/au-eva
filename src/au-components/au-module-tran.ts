@@ -8,7 +8,6 @@ import {AuPopupBchgMover} from "au-components/au-popup-bchg-mover";
 @customElement('au-module-tran')
 @inject(App)
 export class AuModuleTran {
-  editingTran = false;
   clonedTran: Tran;
 
 
@@ -117,7 +116,7 @@ export class AuModuleTran {
       this.clonedTran.bchgList.push(clonedBchg);
     }
 
-    this.editingTran = true;
+    this.app.selectedModuleMode = this.app.MODULE_MODE_EDITING;
   }
   tranDelete(event) {
     alert('Not yet implemented.');
@@ -126,10 +125,10 @@ export class AuModuleTran {
   saveEdits(event) {
     this.app.selectedTran.computeBalancingBchgAmt(this.app.data.SIDE_ID_ASSETS, this.app.data.SIDE_ID_EQUITIES);
     this.app.selectedTran.refresh();
-    this.editingTran = false;
+    this.app.selectedModuleMode = this.app.MODULE_MODE_NAVIGATING;
   }
   cancelEdits(event) {
-    this.editingTran = false;
+    this.app.selectedModuleMode = this.app.MODULE_MODE_NAVIGATING;
   }
 
   onPickAcct(event, bchg) {

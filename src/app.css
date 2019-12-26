@@ -478,11 +478,6 @@ h1 {
 .aaBchgCellsRowSeparation {
   margin-bottom: 0.4em; /* space between rows */
 }
-.aaBchgAcctContainer {
-  display: inline-flex;
-  flex-direction: row;
-  align-items: stretch;
-}
 .aaCell {
   display: inline-block;
   padding: 0.30pc 0.5pc 0.20pc 0.5pc;
@@ -522,6 +517,22 @@ h1 {
 .aaCellBchgAmt {
   text-align: right;
   width: 7pc;
+}
+.aaCellWrapper {
+  display: inline-flex;
+  flex-direction: row;
+  align-items: stretch;
+}
+.aaCellHelper {
+  display: inline-flex;
+  flex-direction: row;
+  align-self: stretch;
+  align-items: center;
+  background-color: #fff;
+}
+.aaHelperBtn {
+  padding: 1px 2px;
+  margin: 0 2px;
 }
 
 .aaAutoBalanceItem {

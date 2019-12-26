@@ -19,8 +19,63 @@
 
   <div class="aaPanel aaPanelBoxShadow">
     <div class="aaPanelHeader aaPanelHeaderModule">Transaction</div>
-    <template if.bind="!editingTran">
+    <div class="aaPanelToolBar">
+      <div class="aaInlineBlock"
+           css="visibility: ${app.selectedModuleMode == app.MODULE_MODE_NAVIGATING ? 'visible' : 'hidden'}">
+        <button type="button"
+                class="aaBtn"
+                click.trigger="onGoUp($event)">
+          <au-icon-nav-up></au-icon-nav-up>
+        </button>
+        <button type="button"
+                class="aaBtn"
+                click.trigger="onGoDown($event)">
+          <au-icon-nav-down></au-icon-nav-down>
+        </button>
+        <button type="button"
+                class="aaBtn"
+                click.trigger="onGoJrnl($event)">
+          Transaction journal
+          <au-icon-nav-right></au-icon-nav-right>
+        </button>
+      </div>
+      <span class="aaToolBarDivider">.</span>
+      <template if.bind="app.selectedModuleMode == app.MODULE_MODE_NAVIGATING">
+        <button type="button"
+                class="aaBtn"
+                click.trigger="tranNew($event)">
+          <au-icon-new></au-icon-new>
+          New...
+        </button>
+        <button type="button"
+                class="aaBtn"
+                click.trigger="tranEdit($event)">
+          <au-icon-edit></au-icon-edit>
+          Edit
+        </button>
+        <button type="button"
+                class="aaBtn"
+                click.trigger="tranDelete($event)">
+          <au-icon-delete></au-icon-delete>
+          Delete...
+        </button>
+      </template>
+      <template if.bind="app.selectedModuleMode == app.MODULE_MODE_EDITING">
+        <span class="aaFontLabel aaFontBold">Editing:</span>
+        <span class="aaToolBarDivider aaHidden">.</span>
+        <button type="button" class="aaBtn" click.trigger="saveEdits($event)">Done</button>
+        <span class="aaToolBarDivider aaHidden">.</span>
+        <button type="button" class="aaBtn" click.trigger="cancelEdits($event)">Cancel</button>
+      </template>
+      <span class="aaToolBarDivider">.</span>
+    </div>
+    <template if.bind="app.selectedModuleMode == app.MODULE_MODE_NAVIGATING">
+    </template>
+    <template if.bind="app.selectedModuleMode == app.MODULE_MODE_EDITING">
+    </template>
+    <template if.bind="app.selectedModuleMode == app.MODULE_MODE_NAVIGATING">
       <!-- navigating (not editing) -->
+<!--
       <div class="aaPanelToolBar">
         <button type="button"
                 class="aaBtn"
@@ -59,6 +114,7 @@
         </button>
         <span class="aaToolBarDivider">.</span>
       </div>
+-->
       <div class="aaPanelBody">
         <table border="0" style="border-collapse: collapse;">
           <tr>
@@ -157,7 +213,7 @@
         </div>
       </div>
     </template>
-    <template if.bind="editingTran">
+    <template if.bind="app.selectedModuleMode == app.MODULE_MODE_EDITING">
       <!-- editing (not navigating -->
       <div class="aaPanelToolBar" style="text-align: center;">
         <button type="button" class="aaBtn" click.trigger="saveEdits($event)">Save editing changes</button>
@@ -391,7 +447,7 @@
                 </template>
                 <div class="aaVerticalGridline"></div>
                 <div
-                    class="aaRowData aaRowBgColorData ${bchg.id == app.selectedBchg.id ? 'aaMostRecentlySelectedRow' : ''}">
+                  class="aaRowData aaRowBgColorData ${bchg.id == app.selectedBchg.id ? 'aaMostRecentlySelectedRow' : ''}">
                   <au-tran-bchg-row-data bchg.bind="bchg"></au-tran-bchg-row-data>
                 </div>
                 <div class="aaVerticalGridline"></div>

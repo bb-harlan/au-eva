@@ -219,24 +219,26 @@ export class Data {
       /*parentJrnl*/ this.jrnl,
       /*date*/ "2018/08/05",
       /*intraDateSorter*/ this.nextSorter);
-    targetAcct = this.faeSideAssets.acctList[0] as Acct;
-    newBchg = new Bchg(
-      /*id*/ `bchg${this.nextBchgId}`,
-      /*sourceTran*/ sourceTran,
-      /*targetAcct*/ targetAcct,
-      /*intraTranSorter*/ this.nextSorter,
-      /*desc*/ "Cash from ATM withdrawal",
-      /*amt*/ 0.00);
-    sourceTran.bchgList.push(newBchg);
-    targetAcct.bchgList.push(newBchg);
+
     targetAcct = this.faeSideAssets.acctList[1] as Acct;
     newBchg = new Bchg(
       /*id*/ `bchg${this.nextBchgId}`,
       /*sourceTran*/ sourceTran,
       /*targetAcct*/ targetAcct,
       /*intraTranSorter*/ this.nextSorter,
-      /*desc*/ "ATM withdrawal",
-      /*amt*/ -100.00)
+      /*desc*/ "ATM cash withdrawal",
+      /*amt*/ 0.00)
+    sourceTran.bchgList.push(newBchg);
+    targetAcct.bchgList.push(newBchg);
+
+    targetAcct = this.faeSideAssets.acctList[0] as Acct;
+    newBchg = new Bchg(
+      /*id*/ `bchg${this.nextBchgId}`,
+      /*sourceTran*/ sourceTran,
+      /*targetAcct*/ targetAcct,
+      /*intraTranSorter*/ this.nextSorter,
+      /*desc*/ "Deposit cash from ATM withdrawal",
+      /*amt*/ 100.00);
     sourceTran.bchgList.push(newBchg);
     targetAcct.bchgList.push(newBchg);
     sourceTran.computeBalancingBchgAmt(this.SIDE_ID_ASSETS, this.SIDE_ID_EQUITIES);
