@@ -8,6 +8,7 @@
   <require from="au-views/au-icon-edit.html"></require>
   <require from="au-views/au-icon-delete.html"></require>
   <require from="au-views/au-icon-row-mover.html"></require>
+  <require from="au-views/au-grid-bchg-cells-spacer.html"></require>
   <require from="au-views/au-bchg-grid-header.html"></require>
   <require from="au-views/au-vertical-gridline.html"></require>
   <require from="au-views/au-vertical-gridline-spacer.html"></require>
@@ -16,9 +17,116 @@
   <require from="au-components/au-popup-bchg-mover"></require>
   <require from="au-components/au-popup-acct-picker"></require>
   <require from="au-converters/au-currency-converter"></require>
+  <require from="au-components/au-grid-bchg-cells-heading"></require>
 
   <div class="aaPanel aaPanelBoxShadow">
     <div class="aaPanelHeader aaPanelHeaderModule">Transaction</div>
+    <template if.bind="app.selectedModuleMode == app.MODULE_MODE_NAVIGATING">
+      <div class="aaPanelToolBar">*** START OF NEW CODE ***</div>
+      <div class="aaPanelToolBar">
+        <div class="aaInlineBlock">
+          <button type="button"
+                  class="aaBtn"
+                  click.trigger="onGoUp($event)">
+            <au-icon-nav-up></au-icon-nav-up>
+          </button>
+          <button type="button"
+                  class="aaBtn"
+                  click.trigger="onGoDown($event)">
+            <au-icon-nav-down></au-icon-nav-down>
+          </button>
+          <button type="button"
+                  class="aaBtn"
+                  click.trigger="onGoJrnl($event)">
+            Transaction journal
+            <au-icon-nav-right></au-icon-nav-right>
+          </button>
+        </div>
+        <span class="aaToolBarDivider">.</span>
+        <button type="button"
+                class="aaBtn"
+                click.trigger="tranNew($event)">
+          <au-icon-new></au-icon-new>
+          New...
+        </button>
+        <button type="button"
+                class="aaBtn"
+                click.trigger="tranEdit($event)">
+          <au-icon-edit></au-icon-edit>
+          Edit
+        </button>
+        <button type="button"
+                class="aaBtn"
+                click.trigger="tranDelete($event)">
+          <au-icon-delete></au-icon-delete>
+          Delete...
+        </button>
+        <span class="aaToolBarDivider">.</span>
+        <div class="aaInlineBlock">(navigating toolbar)</div>
+      </div>
+      <div class="aaPanelBody">
+        <table border="0" style="border-collapse: collapse;">
+          <tr>
+            <td class="aaFormItemLabel">Date:</td>
+            <td>
+              <span class="aaCell aaCellBorder aaCellTranDate">${app.selectedTran.date}</span>
+            </td>
+          </tr>
+        </table>
+        <div class="aaGridContainer">
+          <div class="aaGridTitleBar">Account balance changes</div>
+          <div class="aaRow aaRowColumnHeaders aaFontLabel aaFontBold">
+            <div class="aaRowOps aaFontLabel aaHidden">
+              <button type="button" class="aaBtn">
+                <au-icon-nav-left></au-icon-nav-left>
+              </button>
+              <button type="button" class="aaBtn">
+                <au-icon-nav-left-left></au-icon-nav-left-left>
+              </button>
+            </div>
+            <div class="aaVerticalGridline" style="background-color: #fff"></div>
+            <div class="aaRowData">
+              <au-grid-bchg-cells-heading fae-side-id.one-way="app.data.faeSideAssets.id"></au-grid-bchg-cells-heading>
+              <div class="aaVerticalGridline" style="background-color: #fff; width: 3px;"></div>
+              <au-grid-bchg-cells-heading fae-side-id.one-way="app.data.faeSideEquities.id"></au-grid-bchg-cells-heading>
+            </div>
+            <div class="aaVerticalGridline" style="background-color: #fff"></div>
+          </div>
+          <div class="aaGridScrollableRows" id="tranModule-${app.selectedTran.id}" style="height: 25pc;"></div>
+          <div class="aaGridFooterBar"></div>
+        </div>
+      </div>
+      <div class="aaPanelToolBar">*** END OF OF NEW CODE ***</div>
+    </template>
+    <template if.bind="app.selectedModuleMode == app.MODULE_MODE_EDITING">
+      <div class="aaPanelToolBar">*** START OF NEW CODE ***</div>
+      <div class="aaPanelToolBar">
+        <div class="aaInlineBlock aaHidden">
+          <button type="button"
+                  class="aaBtn">
+            <au-icon-nav-up></au-icon-nav-up>
+          </button>
+          <button type="button"
+                  class="aaBtn">
+            <au-icon-nav-down></au-icon-nav-down>
+          </button>
+          <button type="button"
+                  class="aaBtn">
+            Transaction journal
+            <au-icon-nav-right></au-icon-nav-right>
+          </button>
+        </div>
+        <span class="aaToolBarDivider">.</span>
+        <span class="aaFontLabel aaFontBold">Editing:</span>
+        <span class="aaToolBarDivider aaHidden">.</span>
+        <button type="button" class="aaBtn" click.trigger="saveEdits($event)">Done</button>
+        <span class="aaToolBarDivider aaHidden">.</span>
+        <button type="button" class="aaBtn" click.trigger="cancelEdits($event)">Cancel</button>
+        <span class="aaToolBarDivider">.</span>
+        <div class="aaInlineBlock">(editing toolbar)</div>
+      </div>
+      <div class="aaPanelToolBar">*** END OF OF NEW CODE ***</div>
+    </template>
     <div class="aaPanelToolBar">
       <div class="aaInlineBlock"
            css="visibility: ${app.selectedModuleMode == app.MODULE_MODE_NAVIGATING ? 'visible' : 'hidden'}">
@@ -69,52 +177,7 @@
       </template>
       <span class="aaToolBarDivider">.</span>
     </div>
-    <template if.bind="app.selectedModuleMode == app.MODULE_MODE_NAVIGATING">
-    </template>
-    <template if.bind="app.selectedModuleMode == app.MODULE_MODE_EDITING">
-    </template>
-    <template if.bind="app.selectedModuleMode == app.MODULE_MODE_NAVIGATING">
-      <!-- navigating (not editing) -->
-<!--
-      <div class="aaPanelToolBar">
-        <button type="button"
-                class="aaBtn"
-                click.trigger="onGoUp($event)">
-          <au-icon-nav-up></au-icon-nav-up>
-        </button>
-        <button type="button"
-                class="aaBtn"
-                click.trigger="onGoDown($event)">
-          <au-icon-nav-down></au-icon-nav-down>
-        </button>
-        <button type="button"
-                class="aaBtn"
-                click.trigger="onGoJrnl($event)">
-          Transaction journal
-          <au-icon-nav-right></au-icon-nav-right>
-        </button>
-        <span class="aaToolBarDivider">.</span>
-        <button type="button"
-                class="aaBtn"
-                click.trigger="tranNew($event)">
-          <au-icon-new></au-icon-new>
-          New...
-        </button>
-        <button type="button"
-                class="aaBtn"
-                click.trigger="tranEdit($event)">
-          <au-icon-edit></au-icon-edit>
-          Edit
-        </button>
-        <button type="button"
-                class="aaBtn"
-                click.trigger="tranDelete($event)">
-          <au-icon-delete></au-icon-delete>
-          Delete...
-        </button>
-        <span class="aaToolBarDivider">.</span>
-      </div>
--->
+    <template if.bind="false && app.selectedModuleMode == app.MODULE_MODE_NAVIGATING">
       <div class="aaPanelBody">
         <table border="0" style="border-collapse: collapse;">
           <tr>
@@ -213,7 +276,7 @@
         </div>
       </div>
     </template>
-    <template if.bind="app.selectedModuleMode == app.MODULE_MODE_EDITING">
+    <template if.bind="false && app.selectedModuleMode == app.MODULE_MODE_EDITING">
       <!-- editing (not navigating -->
       <div class="aaPanelToolBar" style="text-align: center;">
         <button type="button" class="aaBtn" click.trigger="saveEdits($event)">Save editing changes</button>

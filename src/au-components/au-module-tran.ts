@@ -90,32 +90,11 @@ export class AuModuleTran {
     alert("Not yet imolemented");
   }
 
-
   tranNew(event) {
     alert('Not yet implemented.');
   }
   tranEdit(event) {
-    /*alert('Not yet implemented.');*/
-    this.clonedTran = new Tran(
-      /*id*/ this.app.selectedTran.id,
-      /*parentJrnl*/ this.app.selectedTran.parentJrnl,
-      /*date*/ this.app.selectedTran.date,
-      /*intraDateSorter*/ this.app.selectedTran.intraDateSorter);
-    this.clonedTran.totalChangesAssets = this.app.selectedTran.totalChangesAssets;
-    this.clonedTran.totalChangesEquities = this.app.selectedTran.totalChangesEquities;
-    this.clonedTran.bchgList = [];
-    let clonedBchg: Bchg;
-    for (let bchg of this.app.selectedTran.bchgList) {
-      clonedBchg = new Bchg(
-        /*id*/ bchg.id,
-        /*sourceTran*/ this.clonedTran,
-        /*targetAcct*/ bchg.targetAcct,
-        /*intraTranSorter*/ bchg.intraTranSorter,
-        /*desc*/ bchg.desc,
-        /*amt*/ bchg.amt);
-      this.clonedTran.bchgList.push(clonedBchg);
-    }
-
+    this.clonedTran = this.app.selectedTran.clone();
     this.app.selectedModuleMode = this.app.MODULE_MODE_EDITING;
   }
   tranDelete(event) {

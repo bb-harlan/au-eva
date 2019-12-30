@@ -99,27 +99,26 @@
 
         <div class="aaGridContainer">
           <div class="aaGridTitleBar">Balance changes</div>
-          <div class="aaRow aaRowBgColorNonData">
+          <div class="aaRow aaRowColumnHeaders aaFontLabel aaFontBold">
             <div class="aaRowOps aaFontLabel aaHidden">
-              <button type="button" class="aaBtn" click.delegate="showBchgDetail($event, bchg)">
+              <button type="button" class="aaBtn">
                 <au-icon-nav-right></au-icon-nav-right>
               </button>
-              <button type="button" class="aaBtn" click.delegate="showBchgInTran($event, bchg)">
+              <button type="button" class="aaBtn">
                 <au-icon-nav-right-right></au-icon-nav-right-right>
               </button>
             </div>
-            <div class="aaVerticalGridline"></div>
+            <div class="aaVerticalGridline" style="background-color: #fff"></div>
             <div class="aaRowData">
-              <div class="aaCell aaCellTranDate"><span class="aaFontLabel aaFontBold">Date</span></div>
-              <div class="aaVerticalGridline"></div>
-              <div class="aaCell aaCellBchgDesc"><span class="aaFontLabel aaFontBold">Change description</span></div>
-              <div class="aaVerticalGridline"></div>
-              <div class="aaCell aaFontSizeLabel aaCellBchgAmt"><span class="aaFontLabel aaFontBold">Change amount</span></div>
-              <div class="aaVerticalGridline"></div>
-              <div class="aaCell aaFontSizeLabel aaCellBchgBal"><span class="aaFontLabel aaFontBold">New balance</span>
-              </div>
+              <div class="aaCell aaCellTranDate">Date</div>
+              <div class="aaVerticalGridline" style="background-color: #fff"></div>
+              <div class="aaCell aaCellBchgDesc">Change description</div>
+              <div class="aaVerticalGridline" style="background-color: #fff"></div>
+              <div class="aaCell aaCellBchgAmt">Change amount</div>
+              <div class="aaVerticalGridline" style="background-color: #fff"></div>
+              <div class="aaCell aaCellBchgBal">New balance</div>
+              <div class="aaVerticalGridline" style="background-color: #fff"></div>
             </div>
-            <div class="aaVerticalGridline"></div>
           </div>
           <div class="aaGridScrollableRows" id="acctModule-${app.selectedAcct.id}">
             <template repeat.for="bchg of app.selectedAcct.bchgList">

@@ -342,16 +342,6 @@ h1 {
   /* box-shadow: inset 0px 5px 10px 0px #eee; */
 }
 
-/*
-.aaGridHeader {
-  color: #666;
-  background-color: #ddd;
-  white-space: nowrap;
-  font-weight: normal;
-  !*border-bottom: 2px solid #ccc;*!
-}
-*/
-
 .aaGridScrollableRows {
   margin: 0;
   padding: 0;
@@ -387,6 +377,10 @@ h1 {
   white-space: nowrap;
   border-bottom: 1px solid #ccc;
   cursor: default;
+}
+.aaRowColumnHeaders {
+  color: #fff;
+  background-color: #bbb;
 }
 .aaRowTotals {
   position: relative;
@@ -569,30 +563,12 @@ h1 {
   margin-left: 3pc;
 }
 
-/*
-.aaVerticalGridline1 {
-  display: inline-block;
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  width: 1px;
-  background-color: #ccc;
-}
-
-.aaVerticalGridline2 {
-  display: inline-block;
-  width: 1px;
-  visibility: hidden;
-}
-*/
 .aaVerticalGridline {
   display: inline-block;
   width: 1px;
   align-self: stretch;
   background-color: #ccc;
-  /*background-color: red;*/
   overflow: hidden;
-  font-size: small;
 }
 .aaVerticalGridlineSpacer {
   display: inline-block;
@@ -600,7 +576,6 @@ h1 {
   align-self: stretch;
   background-color: transparent;
   overflow: hidden;
-  font-size: small;
 }
 .aaBchgAmtComputed {
   border-color: transparent;

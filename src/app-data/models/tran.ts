@@ -10,7 +10,10 @@ export class Tran {
   totalChangesEquities: number = 0.00;
   bchgList: Array<Bchg> = [];
 
-  constructor(id: string, parentJrnl: Jrnl, date: string, intraDateSorter: number) {
+  constructor(id: string,
+              parentJrnl: Jrnl,
+              date: string,
+              intraDateSorter: number) {
     this.id = id;
     this.parentJrnl = parentJrnl;
     this.date = date;
@@ -35,6 +38,26 @@ export class Tran {
         (this.intraDateSorter > b.intraDateSorter ? 1 : -1) :
         (this.date > b.date ? 1 : -1)
     )
+  }
+
+  calcTotalChangesToEachSide(sideIdAssets, sideIdEquities) {
+    let totalChangesAssets: number = 0.00;
+    let totalChangesEquities: number = 0.00;
+    // compute totalChangesAssets, totalChangesEquities for indexes 1 ... n of this.bchgList
+    for (let bchg of this.bchgList) {
+      switch (bchg.targetAcct.parentFaeSide.id) {
+        case sideIdAssets:
+          totalChangesAssets += bchg.amt;
+          bchg.targetAcct.refresh();
+          break;
+        case sideIdEquities:
+          totalChangesEquities += bchg.amt;
+          bchg.targetAcct.refresh();
+          break;
+        default:
+          throw new Error(`acct.parentFaeSide.id has invalid value: ${bchg.targetAcct.parentFaeSide.id}.`);
+      }
+    }
   }
 
   computeBalancingBchgAmt(sideIdAssets, sideIdEquities) {
@@ -73,6 +96,27 @@ export class Tran {
     }
     this.totalChangesAssets = totalChangesAssets;
     this.totalChangesEquities = totalChangesEquities;
+  }
 
+  regToAccts() {
+  }
+
+  unregFromAccts() {
+  }
+
+  clone()
+    :
+    Tran {
+    let clonedTran = new Tran(
+      /*id*/ this.id,
+      /*parentJrnl*/ this.parentJrnl,
+      /*date*/ this.date,
+      /*intraDateSorter*/ this.intraDateSorter);
+    clonedTran.totalChangesAssets = this.totalChangesAssets;
+    clonedTran.totalChangesEquities = this.totalChangesEquities;
+    for (let bchg of this.bchgList) {
+      clonedTran.bchgList.push(bchg.clone());
+    }
+    return clonedTran;
   }
 }

@@ -48,18 +48,18 @@
             </div>
       -->
     </div>
-    <div class="aaRow aaRowBgColorNonData">
+    <div class="aaRow aaRowColumnHeaders aaFontLabel aaFontBold">
       <div class="aaRowOps aaHidden">
-        <button type="button" class="aaBtn" click.delegate="onGoAcct($event, listItem)">
+        <button type="button" class="aaBtn">
           <au-icon-nav-right></au-icon-nav-right>
         </button>
       </div>
-      <div class="aaVerticalGridline"></div>
-      <div class="aaRowData aaRowBgColorNonData" element.ref="proxyForMoverPosition">
-        <div class="aaCell aaCellAcctTitle"><span class="aaFontLabel aaFontBold">Title</span></div>
-        <div class="aaVerticalGridline"></div>
-        <div class="aaCell aaCellBchgBal"><span class="aaFontLabel aaFontBold">Balance</span></div>
-        <div class="aaVerticalGridline"></div>
+      <div class="aaVerticalGridline" style="background-color: #fff"></div>
+      <div class="aaRowData" element.ref="proxyForMoverPosition">
+        <div class="aaCell aaCellAcctTitle">Title</div>
+        <div class="aaVerticalGridline" style="background-color: #fff"></div>
+        <div class="aaCell aaCellBchgBal">Balance</div>
+        <div class="aaVerticalGridline" style="background-color: #fff"></div>
       </div>
     </div>
     <div class="aaGridScrollableRows">
@@ -123,7 +123,7 @@
         <div class="aaRowData aaRowBgColorNonData">
           <span class="aaCell aaCellAcctTitle"><span
             class="aaSansSerif aaCellTextEOL">${app.END_OF_LIST}</span></span>
-          <div class="aaVerticalGridlineSpacer"></div>
+          <div class="aaVerticalGridline aaHidden"></div>
           <span class="aaCell aaCellBchgBal"></span>
         </div>
         <div class="aaVerticalGridline"></div>
@@ -146,14 +146,14 @@
           <au-icon-nav-right></au-icon-nav-right>
         </button>
       </div>
-      <div class="aaVerticalGridlineSpacer"></div>
+      <div class="aaVerticalGridline aaHidden"></div>
       <div class="aaRowData">
         <span class="aaCell aaCellAcctTitle" style="text-align: right;"><span
           class="aaFontLabel">Total:</span></span>
-        <div class="aaVerticalGridlineSpacer"></div>
+        <div class="aaVerticalGridline aaHidden"></div>
         <span class="aaCell aaCellBchgBal">${faeSide.listTotal | auCurrencyConverter}</span>
       </div>
-      <div class="aaVerticalGridlineSpacer"></div>
+      <div class="aaVerticalGridline aaHidden"></div>
     </div>
   </div>
 

@@ -6,35 +6,35 @@ import {Jrnl} from 'app-data/models/jrnl';
 
 export class Data {
   /*==========================================================
-  * constants simulated by getters
-  */
-  get SIDE_ID_ASSETS(): string {
+   * constants simulated by getters
+   *==========================================================
+   */
+  get SIDE_ID_ASSETS() {
     return 'Assets';
   }
-
   get SIDE_ID_EQUITIES(): string {
     return 'Equities';
   }
-
-  get TRAN_JRNL_ID(): string {
+  get TRAN_JRNL_ID() {
     return 'Journal';
   }
 
+  /*==========================================================
+   * miscellaneous getters
+   *==========================================================
+   */
   private _nextSorter: number = 1;
   get nextSorter(): number {
     return this._nextSorter++;
   }
-
   private _nextAcctId: number = 1;
   get nextAcctId(): number {
     return this._nextAcctId++;
   }
-
   private _nextTranId: number = 1;
   get nextTranId(): number {
     return this._nextTranId++;
   }
-
   private _nextBchgId: number = 1;
   get nextBchgId(): number {
     return this._nextBchgId++;

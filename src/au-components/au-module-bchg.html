@@ -9,12 +9,14 @@
     <div class="aaPanelHeader aaPanelHeaderModule">Account balance change</div>
     <div class="aaPanelToolBar" style="text-align: center;">
       <button type="button" click.trigger="onGoAcct($event)"
-            class="aaBtn">
-        <au-icon-nav-left></au-icon-nav-left> Show in target account
+              class="aaBtn">
+        <au-icon-nav-left></au-icon-nav-left>
+        Show in target account
       </button>
       <span class="aaToolBarDivider">.</span>
       <button type="button" click.trigger="onGoTran($event)"
-            class="aaBtn">Show in source transaction <au-icon-nav-right></au-icon-nav-right>
+              class="aaBtn">Show in source transaction
+        <au-icon-nav-right></au-icon-nav-right>
       </button>
     </div>
     <div class="aaPanelBody">
@@ -22,13 +24,10 @@
         <!--Target account-->
         <div class="aaGridContainer aaInlineBlock" style="margin-right: 1pc;">
           <div class="aaGridTitleBar">Target account</div>
-          <div class="aaGridHeader aaRowBgColorNonData">
-            <div class="aaFontLabel aaRow">
-              <div class="aaCell aaCellEquSide"><span class="aaFontLabel aaFontBold">Equation side</span>
-              </div>
-              <div class="aaVerticalGridline"></div>
-              <div class="aaCell aaCellAcctTitle"><span class="aaFontLabel aaFontBold">Title</span></div>
-            </div>
+          <div class="aaRow aaRowColumnHeaders aaFontLabel aaFontBold">
+            <div class="aaCell aaCellEquSide">Equation side</div>
+            <div class="aaVerticalGridline" style="background-color: #fff"></div>
+            <div class="aaCell aaCellAcctTitle"><span class="aaFontLabel aaFontBold">Title</span></div>
           </div>
           <div class="aaRow aaRowBgColorNonData" style="border-bottom-style: none;">
             <div class="aaRowData">
@@ -45,14 +44,14 @@
           <div class="aaGridTitleBar">
             Source transaction
           </div>
-          <div class="aaGridHeader aaRowBgColorNonData">
-            <div class="aaFontLabel aaRow">
-              <div class="aaCell aaCellTranDate"><span class="aaFontLabel aaFontBold">Date</span></div>
-            </div>
+          <div class="aaRow aaRowColumnHeaders aaFontLabel aaFontBold">
+            <div class="aaCell aaCellTranDate">Date</div>
+            <div class="aaVerticalGridline" style="background-color: #fff"></div>
           </div>
           <div class="aaRow aaRowBgColorNonData" style="border-bottom-style: none;">
             <div class="aaRowData">
               <div class="aaCell aaFontSizeData aaCellTranDate">${app.selectedBchg.sourceTran.date}</div>
+              <div class="aaVerticalGridline"></div>
             </div>
           </div>
         </div>
@@ -62,12 +61,10 @@
         <div class="aaGridContainer aaInlineBlock" style="margin-top: 0;">
           <!--Balance change-->
           <div class="aaGridTitleBar">Balance change</div>
-          <div class="aaGridHeader aaRowBgColorNonData">
-            <div class="aaFontLabel aaRow">
-              <div class="aaCell aaCellBchgDesc"><span class="aaFontLabel aaFontBold">Change description</span></div>
-              <div class="aaVerticalGridline"></div>
-              <div class="aaCell aaCellBchgAmt"><span class="aaFontLabel aaFontBold">Change amount</span></div>
-            </div>
+          <div class="aaRow aaRowColumnHeaders aaFontLabel aaFontBold">
+            <div class="aaCell aaCellBchgDesc">Change description</div>
+            <div class="aaVerticalGridline" style="background-color: #fff"></div>
+            <div class="aaCell aaCellBchgAmt">Change amount</div>
           </div>
           <div class="aaRow aaRowBgColorNonData" style="border-bottom-style: none;">
             <div class="aaRowData">
