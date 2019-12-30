@@ -640,7 +640,7 @@ h1 {
 .aaMostRecentlySelectedRow {
   -webkit-box-shadow: 0px 0px 2px 2px #6D99C5 inset;
   -moz-box-shadow: 0px 0px 2px 2px #6D99C5 inset;
-  box-shadow: 0 0 3px 3px #6D99C5 inset;
+  box-shadow: 0 0 2px 2px #6D99C5 inset;
 }
 .aaMostRecentlySelectedRow2 {
   border-bottom-size: 0;

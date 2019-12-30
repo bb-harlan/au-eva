@@ -9,7 +9,6 @@
   <require from="au-views/au-icon-delete.html"></require>
   <require from="au-views/au-icon-row-mover.html"></require>
   <require from="au-views/au-grid-bchg-cells-spacer.html"></require>
-  <require from="au-views/au-bchg-grid-header.html"></require>
   <require from="au-views/au-vertical-gridline.html"></require>
   <require from="au-views/au-vertical-gridline-spacer.html"></require>
   <require from="au-views/au-tran-bchg-cells-spacer.html"></require>
@@ -84,13 +83,70 @@
                 <au-icon-nav-left-left></au-icon-nav-left-left>
               </button>
             </div>
-            <div class="aaVerticalGridline" style="background-color: #fff"></div>
+            <div class="aaVerticalGridline" style="background-color: #fff; width: 3px;"></div>
             <div class="aaRowData">
               <au-grid-bchg-cells-heading fae-side-id.one-way="app.data.faeSideAssets.id"></au-grid-bchg-cells-heading>
               <div class="aaVerticalGridline" style="background-color: #fff; width: 3px;"></div>
-              <au-grid-bchg-cells-heading fae-side-id.one-way="app.data.faeSideEquities.id"></au-grid-bchg-cells-heading>
+              <au-grid-bchg-cells-heading
+                fae-side-id.one-way="app.data.faeSideEquities.id"></au-grid-bchg-cells-heading>
             </div>
-            <div class="aaVerticalGridline" style="background-color: #fff"></div>
+            <div class="aaVerticalGridline" style="background-color: #fff; width: 3px;"></div>
+          </div>
+
+          <div class="aaGridScrollableRows" id="tranModule-${app.selectedTran.id}" style="height: 25pc;">
+            <template repeat.for="bchg of app.selectedTran.bchgList">
+              <div class="aaRow" style="border-bottom-width: 3px;"
+                   mouseenter.trigger="onRowEnter($event, bchg)"
+                   mouseleave.trigger="onRowLeave($event, bchg)">
+                <div class="aaRowOps aaBgColorToolbar aaFontSizeLabel">
+                  <div class="aaRowOpsOpacity">
+                    <span class="aaBtn" click.delegate="showBchgInAcct($event, bchg)">
+                      <au-icon-nav-left-left></au-icon-nav-left-left>
+                    </span>
+                    <span class="aaBtn" click.delegate="showBchgDetail($event, bchg)">
+                      <au-icon-nav-left></au-icon-nav-left>
+                    </span>
+                  </div>
+                </div>
+                <div class="aaVerticalGridline" style="width: 3px;"></div>
+                <div class="aaRowData aaRowBgColorData
+                           ${bchg.id == app.selectedBchg.id ? 'aaMostRecentlySelectedRow' : ''}">
+                  <!-- spacer if equities side -->
+                  <template if.bind="bchg.targetAcct.parentFaeSide.id == app.data.SIDE_ID_EQUITIES">
+                    <!-- put blank space in change-to-asset column -->
+                    <au-grid-bchg-cells-spacer></au-grid-bchg-cells-spacer>
+                    <div class="aaVerticalGridline" style="width: 3px;"></div>
+                  </template>
+                  <!-- simulate data cells with spacer -->
+                  <au-grid-bchg-cells-spacer></au-grid-bchg-cells-spacer>
+                  <template if.bind="bchg.targetAcct.parentFaeSide.id == app.data.SIDE_ID_ASSETS">
+                    <!-- put blank space in change-to-equity column -->
+                    <div class="aaVerticalGridline" style="width: 3px;"></div>
+                    <au-grid-bchg-cells-spacer></au-grid-bchg-cells-spacer>
+                  </template>
+                </div>
+                <div class="aaVerticalGridline" style="width: 3px;"></div>
+              </div>
+            </template>
+
+            <!-- End of list row -->
+            <template if.bind="app.isEditing">
+              <div class="aaRowOps aaBgColorToolbar">
+                <span class="aaBtn aaHidden" click.delegate="onMenuClick($event, bchg)">
+                    <i class="fa fa-bars fa-fw" aria-hidden="true"></i>
+                  </span>
+              </div>
+            </template>
+            <div class="aaVerticalGridline"></div>
+            <div element.ref="proxyForMoverPositionLeft"
+                 class="aaRowData">
+              <div class="aaCell aaFontData aaHidden" style="position: absolute;"><span
+                class="aaSansSerif aaCellTextEOL">${app.END_OF_LIST}</span></div>
+              <au-tran-bchg-cells-spacer></au-tran-bchg-cells-spacer>
+              <au-vertical-gridline-spacer></au-vertical-gridline-spacer>
+              <au-tran-bchg-cells-spacer></au-tran-bchg-cells-spacer>
+            </div>
+            <div class="aaVerticalGridline"></div>
           </div>
           <div class="aaGridScrollableRows" id="tranModule-${app.selectedTran.id}" style="height: 25pc;"></div>
           <div class="aaGridFooterBar"></div>
@@ -206,8 +262,8 @@
                   </div>
                 </div>
                 <div class="aaVerticalGridline"></div>
-                <div
-                  class="aaRowData aaRowBgColorData ${bchg.id == app.selectedBchg.id ? 'aaMostRecentlySelectedRow' : ''}">
+                <div class="aaRowData aaRowBgColorData
+                           ${bchg.id == app.selectedBchg.id ? 'aaMostRecentlySelectedRow' : ''}">
                   <au-tran-bchg-row-data bchg.bind="bchg"></au-tran-bchg-row-data>
                 </div>
                 <div class="aaVerticalGridline"></div>
@@ -466,9 +522,8 @@
           </tr>
         </table>
 
-        <div
-          element.ref="proxyForMoverPositionTop"
-          class="aaGridContainer">
+        <div element.ref="proxyForMoverPositionTop"
+             class="aaGridContainer">
           <div class="aaGridTitleBar">Account balance changes</div>
           <div class="aaPanelToolBar">
             <button
