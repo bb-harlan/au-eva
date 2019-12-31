@@ -17,11 +17,15 @@
   <require from="au-components/au-popup-acct-picker"></require>
   <require from="au-converters/au-currency-converter"></require>
   <require from="au-components/au-grid-bchg-cells-heading"></require>
+  <require from="au-components/au-grid-bchg-cells"></require>
+  <require from="au-components/au-grid-bchg-cells-total"></require>
 
   <div class="aaPanel aaPanelBoxShadow">
     <div class="aaPanelHeader aaPanelHeaderModule">Transaction</div>
     <template if.bind="app.selectedModuleMode == app.MODULE_MODE_NAVIGATING">
-      <div class="aaPanelToolBar">*** START OF NEW CODE ***</div>
+      <!--
+      *** START OF NEW CODE ***
+      -->
       <div class="aaPanelToolBar">
         <div class="aaInlineBlock">
           <button type="button"
@@ -118,7 +122,7 @@
                     <div class="aaVerticalGridline" style="width: 3px;"></div>
                   </template>
                   <!-- simulate data cells with spacer -->
-                  <au-grid-bchg-cells-spacer></au-grid-bchg-cells-spacer>
+                  <au-grid-bchg-cells bchg.one-way="bchg"></au-grid-bchg-cells>
                   <template if.bind="bchg.targetAcct.parentFaeSide.id == app.data.SIDE_ID_ASSETS">
                     <!-- put blank space in change-to-equity column -->
                     <div class="aaVerticalGridline" style="width: 3px;"></div>
@@ -148,11 +152,75 @@
             </div>
             <div class="aaVerticalGridline"></div>
           </div>
-          <div class="aaGridScrollableRows" id="tranModule-${app.selectedTran.id}" style="height: 25pc;"></div>
           <div class="aaGridFooterBar"></div>
         </div>
+        <!-- net change amt for eash side -->
+        <div
+          class="aaGridContainer" style="border-color: transparent; background-color: transparent;">
+          <div class="aaRow aaFontLabel" style="border-color: transparent; background-color: transparent;">
+            <div class="aaRowOps aaFontLabel aaHidden">
+              <button type="button" class="aaBtn">
+                <au-icon-nav-left></au-icon-nav-left>
+              </button>
+              <button type="button" class="aaBtn">
+                <au-icon-nav-left-left></au-icon-nav-left-left>
+              </button>
+            </div>
+            <div class="aaVerticalGridline aaHidden" style="width: 3px;"></div>
+            <div class="aaRowData">
+              <au-grid-bchg-cells-total
+                fae-side-id.one-way="app.data.faeSideAssets.id"
+                side-total-changes.one-way="app.selectedTran.totalChangesAssets">
+              </au-grid-bchg-cells-total>
+              <div class="aaVerticalGridline aaHidden" style="width: 3px;"></div>
+              <au-grid-bchg-cells-total
+                fae-side-id.one-way="app.data.faeSideEquities.id"
+                side-total-changes.one-way="app.selectedTran.totalChangesEquities">
+              </au-grid-bchg-cells-total>
+            </div>
+            <div class="aaVerticalGridline aaHidden" style="width: 3px;"></div>
+          </div>
+          <!--
+                    <div class="aaRow" style="border-color: transparent; background-color: transparent;">
+                      <div class="aaRowOps aaHidden">
+                      <span class="aaBtn">
+                        <au-icon-nav-left-left></au-icon-nav-left-left>
+                      </span>
+                        <span class="aaBtn">
+                        <au-icon-nav-left></au-icon-nav-left>
+                      </span>
+                      </div>
+                      <div class="aaVerticalGridline aaHidden"></div>
+                      <div class="aaRowData">
+                        <div class="aaCell aaFontData aaTranBchgRow2Indent">
+                          <input type="text" disabled class="aaCellBchgDesc aaFontLabel"
+                                 style="text-align: right; border-color: transparent; background-color: inherit;"
+                                 value="Total change(s) to assets:">
+                        </div>
+                        <div class="aaCell aaFontData">
+                          <input type="text" disabled class="aaFormInputText aaCellBchgAmt"
+                                 value="${app.selectedTran.totalChangesAssets | auCurrencyConverter}">
+                        </div>
+                      </div>
+                      <div class="aaVerticalGridline aaHidden"></div>
+                      <div class="aaRowData">
+                        <div class="aaCell aaFontData aaTranBchgRow2Indent">
+                          <input type="text" disabled class="aaCellBchgDesc aaFontLabel"
+                                 style="text-align: right; border-color: transparent; background-color: inherit;"
+                                 value="Total change(s) to equities:">
+                        </div>
+                        <div class="aaCell aaFontData">
+                          <input type="text" disabled class="aaFormInputText aaCellBchgAmt"
+                                 value="${app.selectedTran.totalChangesEquities | auCurrencyConverter}">
+                        </div>
+                      </div>
+                    </div>
+          -->
+        </div>
       </div>
-      <div class="aaPanelToolBar">*** END OF OF NEW CODE ***</div>
+      <!--
+      *** END OF OF NEW CODE ***
+      -->
     </template>
     <template if.bind="app.selectedModuleMode == app.MODULE_MODE_EDITING">
       <div class="aaPanelToolBar">*** START OF NEW CODE ***</div>
@@ -182,155 +250,6 @@
         <div class="aaInlineBlock">(editing toolbar)</div>
       </div>
       <div class="aaPanelToolBar">*** END OF OF NEW CODE ***</div>
-    </template>
-    <div class="aaPanelToolBar">
-      <div class="aaInlineBlock"
-           css="visibility: ${app.selectedModuleMode == app.MODULE_MODE_NAVIGATING ? 'visible' : 'hidden'}">
-        <button type="button"
-                class="aaBtn"
-                click.trigger="onGoUp($event)">
-          <au-icon-nav-up></au-icon-nav-up>
-        </button>
-        <button type="button"
-                class="aaBtn"
-                click.trigger="onGoDown($event)">
-          <au-icon-nav-down></au-icon-nav-down>
-        </button>
-        <button type="button"
-                class="aaBtn"
-                click.trigger="onGoJrnl($event)">
-          Transaction journal
-          <au-icon-nav-right></au-icon-nav-right>
-        </button>
-      </div>
-      <span class="aaToolBarDivider">.</span>
-      <template if.bind="app.selectedModuleMode == app.MODULE_MODE_NAVIGATING">
-        <button type="button"
-                class="aaBtn"
-                click.trigger="tranNew($event)">
-          <au-icon-new></au-icon-new>
-          New...
-        </button>
-        <button type="button"
-                class="aaBtn"
-                click.trigger="tranEdit($event)">
-          <au-icon-edit></au-icon-edit>
-          Edit
-        </button>
-        <button type="button"
-                class="aaBtn"
-                click.trigger="tranDelete($event)">
-          <au-icon-delete></au-icon-delete>
-          Delete...
-        </button>
-      </template>
-      <template if.bind="app.selectedModuleMode == app.MODULE_MODE_EDITING">
-        <span class="aaFontLabel aaFontBold">Editing:</span>
-        <span class="aaToolBarDivider aaHidden">.</span>
-        <button type="button" class="aaBtn" click.trigger="saveEdits($event)">Done</button>
-        <span class="aaToolBarDivider aaHidden">.</span>
-        <button type="button" class="aaBtn" click.trigger="cancelEdits($event)">Cancel</button>
-      </template>
-      <span class="aaToolBarDivider">.</span>
-    </div>
-    <template if.bind="false && app.selectedModuleMode == app.MODULE_MODE_NAVIGATING">
-      <div class="aaPanelBody">
-        <table border="0" style="border-collapse: collapse;">
-          <tr>
-            <td class="aaFormItemLabel">Date:</td>
-            <td class="aaFormItemData">
-              <input type="text" readonly class="aaFormInputText aaCellTranDate" value="${app.selectedTran.date}">
-            </td>
-          </tr>
-        </table>
-
-        <div class="aaGridContainer">
-          <div class="aaGridTitleBar">Account balance changes</div>
-          <div class="aaGridScrollableRows" id="tranModule-${app.selectedTran.id}" style="height: 25pc;">
-            <template repeat.for="bchg of app.selectedTran.bchgList">
-              <div class="aaRow" style="border-bottom-width: 2px;"
-                   mouseenter.trigger="onRowEnter($event, bchg)"
-                   mouseleave.trigger="onRowLeave($event, bchg)">
-                <div class="aaRowOps aaBgColorToolbar aaFontSizeLabel">
-                  <div class="aaRowOpsOpacity">
-                    <span class="aaBtn" click.delegate="showBchgInAcct($event, bchg)">
-                      <au-icon-nav-left-left></au-icon-nav-left-left>
-                    </span>
-                    <span class="aaBtn" click.delegate="showBchgDetail($event, bchg)">
-                      <au-icon-nav-left></au-icon-nav-left>
-                    </span>
-                  </div>
-                </div>
-                <div class="aaVerticalGridline"></div>
-                <div class="aaRowData aaRowBgColorData
-                           ${bchg.id == app.selectedBchg.id ? 'aaMostRecentlySelectedRow' : ''}">
-                  <au-tran-bchg-row-data bchg.bind="bchg"></au-tran-bchg-row-data>
-                </div>
-                <div class="aaVerticalGridline"></div>
-              </div>
-            </template>
-
-            <!-- End of list row -->
-            <template if.bind="app.isEditing">
-              <div class="aaRowOps aaBgColorToolbar">
-                <span class="aaBtn aaHidden" click.delegate="onMenuClick($event, bchg)">
-                    <i class="fa fa-bars fa-fw" aria-hidden="true"></i>
-                  </span>
-              </div>
-            </template>
-            <div class="aaVerticalGridline"></div>
-            <div element.ref="proxyForMoverPositionLeft"
-                 class="aaRowData">
-              <div class="aaCell aaFontData aaHidden" style="position: absolute;"><span
-                class="aaSansSerif aaCellTextEOL">${app.END_OF_LIST}</span></div>
-              <au-tran-bchg-cells-spacer></au-tran-bchg-cells-spacer>
-              <au-vertical-gridline-spacer></au-vertical-gridline-spacer>
-              <au-tran-bchg-cells-spacer></au-tran-bchg-cells-spacer>
-            </div>
-            <div class="aaVerticalGridline"></div>
-          </div>
-          <div class="aaGridFooterBar"></div>
-        </div>
-
-        <!-- net change amt for eash side -->
-        <div
-          class="aaGridContainer" style="border-color: transparent; background-color: transparent;">
-          <div class="aaRow" style="border-color: transparent; background-color: transparent;">
-            <div class="aaRowOps aaHidden">
-            <span class="aaBtn">
-              <au-icon-nav-left-left></au-icon-nav-left-left>
-            </span>
-              <span class="aaBtn">
-              <au-icon-nav-left></au-icon-nav-left>
-            </span>
-            </div>
-            <div class="aaVerticalGridline aaHidden"></div>
-            <div class="aaRowData">
-              <div class="aaCell aaFontData aaTranBchgRow2Indent">
-                <input type="text" disabled class="aaCellBchgDesc aaFontLabel"
-                       style="text-align: right; border-color: transparent; background-color: inherit;"
-                       value="Total change(s) to assets:">
-              </div>
-              <div class="aaCell aaFontData">
-                <input type="text" disabled class="aaFormInputText aaCellBchgAmt"
-                       value="${app.selectedTran.totalChangesAssets | auCurrencyConverter}">
-              </div>
-            </div>
-            <div class="aaVerticalGridline aaHidden"></div>
-            <div class="aaRowData">
-              <div class="aaCell aaFontData aaTranBchgRow2Indent">
-                <input type="text" disabled class="aaCellBchgDesc aaFontLabel"
-                       style="text-align: right; border-color: transparent; background-color: inherit;"
-                       value="Total change(s) to equities:">
-              </div>
-              <div class="aaCell aaFontData">
-                <input type="text" disabled class="aaFormInputText aaCellBchgAmt"
-                       value="${app.selectedTran.totalChangesEquities | auCurrencyConverter}">
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
     </template>
     <template if.bind="false && app.selectedModuleMode == app.MODULE_MODE_EDITING">
       <!-- editing (not navigating -->

@@ -5,5 +5,3 @@ au-component: au-grid-bchg-cells
 au-component: au-grid-bchg-cells-editing
 au-component: au-grid-bchg-cells-total
 
-
-au run --watch

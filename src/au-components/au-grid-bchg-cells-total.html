@@ -1,0 +1,25 @@
+<template>
+  <require from="au-converters/au-equation-side-converter"></require>
+  <require from="au-converters/au-currency-converter"></require>
+  <div class="aaBchgCells">
+    <!-- 2nd row -->
+    <div class="aaBchgCellsRow">
+      <!-- change description -->
+      <div class="aaCell aaCellBorder aaCellBchgDesc"
+           style="text-align: right; border-color: transparent; background-color: inherit;">
+        <span class="aaFontLabel">Total changes to ${faeSideId | auEquationSideConverter:false:true}:</span>
+      </div>
+      <!-- change amount -->
+      <div class="aaCellWrapper" style="margin-left: 1pc;">
+        <div class="aaCell aaCellBorder aaCellBchgAmt">
+          <span class="aaFontLabel">${sideTotalChanges | auCurrencyConverter}</span>
+        </div>
+        <div class="aaCellHelper aaHidden">
+          <button type="button" class="aaBtn aaHelperBtn">
+            <span class="fa fa-balance-scale fa-fw" aria-hidden="true"></span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</template>
