@@ -24,7 +24,7 @@ export class App {
     // return String.fromCharCode(0xf111); // FontAwesome fa-circle
     return "&#xf111;" // FontAwesome fa-circle
   }
-  get NAV_RIGHT_CHAR() {
+   get NAV_RIGHT_CHAR() {
     return String.fromCharCode(0xf054); // FontAwesome
   }
   get MODULE_MODE_NAVIGATING() {
