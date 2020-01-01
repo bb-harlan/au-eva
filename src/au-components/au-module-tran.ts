@@ -4,6 +4,7 @@ import {App} from "app";
 import {Bchg} from 'app-data/models/bchg';
 import {Tran} from 'app-data/models/tran';
 import {AuPopupBchgMover} from "au-components/au-popup-bchg-mover";
+import {Data} from "../app-data/data";
 
 @customElement('au-module-tran')
 @inject(App)
@@ -102,7 +103,6 @@ export class AuModuleTran {
   }
 
   saveEdits(event) {
-    this.app.selectedTran.computeBalancingBchgAmt(this.app.data.SIDE_ID_ASSETS, this.app.data.SIDE_ID_EQUITIES);
     this.app.selectedTran.refresh();
     this.app.selectedModuleMode = this.app.MODULE_MODE_NAVIGATING;
   }
@@ -141,5 +141,41 @@ export class AuModuleTran {
   acctPicked(message) {
     console.log(message);
   }
+  SetBchgAmtToBalanceTran(bchg: Bchg) {
+    let totalChangesAssets: number = 0.00;
+    let totalChangesEquities: number = 0.00;
+    // compute totalChangesAssets, totalChangesEquities for all other elements of bchgList
+    for (let otherBchg of bchg.sourceTran.bchgList) {
+      if (otherBchg.id == bchg.id) {
+        continue; // skip this otherBchg
+      }
+      switch (bchg.targetAcct.parentFaeSide.id) {
+        case 'Assets':
+          totalChangesAssets += bchg.amt;
+          break;
+        case 'Equities':
+          totalChangesEquities += bchg.amt;
+          break;
+        default:
+          throw new Error(`acct.parentFaeSide.id has invalid value: ${bchg.targetAcct.parentFaeSide.id}.`);
+      }
+    }
+    // compute bchg.amt for balancing the source tran
+    switch (bchg.targetAcct.parentFaeSide.id) {
+      case 'Assets':
+        bchg.amt = totalChangesEquities - totalChangesAssets;
+        totalChangesAssets += bchg.amt;
+        break;
+      case 'Equities':
+        bchg.amt = totalChangesAssets - totalChangesEquities;
+        totalChangesEquities += bchg.amt;
+        break;
+      default:
+        throw new Error(`acct.parentFaeSide.id has invalid value: ${bchg.targetAcct.parentFaeSide.id}.`);
+    }
+    bchg.sourceTran.totalChangesAssets = totalChangesAssets;
+    bchg.sourceTran.totalChangesEquities = totalChangesEquities;
+  }
+
 }
 

@@ -1,5 +1,6 @@
 import {Bchg} from './bchg';
 import {Jrnl} from './jrnl';
+import {Data} from "../data";
 
 export class Tran {
   id: string;
@@ -30,6 +31,26 @@ export class Tran {
 
   refresh() {
     this.bchgList.sort((a: Bchg, b: Bchg) => a.compareToInTran(b));
+    this.totalChangesAssets = 0.00;
+    this.totalChangesEquities = 0.00;
+    for (let bchg of this.bchgList) {
+      switch (bchg.targetAcct.parentFaeSide.id) {
+        case 'Assets':
+          this.totalChangesAssets += bchg.amt;
+          break;
+        case 'Equities':
+          this.totalChangesEquities += bchg.amt;
+          break;
+        default:
+          throw new Error(`acct.parentFaeSide.id has invalid value: "${bchg.targetAcct.parentFaeSide.id}"`);
+      }
+    }
+    if (this.parentJrnl) {
+      // this.parentJrnl is null if this is a temporary cloned tran
+      for (let bchg of this.bchgList) {
+        bchg.targetAcct.refresh();
+      }
+    }
   }
 
   compareToInJrnl(b: Tran): number {
@@ -40,63 +61,6 @@ export class Tran {
     )
   }
 
-  calcTotalChangesToEachSide(sideIdAssets, sideIdEquities) {
-    let totalChangesAssets: number = 0.00;
-    let totalChangesEquities: number = 0.00;
-    // compute totalChangesAssets, totalChangesEquities for indexes 1 ... n of this.bchgList
-    for (let bchg of this.bchgList) {
-      switch (bchg.targetAcct.parentFaeSide.id) {
-        case sideIdAssets:
-          totalChangesAssets += bchg.amt;
-          bchg.targetAcct.refresh();
-          break;
-        case sideIdEquities:
-          totalChangesEquities += bchg.amt;
-          bchg.targetAcct.refresh();
-          break;
-        default:
-          throw new Error(`acct.parentFaeSide.id has invalid value: ${bchg.targetAcct.parentFaeSide.id}.`);
-      }
-    }
-  }
-
-  computeBalancingBchgAmt(sideIdAssets, sideIdEquities) {
-    let totalChangesAssets: number = 0.00;
-    let totalChangesEquities: number = 0.00;
-    let balancingBchg: Bchg = this.bchgList[0];
-    // compute totalChangesAssets, totalChangesEquities for indexes 1 ... n of this.bchgList
-    for (let bchg of this.bchgList.slice(1)) {
-      switch (bchg.targetAcct.parentFaeSide.id) {
-        case sideIdAssets:
-          totalChangesAssets += bchg.amt;
-          bchg.targetAcct.refresh();
-          break;
-        case sideIdEquities:
-          totalChangesEquities += bchg.amt;
-          bchg.targetAcct.refresh();
-          break;
-        default:
-          throw new Error(`acct.parentFaeSide.id has invalid value: ${bchg.targetAcct.parentFaeSide.id}.`);
-      }
-    }
-    // compute amt for balancing bchg
-    switch (balancingBchg.targetAcct.parentFaeSide.id) {
-      case sideIdAssets:
-        balancingBchg.amt = totalChangesEquities - totalChangesAssets;
-        totalChangesAssets += balancingBchg.amt;
-        balancingBchg.targetAcct.refresh();
-        break;
-      case sideIdEquities:
-        balancingBchg.amt = totalChangesAssets - totalChangesEquities;
-        totalChangesEquities += balancingBchg.amt;
-        balancingBchg.targetAcct.refresh();
-        break;
-      default:
-        throw new Error(`acct.parentFaeSide.id has invalid value: ${balancingBchg.targetAcct.parentFaeSide.id}.`);
-    }
-    this.totalChangesAssets = totalChangesAssets;
-    this.totalChangesEquities = totalChangesEquities;
-  }
 
   regToAccts() {
   }
@@ -104,18 +68,16 @@ export class Tran {
   unregFromAccts() {
   }
 
-  clone()
-    :
-    Tran {
+  clone():Tran {
     let clonedTran = new Tran(
       /*id*/ this.id,
-      /*parentJrnl*/ this.parentJrnl,
+      /*parentJrnl*/ null,
       /*date*/ this.date,
       /*intraDateSorter*/ this.intraDateSorter);
     clonedTran.totalChangesAssets = this.totalChangesAssets;
     clonedTran.totalChangesEquities = this.totalChangesEquities;
     for (let bchg of this.bchgList) {
-      clonedTran.bchgList.push(bchg.clone());
+      clonedTran.bchgList.push(bchg.clone(clonedTran));
     }
     return clonedTran;
   }

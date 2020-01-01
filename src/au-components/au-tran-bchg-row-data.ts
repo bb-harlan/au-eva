@@ -17,7 +17,7 @@ export class TranBchg {
 
   onInputCurrencyCompleted(event) {
     this.bchg.amt = event.detail.newCurrencyAmount;
-    this.bchg.sourceTran.refresh();
+    // this.bchg.sourceTran.refresh();
   }
 }
 

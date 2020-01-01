@@ -7,7 +7,7 @@
 
  <div class="aaInlineFlex">
     <!-- spacer if equities side -->
-    <template if.bind="bchg.targetAcct.parentFaeSide.id == app.data.SIDE_ID_EQUITIES">
+    <template if.bind="bchg.targetAcct.parentFaeSide.id == 'Equities'">
       <!-- put blank space in change-to-asset column -->
       <au-tran-bchg-cells-spacer></au-tran-bchg-cells-spacer>
       <div class="aaVerticalGridline"></div>

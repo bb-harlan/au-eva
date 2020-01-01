@@ -7,16 +7,16 @@
     -->
 
     <!-- 2nd row -->
-    <div class="aaBchgCellsRow">
+    <div class="aaBchgCellsRow aaFontData">
       <!-- change description -->
-      <div class="aaCell aaCellBorder aaCellBchgDesc"
+      <div class="aaCell aaCellBorder aaCellBchgDesc aaFontLabel"
            style="text-align: right; border-color: transparent;">
-        <span class="aaFontLabel">Total changes to ${faeSideId | auEquationSideConverter:false:true}:</span>
+        Total changes to ${faeSide}:
       </div>
       <!-- change amount -->
       <div class="aaCellWrapper" style="margin-left: 1pc;">
         <div class="aaCell aaCellBorder aaCellBchgAmt">
-          <span class="aaFontLabel">${sideTotalChanges | auCurrencyConverter}</span>
+          ${sideTotalChanges | auCurrencyConverter}
         </div>
         <div class="aaCellHelper aaHidden">
           <button type="button" class="aaBtn aaHelperBtn">

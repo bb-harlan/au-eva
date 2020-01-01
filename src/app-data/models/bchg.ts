@@ -1,3 +1,4 @@
+import {Data} from '../data';
 import {Acct} from './acct';
 import {Tran} from './tran';
 
@@ -35,53 +36,51 @@ export class Bchg {
         (this.intraTranSorter < b.intraTranSorter ? -1 : 0));
   }
 
-  clone() {
+  clone(sourceTran) {
     return new Bchg(
       this.id,
-      this.sourceTran,
+      sourceTran,
       this.targetAcct,
       this.intraTranSorter,
       this.desc,
       this.amt);
   }
-
   regToAcct() {
   }
-
   unregFromAcct() {
   }
-
-  SetAmtToBalanceTran(sideIdAssets, sideIdEquities) {
+  setAmtToBalanceTran() {
     let totalChangesAssets: number = 0.00;
     let totalChangesEquities: number = 0.00;
+
     // compute totalChangesAssets, totalChangesEquities for all other elements of bchgList
     for (let otherBchg of this.sourceTran.bchgList) {
       if (otherBchg.id == this.id) {
         continue; // skip this bchg
       }
-      switch (this.targetAcct.parentFaeSide.id) {
-        case sideIdAssets:
-          totalChangesAssets += this.amt;
+      switch (otherBchg.targetAcct.parentFaeSide.id) {
+        case 'Assets':
+          totalChangesAssets += otherBchg.amt;
           break;
-        case sideIdEquities:
-          totalChangesEquities += this.amt;
+        case 'Equities':
+          totalChangesEquities += otherBchg.amt;
           break;
         default:
-          throw new Error(`acct.parentFaeSide.id has invalid value: ${this.targetAcct.parentFaeSide.id}.`);
+          throw new Error(`acct.parentFaeSide.id has invalid value: "${this.targetAcct.parentFaeSide.id}"`);
       }
     }
     // compute this.amt for balancing the source tran
     switch (this.targetAcct.parentFaeSide.id) {
-      case sideIdAssets:
+      case 'Assets':
         this.amt = totalChangesEquities - totalChangesAssets;
         totalChangesAssets += this.amt;
         break;
-      case sideIdEquities:
+      case 'Equities':
         this.amt = totalChangesAssets - totalChangesEquities;
         totalChangesEquities += this.amt;
         break;
       default:
-        throw new Error(`acct.parentFaeSide.id has invalid value: ${this.targetAcct.parentFaeSide.id}.`);
+        throw new Error(`acct.parentFaeSide.id has invalid value: "${this.targetAcct.parentFaeSide.id}"`);
     }
     this.sourceTran.totalChangesAssets = totalChangesAssets;
     this.sourceTran.totalChangesEquities = totalChangesEquities;

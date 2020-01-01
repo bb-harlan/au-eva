@@ -65,7 +65,6 @@
           Delete...
         </button>
         <span class="aaToolBarDivider">.</span>
-        <div class="aaInlineBlock">(navigating toolbar)</div>
       </div>
       <div class="aaPanelBody">
         <table border="0" style="border-collapse: collapse;">
@@ -89,15 +88,20 @@
             </div>
             <div class="aaVerticalGridline" style="background-color: #fff; width: 3px;"></div>
             <div class="aaRowData">
+<!--
               <au-grid-bchg-cells-heading fae-side-id.one-way="app.data.faeSideAssets.id"></au-grid-bchg-cells-heading>
+-->
+              <au-grid-bchg-cells-heading fae-side.one-way="'asset'"></au-grid-bchg-cells-heading>
               <div class="aaVerticalGridline" style="background-color: #fff; width: 3px;"></div>
-              <au-grid-bchg-cells-heading
-                fae-side-id.one-way="app.data.faeSideEquities.id"></au-grid-bchg-cells-heading>
+<!--
+              <au-grid-bchg-cells-heading fae-side-id.one-way="app.data.faeSideEquities.id"></au-grid-bchg-cells-heading>
+-->
+              <au-grid-bchg-cells-heading fae-side.one-way="'equity'"></au-grid-bchg-cells-heading>
             </div>
             <div class="aaVerticalGridline" style="background-color: #fff; width: 3px;"></div>
           </div>
 
-          <div class="aaGridScrollableRows" id="tranModule-${app.selectedTran.id}" style="height: 25pc;">
+          <div class="aaGridScrollableRows" xid="tranModule-${app.selectedTran.id}" style="height: 25pc;">
             <template repeat.for="bchg of app.selectedTran.bchgList">
               <div class="aaRow" style="border-bottom-width: 3px;"
                    mouseenter.trigger="onRowEnter($event, bchg)"
@@ -116,14 +120,14 @@
                 <div class="aaRowData aaRowBgColorData
                            ${bchg.id == app.selectedBchg.id ? 'aaMostRecentlySelectedRow' : ''}">
                   <!-- spacer if equities side -->
-                  <template if.bind="bchg.targetAcct.parentFaeSide.id == app.data.SIDE_ID_EQUITIES">
+                  <template if.bind="bchg.targetAcct.parentFaeSide.id == 'Equities'">
                     <!-- put blank space in change-to-asset column -->
                     <au-grid-bchg-cells-spacer></au-grid-bchg-cells-spacer>
                     <div class="aaVerticalGridline" style="width: 3px;"></div>
                   </template>
                   <!-- simulate data cells with spacer -->
                   <au-grid-bchg-cells bchg.one-way="bchg"></au-grid-bchg-cells>
-                  <template if.bind="bchg.targetAcct.parentFaeSide.id == app.data.SIDE_ID_ASSETS">
+                  <template if.bind="bchg.targetAcct.parentFaeSide.id == 'Assets'">
                     <!-- put blank space in change-to-equity column -->
                     <div class="aaVerticalGridline" style="width: 3px;"></div>
                     <au-grid-bchg-cells-spacer></au-grid-bchg-cells-spacer>
@@ -169,12 +173,12 @@
             <div class="aaVerticalGridline aaHidden" style="width: 3px;"></div>
             <div class="aaRowData">
               <au-grid-bchg-cells-total
-                fae-side-id.one-way="app.data.faeSideAssets.id"
+                fae-side.one-way="'assets'"
                 side-total-changes.one-way="app.selectedTran.totalChangesAssets">
               </au-grid-bchg-cells-total>
               <div class="aaVerticalGridline aaHidden" style="width: 3px;"></div>
               <au-grid-bchg-cells-total
-                fae-side-id.one-way="app.data.faeSideEquities.id"
+                fae-side.one-way="'equities'"
                 side-total-changes.one-way="app.selectedTran.totalChangesEquities">
               </au-grid-bchg-cells-total>
             </div>

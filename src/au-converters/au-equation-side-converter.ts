@@ -12,10 +12,10 @@ export class AuEquationSideConverter {
   }
 
   toView(faeSideId: string, capitalize: boolean, plural: boolean) {
-    if (faeSideId == this.app.data.SIDE_ID_ASSETS) {
+    if (faeSideId == 'Assets') {
       return `${capitalize ? "A" : "a"}sset${plural ? "s" : ""}`;
     }
-    else if (faeSideId == this.app.data.SIDE_ID_EQUITIES) {
+    else if (faeSideId == 'Equities') {
       return `${capitalize ? "E" : "e"}quit${plural ? "ies" : "y"}`;
     }
     else {

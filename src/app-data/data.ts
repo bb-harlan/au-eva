@@ -5,19 +5,6 @@ import {Tran} from 'app-data/models/tran';
 import {Jrnl} from 'app-data/models/jrnl';
 
 export class Data {
-  /*==========================================================
-   * constants simulated by getters
-   *==========================================================
-   */
-  get SIDE_ID_ASSETS() {
-    return 'Assets';
-  }
-  get SIDE_ID_EQUITIES(): string {
-    return 'Equities';
-  }
-  get TRAN_JRNL_ID() {
-    return 'Journal';
-  }
 
   /*==========================================================
    * miscellaneous getters
@@ -43,10 +30,10 @@ export class Data {
   /*==========================================================
    *  entitiy's accounting data
    */
-  entityName: string = "";
-  faeSideAssets: FaeSide = new FaeSide(/*id*/ this.SIDE_ID_ASSETS);
-  faeSideEquities: FaeSide = new FaeSide(/*id*/ this.SIDE_ID_EQUITIES);
-  jrnl: Jrnl = new Jrnl(/*id*/ this.TRAN_JRNL_ID);
+  entityName: string = "test entity";
+  faeSideAssets: FaeSide = new FaeSide(/*id*/ 'Assets');
+  faeSideEquities: FaeSide = new FaeSide(/*id*/ 'Equities');
+  jrnl: Jrnl = new Jrnl(/*id*/ 'Journal');
 
 
   generateTestData() {
@@ -78,6 +65,7 @@ export class Data {
         /*title*/ `Test account (equationSide: ${this.faeSideAssets.id}, acctId: ${acctId};)`,
         /*normalBalance*/ 1);
       this.faeSideAssets.acctList.push(newAcct);
+
       acctId = `acct${this.nextAcctId}`;
       newAcct = new Acct(
         /*id*/ acctId,
@@ -98,8 +86,9 @@ export class Data {
       sourceTran = new Tran(
         /*id*/ `tran${this.nextTranId}`,
         /*parentJrnl*/ this.jrnl,
-        /*date*/ (i % 2 ? "2016/02/13" : "2016/02/12"),
+        /*date*/ (i % 2 ? "2016/02/03" : "2016/02/20"),
         /*intraDateSorter*/ this.nextSorter);
+
       randomAcct = acctList[(Math.random() * (acctList.length - 1)).toFixed(0)];
       newBchg = new Bchg(
         /*id*/ `bchg${this.nextBchgId}`,
@@ -110,6 +99,7 @@ export class Data {
         /*amt*/ 0.00);
       sourceTran.bchgList.push(newBchg);
       randomAcct.bchgList.push(newBchg);
+
       randomAcct = acctList[(Math.random() * (acctList.length - 1)).toFixed(0)];
       newBchg = new Bchg(
         /*id*/ `bchg${this.nextBchgId}`,
@@ -120,7 +110,8 @@ export class Data {
         /*amt*/ Math.round(Math.random() * 1000000) / 100);
       sourceTran.bchgList.push(newBchg);
       randomAcct.bchgList.push(newBchg);
-      sourceTran.computeBalancingBchgAmt(this.SIDE_ID_ASSETS, this.SIDE_ID_EQUITIES);
+
+      sourceTran.bchgList[0].setAmtToBalanceTran();
       this.jrnl.tranList.push(sourceTran);
     }
     this.jrnl.refresh(); // cascades to refresh all
@@ -175,16 +166,7 @@ export class Data {
       /*parentJrnl*/ this.jrnl,
       /*date*/ "2018/08/01",
       /*intraDateSorter*/ this.nextSorter);
-    targetAcct = this.faeSideEquities.acctList[0] as Acct;
-    newBchg = new Bchg(
-      /*id*/ `bchg${this.nextBchgId}`,
-      /*sourceTran*/ sourceTran,
-      /*targetAcct*/ targetAcct,
-      /*intraTranSorter*/ this.nextSorter,
-      /*desc*/ "Opening position",
-      /*amt*/ 0.00);
-    sourceTran.bchgList.push(newBchg);
-    targetAcct.bchgList.push(newBchg);
+
     targetAcct = this.faeSideAssets.acctList[0] as Acct;
     newBchg = new Bchg(
       /*id*/ `bchg${this.nextBchgId}`,
@@ -195,6 +177,7 @@ export class Data {
       /*amt*/ 12.00);
     sourceTran.bchgList.push(newBchg);
     targetAcct.bchgList.push(newBchg);
+
     targetAcct = this.faeSideAssets.acctList[1] as Acct;
     newBchg = new Bchg(
       /*id*/ `bchg${this.nextBchgId}`,
@@ -205,7 +188,19 @@ export class Data {
       /*amt*/ 1700.00);
     sourceTran.bchgList.push(newBchg);
     targetAcct.bchgList.push(newBchg);
-    sourceTran.computeBalancingBchgAmt(this.SIDE_ID_ASSETS, this.SIDE_ID_EQUITIES);
+
+    targetAcct = this.faeSideEquities.acctList[0] as Acct;
+    newBchg = new Bchg(
+      /*id*/ `bchg${this.nextBchgId}`,
+      /*sourceTran*/ sourceTran,
+      /*targetAcct*/ targetAcct,
+      /*intraTranSorter*/ this.nextSorter,
+      /*desc*/ "Opening position",
+      /*amt*/ 0.00);
+    sourceTran.bchgList.push(newBchg);
+    targetAcct.bchgList.push(newBchg);
+    newBchg.setAmtToBalanceTran();
+
     this.jrnl.tranList.push(sourceTran);
     /* end of transaction */
 
@@ -220,17 +215,6 @@ export class Data {
       /*date*/ "2018/08/05",
       /*intraDateSorter*/ this.nextSorter);
 
-    targetAcct = this.faeSideAssets.acctList[1] as Acct;
-    newBchg = new Bchg(
-      /*id*/ `bchg${this.nextBchgId}`,
-      /*sourceTran*/ sourceTran,
-      /*targetAcct*/ targetAcct,
-      /*intraTranSorter*/ this.nextSorter,
-      /*desc*/ "ATM cash withdrawal",
-      /*amt*/ 0.00)
-    sourceTran.bchgList.push(newBchg);
-    targetAcct.bchgList.push(newBchg);
-
     targetAcct = this.faeSideAssets.acctList[0] as Acct;
     newBchg = new Bchg(
       /*id*/ `bchg${this.nextBchgId}`,
@@ -241,7 +225,20 @@ export class Data {
       /*amt*/ 100.00);
     sourceTran.bchgList.push(newBchg);
     targetAcct.bchgList.push(newBchg);
-    sourceTran.computeBalancingBchgAmt(this.SIDE_ID_ASSETS, this.SIDE_ID_EQUITIES);
+
+    targetAcct = this.faeSideAssets.acctList[1] as Acct;
+    newBchg = new Bchg(
+      /*id*/ `bchg${this.nextBchgId}`,
+      /*sourceTran*/ sourceTran,
+      /*targetAcct*/ targetAcct,
+      /*intraTranSorter*/ this.nextSorter,
+      /*desc*/ "ATM cash withdrawal",
+      /*amt*/ 0.00);
+    sourceTran.bchgList.push(newBchg);
+    targetAcct.bchgList.push(newBchg);
+    newBchg.setAmtToBalanceTran();
+
+
     this.jrnl.tranList.push(sourceTran);
     /* end of transaction */
 

@@ -6,7 +6,7 @@ import {App} from 'app';
 @inject(App)
 export class AuGridBchgCellsHeading {
   app = null;
-  @bindable faeSideId: string;
+  @bindable faeSide: string;
 
   constructor(app) {
     this.app = app;

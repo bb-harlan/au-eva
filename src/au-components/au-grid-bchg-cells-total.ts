@@ -6,7 +6,7 @@ import {App} from 'app';
 @inject(App)
 export class AuGridBchgCellsTotal {
   app = null;
-  @bindable faeSideId: string;
+  @bindable faeSide: string;
   @bindable sideTotalChanges: number;
 
   constructor(app) {
