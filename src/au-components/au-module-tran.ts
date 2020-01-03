@@ -81,8 +81,10 @@ export class AuModuleTran {
   rowNew(event, listItem) {
     alert(`Insert before "${listItem ? listItem.targetAcct.title : null}" not yet implemented.`);
   }
-  rowDelete(event, listItem) {
-    alert("Not yet imolemented");
+  rowDelete(event, bchg) {
+    let sourceTran = bchg.sourceTran;
+    sourceTran.bchgList.splice(bchg.intraTranIndex, 1);
+    sourceTran.refresh()
   }
   tranNew(event) {
     alert('Not yet implemented.');

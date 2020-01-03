@@ -15,7 +15,9 @@
       </div>
       <!-- change amount -->
       <div class="aaCellWrapper" style="margin-left: 1pc;">
-        <div class="aaCell aaCellBorder aaCellBchgAmt">
+        <div class="aaCell aaCellBorder aaCellBchgAmt"
+             css="${auModuleTran.clonedTran.totalChangesAssets != auModuleTran.clonedTran.totalChangesEquities ? 'color: red; border-color: red' : ''};"
+             >
           ${sideTotalChanges | auCurrencyConverter}
         </div>
         <div class="aaCellHelper aaHidden">

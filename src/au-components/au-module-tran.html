@@ -238,7 +238,7 @@
         <span class="aaToolBarDivider aaHidden">.</span>
         <button type="button" class="aaBtn" click.trigger="cancelEdits($event)">Cancel</button>
         <span class="aaToolBarDivider">.</span>
-        <div class="aaInlineBlock">(editing toolbar)</div>
+        <div class="aaInlineBlock"></div>
       </div>
       <div class="aaPanelBody">
         <table border="0" style="border-collapse: collapse;">
@@ -361,12 +361,12 @@
             <div class="aaRowData">
               <au-grid-bchg-cells-total
                 fae-side.one-way="'assets'"
-                side-total-changes.one-way="app.selectedTran.totalChangesAssets">
+                side-total-changes.one-way="clonedTran.totalChangesAssets">
               </au-grid-bchg-cells-total>
               <div class="aaVerticalGridline aaHidden" style="width: 3px;"></div>
               <au-grid-bchg-cells-total
                 fae-side.one-way="'equities'"
-                side-total-changes.one-way="app.selectedTran.totalChangesEquities">
+                side-total-changes.one-way="clonedTran.totalChangesEquities">
               </au-grid-bchg-cells-total>
             </div>
             <div class="aaVerticalGridline aaHidden" style="width: 3px;"></div>
