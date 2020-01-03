@@ -30,7 +30,6 @@ export class AuModuleTran {
     this.app.selectedBchg = null;
     this.app.selectedModule = this.app.MODULE_JRNL;
   }
-
   onGoUp(event) {
     let selectedTranId = this.app.selectedTran.id;
     let tranList = this.app.selectedTran.parentJrnl.tranList;
@@ -44,7 +43,6 @@ export class AuModuleTran {
       alert('Reached beginning of list.');
     }
   }
-
   onGoDown(event) {
     let selectedTranId = this.app.selectedTran.id;
     let tranList = this.app.selectedTran.parentJrnl.tranList;
@@ -58,19 +56,16 @@ export class AuModuleTran {
       alert('Reached end of list.');
     }
   }
-
   showBchgDetail(event, bchg) {
     this.app.selectedBchg = bchg;
     this.app.selectedAcct = bchg.targetAcct;
     this.app.selectedModule = this.app.MODULE_BCHG;
   }
-
   showBchgInAcct(event, bchg) {
     this.app.selectedBchg = bchg;
     this.app.selectedAcct = bchg.targetAcct;
     this.app.selectedModule = this.app.MODULE_ACCT;
   }
-
   onRowEnter(event, listItem) {
     event.target.children[0].children[0].classList.toggle('aaRowOpsHover', true);
     if (true || listItem) {
@@ -83,14 +78,12 @@ export class AuModuleTran {
       event.target.children[2].classList.toggle('aaRowDataHover', false);
     }
   }
-
   rowNew(event, listItem) {
     alert(`Insert before "${listItem ? listItem.targetAcct.title : null}" not yet implemented.`);
   }
   rowDelete(event, listItem) {
     alert("Not yet imolemented");
   }
-
   tranNew(event) {
     alert('Not yet implemented.');
   }

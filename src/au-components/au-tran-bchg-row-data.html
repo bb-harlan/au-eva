@@ -65,19 +65,19 @@
                                classes-string.to-view="'aaFormInputText aaCellBchgAmt'"></au-input-currency>
           </template>
           <template if.bind="app.isEditing">
-            <template if.bind="bchg.intraTranSorter != 0">
+            <template if.bind="bchg.intraTranIndex != 0">
               <au-input-currency currency-amount.to-view="bchg.amt" is-readonly.to-view="false"
                                  classes-string.to-view="'aaFormInputText aaCellBchgAmt'"
                                  inputcurrencycompleted.delegate="onInputCurrencyCompleted($event)"></au-input-currency>
             </template>
-            <template if.bind="bchg.intraTranSorter == 0">
+            <template if.bind="bchg.intraTranIndex == 0">
               <au-input-currency currency-amount.to-view="bchg.amt" is-readonly.to-view="true"
                                  classes-string.to-view="'aaFormInputText aaCellBchgAmt aaBchgAmtComputed'"></au-input-currency>
             </template>
           </template>
         </div>
       </div>
-      <template if.bind="app.selectedModule == app.MODULE_TRAN && bchg.intraTranSorter == 0 && app.isEditing">
+      <template if.bind="app.selectedModule == app.MODULE_TRAN && bchg.intraTranIndex == 0 && app.isEditing">
         <div style="text-align: right;">
           <div class="aaCell aaFontLabel">NOTE: The change amount in this first row is automatically computed to
             balance the transaction.

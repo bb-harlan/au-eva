@@ -94,7 +94,6 @@ export class Data {
         /*id*/ `bchg${this.nextBchgId}`,
         /*sourceTran*/ sourceTran,
         /*targetAcct*/ randomAcct,
-        /*intraTranSorter*/ 0,
         /*desc*/ `<change desc: bchg #B${this.nextBchgId}; tran #${sourceTran.id}; acct #${randomAcct.id}; >`,
         /*amt*/ 0.00);
       sourceTran.bchgList.push(newBchg);
@@ -105,7 +104,6 @@ export class Data {
         /*id*/ `bchg${this.nextBchgId}`,
         /*sourceTran*/ sourceTran,
         /*targetAcct*/ randomAcct,
-        /*intraTranSorter*/ 1,
         /*desc*/ `<change desc: bchg #B${this.nextBchgId}; tran #${sourceTran.id}; acct #${randomAcct.id}; >`,
         /*amt*/ Math.round(Math.random() * 1000000) / 100);
       sourceTran.bchgList.push(newBchg);
@@ -172,7 +170,6 @@ export class Data {
       /*id*/ `bchg${this.nextBchgId}`,
       /*sourceTran*/ sourceTran,
       /*targetAcct*/ targetAcct,
-      /*intraTranSorter*/ this.nextSorter,
       /*desc*/ "Opening position",
       /*amt*/ 12.00);
     sourceTran.bchgList.push(newBchg);
@@ -183,7 +180,6 @@ export class Data {
       /*id*/ `bchg${this.nextBchgId}`,
       /*sourceTran*/ sourceTran,
       /*targetAcct*/ targetAcct,
-      /*intraTranSorter*/ this.nextSorter,
       /*desc*/ "Opening position",
       /*amt*/ 1700.00);
     sourceTran.bchgList.push(newBchg);
@@ -194,7 +190,6 @@ export class Data {
       /*id*/ `bchg${this.nextBchgId}`,
       /*sourceTran*/ sourceTran,
       /*targetAcct*/ targetAcct,
-      /*intraTranSorter*/ this.nextSorter,
       /*desc*/ "Opening position",
       /*amt*/ 0.00);
     sourceTran.bchgList.push(newBchg);
@@ -220,7 +215,6 @@ export class Data {
       /*id*/ `bchg${this.nextBchgId}`,
       /*sourceTran*/ sourceTran,
       /*targetAcct*/ targetAcct,
-      /*intraTranSorter*/ this.nextSorter,
       /*desc*/ "Deposit cash from ATM withdrawal",
       /*amt*/ 100.00);
     sourceTran.bchgList.push(newBchg);
@@ -231,7 +225,6 @@ export class Data {
       /*id*/ `bchg${this.nextBchgId}`,
       /*sourceTran*/ sourceTran,
       /*targetAcct*/ targetAcct,
-      /*intraTranSorter*/ this.nextSorter,
       /*desc*/ "ATM cash withdrawal",
       /*amt*/ 0.00);
     sourceTran.bchgList.push(newBchg);

@@ -11,7 +11,7 @@ export class AuPopupBchgMover {
   auModuleTran: AuModuleTran;
 
   /* data properties */
-  moverTranBchgList: Array<Bchg> = [];
+  moverBchgList: Array<Bchg> = [];
 
   /* view properties */
   mouseIsDown: boolean = false;
@@ -28,19 +28,14 @@ export class AuPopupBchgMover {
   }
 
   open(event, proxyForMoverPositionTop: HTMLElement, proxyForMoverPositionLeft: HTMLElement) {
-/*
-    console.log (proxyForMoverPositionTop);
-    console.log (proxyForMoverPositionLeft);
-*/
     // make copy of bchgList for mover
-    this.moverTranBchgList.push(...this.auModuleTran.clonedTran.bchgList);
-
+    this.moverBchgList.push(...this.auModuleTran.clonedTran.bchgList);
     // position moverDialogContent
     let proxyPositionProps = proxyForMoverPositionTop.getBoundingClientRect();
     this.moverDialogContent.style.top = `${proxyPositionProps.top}px`;
     proxyPositionProps = proxyForMoverPositionLeft.getBoundingClientRect();
     this.moverDialogContent.style.left = `${proxyPositionProps.left}px`;
-
+    // display dialog
     this.moverDialogModal.style.display = "block";
   }
 
@@ -49,7 +44,7 @@ export class AuPopupBchgMover {
     In the view an Aurelia repeat loop is coded as follows to create
     a div for each row of the mover datagrid as follows.
 
-      <template repeat.for="moverBchg of moverTranBchgList">
+      <template repeat.for="moverBchg of moverBchgList">
         <div
         class="aaRow"
          mover-bchg.bind="moverBchg"
@@ -65,21 +60,20 @@ export class AuPopupBchgMover {
     The value of that property is set to the iterator moverBchg.
 
     The following for loop uses that moverBchg property
-    to reference the original bchg object and update its intraTranSorter property
+    to reference the original bchg object and update its intraTranIndex property
     to reflect its possibly new position in the list as a result of moving.
     */
     for (let i = 0; i <= this.moverRowList.childElementCount - 1; i++) {
       let moverBchg = (<any>this.moverRowList.children[i]).moverBchg as Bchg;
-      moverBchg.intraTranSorter = i;
-      // console.log (`${moverBchg.intraTranSorter}; ${moverBchg.targetAcct.title}`);
+      moverBchg.intraTranIndex = i;
     }
-    this.moverTranBchgList = []; //done with it
-    this.auModuleTran.clonedTran.refresh();
+    this.moverBchgList = []; //done with it
+    this.auModuleTran.clonedTran.bchgList.sort((a: Bchg, b: Bchg) => a.compareToInTran(b));
     this.moverDialogModal.style.display = "none";
   }
 
   cancel(event) {
-    this.moverTranBchgList = []; //done with it
+    this.moverBchgList = []; //done with it
     this.moverDialogModal.style.display = "none";
   }
 

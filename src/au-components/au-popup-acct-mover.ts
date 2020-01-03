@@ -59,7 +59,7 @@ export class AuPopupAcctMover {
     The value of that property is set to the iterator moverAcctListItem.
 
     The following for loop uses that moverAcctListItem property
-    to reference the original acct|annotation object and update its intraTranSorter property
+    to reference the original acct|annotation object and update its intraTranIndex property
     to reflect its possibly new position in the list as a result of moving.
     */
     this.moverAcctList = []; // done with it

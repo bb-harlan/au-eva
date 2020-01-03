@@ -22,7 +22,7 @@
            class="aaGridScrollableRows"
            mousemove.trigger="onListMouseMove($event)"
            mouseleave.trigger="onListMouseLeave($event)">
-        <template repeat.for="moverBchg of moverTranBchgList">
+        <template repeat.for="moverBchg of moverBchgList">
           <div class="aaRow"
                mover-bchg.bind="moverBchg"
                mouseenter.trigger="onRowMouseEnter($event, listItem)"

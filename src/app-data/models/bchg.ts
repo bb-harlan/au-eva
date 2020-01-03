@@ -6,7 +6,7 @@ export class Bchg {
   id: string;
   sourceTran: Tran;
   targetAcct: Acct;
-  intraTranSorter: number;
+  intraTranIndex: number;
   desc: string;
   amt: number;
   newBalance: number = 0.00;
@@ -14,13 +14,11 @@ export class Bchg {
   constructor(id: string,
               sourceTran: Tran,
               targetAcct: Acct,
-              intraTranSorter: number,
               desc: string,
               amt: number) {
     this.id = id;
     this.sourceTran = sourceTran;
     this.targetAcct = targetAcct;
-    this.intraTranSorter = intraTranSorter;
     this.desc = desc;
     this.amt = amt;
   }
@@ -31,23 +29,40 @@ export class Bchg {
 
   compareToInTran(b: Bchg): number {
     return (
-      this.intraTranSorter > b.intraTranSorter ?
+      this.intraTranIndex > b.intraTranIndex ?
         1 :
-        (this.intraTranSorter < b.intraTranSorter ? -1 : 0));
+        (this.intraTranIndex < b.intraTranIndex ? -1 : 0));
   }
 
-  clone(sourceTran) {
-    return new Bchg(
+  clone(sourceTran: Tran): Bchg {
+    let clonedBchg =  new Bchg(
       this.id,
       sourceTran,
       this.targetAcct,
-      this.intraTranSorter,
       this.desc,
       this.amt);
+    clonedBchg.intraTranIndex = this.intraTranIndex;
+    return clonedBchg;
   }
   regToAcct() {
   }
   unregFromAcct() {
+    for (let i = 0; i <= this.targetAcct.bchgList.length - 1; i++) {
+      if (this.targetAcct.bchgList[i].id == this.id) {
+        console.log(`Deleting from targetAcct.bchgList: bchg.Id: ${this.id}; bchg.dsec: ${this.desc};`);
+        this.targetAcct.bchgList.splice(i, 1);
+        break;
+      }
+    }
+  }
+  unregFromTran() {
+    for (let i = 0; i <= this.sourceTran.bchgList.length - 1; i++) {
+      if (this.sourceTran.bchgList[i].id == this.id) {
+        console.log(`Deleting from sourceTran.bchgList:  ${this.id}; bchg.dsec: ${this.desc};`);
+        this.sourceTran.bchgList.splice(i, 1);
+        break;
+      }
+    }
   }
   setAmtToBalanceTran() {
     let totalChangesAssets: number = 0.00;
