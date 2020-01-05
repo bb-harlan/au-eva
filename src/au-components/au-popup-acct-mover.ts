@@ -65,6 +65,7 @@ export class AuPopupAcctMover {
     this.moverAcctList = []; // done with it
     for (let i = 0; i <= this.moverRowList.childElementCount - 1; i++) {
       let listItem = (<any>this.moverRowList.children[i]).listItem as Acct | Annotation;
+      console.log(listItem);
       listItem.intraSideSorter = i;
     }
     this.faeSide.refresh();

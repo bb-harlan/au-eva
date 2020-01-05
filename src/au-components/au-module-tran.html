@@ -8,10 +8,12 @@
   <require from="au-views/au-icon-edit.html"></require>
   <require from="au-views/au-icon-delete.html"></require>
   <require from="au-views/au-icon-row-mover.html"></require>
+  <require from="au-views/au-icon-ellipsis.html"></require>
+  <require from="au-views/au-text-ellipsis.html"></require>
   <require from="au-views/au-grid-bchg-cells-spacer.html"></require>
   <require from="au-views/au-vertical-gridline.html"></require>
   <require from="au-views/au-vertical-gridline-spacer.html"></require>
-  <require from="au-views/au-tran-bchg-cells-spacer.html"></require>
+  <require from="au-views/au-grid-bchg-cells-spacer.html"></require>
   <require from="au-components/au-tran-bchg-row-data"></require>
   <require from="au-components/au-popup-bchg-mover"></require>
   <require from="au-components/au-popup-acct-picker"></require>
@@ -47,7 +49,8 @@
                 class="aaBtn"
                 click.trigger="tranNew($event)">
           <au-icon-new></au-icon-new>
-          New...
+          New
+          <au-text-ellipsis></au-text-ellipsis>
         </button>
         <button type="button"
                 class="aaBtn"
@@ -59,7 +62,8 @@
                 class="aaBtn"
                 click.trigger="tranDelete($event)">
           <au-icon-delete></au-icon-delete>
-          Delete...
+          Delete
+          <au-text-ellipsis></au-text-ellipsis>
         </button>
         <span class="aaToolBarDivider">.</span>
       </div>
@@ -83,16 +87,16 @@
                 <au-icon-nav-left-left></au-icon-nav-left-left>
               </button>
             </div>
-            <div class="aaVerticalGridline" style="background-color: #fff; width: 3px;"></div>
+            <div class="aaVerticalGridline" style="background-color: #999; width: 3px;"></div>
             <div class="aaRowData">
               <au-grid-bchg-cells-heading fae-side.one-time="'asset'"></au-grid-bchg-cells-heading>
-              <div class="aaVerticalGridline" style="background-color: #fff; width: 3px;"></div>
+              <div class="aaVerticalGridline" style="background-color: #999; width: 3px;"></div>
               <au-grid-bchg-cells-heading fae-side.one-time="'equity'"></au-grid-bchg-cells-heading>
             </div>
-            <div class="aaVerticalGridline" style="background-color: #fff; width: 3px;"></div>
+            <div class="aaVerticalGridline" style="background-color: #999; width: 3px;"></div>
           </div>
 
-          <div class="aaGridScrollableRows" xid="tranModule-${app.selectedTran.id}" style="height: 25pc;">
+          <div class="aaGridScrollableRows" id="tranModule-${app.selectedTran.id}" style="height: 25pc;">
             <template repeat.for="bchg of app.selectedTran.bchgList">
               <div class="aaRow" style="border-bottom-width: 3px;"
                    mouseenter.trigger="onRowEnter($event, bchg)"
@@ -129,29 +133,33 @@
             </template>
 
             <!-- End of list row -->
-            <template if.bind="app.isEditing">
-              <div class="aaRowOps aaBgColorToolbar">
-                <span class="aaBtn aaHidden" click.delegate="onMenuClick($event, bchg)">
-                    <i class="fa fa-bars fa-fw" aria-hidden="true"></i>
-                  </span>
-              </div>
-            </template>
+            <!--
+                        <template if.bind="app.isEditing">
+                          <div class="aaRowOps aaBgColorToolbar">
+                            <span class="aaBtn aaHidden" click.delegate="onMenuClick($event, bchg)">
+                                <i class="fa fa-bars fa-fw" aria-hidden="true"></i>
+                              </span>
+                          </div>
+                        </template>
+            -->
             <div class="aaVerticalGridline"></div>
-            <div element.ref="proxyForMoverPositionLeft"
-                 class="aaRowData">
+            <div class="aaRowData"
+                 element.ref="proxyForMoverPositionLeft">
               <div class="aaCell aaFontData aaHidden" style="position: absolute;"><span
                 class="aaSansSerif aaCellTextEOL">${app.END_OF_LIST}</span></div>
-              <au-tran-bchg-cells-spacer></au-tran-bchg-cells-spacer>
+              <au-grid-bchg-cells-spacer></au-grid-bchg-cells-spacer>
               <au-vertical-gridline-spacer></au-vertical-gridline-spacer>
-              <au-tran-bchg-cells-spacer></au-tran-bchg-cells-spacer>
+              <au-grid-bchg-cells-spacer></au-grid-bchg-cells-spacer>
             </div>
-            <div class="aaVerticalGridline"></div>
+            <!--
+                        <div class="aaVerticalGridline"></div>
+            -->
           </div>
           <div class="aaGridFooterBar"></div>
         </div>
         <!-- net change amt for eash side -->
-        <div
-          class="aaGridContainer" style="border-color: transparent; background-color: transparent;">
+        <div class="aaGridContainer"
+             style="border-color: transparent; background-color: transparent;">
           <div class="aaRow aaFontLabel" style="border-color: transparent; background-color: transparent;">
             <div class="aaRowOps aaFontLabel aaHidden">
               <button type="button" class="aaBtn">
@@ -249,16 +257,16 @@
             </td>
           </tr>
         </table>
-        <div element.ref="proxyForMoverPositionTop"
-             class="aaGridContainer">
+        <div class="aaGridContainer"
+             element.ref="proxyForMoverPositionTop">
           <div class="aaGridTitleBar">Account balance changes</div>
-          <div class="aaPanelToolBar" style="text-align: center;">
+          <div class="aaPanelToolBar" style="text-align: left;">
             <button
               type="button"
               class="aaBtn"
               click.trigger="viewmodelPopupBchgMover.open($event, proxyForMoverPositionTop, proxyForMoverPositionLeft)">
-              <au-icon-row-mover></au-icon-row-mover>
-              Move rows...
+              Move rows
+              <au-text-ellipsis></au-text-ellipsis>
             </button>
             <!--
                         <button
@@ -278,14 +286,14 @@
                 <au-icon-delete></au-icon-delete>
               </span>
             </div>
-            <div class="aaVerticalGridline" style="background-color: #fff; width: 3px;"></div>
+            <div class="aaVerticalGridline" style="background-color: #999; width: 3px;"></div>
             <div class="aaRowData"
                  element.ref="proxyForMoverPositionLeft">
               <au-grid-bchg-cells-heading fae-side.one-time="'asset'"></au-grid-bchg-cells-heading>
-              <div class="aaVerticalGridline" style="background-color: #fff; width: 3px;"></div>
+              <div class="aaVerticalGridline" style="background-color: #999; width: 3px;"></div>
               <au-grid-bchg-cells-heading fae-side.one-time="'equity'"></au-grid-bchg-cells-heading>
             </div>
-            <div class="aaVerticalGridline" style="background-color: #fff; width: 3px;"></div>
+            <div class="aaVerticalGridline" style="background-color: #999; width: 3px;"></div>
           </div>
 
           <div class="aaGridScrollableRows" id="clonedTran-${app.selectedTran.id}" style="height: 25pc;">
@@ -323,25 +331,28 @@
                 <div class="aaVerticalGridline" style="width: 3px;"></div>
               </div>
             </template>
-
             <!-- End of list row -->
-            <template if.bind="app.isEditing">
-              <div class="aaRowOps aaBgColorToolbar">
-                <span class="aaBtn aaHidden" click.delegate="onMenuClick($event, bchg)">
-                    <i class="fa fa-bars fa-fw" aria-hidden="true"></i>
-                  </span>
+            <div class="aaRow" style="border-bottom-width: 3px;"
+                 mouseenter.trigger="onRowEnter($event, null)"
+                 mouseleave.trigger="onRowLeave($event, null)">
+              <div class="aaRowOps aaBgColorToolbar aaFontSizeLabel">
+                <div class="aaRowOpsOpacity">
+                    <span class="aaBtn" click.delegate="rowNew($event, null)">
+                      <au-icon-new></au-icon-new>
+                    </span>
+                  <span class="aaBtn aaHidden">
+                      <au-icon-delete></au-icon-delete>
+                    </span>
+                </div>
               </div>
-            </template>
-            <div class="aaVerticalGridline"></div>
-            <div element.ref="proxyForMoverPositionLeft"
-                 class="aaRowData">
-              <div class="aaCell aaFontData aaHidden" style="position: absolute;"><span
-                class="aaSansSerif aaCellTextEOL">${app.END_OF_LIST}</span></div>
-              <au-tran-bchg-cells-spacer></au-tran-bchg-cells-spacer>
-              <au-vertical-gridline-spacer></au-vertical-gridline-spacer>
-              <au-tran-bchg-cells-spacer></au-tran-bchg-cells-spacer>
+              <div class="aaVerticalGridline" style="width: 3px;"></div>
+              <div class="aaRowData aaHidden">
+                <au-grid-bchg-cells-spacer></au-grid-bchg-cells-spacer>
+                <div class="aaVerticalGridline" style="width: 3px;"></div>
+                <au-grid-bchg-cells-spacer></au-grid-bchg-cells-spacer>
+              </div>
+              <div class="aaVerticalGridline" style="width: 3px;"></div>
             </div>
-            <div class="aaVerticalGridline"></div>
           </div>
           <div class="aaGridFooterBar"></div>
         </div>

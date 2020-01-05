@@ -4,6 +4,7 @@
   <require from="au-views/au-icon-row-mover.html"></require>
   <require from="au-views/au-icon-new.html"></require>
   <require from="au-views/au-icon-delete.html"></require>
+  <require from="au-views/au-text-ellipsis.html"></require>
 <!--
   <require from="au-views/au-vertical-gridline.html"></require>
   <require from="au-views/au-vertical-gridline-spacer.html"></require>
@@ -25,7 +26,8 @@
         class="aaBtn"
         click.trigger="onEditRows($event)">
         <au-icon-edit></au-icon-edit>
-        Edit rows...
+        Edit rows
+        <au-text-ellipsis></au-text-ellipsis>
       </button>
       <button
         type="button"
@@ -34,19 +36,6 @@
         <au-icon-row-mover></au-icon-row-mover>
         Move rows...
       </button>
-      <!--
-            <div class="btn-group">
-              <a class="aaBtn mdropdown-toggle" data-toggle="dropdown">
-                <span class="fa fa-bars fa-fw" aria-hidden="true"></span>
-              </a>
-              <ul class="dropdown-menu aaSansSerif">
-                <li><a><i class="fa fa-plus-circle fa-fw aaIconGreen"></i> Insert new account row</a></li>
-                <li><a><i class="fa fa-plus-circle fa-fw aaIconGreen"></i> Insert new annotation row</a></li>
-                <li class="divider"></li>
-                <li><a><i class="fa fa-minus-circle fa-fw aaIconRed"></i> Delete row...</a></li>
-              </ul>
-            </div>
-      -->
     </div>
     <div class="aaRow aaRowColumnHeaders aaFontLabel aaFontBold">
       <div class="aaRowOps aaHidden">
@@ -54,12 +43,12 @@
           <au-icon-nav-right></au-icon-nav-right>
         </button>
       </div>
-      <div class="aaVerticalGridline" style="background-color: #fff"></div>
+      <div class="aaVerticalGridline" style="background-color: #999;"></div>
       <div class="aaRowData" element.ref="proxyForMoverPosition">
         <div class="aaCell aaCellAcctTitle">Title</div>
-        <div class="aaVerticalGridline" style="background-color: #fff"></div>
+        <div class="aaVerticalGridline" style="background-color: #999;"></div>
         <div class="aaCell aaCellBchgBal">Balance</div>
-        <div class="aaVerticalGridline" style="background-color: #fff"></div>
+        <div class="aaVerticalGridline" style="background-color: #999;"></div>
       </div>
     </div>
     <div class="aaGridScrollableRows">

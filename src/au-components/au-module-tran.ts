@@ -66,20 +66,35 @@ export class AuModuleTran {
     this.app.selectedAcct = bchg.targetAcct;
     this.app.selectedModule = this.app.MODULE_ACCT;
   }
-  onRowEnter(event, listItem) {
+  onRowEnter(event, bchg) {
     event.target.children[0].children[0].classList.toggle('aaRowOpsHover', true);
-    if (true || listItem) {
+    if (bchg) {
       event.target.children[2].classList.toggle('aaRowDataHover', true);
     }
   }
-  onRowLeave(event, listItem) {
+  onRowLeave(event, bchg) {
     event.target.children[0].children[0].classList.toggle('aaRowOpsHover', false);
-    if (true || listItem) {
+    if (bchg) {
       event.target.children[2].classList.toggle('aaRowDataHover', false);
     }
   }
-  rowNew(event, listItem) {
-    alert(`Insert before "${listItem ? listItem.targetAcct.title : null}" not yet implemented.`);
+  rowNew(event, bchg) {
+    let insertionIndex: number;
+    if (bchg) {
+      insertionIndex = bchg.intraTranIndex;
+    } else {
+      insertionIndex = this.clonedTran.bchgList.length;
+    }
+    let newBchg = new Bchg(
+      /*id*/ `bchg${this.app.data.nextBchgId}`,
+      /*sourceTran*/ this.clonedTran,
+      /*targetAcct*/ null,
+      /*desc*/ "new bchg",
+      /*amt*/ 0.00);
+    this.clonedTran.bchgList.splice(insertionIndex, 0, newBchg);
+    this.clonedTran.refresh(); // updates each bchg.intraTranIndex
+    console.log(this.clonedTran.bchgList);
+    // alert(`Insert before "${bchg ? bchg.targetAcct.title : null}" not yet implemented.`);
   }
   rowDelete(event, bchg) {
     let sourceTran = bchg.sourceTran;

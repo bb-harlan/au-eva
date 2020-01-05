@@ -11,29 +11,23 @@ export class AuModuleJrnl {
     this.app = app;
   }
 
-  onRowEnter(event, listItem) {
+  onRowEnter(event) {
+    /*row ops*/
     event.target.children[0].children[0].classList.toggle('aaRowOpsHover', true);
+    /*tran date*/
     event.target.children[2].children[0].classList.toggle('aaRowDataHover', true);
+    /*tran bchg rows*/
     event.target.children[2].children[1].classList.toggle('aaRowDataHover', true);
   }
 
-  onRowLeave(event, listItem) {
+  onRowLeave(event) {
+    /*row ops*/
     event.target.children[0].children[0].classList.toggle('aaRowOpsHover', false);
+    /*tran date*/
     event.target.children[2].children[0].classList.toggle('aaRowDataHover', false);
+    /*tran bchg rows*/
     event.target.children[2].children[1].classList.toggle('aaRowDataHover', false);
   }
-
-/*
-  onRowEnter(event, tran) {
-    event.target.children[0].classList.toggle('aaRowOpsHover', true);
-    event.target.children[2].classList.toggle('aaRowDataHover', true);
-  }
-
-  onRowLeave(event, tran) {
-    event.target.children[0].classList.toggle('aaRowOpsHover', false);
-    event.target.children[2].classList.toggle('aaRowDataHover', false);
-  }
-*/
 
   onGoTran(event, tran) {
     this.app.selectedBchg = null;

@@ -2,6 +2,7 @@ import {customElement, bindable, inject} from 'aurelia-framework';
 import {App} from 'app';
 import {AuModuleTran} from 'au-components/au-module-tran';
 import {Bchg} from 'app-data/models/bchg';
+import {Acct, Annotation} from "../app-data/models/acct";
 
 @customElement('au-popup-bchg-mover')
 @inject(App, AuModuleTran)
@@ -44,7 +45,7 @@ export class AuPopupBchgMover {
     In the view an Aurelia repeat loop is coded as follows to create
     a div for each row of the mover datagrid as follows.
 
-      <template repeat.for="moverBchg of moverBchgList">
+      <template repeat.for="bchg of moverBchgList">
         <div
         class="aaRow"
          mover-bchg.bind="moverBchg"
@@ -54,10 +55,10 @@ export class AuPopupBchgMover {
 
     In that loop note that
 
-        mover-bchg.bind="moverBchg"
+        mover-bchg.bind="bchg"
 
-    creates a property named moverBchg on each row, a div of type HTMLElement.
-    The value of that property is set to the iterator moverBchg.
+    creates a property named moverBchg on each row element, a div of type HTMLElement.
+    The value of that property is set to the iterator bchg.
 
     The following for loop uses that moverBchg property
     to reference the original bchg object and update its intraTranIndex property
@@ -79,31 +80,31 @@ export class AuPopupBchgMover {
 
   onRowMouseDown(event) {
     let targetRow: Element = event.currentTarget as Element;
-    targetRow.children[0].classList.toggle('aaRowDataHover', false);
-    targetRow.children[0].classList.toggle('aaDragging', true);
+    targetRow.children[1].classList.toggle('aaRowDataHover', false);
+    targetRow.children[1].classList.toggle('aaDragging', true);
     this.mouseIsDown = true;
     this.selectedMoverRow = event.currentTarget;
   }
 
   onRowMouseUp(event) {
     let targetRow = event.currentTarget as Element;
-    targetRow.children[0].classList.toggle('aaDragging', false);
-    targetRow.children[0].classList.toggle('aaRowDataHover', true);
+    targetRow.children[1].classList.toggle('aaDragging', false);
+    targetRow.children[1].classList.toggle('aaRowDataHover', true);
     this.mouseIsDown = false;
     this.selectedMoverRow = null;
   }
 
-  onRowMouseLeave(event, listItem) {
+  onRowMouseLeave(event, bchg) {
     if (!this.mouseIsDown) {
       let targetRow = event.currentTarget as Element;
-      targetRow.children[0].classList.toggle('aaRowDataHover', false);
+      targetRow.children[1].classList.toggle('aaRowDataHover', false);
     }
   }
 
-  onRowMouseEnter(event, listItem) {
+  onRowMouseEnter(event, bchg) {
     if (!this.mouseIsDown) {
       let targetRow = event.currentTarget as Element;
-      targetRow.children[0].classList.toggle('aaRowDataHover', true);
+      targetRow.children[1].classList.toggle('aaRowDataHover', true);
     }
   }
 

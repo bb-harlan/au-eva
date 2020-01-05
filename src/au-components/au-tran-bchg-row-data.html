@@ -1,7 +1,8 @@
 <template>
-  <require from="au-views/au-tran-bchg-cells-spacer.html"></require>
+  <require from="au-views/au-grid-bchg-cells-spacer.html"></require>
   <require from="au-views/au-vertical-gridline.html"></require>
   <require from="au-views/au-icon-ellipsis.html"></require>
+  <require from="au-views/au-text-ellipsis.html"></require>
   <require from="au-views/au-icon-balance-scale.html"></require>
   <require from="au-components/au-input-currency"></require>
 
@@ -9,7 +10,7 @@
     <!-- spacer if equities side -->
     <template if.bind="bchg.targetAcct.parentFaeSide.id == 'Equities'">
       <!-- put blank space in change-to-asset column -->
-      <au-tran-bchg-cells-spacer></au-tran-bchg-cells-spacer>
+      <au-grid-bchg-cells-spacer></au-grid-bchg-cells-spacer>
       <div class="aaVerticalGridline"></div>
     </template>
 
@@ -24,6 +25,7 @@
                 class="aaBtn"
                 click.trigger="auTranBchgAcctPicker.open($event, bchg)">
           <au-icon-ellipsis></au-icon-ellipsis>
+          <au-text-ellipsis></au-text-ellipsis>
         </button>
         <button type="button"
                 class="aaBtn"
@@ -90,7 +92,7 @@
     <template if.bind="bchg.targetAcct.parentFaeSide.id == app.data.faeSideAssets.id">
       <!-- put blank space in change-to-equity column -->
       <div class="aaVerticalGridline"></div>
-      <au-tran-bchg-cells-spacer></au-tran-bchg-cells-spacer>
+      <au-grid-bchg-cells-spacer></au-grid-bchg-cells-spacer>
     </template>
   </div>
 </template>

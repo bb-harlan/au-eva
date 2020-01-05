@@ -3,8 +3,8 @@
   <require from="au-views/au-vertical-gridline-spacer.html"></require>
   <require from="au-converters/au-currency-converter"></require>
   <require from="au-converters/au-equation-side-converter"></require>
-  <require from="au-components/au-tran-bchg-row-data"></require>
-  <require from="au-views/au-tran-bchg-cells-spacer.html"></require>
+  <require from="au-components/au-grid-bchg-cells"></require>
+  <require from="au-views/au-grid-bchg-cells-spacer.html"></require>
 
   <div element.ref="moverDialogModal" class="aaModal">
     <div
@@ -18,25 +18,47 @@
           <span click.trigger="cancel($event)" class="aaBtn" style="margin-left: 4pc;">Cancel</span>
         </div>
       </div>
-      <div element.ref="moverRowList"
-           class="aaGridScrollableRows"
+      <div class="aaGridScrollableRows"
+           element.ref="moverRowList"
            mousemove.trigger="onListMouseMove($event)"
            mouseleave.trigger="onListMouseLeave($event)">
-        <template repeat.for="moverBchg of moverBchgList">
-          <div class="aaRow"
-               mover-bchg.bind="moverBchg"
-               mouseenter.trigger="onRowMouseEnter($event, listItem)"
-               mouseleave.trigger="onRowMouseLeave($event, listItem)"
+        <template repeat.for="bchg of moverBchgList">
+          <div class="aaRow" style="border-bottom-width: 3px;"
+               mover-bchg.one-time="bchg"
+               mouseenter.trigger="onRowMouseEnter($event, bchg)"
+               mouseleave.trigger="onRowMouseLeave($event, bchg)"
                mousedown.trigger="onRowMouseDown($event)"
                mouseup.trigger="onRowMouseUp($event)">
+            <div class="aaVerticalGridline" style="width: 3px;"></div>
             <div class="aaRowData aaRowBgColorData">
-              <au-tran-bchg-row-data bchg.bind="moverBchg"></au-tran-bchg-row-data>
-              <div class="aaVerticalGridline"></div>
+              <!-- spacer if equities side -->
+              <template if.bind="bchg.targetAcct.parentFaeSide.id == 'Equities'">
+                <!-- put blank space in change-to-asset column -->
+                <au-grid-bchg-cells-spacer></au-grid-bchg-cells-spacer>
+                <div class="aaVerticalGridline" style="width: 3px;"></div>
+              </template>
+              <!-- simulate data cells with spacer -->
+              <au-grid-bchg-cells bchg.one-way="bchg"></au-grid-bchg-cells>
+              <template if.bind="bchg.targetAcct.parentFaeSide.id == 'Assets'">
+                <!-- put blank space in change-to-equity column -->
+                <div class="aaVerticalGridline" style="width: 3px;"></div>
+                <au-grid-bchg-cells-spacer></au-grid-bchg-cells-spacer>
+              </template>
             </div>
+            <div class="aaVerticalGridline" style="width: 3px;"></div>
           </div>
+<!--
+            <div class="aaVerticalGridline" style="width: 3px;"></div>
+-->
         </template>
       </div>
-      <div class="aaGridFooterBar"></div>
     </div>
+    <div class="aaVerticalGridline" style="width: 3px;"></div>
   </div>
+  </div>
+</template>
+</div>
+<div class="aaGridFooterBar"></div>
+</div>
+</div>
 </template>

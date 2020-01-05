@@ -59,7 +59,7 @@ h1 {
   color: #0c0;
 }
 .aaIconBlue {
-  color: #00a;
+  color: #00e;
 }
 
 .aaAppToolBar {
@@ -232,7 +232,7 @@ h1 {
 }
 
 .aaBtn {
-  display: inline-block;
+  display: inline-flex;
   color: #333;
   /*padding: 0.25pc 0.35pc;*/
   padding: 2px 0.25pc;
@@ -382,6 +382,8 @@ h1 {
 .aaRowColumnHeaders {
   color: #fff;
   background-color: #bbb;
+  border-top: 3px solid #999;
+  border-bottom: 3px solid #999;
 }
 .aaRowTotals {
   position: relative;
@@ -570,6 +572,9 @@ h1 {
   align-self: stretch;
   background-color: #ccc;
   overflow: hidden;
+}
+.aaVerticalGridlineColHeaders {
+  background-color: #999;
 }
 .aaVerticalGridlineSpacer {
   display: inline-block;

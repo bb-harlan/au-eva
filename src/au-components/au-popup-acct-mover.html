@@ -22,13 +22,12 @@
         mousemove.trigger="onListMouseMove($event)"
         mouseleave.trigger="onListMouseLeave($event)">
         <template repeat.for="listItem of moverAcctList">
-          <div
-            class="aaRow"
-            list-item.bind="listItem"
-            mouseenter.trigger="onRowMouseEnter($event, listItem)"
-            mouseleave.trigger="onRowMouseLeave($event, listItem)"
-            mousedown.trigger="onRowMouseDown($event)"
-            mouseup.trigger="onRowMouseUp($event)">
+          <div class="aaRow"
+               list-item.bind="listItem"
+               mouseenter.trigger="onRowMouseEnter($event, listItem)"
+               mouseleave.trigger="onRowMouseLeave($event, listItem)"
+               mousedown.trigger="onRowMouseDown($event)"
+                mouseup.trigger="onRowMouseUp($event)">
             <div class="aaRowData aaRowBgColorData">
               <template if.bind="listItem.isAcct()">
                 <span class="aaCell aaFontSizeData aaCellAcctTitle">${listItem.title}</span>

@@ -35,15 +35,17 @@ export class Tran {
     let intraTranIndex = 0;
     for (let bchg of this.bchgList) {
       bchg.intraTranIndex = intraTranIndex++;
-      switch (bchg.targetAcct.parentFaeSide.id) {
-        case 'Assets':
-          this.totalChangesAssets += bchg.amt;
-          break;
-        case 'Equities':
-          this.totalChangesEquities += bchg.amt;
-          break;
-        default:
-          throw new Error(`acct.parentFaeSide.id has invalid value: "${bchg.targetAcct.parentFaeSide.id}"`);
+      if (bchg.targetAcct) {
+        switch (bchg.targetAcct.parentFaeSide.id) {
+          case 'Assets':
+            this.totalChangesAssets += bchg.amt;
+            break;
+          case 'Equities':
+            this.totalChangesEquities += bchg.amt;
+            break;
+          default:
+            throw new Error(`acct.parentFaeSide.id has invalid value: "${bchg.targetAcct.parentFaeSide.id}"`);
+        }
       }
     }
     if (this.parentJrnl) {
