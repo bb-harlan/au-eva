@@ -9,7 +9,7 @@ import {FaeSide} from 'app-data/models/fae-side';
 export class AuPopupAcctMover {
   app;
   faeSide: FaeSide;
-  moverAcctList: Array<Acct | Annotation>;
+  moverAcctList: Array<Acct | Annotation> = [];
   mouseIsDown: boolean = false;
   selectedMoverRow: Element = null;
 
@@ -26,7 +26,6 @@ export class AuPopupAcctMover {
     this.faeSide = faeSide;
 
     // make copy of acctList for mover
-    this.moverAcctList = [];
     this.moverAcctList.push(...faeSide.acctList);
 
     // postion moverDialogContent
@@ -62,7 +61,7 @@ export class AuPopupAcctMover {
     to reference the original acct|annotation object and update its intraTranIndex property
     to reflect its possibly new position in the list as a result of moving.
     */
-    this.moverAcctList = []; // done with it
+    this.moverAcctList.splice(0, this.moverAcctList.length); //donewith it, delete all members
     for (let i = 0; i <= this.moverRowList.childElementCount - 1; i++) {
       let listItem = (<any>this.moverRowList.children[i]).listItem as Acct | Annotation;
       console.log(listItem);
@@ -73,7 +72,7 @@ export class AuPopupAcctMover {
   }
 
   cancel(event) {
-    this.moverAcctList = [];
+    this.moverAcctList.splice(0, this.moverAcctList.length); //donewith it, delete all members
     this.moverDialogModal.style.display = "none";
   }
 

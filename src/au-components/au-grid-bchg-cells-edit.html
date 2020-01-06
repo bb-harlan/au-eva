@@ -10,7 +10,7 @@
         <div class="aaCell aaCellBorder aaCellAcctTitle">
           ${bchg.targetAcct.title}
         </div>
-        <div class="aaCellHelper aaFontSizeLabel aaHidden">
+        <div class="aaCellHelper aaFontSizeLabel">
           <button type="button" class="aaBtn aaHelperBtn">
             <au-icon-ellipsis></au-icon-ellipsis>
           </button>
@@ -29,8 +29,10 @@
         <div class="aaCell aaCellBorder aaCellBchgAmt">
           ${bchg.amt | auCurrencyConverter}
         </div>
-        <div class="aaCellHelper aaHidden">
-          <button type="button" class="aaBtn aaHelperBtn">
+        <div class="aaCellHelper aaFontSizeLabel ${bchg.sourceTran.totalChangesAssets == bchg.sourceTran.totalChangesEquities ? 'aaHidden' : ''}">
+          <button type="button"
+                  class="aaBtn aaHelperBtn"
+                  click.trigger="bchg.setAmtToBalanceTran()">
             <au-icon-balance-scale></au-icon-balance-scale>
           </button>
         </div>

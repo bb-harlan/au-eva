@@ -526,17 +526,27 @@ h1 {
   align-self: stretch;
   align-items: center;
   background-color: #fff;
+
+  display: inline-flex;
+  flex-direction: row;
+  align-self: stretch;
+  align-items: center;
+  color: #000;
+  background-color: #ddd;
+  border: 1px solid #ccc;
+  border-left-style: none;
 }
 .aaHelperBtn {
-  padding: 1px 2px;
+  padding: 2px;
   margin: 0 2px;
 }
-
-.aaAutoBalanceItem {
-  color: #000;
-  background-color: #ffc;
+.aaTranOutOfBalance {
+  color: red;
+  border-color: red;
+  -webkit-box-shadow: 0px 0px 2px 2px red;
+  -moz-box-shadow: 0px 0px 2px 2px red;
+  box-shadow: 0px 0px 2px 2px red;
 }
-
 .aaCellBchgBal {
   width: 7pc;
   text-align: right;
@@ -561,11 +571,6 @@ h1 {
   outline: 2px solid #58b;
   outline-radius: 0.25pc;
 }
-
-.aaTranBchgRow2Indent {
-  margin-left: 3pc;
-}
-
 .aaVerticalGridline {
   display: inline-block;
   width: 1px;

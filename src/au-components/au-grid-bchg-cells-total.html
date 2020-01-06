@@ -15,14 +15,13 @@
       </div>
       <!-- change amount -->
       <div class="aaCellWrapper" style="margin-left: 1pc;">
-        <div class="aaCell aaCellBorder aaCellBchgAmt"
-             css="${auModuleTran.clonedTran.totalChangesAssets != auModuleTran.clonedTran.totalChangesEquities ? 'color: red; border-color: red' : ''};"
-             >
+        <div class="aaCell aaCellBorder aaCellBchgAmt ${sideTotalChanges != otherSideTotalChanges ? 'aaTranOutOfBalance' : ''}">
           ${sideTotalChanges | auCurrencyConverter}
         </div>
         <div class="aaCellHelper aaHidden">
-          <button type="button" class="aaBtn aaHelperBtn">
-            <span class="fa fa-balance-scale fa-fw" aria-hidden="true"></span>
+          <button type="button"
+                  class="aaBtn aaHelperBtn>
+            <span class="fa fa-balance-scale fa-fw aria-hidden="true"></span>
           </button>
         </div>
       </div>

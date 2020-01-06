@@ -68,13 +68,13 @@ export class AuPopupBchgMover {
       let moverBchg = (<any>this.moverRowList.children[i]).moverBchg as Bchg;
       moverBchg.intraTranIndex = i;
     }
-    this.moverBchgList = []; //done with it
+    this.moverBchgList.splice(0, this.moverBchgList.length); //donewith it, delete all members
     this.auModuleTran.clonedTran.bchgList.sort((a: Bchg, b: Bchg) => a.compareToInTran(b));
     this.moverDialogModal.style.display = "none";
   }
 
   cancel(event) {
-    this.moverBchgList = []; //done with it
+    this.moverBchgList.splice(0, this.moverBchgList.length); //donewith it, delete all members
     this.moverDialogModal.style.display = "none";
   }
 
