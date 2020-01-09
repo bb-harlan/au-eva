@@ -1,0 +1,45 @@
+<template>
+  <require from="au-converters/au-equation-side-converter"></require>
+
+  <h1 css="text-align: ${faeSide.id == 'Assets' ? 'right' : 'left'};">
+    ${faeSide.id}
+  </h1>
+  <div class="aaGridContainer">
+    <div class="aaGridTitleBar" style="font-size: larger;">${faeSide.id | auEquationSideConverter:true: false}
+      accounts
+    </div>
+    <div class="aaGridScrollableRows">
+      <template repeat.for="listItem of faeSide.acctList">
+        <div id="${listItem.id}"
+             class="aaRow"
+             mouseenter.trigger="onRowEnter($event, listItem)"
+             mouseleave.trigger="onRowLeave($event, listItem)">
+          <template if.bind="listItem.isAcct()">
+            <div class="aaRowData aaRowBgColorData ${listItem.id == app.selectedAcct.id ? 'aaMostRecentlySelectedRow' : ''}">
+              <span class="aaCell aaCellAcctTitle"
+                    click.trigger="auPopupAcctPicker.picked(listItem)">
+                ${listItem.title}
+              </span>
+              <div class="aaVerticalGridline"></div>
+            </div>
+          </template>
+          <template if.bind="listItem.isAnnotation()">
+            <div class="aaRowData aaRowBgColorData ${listItem.id == app.selectedAcct.id ? 'aaMostRecentlySelectedRow' : ''}">
+              <span class="aaCell aaCellAnnoTitle">${listItem.annoText}</span>
+              <div class="aaVerticalGridline"></div>
+            </div>
+            <div class="aaVerticalGridline"></div>
+          </template>
+        </div>
+      </template>
+    </div>
+    <div class="aaGridFooterBar"></div>
+  </div>
+  <!--
+  Following is the coding for a row that shows the total of
+  all account balances. It is coded with invisible menu and nav buttons
+  as horizontal space holders to result in proper horizontal positioning
+  of the "Total" label amd the total amt.
+  -->
+  </div>
+</template>

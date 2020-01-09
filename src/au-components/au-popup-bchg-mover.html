@@ -6,10 +6,10 @@
   <require from="au-components/au-grid-bchg-cells"></require>
   <require from="au-views/au-grid-bchg-cells-spacer.html"></require>
 
-  <div element.ref="moverDialogModal" class="aaModal">
-    <div
-      element.ref="moverDialogContent"
-      class="aaModalContent aaInlineBlock aaPanelBoxShadow">
+  <div class="aaModal"
+       element.ref="moverDialogModal">
+    <div class="aaModalContent aaInlineBlock aaPanelBoxShadow"
+         element.ref="moverDialogContent">
       <div class="aaGridTitleBar" style="font-size: larger;">Move rows<br><span class="aaFontLabel">&mdash; Drag & drop row(s) to desired list position(s). &mdash;</span>
       </div>
       <div class="aaPanelToolBar">
@@ -52,6 +52,7 @@
 -->
         </template>
       </div>
+      <div class="aaGridFooterBar"></div>
     </div>
     <div class="aaVerticalGridline" style="width: 3px;"></div>
   </div>

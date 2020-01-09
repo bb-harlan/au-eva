@@ -65,7 +65,6 @@ export class Bchg {
     }
   }
   setAmtToBalanceTran() {
-    console.log('in setAmtToBalanceTran()');
     let totalChangesAssets: number = 0.00;
     let totalChangesEquities: number = 0.00;
 

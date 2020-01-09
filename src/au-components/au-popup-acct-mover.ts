@@ -22,7 +22,7 @@ export class AuPopupAcctMover {
     this.app = app;
   }
 
-  open(event, proxyForMoverPosition: HTMLElement, faeSide: FaeSide) {
+  open(proxyForMoverPosition: HTMLElement, faeSide: FaeSide) {
     this.faeSide = faeSide;
 
     // make copy of acctList for mover
@@ -37,7 +37,7 @@ export class AuPopupAcctMover {
     this.moverDialogModal.style.display = "block";
   }
 
-  done(event) {
+  done() {
     /*
     In the view an Aurelia repeat loop is coded as follows to create
     a div for each row of the mover datagrid as follows.
@@ -71,7 +71,7 @@ export class AuPopupAcctMover {
     this.moverDialogModal.style.display = "none";
   }
 
-  cancel(event) {
+  cancel() {
     this.moverAcctList.splice(0, this.moverAcctList.length); //donewith it, delete all members
     this.moverDialogModal.style.display = "none";
   }

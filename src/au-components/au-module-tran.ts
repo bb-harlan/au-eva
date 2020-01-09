@@ -8,9 +8,10 @@ import {Data} from "../app-data/data";
 
 @customElement('au-module-tran')
 @inject(App)
-export class AuModuleTran {
-  clonedTran: Tran;
 
+export class AuModuleTran {
+  newBchgInsertionIndex: number;
+  showGridHeaderRow: boolean = false;
 
   // @injected item(s)
   app: App;
@@ -19,9 +20,12 @@ export class AuModuleTran {
    *  references
    *=====================================================
    */
+  proxyForPickerPositionTop: HTMLElement; // <div element.ref="proxyForPickerPositionTop" ...
   proxyForMoverPositionTop: HTMLElement; // <div element.ref="proxyForMoverPositionTop" ...
   proxyForMoverPositionLeft: HTMLElement; // <div element.ref="proxyForMoverPositionLeft" ...
   viewmodelPopupBchgMover; // <au-popup-bchg-mover view-model.ref="viewmodelPopupBchgMover></au-popup-bchg-mover>
+  viewmodelPopupAcctPicker; // <au-popup-acct-picker view-model.ref="viewmodelPopupAcctPicker></au-popup-acct-picker>
+
   constructor(app) {
     this.app = app;
   }
@@ -78,25 +82,37 @@ export class AuModuleTran {
       event.target.children[2].classList.toggle('aaRowDataHover', false);
     }
   }
-  rowNew(event, bchg) {
-    let insertionIndex: number;
-    if (bchg) {
-      insertionIndex = bchg.intraTranIndex;
+  newBchg(currentBchg) {
+    if (currentBchg) {
+      this.newBchgInsertionIndex = currentBchg.intraTranIndex;
     } else {
-      insertionIndex = this.clonedTran.bchgList.length;
+      this.newBchgInsertionIndex = this.app.editableTran.bchgList.length;
     }
+    this.viewmodelPopupAcctPicker.open(this.newAcctPicked)
+/*
     let newBchg = new Bchg(
-      /*id*/ `bchg${this.app.data.nextBchgId}`,
-      /*sourceTran*/ this.clonedTran,
-      /*targetAcct*/ null,
+      /!*id*!/ `bchg${this.app.data.nextBchgId}`,
+      /!*sourceTran*!/ this.app.editableTran,
+      /!*targetAcct*!/ null,
+      /!*desc*!/ "new bchg",
+      /!*amt*!/ 0.00);
+    this.app.editableTran.bchgList.splice(insertionIndex, 0, newBchg);
+    this.app.editableTran.refresh(); // updates each bchg.intraTranIndex
+*/
+  }
+
+  newAcctPicked(pickedAcct) {
+    console.log(pickedAcct);
+    let newBchg = new Bchg(
+      /*id `bchg${this.app.data.nextBchgId}`*/ "ID",
+      /*sourceTran*/ this.app.editableTran,
+      /*targetAcct*/ pickedAcct,
       /*desc*/ "new bchg",
       /*amt*/ 0.00);
-    this.clonedTran.bchgList.splice(insertionIndex, 0, newBchg);
-    this.clonedTran.refresh(); // updates each bchg.intraTranIndex
-    console.log(this.clonedTran.bchgList);
-    // alert(`Insert before "${bchg ? bchg.targetAcct.title : null}" not yet implemented.`);
+    this.app.editableTran.bchgList.splice(this.newBchgInsertionIndex, 0, newBchg);
+    this.app.editableTran.refresh(); // updates each bchg.intraTranIndex
   }
-  rowDelete(event, bchg) {
+  rowDelete(bchg) {
     let sourceTran = bchg.sourceTran;
     sourceTran.bchgList.splice(bchg.intraTranIndex, 1);
     sourceTran.refresh()
@@ -105,8 +121,8 @@ export class AuModuleTran {
     alert('Not yet implemented.');
   }
   tranEdit(event) {
-    this.clonedTran = this.app.selectedTran.clone();
-    this.app.selectedModuleMode = this.app.MODULE_MODE_EDITING;
+    this.app.editableTran = this.app.selectedTran.clone();
+    this.app.tranEditingMode = true;
   }
   tranDelete(event) {
     alert('Not yet implemented.');
@@ -114,10 +130,10 @@ export class AuModuleTran {
 
   saveEdits(event) {
     this.app.selectedTran.refresh();
-    this.app.selectedModuleMode = this.app.MODULE_MODE_NAVIGATING;
+    this.app.tranEditingMode = false;
   }
   cancelEdits(event) {
-    this.app.selectedModuleMode = this.app.MODULE_MODE_NAVIGATING;
+    this.app.tranEditingMode = false;
   }
 
   onPickAcct(event, bchg) {

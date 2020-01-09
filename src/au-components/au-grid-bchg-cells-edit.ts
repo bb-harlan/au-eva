@@ -6,6 +6,8 @@ import {App} from 'app';
 @inject(App)
 export class AuGridBchgCells {
   app = null;
+  @bindable viewmodelPopupAcctPicker; // <au-popup-acct-picker view-model.ref="viewmodelPopupAcctPicker></au-popup-bchg-mover>
+  @bindable proxyForPickerPositionTop: HTMLElement; // <div element.ref="proxyForPickerPositionTop" ...
   @bindable bchg: Bchg;
 
   constructor(app) {

@@ -5,15 +5,15 @@
   <require from="au-converters/au-currency-converter"></require>
   <require from="au-converters/au-equation-side-converter"></require>
 
-  <div element.ref="moverDialogModal" class="aaModal">
-    <div
-      element.ref = "moverDialogContent"
-      class="aaModalContent aaInlineBlock aaPanelBoxShadow">
+  <div class="aaModal"
+       element.ref="moverDialogModal">
+    <div class="aaModalContent aaInlineBlock aaPanelBoxShadow"
+         element.ref = "moverDialogContent">
       <div class="aaGridTitleBar" style="font-size: larger;">Move rows<br><span class="aaFontLabel">&mdash; Drag & drop row(s) to desired list position(s). &mdash;</span></div>
       <div class="aaPanelToolBar">
         <div style="text-align: center;">
-          <button type="button" class="aaBtn" click.trigger="done($event)">Done</button>
-          <button type="button" class="aaBtn" style="margin-left: 4pc;" click.trigger="cancel($event)">Cancel</button>
+          <button type="button" class="aaBtn" click.trigger="done()">Done</button>
+          <button type="button" class="aaBtn" style="margin-left: 4pc;" click.trigger="cancel()">Cancel</button>
         </div>
       </div>
       <div

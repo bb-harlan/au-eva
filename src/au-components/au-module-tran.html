@@ -22,9 +22,10 @@
   <require from="au-components/au-grid-bchg-cells-edit"></require>
   <require from="au-components/au-grid-bchg-cells-total"></require>
 
-  <div class="aaPanel aaPanelBoxShadow">
+  <div class="aaPanel aaPanelBoxShadow"
+       element.ref="proxyForPickerPositionTop">
     <div class="aaPanelHeader aaPanelHeaderModule">Transaction</div>
-    <template if.bind="app.selectedModuleMode == app.MODULE_MODE_NAVIGATING">
+    <template if.bind="!app.tranEditingMode">
       <div class="aaPanelToolBar">
         <div class="aaInlineBlock">
           <button type="button"
@@ -78,7 +79,8 @@
         </table>
         <div class="aaGridContainer">
           <div class="aaGridTitleBar">Account balance changes</div>
-          <div class="aaRow aaRowColumnHeaders aaFontLabel aaFontBold">
+          <div class="aaRow aaRowColumnHeaders aaFontLabel aaFontBold"
+               css="${showGridHeaderRow ? '' : 'display: none;'}">
             <div class="aaRowOps aaFontLabel aaHidden">
               <button type="button" class="aaBtn">
                 <au-icon-nav-left></au-icon-nav-left>
@@ -172,11 +174,14 @@
             <div class="aaVerticalGridline aaHidden" style="width: 3px;"></div>
             <div class="aaRowData">
               <au-grid-bchg-cells-total
+                fae-side.one-way="'assets'"
                 side-total-changes.one-way="app.selectedTran.totalChangesAssets"
                 other-side-total-changes.one-way="app.selectedTran.totalChangesEquities">
               </au-grid-bchg-cells-total>
+
               <div class="aaVerticalGridline aaHidden" style="width: 3px;"></div>
               <au-grid-bchg-cells-total
+                fae-side.one-way="'equities'"
                 side-total-changes.one-way="app.selectedTran.totalChangesEquities"
                 other-side-total-changes.one-way="app.selectedTran.totalChangesAssets">
               </au-grid-bchg-cells-total>
@@ -186,7 +191,7 @@
         </div>
       </div>
     </template>
-    <template if.bind="app.selectedModuleMode == app.MODULE_MODE_EDITING">
+    <template if.bind="app.tranEditingMode">
       <div class="aaPanelToolBar">
         <div class="aaInlineBlock aaHidden">
           <button type="button"
@@ -228,7 +233,7 @@
             <button
               type="button"
               class="aaBtn"
-              click.trigger="viewmodelPopupBchgMover.open($event, proxyForMoverPositionTop, proxyForMoverPositionLeft)">
+              click.trigger="viewmodelPopupBchgMover.open(proxyForMoverPositionTop, proxyForMoverPositionLeft)">
               Move rows
               <au-text-ellipsis></au-text-ellipsis>
             </button>
@@ -236,7 +241,7 @@
                         <button
                           type="button"
                           class="aaBtn"
-                          click.trigger="viewmodelPopupAcctPicker.open($event, acctPicked)">
+                          click.trigger="viewmodelPopupAcctPicker.open(acctPicked)">
                           Pick acct...
                         </button>
             -->
@@ -260,17 +265,17 @@
             <div class="aaVerticalGridline" style="background-color: #999; width: 3px;"></div>
           </div>
 
-          <div class="aaGridScrollableRows" id="clonedTran-${app.selectedTran.id}" style="height: 25pc;">
-            <template repeat.for="bchg of clonedTran.bchgList">
+          <div class="aaGridScrollableRows" id="app.editableTran-${app.selectedTran.id}" style="height: 25pc;">
+            <template repeat.for="bchg of app.editableTran.bchgList">
               <div class="aaRow" style="border-bottom-width: 3px;"
                    mouseenter.trigger="onRowEnter($event, bchg)"
                    mouseleave.trigger="onRowLeave($event, bchg)">
                 <div class="aaRowOps aaBgColorToolbar aaFontSizeLabel">
                   <div class="aaRowOpsOpacity">
-                    <span class="aaBtn" click.delegate="rowNew($event, bchg)">
+                    <span class="aaBtn" click.trigger="viewmodelPopupAcctPicker.open(proxyForPickerPositionTop, bchg, 'create')">
                       <au-icon-new></au-icon-new>
                     </span>
-                    <span class="aaBtn" click.delegate="rowDelete($event, bchg)">
+                    <span class="aaBtn" click.trigger="rowDelete(bchg)">
                       <au-icon-delete></au-icon-delete>
                     </span>
                   </div>
@@ -284,8 +289,11 @@
                     <au-grid-bchg-cells-spacer></au-grid-bchg-cells-spacer>
                     <div class="aaVerticalGridline" style="width: 3px;"></div>
                   </template>
-                  <!-- simulate data cells with spacer -->
-                  <au-grid-bchg-cells-edit bchg.one-way="bchg"></au-grid-bchg-cells-edit>
+                  <!-- data cells column -->
+                  <au-grid-bchg-cells-edit bchg.one-way="bchg"
+                                           proxy-for-picker-position-top.one-time="proxyForPickerPositionTop"
+                                           viewmodel-popup-acct-picker.one-time="viewmodelPopupAcctPicker">
+                  </au-grid-bchg-cells-edit>
                   <template if.bind="bchg.targetAcct.parentFaeSide.id == 'Assets'">
                     <!-- put blank space in change-to-equity column -->
                     <div class="aaVerticalGridline" style="width: 3px;"></div>
@@ -301,7 +309,7 @@
                  mouseleave.trigger="onRowLeave($event, null)">
               <div class="aaRowOps aaBgColorToolbar aaFontSizeLabel">
                 <div class="aaRowOpsOpacity">
-                    <span class="aaBtn" click.delegate="rowNew($event, null)">
+                    <span class="aaBtn" click.trigger="viewmodelPopupAcctPicker.open(proxyForPickerPositionTop, null, 'create')">
                       <au-icon-new></au-icon-new>
                     </span>
                   <span class="aaBtn aaHidden">
@@ -335,20 +343,21 @@
             <div class="aaVerticalGridline aaHidden" style="width: 3px;"></div>
             <div class="aaRowData">
               <au-grid-bchg-cells-total
-                side-total-changes.one-way="clonedTran.totalChangesAssets"
-                other-side-total-changes.one-way="clonedTran.totalChangesEquities">
+                fae-side.one-way="'assets'"
+                side-total-changes.one-way="app.editableTran.totalChangesAssets"
+                other-side-total-changes.one-way="app.editableTran.totalChangesEquities">
               </au-grid-bchg-cells-total>
               <div class="aaVerticalGridline aaHidden" style="width: 3px;"></div>
               <au-grid-bchg-cells-total
-                side-total-changes.one-way="clonedTran.totalChangesEquities"
-                other-side-total-changes.one-way="clonedTran.totalChangesAssets">
+                fae-side.one-way="'equities'"
+                side-total-changes.one-way="app.editableTran.totalChangesEquities"
+                other-side-total-changes.one-way="app.editableTran.totalChangesAssets">
               </au-grid-bchg-cells-total>
             </div>
             <div class="aaVerticalGridline aaHidden" style="width: 3px;"></div>
           </div>
         </div>
       </div>
-  </div>
     </template>
   </div>
 

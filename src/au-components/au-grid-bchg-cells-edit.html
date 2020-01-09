@@ -11,7 +11,9 @@
           ${bchg.targetAcct.title}
         </div>
         <div class="aaCellHelper aaFontSizeLabel">
-          <button type="button" class="aaBtn aaHelperBtn">
+          <button class="aaBtn aaHelperBtn"
+                  type="button"
+                  click.trigger="viewmodelPopupAcctPicker.open(proxyForPickerPositionTop, bchg, 'update')">
             <au-icon-ellipsis></au-icon-ellipsis>
           </button>
         </div>

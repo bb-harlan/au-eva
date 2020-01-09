@@ -53,9 +53,16 @@ export class App {
    */
   selectedModule = this.MODULE_FAE;
   selectedModuleMode = this.MODULE_MODE_NAVIGATING;
+
   selectedFaeSide = null;
+  editableFaeSide = null
+
   selectedAcct = null;
+
   selectedTran = null;
+  editableTran = null // clone of selectedTran for editing
+  tranEditingMode = false;
+
   selectedBchg = null;
   isEditing = false;
 

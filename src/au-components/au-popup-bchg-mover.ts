@@ -28,9 +28,9 @@ export class AuPopupBchgMover {
     this.auModuleTran = auModuleTran;
   }
 
-  open(event, proxyForMoverPositionTop: HTMLElement, proxyForMoverPositionLeft: HTMLElement) {
+  open(proxyForMoverPositionTop: HTMLElement, proxyForMoverPositionLeft: HTMLElement) {
     // make copy of bchgList for mover
-    this.moverBchgList.push(...this.auModuleTran.clonedTran.bchgList);
+    this.moverBchgList.push(...this.app.editableTran.bchgList);
     // position moverDialogContent
     let proxyPositionProps = proxyForMoverPositionTop.getBoundingClientRect();
     this.moverDialogContent.style.top = `${proxyPositionProps.top}px`;
@@ -69,7 +69,7 @@ export class AuPopupBchgMover {
       moverBchg.intraTranIndex = i;
     }
     this.moverBchgList.splice(0, this.moverBchgList.length); //donewith it, delete all members
-    this.auModuleTran.clonedTran.bchgList.sort((a: Bchg, b: Bchg) => a.compareToInTran(b));
+    this.app.editableTran.bchgList.sort((a: Bchg, b: Bchg) => a.compareToInTran(b));
     this.moverDialogModal.style.display = "none";
   }
 

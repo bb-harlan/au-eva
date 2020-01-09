@@ -1,20 +1,35 @@
 <template>
+  <require from="au-components/au-fae-side-picker"></require>
   <require from="au-converters/au-equation-side-converter"></require>
-
-  <div element.ref="pickerDialogModal" class="aaModal">
-    <div
-      class="aaGridContainer aaInlineBlock aaPanelBoxShadow"
-      css="position: absolute;">
+  <div class="aaModal"
+       element.ref="pickerDialogModal">
+    <div class="aaModalContent aaInlineBlock aaPanelBoxShadow"
+         style="text-align: center;"
+         element.ref="pickerDialogContent">
       <div
         class="aaGridTitleBar"
         style="font-size: larger;">Target account picker
       </div>
       <div class="aaPanelToolBar">
         <div style="text-align: center;">
-          <span click.trigger="picked($event)" class="aaBtn">Pick target account</span>
+          <button type="button" class="aaBtn" style="margin-left: 4pc;" click.trigger="cancel()">Cancel</button>
         </div>
       </div>
-      <div class="aaGridFooterBar"></div>
+      <div class="aaPanelBody">
+        <div class="aaEquSideContainer">
+          <au-fae-side-picker
+            fae-side.one-way="app.data.faeSideAssets">
+          </au-fae-side-picker>
+        </div>
+        <div class="aaEquSideContainer" style="padding: 0 1pc;">
+          <h1>=</h1>
+        </div>
+        <div class="aaEquSideContainer">
+          <au-fae-side-picker
+            fae-side.one-way="app.data.faeSideEquities">
+          </au-fae-side-picker>
+        </div>
+      </div>
     </div>
   </div>
 </template>

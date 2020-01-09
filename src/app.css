@@ -100,18 +100,18 @@ h1 {
   cursor: pointer;
 }
 .aaNavBtn:active {
-  -webkit-box-shadow: 0px 0px 2px 2px #6d99c5;
-  -moz-box-shadow: 0px 0px 2px 2px #6d99c5;
-  box-shadow: 0px 0px 2px 2px #6D99C5;
+  -webkit-box-shadow: 0px 0px 3px 1px #6d99c5;
+  -moz-box-shadow: 0px 0px 3px 1px #6d99c5;
+  box-shadow: 0px 0px 3px 1px #6D99C5;
   background-color: #fff !important;
   cursor: pointer;
 }
 
 .aaNavBtnSelected {
   /*border-style: none;*/
-  -webkit-box-shadow: 0px 0px 2px 2px #6d99c5;
-  -moz-box-shadow: 0px 0px 2px 2px #6d99c5;
-  box-shadow: 0px 0px 2px 2px #6D99C5;
+  -webkit-box-shadow: 0px 0px 3px 1px #6d99c5;
+  -moz-box-shadow: 0px 0px 3px 1px #6d99c5;
+  box-shadow: 0px 0px 3px 1px #6D99C5;
   /*background-color: #ffffee;*/
   background-color: #edf2f7 !important;
 }
@@ -137,28 +137,18 @@ h1 {
   -moz-box-shadow: 4px 8px 5px 0px rgba(0, 0, 0, 0.2);
   box-shadow: 4px 8px 5px 0px rgba(0, 0, 0, 0.2);
 }
-
 .aaPanelHeader {
   padding: 0.25pc;
-  /*color: rgba(255, 255, 255, 0.7);*/
-  /*color: #eee;*/
   color: #fff;
-  /*background-color: #58b;*/
   background-color: #6d99c5;
-  /* -webkit-box-shadow: inset 0px 5px 10px 0px #7ad; */
-  /* -moz-box-shadow: inset 0px 5px 10px 0px #7ad; */
-  /* box-shadow: inset 0px 5px 10px 0px #7ad; */
   font-family: sans-serif, SansSerif;
-  /*font-size: medium;*/
   font-weight: normal;
   letter-spacing: 1px;
 }
-
 .aaPanelHeaderModule {
   font-size: 150%;
   letter-spacing: 3px;
 }
-
 .aaPanelToolBar {
   padding: 0.25pc 1pc;
   white-space: nowrap;
@@ -166,19 +156,16 @@ h1 {
   text-align: left;
   border-bottom: 1px solid #999;
 }
-
 .aaPanelBody {
   padding: 1pc;
   white-space: nowrap;
   background-color: #eee;
 }
-
 .aaForm {
   /*margin-top: 1pc;*/
   text-align: left;
   font-size: medium;
 }
-
 .aaFormItemLabel {
   padding: 0.30pc 0 0.20pc 0;
   text-align: right;
@@ -187,12 +174,10 @@ h1 {
   font-weight: normal;
   font-size: small;
 }
-
 .aaFormItemData {
   padding: 0.30pc 0.5pc 0.20pc 0.5pc;
   font-size: medium;
 }
-
 .aaFormInputText {
   padding: 1px 0.5pc;
   background-color: #fff;
@@ -203,20 +188,15 @@ h1 {
   border-color: #ccc;
   cursor: inherit; /* for when dragging row in mover */
 }
-
 .aaFormInputText:disabled {
-  /*border-color: transparent;*/
   border-style: solid;
   background-color: transparent;
   cursor: inherit; /* for when dragging row in mover */
 }
 .aaFormInputText:read-only {
-  /*border-color: transparent;*/
-  /*border-style: solid;*/
   background-color: transparent;
   cursor: inherit; /* for when dragging row in mover */
 }
-
 .aaInlineBlock {
   display: inline-block;
 }
@@ -225,12 +205,10 @@ h1 {
   flex-direction: row;
   justify-content: flex-start;
 }
-
 .aaEquSideContainer {
   display: inline-block;
   vertical-align: top;
 }
-
 .aaBtn {
   display: inline-flex;
   color: #333;
@@ -254,22 +232,18 @@ h1 {
   font-weight: normal;
   font-size: small;
 }
-
 .aaHidden {
   visibility: hidden;
 }
-
 .aaBtn:hover {
   border-color: #333;
   cursor: pointer;
 }
-
 .aaBtn:active {
   color: #000;
   background-color: #B6CBE2;
   border-color: #000;
 }
-
 .aaToolBarDivider {
   display: inline-block;
   color: transparent;
@@ -291,7 +265,6 @@ h1 {
   font-weight: normal;
   font-size: small;
 }
-
 .aaGridContainer {
   margin-top: 1pc;
   padding: 0;
@@ -305,44 +278,19 @@ h1 {
   padding: 0.25pc;
   color: #333;
   background-color: #b6cbe2;
-  /*background-color: #EDF2F7;*/
   border-bottom: 1px solid #999;
-  /* -webkit-box-shadow: inset 0px 5px 10px 0px #eee; */
-  /* -moz-box-shadow: inset 0px 5px 10px 0px #eee; */
-  /* box-shadow: inset 0px 5px 10px 0px #eee; */
   font-family: sans-serif, SansSerif;
   font-size: medium;
   font-weight: bold;
   letter-spacing: 1px;
   text-align: center;
 }
-
-.aaGridBchgSubtitleBar {
-  padding: 0.15pc 0;
-  color: #fff;
-  /*background-color: #aaa;*/
-  /*color: #000;*/
-  background-color: #bbb;
-  text-align: center;
-  font-size: small;
-  font-weight: bold;
-  letter-spacing: 2px;
-  width: 1127px;
-  height: 25px;
-}
-
 .aaGridFooterBar {
   background-color: #b6cbe2;
-  /*background-color: #EDF2F7;*/
   border-top: 1px solid #999;
   padding-bottom: 0.5pc;
   margin: 0;
-  /* -webkit-box-shadow: inset 0px -2px 4px 1px #eee; */
-  /* -moz-box-shadow: inset 0px -2px 4px 1px #eee; */
-  /* box-shadow: inset 0px -2px 4px 1px #fff; */
-  /* box-shadow: inset 0px 5px 10px 0px #eee; */
 }
-
 .aaGridScrollableRows {
   margin: 0;
   padding: 0;
@@ -352,12 +300,10 @@ h1 {
   white-space: nowrap;
   background-color: #ccc;
 }
-
 .aaGridFooterTotals {
   padding-top: 0.5pc;
   border-top: 3px solid #ccc;
 }
-
 .aaBgColorToolbar {
   background-color: #fff;
 }
@@ -368,7 +314,6 @@ h1 {
   background-color: #eee;
 }
 .aaRow {
-  /*position: relative;*/
   display: flex;
   flex-direction: row;
   justify-content: flex-start;
@@ -382,8 +327,15 @@ h1 {
 .aaRowColumnHeaders {
   color: #fff;
   background-color: #bbb;
+  /*
   border-top: 3px solid #999;
   border-bottom: 3px solid #999;
+  */
+  border-top: 1px solid #999;
+  border-bottom: 1px solid #999;
+  -webkit-box-shadow: 0px 0px 3px 1px #999 inset;
+  -moz-box-shadow: 0px 0px 3px 1px #999 inset;
+  box-shadow: 0px 0px 3px 1px #999 inset;
 }
 .aaRowTotals {
   position: relative;
@@ -396,7 +348,6 @@ h1 {
 }
 .aaRowOps {
   display: inline-flex;
-  /*vertical-align: middle;*/
   white-space: nowrap;
   overflow: hidden;
   padding-top: 0.25pc;
@@ -450,14 +401,12 @@ h1 {
   width: 2.5pc;
   text-align: center;
 }
-
 .aaCellRowSelected {
   display: inline-flex;
   width: 1.5pc;
   text-align: center;
   font-weight: bold;
 }
-
 .aaCellBorder {
   border: 0.05pc solid #ccc;
 }
@@ -482,35 +431,29 @@ h1 {
   white-space: nowrap;
   overflow: hidden;
 }
-
 .aaCellTextEOL {
   color: #666;
   font-size: small;
 }
-
 .aaCellAcctTitle {
   width: 25pc;
   text-align: left;
 }
-
 .aaCellAnnoTitle {
   width: 25pc;
   text-align: left;
   font-family: sans-serif, SansSerif;
   text-decoration: underline;
 }
-
 .aaCellTranDate {
   width: 7pc;
   text-align: center;
   /*text-align: left;*/
 }
-
 .aaCellBchgDesc {
   width: 25pc;
   text-align: left;
 }
-
 .aaCellBchgAmt {
   text-align: right;
   width: 7pc;
@@ -521,12 +464,6 @@ h1 {
   align-items: stretch;
 }
 .aaCellHelper {
-  display: inline-flex;
-  flex-direction: row;
-  align-self: stretch;
-  align-items: center;
-  background-color: #fff;
-
   display: inline-flex;
   flex-direction: row;
   align-self: stretch;
@@ -543,9 +480,9 @@ h1 {
 .aaTranOutOfBalance {
   color: red;
   border-color: red;
-  -webkit-box-shadow: 0px 0px 2px 2px red;
-  -moz-box-shadow: 0px 0px 2px 2px red;
-  box-shadow: 0px 0px 2px 2px red;
+  -webkit-box-shadow: 0px 0px 3px 1px red;
+  -moz-box-shadow: 0px 0px 3px 1px red;
+  box-shadow: 0px 0px 3px 1px red;
 }
 .aaCellBchgBal {
   width: 7pc;
@@ -624,36 +561,16 @@ h1 {
 }
 .aaDragging {
   cursor: n-resize;
-  -webkit-box-shadow: 0px 0px 2px 2px #6D99C5 inset;
-  -moz-box-shadow: 0px 0px 2px 2px #6D99C5 inset;
-  box-shadow: 0 0 2px 2px #6D99C5 inset;
+  -webkit-box-shadow: 0px 0px 3px 1px #6D99C5 inset;
+  -moz-box-shadow: 0px 0px 3px 1px #6D99C5 inset;
+  box-shadow: 0 0 3px 1px #6D99C5 inset;
   background-color: #edf2f7 !important;
-}
-.aaDragFrom {
-  cursor: n-resize;
-  /*-webkit-box-shadow: 0px 0px 2px 2px #58b;*/
-  /*-moz-box-shadow: 0px 0px 2px 2px #58b;*/
-  /*box-shadow: 0px 0px 2px 2px #58b;*/
-  background-color: #ffffee;
-  box-shadow: 0 0 2px 2px #6D99C5 inset;
-}
-.aaDragTo {
-  cursor: n-resize;
-  /*-webkit-box-shadow: 0px 0px 2px 2px #58b;*/
-  /*-moz-box-shadow: 0px 0px 2px 2px #58b;*/
-  /*box-shadow: 0px 0px 2px 2px #58b;*/
-  background-color: #ffffee;
-  box-shadow: 0 0 2px 2px #C56D99 inset;
 }
 .aaPointerEventsNone {
   pointer-events: none;
 }
 .aaMostRecentlySelectedRow {
-  -webkit-box-shadow: 0px 0px 2px 2px #6D99C5 inset;
-  -moz-box-shadow: 0px 0px 2px 2px #6D99C5 inset;
-  box-shadow: 0 0 2px 2px #6D99C5 inset;
-}
-.aaMostRecentlySelectedRow2 {
-  border-bottom-size: 0;
-  padding-bottom: 2px;
+  -webkit-box-shadow: 0px 0px 3px 1px #6D99C5 inset;
+  -moz-box-shadow: 0px 0px 3px 1px #6D99C5 inset;
+  box-shadow: 0 0 3px 1px #6D99C5 inset;
 }
