@@ -31,8 +31,8 @@ export class AuPopupBchgMover {
     // make copy of bchgList for mover
     this.moverBchgList.push(...this.app.editableTran.bchgList);
     // position moverDialogContent
-    let proxyPositionProps = this.auModuleTran.popupTop.getBoundingClientRect();
-    this.moverDialogContent.style.marginTop = `${proxyPositionProps.top}px`;
+    let boundingClientRect = this.auModuleTran.popupTop.getBoundingClientRect();
+    this.moverDialogContent.style.marginTop = `${boundingClientRect.top}px`;
     // display dialog
     this.moverDialogModal.style.display = "flex";
   }
@@ -66,15 +66,13 @@ export class AuPopupBchgMover {
       moverBchg.intraTranIndex = i;
     }
     this.moverBchgList.splice(0, this.moverBchgList.length); //donewith it, delete all members
-    this.app.editableTran.bchgList.sort((a: Bchg, b: Bchg) => a.compareToInTran(b));
+    this.app.editableTran.sortBchgList();
     this.moverDialogModal.style.display = "none";
   }
-
   cancel(event) {
     this.moverBchgList.splice(0, this.moverBchgList.length); //donewith it, delete all members
     this.moverDialogModal.style.display = "none";
   }
-
   onRowMouseDown(event) {
     let targetRow: Element = event.currentTarget as Element;
     targetRow.children[1].classList.toggle('aaRowDataHover', false);
@@ -82,7 +80,6 @@ export class AuPopupBchgMover {
     this.mouseIsDown = true;
     this.selectedMoverRow = event.currentTarget;
   }
-
   onRowMouseUp(event) {
     let targetRow = event.currentTarget as Element;
     targetRow.children[1].classList.toggle('aaDragging', false);
@@ -90,21 +87,18 @@ export class AuPopupBchgMover {
     this.mouseIsDown = false;
     this.selectedMoverRow = null;
   }
-
   onRowMouseLeave(event, bchg) {
     if (!this.mouseIsDown) {
       let targetRow = event.currentTarget as Element;
       targetRow.children[1].classList.toggle('aaRowDataHover', false);
     }
   }
-
   onRowMouseEnter(event, bchg) {
     if (!this.mouseIsDown) {
       let targetRow = event.currentTarget as Element;
       targetRow.children[1].classList.toggle('aaRowDataHover', true);
     }
   }
-
   onListMouseMove(event) {
     if (!this.mouseIsDown || !this.selectedMoverRow) {
       return;
@@ -122,7 +116,6 @@ export class AuPopupBchgMover {
       return;
     }
   }
-
   onListMouseLeave(event) {
     if (this.mouseIsDown && this.selectedMoverRow) {
       this.selectedMoverRow.children[0].classList.toggle('aaDragging', false);
@@ -132,7 +125,6 @@ export class AuPopupBchgMover {
       return;
     }
   }
-
   elementY(element) {
     return element.getBoundingClientRect().top;
   };

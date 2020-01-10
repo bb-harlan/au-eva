@@ -26,9 +26,9 @@ export class AuPopupAcctMover {
   }
   open(popupTopLeft: HTMLElement, faeSide: FaeSide): void {
     // set postion of moverDialogContent
-    let moverDialogPositionProps = popupTopLeft.getBoundingClientRect();
-    this.moverDialogContent.style.top = `${moverDialogPositionProps.top}px`;
-    this.moverDialogContent.style.left = `${moverDialogPositionProps.left}px`;
+    let boundingClientRect = popupTopLeft.getBoundingClientRect();
+    this.moverDialogContent.style.top = `${boundingClientRect.top}px`;
+    this.moverDialogContent.style.left = `${boundingClientRect.left}px`;
 
     // make copy of acctList for mover
     this.faeSide = faeSide;
@@ -67,7 +67,7 @@ export class AuPopupAcctMover {
       let listItem = (<any>this.moverGridRows.children[i]).listItem as Acct | Annotation;
       listItem.intraSideSorter = i;
     }
-    this.faeSide.acctList.sort((a, b) => a.compareTo(b));
+    this.faeSide.sortAcctList();
     this.moverDialogModal.style.display = "none";
   }
   cancel() {

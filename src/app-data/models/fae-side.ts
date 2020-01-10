@@ -9,9 +9,11 @@ export class FaeSide {
   constructor(id: string) {
     this.id = id;
   }
-
-  refresh(): void {
+  sortAcctList(): void {
     this.acctList.sort((a, b) => a.compareTo(b));
+  }
+  refresh(): void {
+    this.sortAcctList();
     this.listTotal = 0.00;
     for (let acct of this.acctList) {
       if (acct instanceof Acct) {

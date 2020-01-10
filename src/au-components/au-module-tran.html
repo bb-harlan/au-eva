@@ -22,8 +22,7 @@
   <require from="au-components/au-grid-bchg-cells-edit"></require>
   <require from="au-components/au-grid-bchg-cells-total"></require>
 
-  <div class="aaPanel aaPanelBoxShadow"
-       element.ref="proxyForPickerPositionTop">
+  <div class="aaPanel aaPanelBoxShadow">
     <div class="aaPanelHeader aaPanelHeaderModule">Transaction</div>
     <template if.bind="!app.tranEditingMode">
       <div class="aaPanelToolBar">
@@ -145,8 +144,7 @@
                         </template>
             -->
             <div class="aaVerticalGridline"></div>
-            <div class="aaRowData"
-                 element.ref="proxyForMoverPositionLeft">
+            <div class="aaRowData">
               <div class="aaCell aaFontData aaHidden" style="position: absolute;"><span
                 class="aaSansSerif aaCellTextEOL">${app.END_OF_LIST}</span></div>
               <au-grid-bchg-cells-spacer></au-grid-bchg-cells-spacer>
@@ -282,7 +280,6 @@
                   </template>
                   <!-- data cells column -->
                   <au-grid-bchg-cells-edit bchg.one-way="bchg"
-                                           proxy-for-picker-position-top.one-time="proxyForPickerPositionTop"
                                            viewmodel-popup-acct-picker.one-time="viewmodelPopupAcctPicker">
                   </au-grid-bchg-cells-edit>
                   <template if.bind="bchg.targetAcct.parentFaeSide.id == 'Assets'">

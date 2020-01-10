@@ -24,16 +24,18 @@ export class Bchg {
   }
 
   compareToInAcct(b: Bchg): number {
-    return this.sourceTran.compareTo(b.sourceTran);
+    return (
+      this.sourceTran.date == b.sourceTran.date ?
+        (this.sourceTran.intraDateSorter > b.sourceTran.intraDateSorter ? 1 : -1) :
+        (this.sourceTran.date > b.sourceTran.date ? 1 : -1)
+    )
   }
-
   compareToInTran(b: Bchg): number {
     return (
       this.intraTranIndex > b.intraTranIndex ?
         1 :
         (this.intraTranIndex < b.intraTranIndex ? -1 : 0));
   }
-
   clone(sourceTran: Tran): Bchg {
     let clonedBchg =  new Bchg(
       this.id,
@@ -54,6 +56,10 @@ export class Bchg {
         break;
       }
     }
+/* try the following to see if it works
+    let thisIndex = this.targetAcct.bchgList.findIndex((element) => element.id == this.id);
+    this.targetAcct.bchgList.splice(thisIndex, 1);
+*/
   }
   unregFromTran() {
     for (let i = 0; i <= this.sourceTran.bchgList.length - 1; i++) {

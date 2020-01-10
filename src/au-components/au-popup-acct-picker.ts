@@ -27,8 +27,8 @@ export class AuPopupAcctPicker {
   open(currentBchg: Bchg, action: string): void {
     this.currentBchg = currentBchg;
     this.action = action;
-    let proxyPositionProps = this.auModuleTran.popupTop.getBoundingClientRect();
-    this.pickerDialogContent.style.marginTop = `${proxyPositionProps.top}px`;
+    let boundingClientRect = this.auModuleTran.popupTop.getBoundingClientRect();
+    this.pickerDialogContent.style.marginTop = `${boundingClientRect.top}px`;
     this.pickerDialogModal.style.display = "flex";
   }
   picked(targetAcct: Acct): void {

@@ -8,8 +8,11 @@ export class Jrnl {
   constructor(id: string) {
     this.id = id;
   }
-  refresh(): void {
+  sortTranList(): void {
     this.tranList.sort((a: Tran, b: Tran) => a.compareToInJrnl(b));
+  }
+  refresh(): void {
+    this.sortTranList();
     for (let tran of this.tranList) {
       tran.refresh();
     }

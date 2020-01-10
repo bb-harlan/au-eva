@@ -1,6 +1,5 @@
 import {Bchg} from './bchg';
 import {Jrnl} from './jrnl';
-import {Data} from "../data";
 
 export class Tran {
   id: string;
@@ -20,15 +19,16 @@ export class Tran {
     this.date = date;
     this.intraDateSorter = intraDateSorter;
   }
-
-  compareTo(b: Tran): number {
+  compareToInJrnl(b: Tran): number {
     return (
       this.date == b.date ?
         (this.intraDateSorter > b.intraDateSorter ? 1 : -1) :
         (this.date > b.date ? 1 : -1)
     )
   }
-
+  sortBchgList () {
+    this.bchgList.sort((a: Bchg, b: Bchg) => a.compareToInTran(b));
+  }
   refresh() {
     this.totalChangesAssets = 0.00;
     this.totalChangesEquities = 0.00;
@@ -54,13 +54,6 @@ export class Tran {
         bchg.targetAcct.refresh();
       }
     }
-  }
-  compareToInJrnl(b: Tran): number {
-    return (
-      this.date == b.date ?
-        (this.intraDateSorter > b.intraDateSorter ? 1 : -1) :
-        (this.date > b.date ? 1 : -1)
-    )
   }
   regToAccts() {
     for (let bchg of this.bchgList) {

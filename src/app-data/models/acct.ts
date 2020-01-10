@@ -51,8 +51,11 @@ export class Acct extends EquationSideItem {
     this.title = title;
     this.normalBalance = normalBalance;
   }
-  refresh(): void {
+  sortBchgList(): void {
     this.bchgList.sort((a:Bchg, b:Bchg) => a.compareToInAcct(b));
+  }
+  refresh(): void {
+    this.sortBchgList();
     this.endingBalance = 0.00;
     for (let bchg of this.bchgList) {
         this.endingBalance += bchg.amt;
