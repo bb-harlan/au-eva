@@ -7,6 +7,7 @@
   <require from="au-views/au-grid-bchg-cells-spacer.html"></require>
 
   <div class="aaModal"
+       style="display: none; flex-direction: row; align-items: flex-start; justify-content: center;"
        element.ref="moverDialogModal">
     <div class="aaModalContent aaInlineBlock aaPanelBoxShadow"
          element.ref="moverDialogContent">
@@ -19,7 +20,7 @@
         </div>
       </div>
       <div class="aaGridScrollableRows"
-           element.ref="moverRowList"
+           element.ref="moverGridRows"
            mousemove.trigger="onListMouseMove($event)"
            mouseleave.trigger="onListMouseLeave($event)">
         <template repeat.for="bchg of moverBchgList">
@@ -47,19 +48,12 @@
             </div>
             <div class="aaVerticalGridline" style="width: 3px;"></div>
           </div>
-<!--
-            <div class="aaVerticalGridline" style="width: 3px;"></div>
--->
+          <!--
+                      <div class="aaVerticalGridline" style="width: 3px;"></div>
+          -->
         </template>
       </div>
       <div class="aaGridFooterBar"></div>
     </div>
-    <div class="aaVerticalGridline" style="width: 3px;"></div>
   </div>
-  </div>
-</template>
-</div>
-<div class="aaGridFooterBar"></div>
-</div>
-</div>
 </template>

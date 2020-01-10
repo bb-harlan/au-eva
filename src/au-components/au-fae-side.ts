@@ -7,15 +7,18 @@ import {AuModuleFae} from 'au-components/au-module-fae';
 @customElement('au-fae-side')
 @inject(App, AuModuleFae)
 export class AuFaeSide {
+
+  /* @injected item(s) */
   app: App;
   auModuleFae: AuModuleFae;
+
   @bindable faeSide: FaeSide;
 
   /*=====================================================
     *  references
     *=====================================================
     */
-  proxyForMoverPositions: HTMLElement; // <div class="aaRowData aaRowBgColorNonData"  element.ref="proxyForMoverPositions">
+  popupTopLeft: HTMLElement; // <div class="aaRowData aaRowBgColorNonData"  element.ref="popupTopLeft">
 
   rowOpsMenuModal: HTMLElement;
   rowOpsMenuContent: HTMLElement;

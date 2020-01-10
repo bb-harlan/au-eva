@@ -16,7 +16,7 @@ export class AuFaeSidePicker {
     *  references
     *=====================================================
     */
-  proxyForMoverPositions: HTMLElement; // <div class="aaRowData aaRowBgColorNonData"  element.ref="proxyForMoverPositions">
+  popupTopLefts: HTMLElement; // <div class="aaRowData aaRowBgColorNonData"  element.ref="proxyForMoverPositions">
 
   rowOpsMenuModal: HTMLElement;
   rowOpsMenuContent: HTMLElement;

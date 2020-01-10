@@ -20,16 +20,13 @@ export class AuModuleTran {
    *  references
    *=====================================================
    */
-  proxyForPickerPositionTop: HTMLElement; // <div element.ref="proxyForPickerPositionTop" ...
-  proxyForMoverPositionTop: HTMLElement; // <div element.ref="proxyForMoverPositionTop" ...
-  proxyForMoverPositionLeft: HTMLElement; // <div element.ref="proxyForMoverPositionLeft" ...
+  popupTop: HTMLElement; // <div element.ref="popupTop" ...
   viewmodelPopupBchgMover; // <au-popup-bchg-mover view-model.ref="viewmodelPopupBchgMover></au-popup-bchg-mover>
   viewmodelPopupAcctPicker; // <au-popup-acct-picker view-model.ref="viewmodelPopupAcctPicker></au-popup-acct-picker>
 
   constructor(app) {
     this.app = app;
   }
-
   onGoJrnl(event) {
     this.app.selectedBchg = null;
     this.app.selectedModule = this.app.MODULE_JRNL;
@@ -89,16 +86,6 @@ export class AuModuleTran {
       this.newBchgInsertionIndex = this.app.editableTran.bchgList.length;
     }
     this.viewmodelPopupAcctPicker.open(this.newAcctPicked)
-/*
-    let newBchg = new Bchg(
-      /!*id*!/ `bchg${this.app.data.nextBchgId}`,
-      /!*sourceTran*!/ this.app.editableTran,
-      /!*targetAcct*!/ null,
-      /!*desc*!/ "new bchg",
-      /!*amt*!/ 0.00);
-    this.app.editableTran.bchgList.splice(insertionIndex, 0, newBchg);
-    this.app.editableTran.refresh(); // updates each bchg.intraTranIndex
-*/
   }
 
   newAcctPicked(pickedAcct) {

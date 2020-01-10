@@ -6,6 +6,7 @@
   <require from="au-converters/au-equation-side-converter"></require>
 
   <div class="aaModal"
+       style="display: none; flex-direction: row; align-items: flex-start; justify-content: center;"
        element.ref="moverDialogModal">
     <div class="aaModalContent aaInlineBlock aaPanelBoxShadow"
          element.ref = "moverDialogContent">
@@ -16,11 +17,10 @@
           <button type="button" class="aaBtn" style="margin-left: 4pc;" click.trigger="cancel()">Cancel</button>
         </div>
       </div>
-      <div
-        element.ref="moverRowList"
-        class="aaGridScrollableRows"
-        mousemove.trigger="onListMouseMove($event)"
-        mouseleave.trigger="onListMouseLeave($event)">
+      <div class="aaGridScrollableRows"
+           element.ref="moverGridRows"
+           mousemove.trigger="onListMouseMove($event)"
+           mouseleave.trigger="onListMouseLeave($event)">
         <template repeat.for="listItem of moverAcctList">
           <div class="aaRow"
                list-item.bind="listItem"

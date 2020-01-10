@@ -11,25 +11,26 @@
     <div class="aaGridScrollableRows">
       <template repeat.for="listItem of faeSide.acctList">
         <div id="${listItem.id}"
-             class="aaRow"
-             mouseenter.trigger="onRowEnter($event, listItem)"
-             mouseleave.trigger="onRowLeave($event, listItem)">
+             class="aaRow">
           <template if.bind="listItem.isAcct()">
-            <div class="aaRowData aaRowBgColorData ${listItem.id == app.selectedAcct.id ? 'aaMostRecentlySelectedRow' : ''}">
-              <span class="aaCell aaCellAcctTitle"
-                    click.trigger="auPopupAcctPicker.picked(listItem)">
+            <div class="aaRowOps"
+                 style="background-color: #fff; padding: 2px;">
+              <button  class="aaBtn aaCellAcctTitle"
+                       type="button"
+                       click.trigger="auPopupAcctPicker.picked(listItem)">
                 ${listItem.title}
-              </span>
-              <div class="aaVerticalGridline"></div>
+              </button>
             </div>
           </template>
           <template if.bind="listItem.isAnnotation()">
-            <div class="aaRowData aaRowBgColorData ${listItem.id == app.selectedAcct.id ? 'aaMostRecentlySelectedRow' : ''}">
-              <span class="aaCell aaCellAnnoTitle">${listItem.annoText}</span>
-              <div class="aaVerticalGridline"></div>
+            <div class="aaRowops aaRowBgColorData"
+                 style="padding: 2px;">
+              <span class="aaDummyBtn aaCellAnnoTitle">
+                ${listItem.annoText}
+              </span>
             </div>
-            <div class="aaVerticalGridline"></div>
           </template>
+          <div class="aaVerticalGridline"></div>
         </div>
       </template>
     </div>

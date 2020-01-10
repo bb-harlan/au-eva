@@ -32,19 +32,20 @@
       <button
         type="button"
         class="aaBtn"
-        click.trigger="auModuleFae.viewmodelPopupAcctMover.open(proxyForMoverPosition, faeSide)">
+        click.trigger="auModuleFae.viewmodelPopupAcctMover.open(popupTopLeft, faeSide)">
         <au-icon-row-mover></au-icon-row-mover>
         Move rows...
       </button>
     </div>
-    <div class="aaRow aaRowColumnHeaders aaFontLabel aaFontBold">
+    <div class="aaRow aaRowColumnHeaders aaFontLabel aaFontBold"
+    >
       <div class="aaRowOps aaHidden">
         <button type="button" class="aaBtn">
           <au-icon-nav-right></au-icon-nav-right>
         </button>
       </div>
       <div class="aaVerticalGridline" style="background-color: #999;"></div>
-      <div class="aaRowData" element.ref="proxyForMoverPosition">
+      <div class="aaRowData" element.ref="popupTopLeft">
         <div class="aaCell aaCellAcctTitle">Title</div>
         <div class="aaVerticalGridline" style="background-color: #999;"></div>
         <div class="aaCell aaCellBchgBal">Balance</div>

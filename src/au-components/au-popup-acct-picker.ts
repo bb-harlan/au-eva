@@ -1,13 +1,16 @@
 import {customElement, bindable, inject} from 'aurelia-framework';
 import {App} from 'app';
+import {AuModuleTran} from "au-components/au-module-tran";
+
 import {Bchg} from "../app-data/models/bchg";
 import {Acct} from "../app-data/models/acct";
 
 @customElement('au-popup-acct-picker')
-@inject(App)
+@inject(App, AuModuleTran)
 export class AuPopupAcctPicker {
   // injected stuff
   app;
+  auModuleTran;
 
   // refs
   pickerDialogModal: HTMLElement; // <div element.ref="pickerDialogModal" class="aaModal">
@@ -17,15 +20,16 @@ export class AuPopupAcctPicker {
   currentBchg: Bchg;
   action: string;
 
-  constructor(app) {
+  constructor(app, auModuleTran) {
     this.app = app;
+    this.auModuleTran = auModuleTran;
   }
-  open(proxyForPickerPositionTop: HTMLElement, currentBchg: Bchg, action: string): void {
+  open(currentBchg: Bchg, action: string): void {
     this.currentBchg = currentBchg;
     this.action = action;
-    let proxyPositionProps = proxyForPickerPositionTop.getBoundingClientRect();
-    this.pickerDialogContent.style.top = `${proxyPositionProps.top}px`;
-    this.pickerDialogModal.style.display = "block";
+    let proxyPositionProps = this.auModuleTran.popupTop.getBoundingClientRect();
+    this.pickerDialogContent.style.marginTop = `${proxyPositionProps.top}px`;
+    this.pickerDialogModal.style.display = "flex";
   }
   picked(targetAcct: Acct): void {
     switch (this.action) {

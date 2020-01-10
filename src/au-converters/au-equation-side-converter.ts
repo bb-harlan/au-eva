@@ -1,6 +1,5 @@
 import {inject, valueConverter} from "aurelia-framework";
 import {App} from 'app';
-import {AuFaeSide} from "au-components/au-fae-side";
 
 @valueConverter("auEquationSideConverter")
 @inject(App)

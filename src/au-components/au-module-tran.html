@@ -217,7 +217,8 @@
         <span class="aaToolBarDivider">.</span>
         <div class="aaInlineBlock"></div>
       </div>
-      <div class="aaPanelBody">
+      <div class="aaPanelBody"
+           element.ref="popupTop">
         <table border="0" style="border-collapse: collapse;">
           <tr>
             <td class="aaFormItemLabel">Date:</td>
@@ -226,25 +227,16 @@
             </td>
           </tr>
         </table>
-        <div class="aaGridContainer"
-             element.ref="proxyForMoverPositionTop">
+        <div class="aaGridContainer">
           <div class="aaGridTitleBar">Account balance changes</div>
           <div class="aaPanelToolBar" style="text-align: left;">
             <button
               type="button"
               class="aaBtn"
-              click.trigger="viewmodelPopupBchgMover.open(proxyForMoverPositionTop, proxyForMoverPositionLeft)">
+              click.trigger="viewmodelPopupBchgMover.open()">
               Move rows
               <au-text-ellipsis></au-text-ellipsis>
             </button>
-            <!--
-                        <button
-                          type="button"
-                          class="aaBtn"
-                          click.trigger="viewmodelPopupAcctPicker.open(acctPicked)">
-                          Pick acct...
-                        </button>
-            -->
           </div>
           <div class="aaRow aaRowColumnHeaders aaFontLabel aaFontBold">
             <div class="aaRowOps aaFontLabel aaHidden">
@@ -256,8 +248,7 @@
               </span>
             </div>
             <div class="aaVerticalGridline" style="background-color: #999; width: 3px;"></div>
-            <div class="aaRowData"
-                 element.ref="proxyForMoverPositionLeft">
+            <div class="aaRowData">
               <au-grid-bchg-cells-heading fae-side.one-time="'asset'"></au-grid-bchg-cells-heading>
               <div class="aaVerticalGridline" style="background-color: #999; width: 3px;"></div>
               <au-grid-bchg-cells-heading fae-side.one-time="'equity'"></au-grid-bchg-cells-heading>
@@ -272,7 +263,7 @@
                    mouseleave.trigger="onRowLeave($event, bchg)">
                 <div class="aaRowOps aaBgColorToolbar aaFontSizeLabel">
                   <div class="aaRowOpsOpacity">
-                    <span class="aaBtn" click.trigger="viewmodelPopupAcctPicker.open(proxyForPickerPositionTop, bchg, 'create')">
+                    <span class="aaBtn" click.trigger="viewmodelPopupAcctPicker.open(bchg, 'create')">
                       <au-icon-new></au-icon-new>
                     </span>
                     <span class="aaBtn" click.trigger="rowDelete(bchg)">
@@ -309,7 +300,7 @@
                  mouseleave.trigger="onRowLeave($event, null)">
               <div class="aaRowOps aaBgColorToolbar aaFontSizeLabel">
                 <div class="aaRowOpsOpacity">
-                    <span class="aaBtn" click.trigger="viewmodelPopupAcctPicker.open(proxyForPickerPositionTop, null, 'create')">
+                    <span class="aaBtn" click.trigger="viewmodelPopupAcctPicker.open(null, 'create')">
                       <au-icon-new></au-icon-new>
                     </span>
                   <span class="aaBtn aaHidden">

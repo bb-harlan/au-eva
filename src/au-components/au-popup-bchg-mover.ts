@@ -2,7 +2,6 @@ import {customElement, bindable, inject} from 'aurelia-framework';
 import {App} from 'app';
 import {AuModuleTran} from 'au-components/au-module-tran';
 import {Bchg} from 'app-data/models/bchg';
-import {Acct, Annotation} from "../app-data/models/acct";
 
 @customElement('au-popup-bchg-mover')
 @inject(App, AuModuleTran)
@@ -21,23 +20,21 @@ export class AuPopupBchgMover {
   /* ref properties */
   moverDialogModal: HTMLElement; //<div element.ref="moverDialogModal"
   moverDialogContent: HTMLElement; // <div element.ref = "moverDialogContent" ...
-  moverRowList: HTMLElement; //<div element.ref="moverRowList"
+  moverGridRows: HTMLElement; //<div element.ref="moverGridRows"
 
   constructor(app: App, auModuleTran: AuModuleTran) {
     this.app = app;
     this.auModuleTran = auModuleTran;
   }
 
-  open(proxyForMoverPositionTop: HTMLElement, proxyForMoverPositionLeft: HTMLElement) {
+  open(): void {
     // make copy of bchgList for mover
     this.moverBchgList.push(...this.app.editableTran.bchgList);
     // position moverDialogContent
-    let proxyPositionProps = proxyForMoverPositionTop.getBoundingClientRect();
-    this.moverDialogContent.style.top = `${proxyPositionProps.top}px`;
-    proxyPositionProps = proxyForMoverPositionLeft.getBoundingClientRect();
-    this.moverDialogContent.style.left = `${proxyPositionProps.left}px`;
+    let proxyPositionProps = this.auModuleTran.popupTop.getBoundingClientRect();
+    this.moverDialogContent.style.marginTop = `${proxyPositionProps.top}px`;
     // display dialog
-    this.moverDialogModal.style.display = "block";
+    this.moverDialogModal.style.display = "flex";
   }
 
   done(event) {
@@ -64,8 +61,8 @@ export class AuPopupBchgMover {
     to reference the original bchg object and update its intraTranIndex property
     to reflect its possibly new position in the list as a result of moving.
     */
-    for (let i = 0; i <= this.moverRowList.childElementCount - 1; i++) {
-      let moverBchg = (<any>this.moverRowList.children[i]).moverBchg as Bchg;
+    for (let i = 0; i <= this.moverGridRows.childElementCount - 1; i++) {
+      let moverBchg = (<any>this.moverGridRows.children[i]).moverBchg as Bchg;
       moverBchg.intraTranIndex = i;
     }
     this.moverBchgList.splice(0, this.moverBchgList.length); //donewith it, delete all members
@@ -113,15 +110,15 @@ export class AuPopupBchgMover {
       return;
     }
     let mouseY = event.clientY;
-    let moverRowList = event.currentTarget;
+    let moverGridRows = event.currentTarget;
     let previousSibling = this.selectedMoverRow.previousElementSibling;
     if (previousSibling && mouseY < this.selectedMoverRow.getBoundingClientRect().top) {
-      moverRowList.insertBefore(this.selectedMoverRow, previousSibling);
+      moverGridRows.insertBefore(this.selectedMoverRow, previousSibling);
       return;
     }
     let nextSibling = this.selectedMoverRow.nextElementSibling;
     if (nextSibling && mouseY >= nextSibling.getBoundingClientRect().top) {
-      moverRowList.insertBefore(nextSibling, this.selectedMoverRow);
+      moverGridRows.insertBefore(nextSibling, this.selectedMoverRow);
       return;
     }
   }

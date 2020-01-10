@@ -2,17 +2,18 @@
   <require from="au-components/au-fae-side-picker"></require>
   <require from="au-converters/au-equation-side-converter"></require>
   <div class="aaModal"
+       style="display: none; flex-direction: row; align-items: flex-start; justify-content: center;"
        element.ref="pickerDialogModal">
     <div class="aaModalContent aaInlineBlock aaPanelBoxShadow"
          style="text-align: center;"
          element.ref="pickerDialogContent">
       <div
         class="aaGridTitleBar"
-        style="font-size: larger;">Target account picker
+        style="font-size: larger;">Pick target account
       </div>
       <div class="aaPanelToolBar">
         <div style="text-align: center;">
-          <button type="button" class="aaBtn" style="margin-left: 4pc;" click.trigger="cancel()">Cancel</button>
+          <button type="button" class="aaBtn" click.trigger="cancel()">Cancel</button>
         </div>
       </div>
       <div class="aaPanelBody">
