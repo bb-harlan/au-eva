@@ -44,18 +44,18 @@ export class AuPopupAcctPicker {
           /*id */ `bchg${this.app.data.nextBchgId}`,
           /*sourceTran*/ this.app.editableTran,
           /*targetAcct*/ targetAcct,
-          /*desc*/ "picked account",
-          /*amt*/ 90.00);
+          /*desc*/ "",
+          /*amt*/ 0.00);
         this.app.editableTran.bchgList.splice(newBchgInsertionIndex, 0, newBchg);
-        this.app.editableTran.refresh(); // updates each bchg.intraTranIndex
         break;
       case 'update':
         this.currentBchg.targetAcct = targetAcct;
-        this.app.editableTran.refresh(); // updates each bchg.intraTranIndex
         break;
       default:
         throw new Error(`action pararmeter has invalid value: "${this.action}"`);
     }
+    // update each bchg.intraTranIndex and recalc side totals
+    this.app.editableTran.refresh();
     this.pickerDialogModal.style.display = "none";
   }
   cancel(): void {

@@ -1,4 +1,5 @@
 <template>
+  <require from="au-components/au-input-currency"></require>
   <require from="au-converters/au-currency-converter"></require>
   <require from="au-views/au-icon-ellipsis.html"></require>
   <require from="au-views/au-icon-balance-scale.html"></require>
@@ -22,23 +23,36 @@
     <!-- 2nd row -->
     <div class="aaBchgCellsRow">
       <!-- change description -->
-      <div class="aaCell aaCellBorder aaCellBchgDesc">
-        ${bchg.desc}
-      </div>
+      <input type="text"
+             class="aaCell aaCellBorder aaCellBchgDesc"
+             value.two-way="bchg.desc">
+      <!--
+            <div class="aaCell aaCellBorder aaCellBchgDesc">
+              ${bchg.desc}
+            </div>
+      -->
       <!-- change amount -->
       <div class="aaCellWrapper"
            style="margin-left: 1pc;">
+        <au-input-currency
+          currency-amount.two-way="bchg.amt"
+          classes-string.one-way="'aaCell aaCellBorder aaCellBchgAmt'">
+        </au-input-currency>
+<!--
         <div class="aaCell aaCellBorder aaCellBchgAmt">
           ${bchg.amt | auCurrencyConverter}
         </div>
-        <div class="aaCellHelper aaFontSizeLabel ${bchg.sourceTran.totalChangesAssets == bchg.sourceTran.totalChangesEquities ? 'aaHidden' : ''}">
-          <button type="button"
-                  class="aaBtn aaHelperBtn"
-                  click.trigger="bchg.setAmtToBalanceTran()">
-            <au-icon-balance-scale></au-icon-balance-scale>
-          </button>
-        </div>
+-->
+      </div>
+      <div
+        class="aaCellHelper aaFontSizeLabel ${bchg.sourceTran.totalChangesAssets == bchg.sourceTran.totalChangesEquities ? 'aaHidden' : ''}">
+        <button type="button"
+                class="aaBtn aaHelperBtn"
+                click.trigger="bchg.setAmtToBalanceTran()">
+          <au-icon-balance-scale></au-icon-balance-scale>
+        </button>
       </div>
     </div>
+  </div>
   </div>
 </template>

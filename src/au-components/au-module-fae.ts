@@ -26,15 +26,11 @@ export class AuModuleFae {
   }
 
   attached() {
-    let hyperLink: Element = document.getElementById('scrollToSelected');
     if (this.app.selectedAcct) {
-      hyperLink.innerHTML = `#${this.app.selectedAcct.id}`;
-      hyperLink.setAttribute("href", `#${this.app.selectedAcct.id}`);
-      // hyperLink.click();
-      document.getElementById('scrollToSelected').click();
+      this.app.gridScrollerLink.setAttribute("href", `#${this.app.selectedAcct.id}`);
+      this.app.gridScrollerLink.click();
     } else {
-      hyperLink.innerHTML = "#";
-      hyperLink.setAttribute("href", `#`);
+      this.app.gridScrollerLink.setAttribute("href", `#`);
     }
     this.app.selectedBchg = null;
     this.app.selectedTran = null;

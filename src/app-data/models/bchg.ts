@@ -47,28 +47,15 @@ export class Bchg {
     return clonedBchg;
   }
   regToAcct() {
+    this.targetAcct.bchgList.push(this);
   }
   unregFromAcct() {
-    for (let i = 0; i <= this.targetAcct.bchgList.length - 1; i++) {
-      if (this.targetAcct.bchgList[i].id == this.id) {
-        console.log(`Deleting from targetAcct.bchgList: bchg.Id: ${this.id}; bchg.dsec: ${this.desc};`);
-        this.targetAcct.bchgList.splice(i, 1);
-        break;
-      }
-    }
-/* try the following to see if it works
     let thisIndex = this.targetAcct.bchgList.findIndex((element) => element.id == this.id);
     this.targetAcct.bchgList.splice(thisIndex, 1);
-*/
   }
   unregFromTran() {
-    for (let i = 0; i <= this.sourceTran.bchgList.length - 1; i++) {
-      if (this.sourceTran.bchgList[i].id == this.id) {
-        console.log(`Deleting from sourceTran.bchgList:  ${this.id}; bchg.dsec: ${this.desc};`);
-        this.sourceTran.bchgList.splice(i, 1);
-        break;
-      }
-    }
+    let thisIndex = this.sourceTran.bchgList.findIndex((element) => element.id == this.id);
+    this.sourceTran.bchgList.splice(thisIndex, 1);
   }
   setAmtToBalanceTran() {
     let totalChangesAssets: number = 0.00;

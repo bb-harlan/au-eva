@@ -26,10 +26,10 @@ export class Tran {
         (this.date > b.date ? 1 : -1)
     )
   }
-  sortBchgList () {
+  sortBchgList (): void {
     this.bchgList.sort((a: Bchg, b: Bchg) => a.compareToInTran(b));
   }
-  refresh() {
+  refresh(): void {
     this.totalChangesAssets = 0.00;
     this.totalChangesEquities = 0.00;
     let intraTranIndex = 0;
@@ -55,14 +55,23 @@ export class Tran {
       }
     }
   }
-  regToAccts() {
+  register(): void {
+    this.parentJrnl.tranList.push(this);
     for (let bchg of this.bchgList) {
       bchg.regToAcct();
     }
   }
-  unregFromAccts() {
+  unregister(): void {
     for (let bchg of this.bchgList) {
       bchg.unregFromAcct();
+    }
+    this.bchgList = [];
+    let thisIndex = this.parentJrnl.tranList.findIndex((element) => element.id == this.id);
+    this.parentJrnl.tranList.splice(thisIndex, 1);
+  }
+  regToAccts(): void {
+    for (let bchg of this.bchgList) {
+      bchg.regToAcct();
     }
   }
   clone():Tran {

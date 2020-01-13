@@ -1,17 +1,16 @@
 import {customElement} from 'aurelia-framework';
 import {inject} from 'aurelia-framework';
 import {App} from "app";
-import {Bchg} from 'app-data/models/bchg';
 import {Tran} from 'app-data/models/tran';
-import {AuPopupBchgMover} from "au-components/au-popup-bchg-mover";
-import {Data} from "../app-data/data";
+import {Bchg} from 'app-data/models/bchg';
 
 @customElement('au-module-tran')
 @inject(App)
 
 export class AuModuleTran {
   newBchgInsertionIndex: number;
-  showGridHeaderRow: boolean = false;
+  // Maybe use the following eventually to let user control header row soff o ron
+  showGridHeaderRow: boolean = true;
 
   // @injected item(s)
   app: App;
@@ -116,10 +115,15 @@ export class AuModuleTran {
   }
 
   saveEdits(event) {
-    this.app.selectedTran.refresh();
+    this.app.editableTran.parentJrnl = this.app.selectedTran.parentJrnl;
+    this.app.selectedTran.unregister();
+    this.app.selectedTran = this.app.editableTran;
+    this.app.selectedTran.register();
+    this.app.data.jrnl.refresh();
     this.app.tranEditingMode = false;
   }
   cancelEdits(event) {
+    this.app.editableTran = null;
     this.app.tranEditingMode = false;
   }
 
@@ -140,14 +144,12 @@ export class AuModuleTran {
   }
 
   attached() {
-    let hyperLink: Element = document.getElementById('scrollToSelected');
     if (this.app.selectedBchg) {
-      hyperLink.innerHTML = `#${this.app.selectedBchg.id}`;
-      hyperLink.setAttribute("href", `#${this.app.selectedBchg.id}`);
-      // hyperLink.click();
-      document.getElementById('scrollToSelected').click();
+      this.app.gridScrollerLink.innerHTML = `#${this.app.selectedBchg.id}`;
+      this.app.gridScrollerLink.setAttribute("href", `#${this.app.selectedBchg.id}`);
+      this.app.gridScrollerLink.click();
     } else {
-      hyperLink.innerHTML = "#";
+      this.app.gridScrollerLink.innerHTML = "#";
     }
   }
 

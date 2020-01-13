@@ -1,7 +1,0 @@
-
-au-component: au-grid-bchg-cells-heading
-au-view:      au-grid-bchg-cells-spacer
-au-component: au-grid-bchg-cells
-au-component: au-grid-bchg-cells-editing
-au-component: au-grid-bchg-cells-total
-

@@ -121,14 +121,11 @@ export class AuModuleAcct {
   }
 
   attached() {
-    let hyperLink: Element = document.getElementById('scrollToSelected');
     if (this.app.selectedBchg) {
-      hyperLink.innerHTML = `#${this.app.selectedBchg.id}`;
-      hyperLink.setAttribute("href", `#${this.app.selectedBchg.id}`);
-      // hyperLink.click();
-      document.getElementById('scrollToSelected').click();
+      this.app.gridScrollerLink.setAttribute("href", `#${this.app.selectedBchg.id}`);
+      this.app.gridScrollerLink.click();
     } else {
-      hyperLink.innerHTML = "#";
+      this.app.gridScrollerLink.setAttribute("href", `#`);
     }
   }
 }

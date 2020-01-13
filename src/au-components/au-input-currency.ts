@@ -1,6 +1,7 @@
-import { customElement, bindable, inject } from 'aurelia-framework';
+import {customElement, bindable, inject, observable} from 'aurelia-framework';
 import {App} from 'app';
 import {AuCurrencyConverter} from 'au-converters/au-currency-converter';
+
 //
 @customElement('au-input-currency')
 @inject(Element, AuCurrencyConverter)
@@ -9,8 +10,7 @@ export class AuInputCurrency {
   element: Element;
   inputElement: HTMLInputElement;
   auCurrencyConverter: AuCurrencyConverter;
-
-  @bindable currencyAmount: number;
+  @bindable @observable({changeHandler: 'currencyAmountChanged'}) currencyAmount: number;
   @bindable isReadonly: boolean = false;
   @bindable isDisabled: boolean = false;
   @bindable classesString: string;
@@ -21,6 +21,7 @@ export class AuInputCurrency {
   }
 
   currencyAmountChanged(newValue, oldValue) {
+    console.log(`newValue: ${newValue}; oldValue" ${oldValue};`);
     let customEvent = new CustomEvent(
       'inputcurrencycompleted',
       {
@@ -61,8 +62,7 @@ export class AuInputCurrency {
           console.log("this.targetCharForRemoval: '" + this.targetCharForRemoval, "'")
         }
       }
-    }
-    else if (event.which == 46) {
+    } else if (event.which == 46) {
       // delete key
       let targetCharForRemoval = this.inputElement.value.substr(this.inputElement.selectionStart, 1);
       if (targetCharForRemoval == "," || targetCharForRemoval == ".") {
@@ -70,8 +70,7 @@ export class AuInputCurrency {
         this.targetCharForRemoval = targetCharForRemoval;
         console.log("this.targetCharForRemoval: '" + this.targetCharForRemoval, "'")
       }
-    }
-    else if (event.which == 13) {
+    } else if (event.which == 13) {
       // enter key
       this.onBlur();
     }
@@ -86,28 +85,23 @@ export class AuInputCurrency {
       if (cursorPosition > 0) {
         if (this.targetCharForRemoval == ",") {
           inputElementValue = inputElementValue.substr(0, cursorPosition - 1) + inputElementValue.substr(cursorPosition);
-        }
-        else if (this.targetCharForRemoval == ".") {
+        } else if (this.targetCharForRemoval == ".") {
           inputElementValue = inputElementValue.substr(0, cursorPosition - 1) + "." + inputElementValue.substr(cursorPosition);
-        }
-        else {
+        } else {
           // logic fault
         }
         cursorPosition = cursorPosition - 1;
         this.modifyBackspace = false; // reset to default
       }
       console.log("onInput() value: '" + inputElementValue + "'");
-    }
-    else if (this.modifyDelete) {
+    } else if (this.modifyDelete) {
       if (this.targetCharForRemoval == ",") {
         inputElementValue = inputElementValue.substr(0, cursorPosition) + inputElementValue.substr(cursorPosition + 1);
         cursorPosition = cursorPosition - 1;
-      }
-      else if (this.targetCharForRemoval == ".") {
+      } else if (this.targetCharForRemoval == ".") {
         inputElementValue = inputElementValue.substr(0, cursorPosition) + "." + inputElementValue.substr(cursorPosition + 1);
         cursorPosition = cursorPosition + 1;
-      }
-      else {
+      } else {
         // logic fault
       }
       this.modifyDelete = false; // reset to default
@@ -123,8 +117,7 @@ export class AuInputCurrency {
       if (i == 0 && char == "-") {
         sanitizedValue += char;
         console.log("sanitizedValue = ", sanitizedValue, "; cursorPosition = ", cursorPosition);
-      }
-      else if (char == ".") {
+      } else if (char == ".") {
         if (!encounteredDecimalPoint) {
           // first encounter
           encounteredDecimalPoint = true;
@@ -137,8 +130,7 @@ export class AuInputCurrency {
         if (encounteredDecimalPoint) {
           fractionLength++;
         }
-      }
-      else {
+      } else {
         //unacceptable char, don't append to sanitizedValue and put cursor back to prior position
         if (i < cursorPosition) {
           cursorPosition--;
@@ -171,12 +163,10 @@ export class AuInputCurrency {
     }
     if (sanitizedValue === "") {
       this.tempCurrencyAmount = 0;
-    }
-    else {
+    } else {
       this.tempCurrencyAmount = parseFloat(sanitizedValue);
     }
     this.formattedCurrencyAmount = this.auCurrencyConverter.toView(this.tempCurrencyAmount);
-
     // adjust cursor position for any digit group separaters added by formatting
     for (let i = 0; i <= cursorPosition; i++) {
       if (this.formattedCurrencyAmount.substr(i, 1) == ",") {
@@ -190,7 +180,6 @@ export class AuInputCurrency {
         console.log("============ end of char processing ==============");
     */
   }
-
 }
 
 

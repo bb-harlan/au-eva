@@ -115,16 +115,15 @@
                 <div class="aaVerticalGridline" style="width: 3px;"></div>
                 <div class="aaRowData aaRowBgColorData
                            ${bchg.id == app.selectedBchg.id ? 'aaMostRecentlySelectedRow' : ''}">
-                  <!-- spacer if equities side -->
                   <template if.bind="bchg.targetAcct.parentFaeSide.id == 'Equities'">
-                    <!-- put blank space in change-to-asset column -->
+                    <!-- blank space in change-to-asset column -->
                     <au-grid-bchg-cells-spacer></au-grid-bchg-cells-spacer>
                     <div class="aaVerticalGridline" style="width: 3px;"></div>
                   </template>
-                  <!-- simulate data cells with spacer -->
+                  <!-- column with read-only data cells -->
                   <au-grid-bchg-cells bchg.one-way="bchg"></au-grid-bchg-cells>
                   <template if.bind="bchg.targetAcct.parentFaeSide.id == 'Assets'">
-                    <!-- put blank space in change-to-equity column -->
+                    <!-- blank space in change-to-equity column -->
                     <div class="aaVerticalGridline" style="width: 3px;"></div>
                     <au-grid-bchg-cells-spacer></au-grid-bchg-cells-spacer>
                   </template>
@@ -274,16 +273,16 @@
                            ${bchg.id == app.selectedBchg.id ? 'aaMostRecentlySelectedRow' : ''}">
                   <!-- spacer if equities side -->
                   <template if.bind="bchg.targetAcct.parentFaeSide.id == 'Equities'">
-                    <!-- put blank space in change-to-asset column -->
+                    <!-- blank space in change-to-asset column -->
                     <au-grid-bchg-cells-spacer></au-grid-bchg-cells-spacer>
                     <div class="aaVerticalGridline" style="width: 3px;"></div>
                   </template>
-                  <!-- data cells column -->
+                  <!-- column for editable data cells -->
                   <au-grid-bchg-cells-edit bchg.one-way="bchg"
                                            viewmodel-popup-acct-picker.one-time="viewmodelPopupAcctPicker">
                   </au-grid-bchg-cells-edit>
                   <template if.bind="bchg.targetAcct.parentFaeSide.id == 'Assets'">
-                    <!-- put blank space in change-to-equity column -->
+                    <!-- blank space in change-to-equity column -->
                     <div class="aaVerticalGridline" style="width: 3px;"></div>
                     <au-grid-bchg-cells-spacer></au-grid-bchg-cells-spacer>
                   </template>
