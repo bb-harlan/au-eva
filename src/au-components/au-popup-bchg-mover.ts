@@ -17,7 +17,7 @@ export class AuPopupBchgMover {
   mouseIsDown: boolean = false;
   selectedMoverRow: Element = null;
 
-  /* ref properties */
+  /* element.ref properties */
   moverDialogModal: HTMLElement; //<div element.ref="moverDialogModal"
   moverDialogContent: HTMLElement; // <div element.ref = "moverDialogContent" ...
   moverGridRows: HTMLElement; //<div element.ref="moverGridRows"

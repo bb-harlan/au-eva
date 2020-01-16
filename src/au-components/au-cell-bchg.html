@@ -16,13 +16,6 @@
           <div class="aaVerticalGridline"></div>
           <template if.bind="autoBalanceItem">
             <div class="aaCell aaFontData">
-<!--
-              <input type="text"
-                     disabled
-                     class="aaFormInputText aaCellBchgAmt"
-                     style="border-color: transparent;"
-                     value="${bchgAmt}">
--->
               <au-input-currency
                 currency-amount.two-way="bchgAmt"
                 is-disabled.one-way="true"
@@ -31,12 +24,6 @@
           </template>
           <template if.bind="!autoBalanceItem">
             <div class="aaCell aaFontData">
-<!--
-              <input type="text"
-                     disabled
-                     class="aaFormInputText aaCellBchgAmt"
-                     value="${bchgAmt}">
--->
               <au-input-currency
                 currency-amount.two-way="bchgAmt"
                 is-disabled.one-way="true"

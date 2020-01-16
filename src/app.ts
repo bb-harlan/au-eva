@@ -43,11 +43,8 @@ export class App {
     return "moving rows";
   }
 
-  /*=====================================================
-   *  references
-   *=====================================================
-   */
-  gridScrollerLink: HTMLElement;
+  /* element.ref properties */
+  gridScrollerLink: HTMLElement; //<a> tag used to scroll grid to row having specifid Id
   viewmodelModuleFAE; // <au-module-fae view-model.ref="viewmodelModuleFAE" if.bind="selectedModule == MODULE_FAE"></au-module-fae>
   viewmodelModuleAcct; // <au-module-acct view-model.ref="viewmodelModuleAcct" ...></au-module-fae>
   viewmodelModuleBchg; // <au-module-bchg view-model.ref="viewmodelModuleBchg" ...></au-module-fae>
@@ -79,8 +76,8 @@ export class App {
   data = new Data();
 
   bind() {
-    this.data.generateTestData();
-    // this.data.generateExample1Data();
+    // this.data.generateTestData();
+    this.data.generateExample1Data();
   }
 
   onFaeModule(event) {

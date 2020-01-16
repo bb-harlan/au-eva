@@ -26,23 +26,16 @@
       <input type="text"
              class="aaCell aaCellBorder aaCellBchgDesc"
              value.two-way="bchg.desc">
-      <!--
-            <div class="aaCell aaCellBorder aaCellBchgDesc">
-              ${bchg.desc}
-            </div>
-      -->
       <!-- change amount -->
       <div class="aaCellWrapper"
            style="margin-left: 1pc;">
         <au-input-currency
-          currency-amount.two-way="bchg.amt"
-          classes-string.one-way="'aaCell aaCellBorder aaCellBchgAmt'">
+          currency-amt.to-view="bchg.amt"
+          classes-string.one-time="'aaCell aaCellBorder aaCellBchgAmt'"
+          on-completed.call="inputCurrencyCompleted(newBchgAmt)"
+          >
+<!--          on-completed.call="bchg.sourceTran.refresh()"-->
         </au-input-currency>
-<!--
-        <div class="aaCell aaCellBorder aaCellBchgAmt">
-          ${bchg.amt | auCurrencyConverter}
-        </div>
--->
       </div>
       <div
         class="aaCellHelper aaFontSizeLabel ${bchg.sourceTran.totalChangesAssets == bchg.sourceTran.totalChangesEquities ? 'aaHidden' : ''}">

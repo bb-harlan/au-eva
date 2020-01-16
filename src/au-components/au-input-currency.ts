@@ -1,107 +1,194 @@
-import {customElement, bindable, inject, observable} from 'aurelia-framework';
+import {customElement, bindable, inject} from 'aurelia-framework';
 import {App} from 'app';
 import {AuCurrencyConverter} from 'au-converters/au-currency-converter';
 
-//
-@customElement('au-input-currency')
-@inject(Element, AuCurrencyConverter)
+@customElement('au-input-currency') @inject(AuCurrencyConverter)
 export class AuInputCurrency {
-  //
-  element: Element;
-  inputElement: HTMLInputElement;
-  auCurrencyConverter: AuCurrencyConverter;
-  @bindable @observable({changeHandler: 'currencyAmountChanged'}) currencyAmount: number;
+
+  @bindable classesString: string;
   @bindable isReadonly: boolean = false;
   @bindable isDisabled: boolean = false;
-  @bindable classesString: string;
+  @bindable currencyAmt: number = 0.00;
+  @bindable onCompleted;
 
-  constructor(element: Element, auCurrencyConverter: AuCurrencyConverter) {
-    this.element = element;
+  /*injected objects*/
+  auCurrencyConverter: AuCurrencyConverter;
+
+  /* element.ref properties */
+  inputCurrencyElement: HTMLInputElement;
+
+  /*misc properties*/
+  originalInputValue: string; // Esc key restores these original values
+  originalSelectionStart: number;
+  currentInputValue: string; // values used in processing each keyup event
+  currentSelectionStart: number;
+  priorInputValue: string; // values used in keyup processing to see what was prior to a Delete or Backspace key
+  priorSelectionStart: number;
+  formattedCurrencyAmount: string;
+  tempCurrencyAmount: number;
+  modifyDelete: boolean = false;
+  modifyBackspace: boolean = false;
+  targetCharForRemoval: string;
+
+  constructor(auCurrencyConverter: AuCurrencyConverter) {
     this.auCurrencyConverter = auCurrencyConverter;
   }
-
-  currencyAmountChanged(newValue, oldValue) {
-    console.log(`newValue: ${newValue}; oldValue" ${oldValue};`);
-    let customEvent = new CustomEvent(
-      'inputcurrencycompleted',
-      {
-        bubbles: true,
-        detail: {
-          newCurrencyAmount: newValue
-        }
-      }
-    );
-    this.element.dispatchEvent(customEvent);
+  onFocus(): void {
+    this.originalInputValue = this.inputCurrencyElement.value;
+    this.originalSelectionStart = this.inputCurrencyElement.selectionStart;
+    this.priorInputValue = this.inputCurrencyElement.value;
+    this.priorSelectionStart = this.inputCurrencyElement.selectionStart;
+    this.tempCurrencyAmount = this.currencyAmt;
   }
-
-  formattedCurrencyAmount: string;
-  private tempCurrencyAmount: number;
-  private modifyDelete: boolean = false;
-  private modifyBackspace: boolean = false;
-  private targetCharForRemoval: string;
-
-  onFocus() {
-    if (this.currencyAmount) {
-      this.tempCurrencyAmount = this.currencyAmount;
-    }
+  onBlur(): void {
+    this.inputCompleted();
   }
-
-  onBlur() {
-    this.currencyAmount = this.tempCurrencyAmount;
-  }
-
-  onKeydown(event) {
-    console.log("onKeydown(); event.which:", event.which, "; event.keyCode:", event.keyCode, "; event.charCode:", event.charCode, "; event.key:", event.key);
-    if (event.which == 8) {
-      // backspace key
-      if (this.inputElement.selectionStart > 0) {
-        let targetCharForRemoval = this.inputElement.value.substr(this.inputElement.selectionStart - 1, 1);
+  onKeyup(keyboardEvent) {
+    console.log(`this.priorInputValue: ${this.priorInputValue}; this.priorSelectionStart: ${this.priorSelectionStart};`);
+    console.log(`keyboardEvent.key: ${keyboardEvent.key}; keyboardEvent.code: ${keyboardEvent.code};`);
+    this.currentInputValue = this.inputCurrencyElement.value;
+    this.currentSelectionStart = this.inputCurrencyElement.selectionStart;
+    console.log(`this.currentInputValue: ${this.currentInputValue}; this.currentSelectionStart: ${this.currentSelectionStart};`);
+    if (keyboardEvent.key == "Backspace") {
+      if (this.inputCurrencyElement.selectionStart > 0) {
+        let targetCharForRemoval = this.inputCurrencyElement.value.substr(this.inputCurrencyElement.selectionStart - 1, 1);
         if (targetCharForRemoval == "," || targetCharForRemoval == ".") {
           this.modifyBackspace = true;
           this.targetCharForRemoval = targetCharForRemoval;
           console.log("this.targetCharForRemoval: '" + this.targetCharForRemoval, "'")
         }
       }
-    } else if (event.which == 46) {
-      // delete key
-      let targetCharForRemoval = this.inputElement.value.substr(this.inputElement.selectionStart, 1);
+    }
+    else if (keyboardEvent.key == "Delete") {
+      let targetCharForRemoval = this.inputCurrencyElement.value.substr(this.inputCurrencyElement.selectionStart, 1);
       if (targetCharForRemoval == "," || targetCharForRemoval == ".") {
         this.modifyDelete = true;
         this.targetCharForRemoval = targetCharForRemoval;
         console.log("this.targetCharForRemoval: '" + this.targetCharForRemoval, "'")
       }
-    } else if (event.which == 13) {
-      // enter key
-      this.onBlur();
     }
-    return true;
+    else if (keyboardEvent.key == "Enter") {
+      this.inputCompleted();
+    }
+    else if (keyboardEvent.key >= "0" && keyboardEvent.key <= "9") {
+      let inputValue: string = this.inputCurrencyElement.value;
+      let inputCursorPosition: number = this.inputCurrencyElement.selectionStart;
+      let dataCursorPosition: number = inputCursorPosition;
+      // remove commas from inputValue adjusting dataCursorPosition as necessary
+      let commaPosition = inputValue.indexOf(",");
+      while (commaPosition >= 0) {
+        console.log(`inputValue: "${inputValue}"; commaPosition: ${commaPosition}; dataCursorPosition: ${dataCursorPosition};`);
+        inputValue = inputValue.substring(0, commaPosition) + inputValue.substring(commaPosition + 1);
+        if (dataCursorPosition > commaPosition) {
+          dataCursorPosition--;
+        }
+        commaPosition = inputValue.indexOf(",", commaPosition + 1);
+      }
+      // convert inputValue (a string) to tempCurrencyAmount (a float)
+      this.tempCurrencyAmount = parseFloat(inputValue); // (binding will cause view to be updated)
+      // adjust dataCursorPosition as necessary to account for any commas added by formatting
+      let tempFormattedAmount = this.auCurrencyConverter.toView(this.tempCurrencyAmount);
+      console.log(`this.tempCurrencyAmount: ${this.tempCurrencyAmount}; tempFormattedAmount: ${tempFormattedAmount};`);
+      commaPosition = tempFormattedAmount.indexOf(",");
+      console.log(`commaPosition: ${commaPosition}; dataCursorPosition: ${dataCursorPosition};`);
+      while (commaPosition >= 0) {
+        console.log(`inputValue: "${inputValue}"; commaPosition: ${commaPosition}; dataCursorPosition: ${dataCursorPosition};`);
+        if (dataCursorPosition >= commaPosition) {
+          dataCursorPosition++;
+        }
+        console.log(`commaPosition: ${commaPosition}; dataCursorPosition: ${dataCursorPosition};`);
+        commaPosition = tempFormattedAmount.indexOf(",", commaPosition + 1);
+      }
+      this.inputCurrencyElement.value = tempFormattedAmount;
+      this.inputCurrencyElement.setSelectionRange(dataCursorPosition, dataCursorPosition);
+    }
+    else if (keyboardEvent.key == ".") {
+      // to be completed
+    }
+    else if (keyboardEvent.key == "-") {
+      // to be completed
+    }
+    else if (keyboardEvent.key == "Escape") {
+      this.inputCurrencyElement.value = this.originalInputValue;
+      this.inputCurrencyElement.setSelectionRange(this.originalSelectionStart, this.originalSelectionStart);
+    }
+    else if (keyboardEvent.key == "ArrowLeft" || keyboardEvent.key == "ArrowRight") {
+      this.priorSelectionStart = this.currentSelectionStart;
+    }
+    else {
+      // undo any unacceptable key
+      this.inputCurrencyElement.value = this.priorInputValue;
+      this.inputCurrencyElement.setSelectionRange(this.priorSelectionStart, this.priorSelectionStart);
+    }
+    //prepare for the next keyboard input if any
+/*
+    this.priorInputValue = this.currentInputValue;
+    this.priorSelectionStart = this.currentSelectionStart;
+*/
   }
+  inputCompleted(): void {
+    console.log(`this.tempCurrencyAmount: ${this.tempCurrencyAmount}; this.currencyAmt: ${this.currencyAmt};`);
+    this.currencyAmt = this.tempCurrencyAmount;
+    console.log(`this.tempCurrencyAmount: ${this.tempCurrencyAmount}; this.currencyAmt: ${this.currencyAmt};`);
+    this.onCompleted({newBchgAmt: this.tempCurrencyAmount});
+  };
 
+  /*
+      following "if else if" stuff replaced by the above swtich statement
+      if (keyboardEvent.key == "Backspace") {
+        if (this.inputElement.selectionStart > 0) {
+          let targetCharForRemoval = this.inputElement.value.substr(this.inputElement.selectionStart - 1, 1);
+          if (targetCharForRemoval == "," || targetCharForRemoval == ".") {
+            this.modifyBackspace = true;
+            this.targetCharForRemoval = targetCharForRemoval;
+            console.log("this.targetCharForRemoval: '" + this.targetCharForRemoval, "'")
+          }
+        }
+      } else if (keyboardEvent.key == "Delete") {
+        let targetCharForRemoval = this.inputElement.value.substr(this.inputElement.selectionStart, 1);
+        if (targetCharForRemoval == "," || targetCharForRemoval == ".") {
+          this.modifyDelete = true;
+          this.targetCharForRemoval = targetCharForRemoval;
+          console.log("this.targetCharForRemoval: '" + this.targetCharForRemoval, "'")
+        }
+      } else if keyboardEvent.key == "Enter") {
+        console.log(`this.currencyAmt: ${this.currencyAmt}; this.tempCurrencyAmount: ${this.tempCurrencyAmount}`);
+        this.currencyAmt = this.tempCurrencyAmount;
+        console.log("calling this.onCompleted()");
+        this.onCompleted();
+      }
+      return true;
+    }
+  */
   onInput() {
-    let inputElementValue = this.inputElement.value
-    console.log("onInput() value: '" + inputElementValue + "'");
-    let cursorPosition = this.inputElement.selectionStart;
+    let inputCurrencyElementValue = this.inputCurrencyElement.value;
+    console.log(`this.inputCurrencyElement.value: ${this.inputCurrencyElement.value};`);
+    let cursorPosition = this.inputCurrencyElement.selectionStart;
     if (this.modifyBackspace) {
       if (cursorPosition > 0) {
         if (this.targetCharForRemoval == ",") {
-          inputElementValue = inputElementValue.substr(0, cursorPosition - 1) + inputElementValue.substr(cursorPosition);
-        } else if (this.targetCharForRemoval == ".") {
-          inputElementValue = inputElementValue.substr(0, cursorPosition - 1) + "." + inputElementValue.substr(cursorPosition);
-        } else {
+          inputCurrencyElementValue = inputCurrencyElementValue.substr(0, cursorPosition - 1) + inputCurrencyElementValue.substr(cursorPosition);
+        }
+        else if (this.targetCharForRemoval == ".") {
+          inputCurrencyElementValue = inputCurrencyElementValue.substr(0, cursorPosition - 1) + "." + inputCurrencyElementValue.substr(cursorPosition);
+        }
+        else {
           // logic fault
         }
         cursorPosition = cursorPosition - 1;
         this.modifyBackspace = false; // reset to default
       }
-      console.log("onInput() value: '" + inputElementValue + "'");
-    } else if (this.modifyDelete) {
+    }
+    else if (this.modifyDelete) {
       if (this.targetCharForRemoval == ",") {
-        inputElementValue = inputElementValue.substr(0, cursorPosition) + inputElementValue.substr(cursorPosition + 1);
+        inputCurrencyElementValue = inputCurrencyElementValue.substr(0, cursorPosition) + inputCurrencyElementValue.substr(cursorPosition + 1);
         cursorPosition = cursorPosition - 1;
-      } else if (this.targetCharForRemoval == ".") {
-        inputElementValue = inputElementValue.substr(0, cursorPosition) + "." + inputElementValue.substr(cursorPosition + 1);
+      }
+      else if (this.targetCharForRemoval == ".") {
+        inputCurrencyElementValue = inputCurrencyElementValue.substr(0, cursorPosition) + "." + inputCurrencyElementValue.substr(cursorPosition + 1);
         cursorPosition = cursorPosition + 1;
-      } else {
+      }
+      else {
         // logic fault
       }
       this.modifyDelete = false; // reset to default
@@ -112,25 +199,28 @@ export class AuInputCurrency {
     let char: string;
     let i: number;
     console.log("sanitizedValue = '" + sanitizedValue + "'; cursorPosition = ", cursorPosition);
-    for (let i = 0; i < inputElementValue.length; i++) {
-      char = inputElementValue.substr(i, 1);
+    for (let i = 0; i < inputCurrencyElementValue.length; i++) {
+      char = inputCurrencyElementValue.substr(i, 1);
       if (i == 0 && char == "-") {
         sanitizedValue += char;
         console.log("sanitizedValue = ", sanitizedValue, "; cursorPosition = ", cursorPosition);
-      } else if (char == ".") {
+      }
+      else if (char == ".") {
         if (!encounteredDecimalPoint) {
           // first encounter
           encounteredDecimalPoint = true;
           sanitizedValue += char;
           console.log("sanitizedValue = ", sanitizedValue, "; cursorPosition = ", cursorPosition);
         }
-      } else if (char >= "0" && char <= "9") {
+      }
+      else if (char >= "0" && char <= "9") {
         sanitizedValue += char;
         console.log("sanitizedValue = ", sanitizedValue, "; cursorPosition = ", cursorPosition);
         if (encounteredDecimalPoint) {
           fractionLength++;
         }
-      } else {
+      }
+      else {
         //unacceptable char, don't append to sanitizedValue and put cursor back to prior position
         if (i < cursorPosition) {
           cursorPosition--;
@@ -144,7 +234,8 @@ export class AuInputCurrency {
       if (cursorPosition >= 1) {
         cursorPosition--;
       }
-    } else if (sanitizedValue.substr(0, 2) == "-0") {
+    }
+    else if (sanitizedValue.substr(0, 2) == "-0") {
       sanitizedValue = "-" + sanitizedValue.substr(2);
       console.log("sanitizedValue = ", sanitizedValue, "; cursorPosition = ", cursorPosition);
       if (cursorPosition >= 2) {
@@ -163,7 +254,8 @@ export class AuInputCurrency {
     }
     if (sanitizedValue === "") {
       this.tempCurrencyAmount = 0;
-    } else {
+    }
+    else {
       this.tempCurrencyAmount = parseFloat(sanitizedValue);
     }
     this.formattedCurrencyAmount = this.auCurrencyConverter.toView(this.tempCurrencyAmount);
@@ -173,8 +265,8 @@ export class AuInputCurrency {
         cursorPosition++;
       }
     }
-    this.inputElement.value = this.formattedCurrencyAmount;
-    this.inputElement.setSelectionRange(cursorPosition, cursorPosition);
+    this.inputCurrencyElement.value = this.formattedCurrencyAmount;
+    this.inputCurrencyElement.setSelectionRange(cursorPosition, cursorPosition);
     /*
         console.log("sanitizedValue = ", sanitizedValue, "; cursorPosition = ", cursorPosition);
         console.log("============ end of char processing ==============");

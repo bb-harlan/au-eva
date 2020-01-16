@@ -99,9 +99,9 @@
         }
       }
 
-      var currencyAmount = parseFloat(sanitizedValue);
+      var currencyAmt = parseFloat(sanitizedValue);
 
-      var formattedCurrencyAmount = numeral(currencyAmount).format('0,0.00');
+      var formattedCurrencyAmount = numeral(currencyAmt).format('0,0.00');
       event.target.value = formattedCurrencyAmount;
 
       // adjust cursor position for any thousands separaters added by formatting

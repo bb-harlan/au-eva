@@ -30,10 +30,12 @@ export class Tran {
     this.bchgList.sort((a: Bchg, b: Bchg) => a.compareToInTran(b));
   }
   refresh(): void {
+    console.log("in tran.refresh()");
     this.totalChangesAssets = 0.00;
     this.totalChangesEquities = 0.00;
     let intraTranIndex = 0;
     for (let bchg of this.bchgList) {
+      console.log(`bchg.amt: ${bchg.amt};`);
       bchg.intraTranIndex = intraTranIndex++;
       if (bchg.targetAcct) {
         switch (bchg.targetAcct.parentFaeSide.id) {

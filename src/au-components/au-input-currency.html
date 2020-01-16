@@ -1,15 +1,13 @@
 <template>
   <require from="au-converters/au-currency-converter"></require>
   <input
-    element.ref="inputElement"
+    element.ref="inputCurrencyElement"
     type="text"
+    class="${classesString}"
     readonly="${isReadonly ? 'readonly' : ''}"
     disabled="${isDisabled ? 'disabled' : ''}"
-    class="${classesString}"
     focus.trigger="onFocus()"
     blur.trigger="onBlur()"
-    keydown.trigger="onKeydown($event)"
-    input.trigger="onInput()"
-    value.to-view="currencyAmount | auCurrencyConverter"
-    >
+    keyup.trigger="onKeyup($event)"
+    value.to-view="currencyAmt | auCurrencyConverter">
 </template>
