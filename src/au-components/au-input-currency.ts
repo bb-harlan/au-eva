@@ -32,22 +32,47 @@ export class AuInputCurrency {
   onFocus(): void {
     this.originalInputValue = this.inputCurrencyElement.value;
     this.originalSelectionStart = this.inputCurrencyElement.selectionStart;
+    this.originalCurrencyAmt = this.currencyAmt;
     this.priorInputValue = this.inputCurrencyElement.value;
     this.priorSelectionStart = this.inputCurrencyElement.selectionStart;
   }
   onBlur(): void {
     this.inputCompleted();
   }
-  onKeydown(keyboardEvent) {
+  onKeydown (keyboardEvent) {
+    console.log(`\n*** keyboardEvent.type: "${keyboardEvent.type}"; ***************`);
+    console.log(keyboardEvent);
+    console.log(keyboardEvent.target.value);
+    if (
+       (keyboardEvent.key >= "0" && keyboardEvent.key <= "9") ||
+       keyboardEvent.key == "Backspace" ||
+       keyboardEvent.key == "Delete" ||
+       keyboardEvent.key == "Enter" ||
+       keyboardEvent.key == "." ||
+       (keyboardEvent.key == "-" &&
+        this.inputCurrencyElement.selectionStart == 0
+        && this.inputCurrencyElement.value.charAt(0) != '-')  ||
+       keyboardEvent.key == "Escape" ||
+       keyboardEvent.key == "ArrowLeft" ||
+       keyboardEvent.key == "ArrowRight"
+       )
+    {
+      return true;
+    }
+    else {
+      return false;
+    }
+  }
+  onKeyup (keyboardEvent) {
     let currentInputValue = this.inputCurrencyElement.value;
     let currentSelectionStart = this.inputCurrencyElement.selectionStart;
     let indexOfComma: number;
     let currentCurrencyAmt: number;
-    console.log("\n*** HANDLING KEYDOWN EVENT ***");
+    console.log(`\n*** keyboardEvent.type: "${keyboardEvent.type}"; ***************`);
     console.log(`this.priorInputValue: ${this.priorInputValue}; this.priorSelectionStart: ${this.priorSelectionStart};`);
     console.log(`currentInputValue: ${currentInputValue}; currentSelectionStart: ${currentSelectionStart};`);
     console.log(`keyboardEvent.key: ${keyboardEvent.key}; keyboardEvent.code: ${keyboardEvent.code};`);
-    console.log("******************************");
+    console.log("******************************************");
     if (keyboardEvent.key == "Backspace") {
       if (this.inputCurrencyElement.selectionStart > 0) {
         let targetCharForRemoval = this.inputCurrencyElement.value.substr(this.inputCurrencyElement.selectionStart - 1, 1);
@@ -100,6 +125,7 @@ export class AuInputCurrency {
       this.currencyAmt = currentCurrencyAmt;
       this.inputCurrencyElement.value = currentInputValue;
       this.inputCurrencyElement.setSelectionRange(currentSelectionStart, currentSelectionStart);
+      return true;
     }
     else if (keyboardEvent.key == ".") {
       // to be completed

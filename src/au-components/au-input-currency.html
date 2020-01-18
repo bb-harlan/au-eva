@@ -4,10 +4,12 @@
     element.ref="inputCurrencyElement"
     type="text"
     class="${classesString}"
+    maxlength="13"
     readonly="${isReadonly ? 'readonly' : ''}"
     disabled="${isDisabled ? 'disabled' : ''}"
     focus.trigger="onFocus()"
     blur.trigger="onBlur()"
-    keyup.trigger="onKeydown($event)"
+    keydown.trigger="onKeydown($event)"
+    keyup.trigger="onKeyup($event)"
     value.to-view="currencyAmt | auCurrencyConverter">
 </template>
