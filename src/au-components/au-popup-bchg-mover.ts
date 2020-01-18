@@ -1,14 +1,12 @@
 import {customElement, bindable, inject} from 'aurelia-framework';
 import {App} from 'app';
-import {AuModuleTran} from 'au-components/au-module-tran';
 import {Bchg} from 'app-data/models/bchg';
 
 @customElement('au-popup-bchg-mover')
-@inject(App, AuModuleTran)
+@inject(App)
 export class AuPopupBchgMover {
   /* @injected item(s) */
   app: App;
-  auModuleTran: AuModuleTran;
 
   /* data properties */
   moverBchgList: Array<Bchg> = [];
@@ -22,16 +20,15 @@ export class AuPopupBchgMover {
   moverDialogContent: HTMLElement; // <div element.ref = "moverDialogContent" ...
   moverGridRows: HTMLElement; //<div element.ref="moverGridRows"
 
-  constructor(app: App, auModuleTran: AuModuleTran) {
+  constructor(app: App) {
     this.app = app;
-    this.auModuleTran = auModuleTran;
   }
 
   open(): void {
     // make copy of bchgList for mover
     this.moverBchgList.push(...this.app.editableTran.bchgList);
     // position moverDialogContent
-    let boundingClientRect = this.auModuleTran.popupTop.getBoundingClientRect();
+    let boundingClientRect = this.app.viewmodelModuleTran.popupTop.getBoundingClientRect();
     this.moverDialogContent.style.marginTop = `${boundingClientRect.top}px`;
     // display dialog
     this.moverDialogModal.style.display = "flex";

@@ -8,6 +8,6 @@
     disabled="${isDisabled ? 'disabled' : ''}"
     focus.trigger="onFocus()"
     blur.trigger="onBlur()"
-    keyup.trigger="onKeyup($event)"
+    keyup.trigger="onKeydown($event)"
     value.to-view="currencyAmt | auCurrencyConverter">
 </template>

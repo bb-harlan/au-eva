@@ -4,8 +4,11 @@ import {App} from 'app';
 
 @customElement('au-grid-bchg-cells-edit')
 @inject(App)
-export class AuGridBchgCells { app = null;
-  viewmodelPopupAcctPicker; // <au-popup-acct-picker view-model.ref="viewmodelPopupAcctPicker></au-popup-bchg-mover>
+export class AuGridBchgCells {
+
+  /*injected stuff*/
+  app = null;
+
   @bindable bchg: Bchg;
 
   constructor(app) {

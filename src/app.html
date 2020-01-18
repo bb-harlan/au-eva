@@ -6,6 +6,7 @@
   <require from="au-components/au-module-tran"></require>
   <require from="au-components/au-module-jrnl"></require>
   <require from="au-components/au-popup-acct-mover"></require>
+  <require from="au-components/au-popup-acct-picker"></require>
   <require from="au-components/au-popup-bchg-mover"></require>
 
   <a element.ref="gridScrollerLink"
@@ -62,7 +63,6 @@
       </div>
     </div>
   </div>
-  <!--<br>-->
   <div class="aaPanelContainer">
     <au-module-fae view-model.ref="viewmodelModuleFAE" if.bind="selectedModule == MODULE_FAE"></au-module-fae>
     <au-module-acct view-model.ref="viewmodelModuleAcct" if.bind="selectedModule == MODULE_ACCT"></au-module-acct>
@@ -70,4 +70,9 @@
     <au-module-tran view-model.ref="viewmodelModuleTran" if.bind="selectedModule == MODULE_TRAN"></au-module-tran>
     <au-module-jrnl view-model.ref="viewmodelModuleJrnl" if.bind="selectedModule == MODULE_JRNL"></au-module-jrnl>
   </div>
+
+  <au-popup-acct-mover view-model.ref="viewmodelPopupAcctMover"></au-popup-acct-mover>
+  <au-popup-acct-picker view-model.ref="viewmodelPopupAcctPicker"></au-popup-acct-picker>
+  <au-popup-bchg-mover view-model.ref="viewmodelPopupBchgMover"></au-popup-bchg-mover>
+
 </template>

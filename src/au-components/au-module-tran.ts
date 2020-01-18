@@ -1,7 +1,5 @@
-import {customElement} from 'aurelia-framework';
-import {inject} from 'aurelia-framework';
+import {customElement, inject} from 'aurelia-framework';
 import {App} from "app";
-import {Tran} from 'app-data/models/tran';
 import {Bchg} from 'app-data/models/bchg';
 
 @customElement('au-module-tran')
@@ -20,8 +18,6 @@ export class AuModuleTran {
    *=====================================================
    */
   popupTop: HTMLElement; // <div element.ref="popupTop" ...
-  viewmodelPopupBchgMover; // <au-popup-bchg-mover view-model.ref="viewmodelPopupBchgMover></au-popup-bchg-mover>
-  viewmodelPopupAcctPicker; // <au-popup-acct-picker view-model.ref="viewmodelPopupAcctPicker></au-popup-acct-picker>
 
   constructor(app) {
     this.app = app;
@@ -84,7 +80,7 @@ export class AuModuleTran {
     } else {
       this.newBchgInsertionIndex = this.app.editableTran.bchgList.length;
     }
-    this.viewmodelPopupAcctPicker.open(this.newAcctPicked)
+    this.app.viewmodelPopupAcctPicker.open(this.newAcctPicked)
   }
 
   newAcctPicked(pickedAcct) {

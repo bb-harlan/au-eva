@@ -51,6 +51,10 @@ export class App {
   viewmodelModuleTran; // <au-module-tran view-model.ref="viewmodelModuleTran" ...></au-module-fae>
   viewmodelModuleJrnl; // <au-module-jrnl view-model.ref="viewmodelModuleJrnl ...></au-module-fae>
 
+  viewmodelPopupAcctMover; // <au-popup-acct-mover view-model.ref="viewmodelPopupAcctMover">
+  viewmodelPopupAcctPicker; // <au-popup-acct-picker view-model.ref="viewmodelPopupAcctPicker">
+  viewmodelPopupBchgMover; // <au-popup-bchg-mover view-model.ref="viewmodelPopupBchgMover">
+
   /*=====================================================
    *  UI state/control
    *=====================================================

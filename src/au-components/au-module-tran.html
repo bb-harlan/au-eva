@@ -14,8 +14,6 @@
   <require from="au-views/au-vertical-gridline.html"></require>
   <require from="au-views/au-vertical-gridline-spacer.html"></require>
   <require from="au-views/au-grid-bchg-cells-spacer.html"></require>
-  <require from="au-components/au-popup-bchg-mover"></require>
-  <require from="au-components/au-popup-acct-picker"></require>
   <require from="au-converters/au-currency-converter"></require>
   <require from="au-components/au-grid-bchg-cells-heading"></require>
   <require from="au-components/au-grid-bchg-cells"></require>
@@ -230,7 +228,7 @@
             <button
               type="button"
               class="aaBtn"
-              click.trigger="viewmodelPopupBchgMover.open()">
+              click.trigger="app.viewmodelPopupBchgMover.open()">
               Move rows
               <au-text-ellipsis></au-text-ellipsis>
             </button>
@@ -260,7 +258,7 @@
                    mouseleave.trigger="onRowLeave($event, bchg)">
                 <div class="aaRowOps aaBgColorToolbar aaFontSizeLabel">
                   <div class="aaRowOpsOpacity">
-                    <span class="aaBtn" click.trigger="viewmodelPopupAcctPicker.open(bchg, 'create')">
+                    <span class="aaBtn" click.trigger="app.viewmodelPopupAcctPicker.open(bchg, 'create')">
                       <au-icon-new></au-icon-new>
                     </span>
                     <span class="aaBtn" click.trigger="rowDelete(bchg)">
@@ -296,7 +294,7 @@
                  mouseleave.trigger="onRowLeave($event, null)">
               <div class="aaRowOps aaBgColorToolbar aaFontSizeLabel">
                 <div class="aaRowOpsOpacity">
-                    <span class="aaBtn" click.trigger="viewmodelPopupAcctPicker.open(null, 'create')">
+                    <span class="aaBtn" click.trigger="app.viewmodelPopupAcctPicker.open(null, 'create')">
                       <au-icon-new></au-icon-new>
                     </span>
                   <span class="aaBtn aaHidden">
@@ -347,7 +345,4 @@
       </div>
     </template>
   </div>
-
-  <au-popup-bchg-mover view-model.ref="viewmodelPopupBchgMover"></au-popup-bchg-mover>
-  <au-popup-acct-picker view-model.ref="viewmodelPopupAcctPicker"></au-popup-acct-picker>
 </template>
