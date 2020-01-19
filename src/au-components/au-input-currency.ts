@@ -17,14 +17,10 @@ export class AuInputCurrency {
   inputCurrencyElement: HTMLInputElement;
 
   /*misc properties*/
+  maxLength = 13;
   originalCurrencyAmt: number;
   originalInputValue: string; // Esc key restores these original values
   originalSelectionStart: number;
-  priorInputValue: string; // used in keyup processing to see what was prior to a Delete or Backspace key
-  priorSelectionStart: number;
-  modifyDelete: boolean = false;
-  modifyBackspace: boolean = false;
-  targetCharForRemoval: string;
 
   constructor(auCurrencyConverter: AuCurrencyConverter) {
     this.auCurrencyConverter = auCurrencyConverter;
@@ -33,68 +29,87 @@ export class AuInputCurrency {
     this.originalInputValue = this.inputCurrencyElement.value;
     this.originalSelectionStart = this.inputCurrencyElement.selectionStart;
     this.originalCurrencyAmt = this.currencyAmt;
-    this.priorInputValue = this.inputCurrencyElement.value;
-    this.priorSelectionStart = this.inputCurrencyElement.selectionStart;
   }
   onBlur(): void {
     this.inputCompleted();
   }
-  onKeydown (keyboardEvent) {
+  onKeydown(keyboardEvent) {
     console.log(`\n*** keyboardEvent.type: "${keyboardEvent.type}"; ***************`);
     console.log(keyboardEvent);
     console.log(keyboardEvent.target.value);
-    if (
-       (keyboardEvent.key >= "0" && keyboardEvent.key <= "9") ||
-       keyboardEvent.key == "Backspace" ||
-       keyboardEvent.key == "Delete" ||
-       keyboardEvent.key == "Enter" ||
-       keyboardEvent.key == "." ||
-       (keyboardEvent.key == "-" &&
-        this.inputCurrencyElement.selectionStart == 0
-        && this.inputCurrencyElement.value.charAt(0) != '-')  ||
-       keyboardEvent.key == "Escape" ||
-       keyboardEvent.key == "ArrowLeft" ||
-       keyboardEvent.key == "ArrowRight"
-       )
-    {
-      return true;
-    }
-    else {
+    if (keyboardEvent.key == ".") {
+      // move cursor to first digit past decimal point,
+      // but don't let period pass through
+      let newSelectionStart = this.inputCurrencyElement.value.indexOf(".") + 1;
+      this.inputCurrencyElement.setSelectionRange(newSelectionStart, newSelectionStart);
       return false;
     }
+    if (keyboardEvent.key == "Delete") {
+      let charAtCursor = this.inputCurrencyElement.value.charAt(this.inputCurrencyElement.selectionStart);
+      console.log(`charAtCursor: "${charAtCursor};"`);
+      if (charAtCursor == "," || charAtCursor == ".") {
+        // treat Delete as ArrowRight
+        let newSelectionStart = this.inputCurrencyElement.selectionStart + 1;
+        this.inputCurrencyElement.setSelectionRange(newSelectionStart, newSelectionStart);
+        return false;
+      }
+      return true;
+    }
+    if (keyboardEvent.key == "Backspace") {
+      let charBeforeCursor = this.inputCurrencyElement.value.charAt(this.inputCurrencyElement.selectionStart - 1);
+      console.log(`charBeforeCursor: "${charBeforeCursor}";`);
+      if (charBeforeCursor == "," || charBeforeCursor == ".") {
+        // treat Backspace as ArrowLeft
+        let newSelectionStart = this.inputCurrencyElement.selectionStart - 1;
+        this.inputCurrencyElement.setSelectionRange(newSelectionStart, newSelectionStart);
+        return false;
+      }
+      return true;
+    }
+    if ((keyboardEvent.key >= "0" && keyboardEvent.key <= "9") ||
+      (keyboardEvent.key == "-" &&
+        this.inputCurrencyElement.selectionStart == 0 &&
+        this.inputCurrencyElement.value.charAt(0) != '-')) {
+      return true;
+    }
+    if (
+      keyboardEvent.key == "Enter" ||
+      keyboardEvent.key == "Escape" ||
+      keyboardEvent.key == "ArrowLeft" ||
+      keyboardEvent.key == "ArrowRight"
+    ) {
+      return true;
+    }
+    // any other key is unacceptable; filter it out.
+    return false;
+    /*
+    keyboardEvent.preventDefault();
+    keyboardEvent.stopPropagation()
+    */
+    return false;
   }
-  onKeyup (keyboardEvent) {
+  onKeyup(keyboardEvent) {
     let currentInputValue = this.inputCurrencyElement.value;
     let currentSelectionStart = this.inputCurrencyElement.selectionStart;
+    let indexOfDecimalPoint = this.inputCurrencyElement.value.indexOf(".");
     let indexOfComma: number;
     let currentCurrencyAmt: number;
     console.log(`\n*** keyboardEvent.type: "${keyboardEvent.type}"; ***************`);
-    console.log(`this.priorInputValue: ${this.priorInputValue}; this.priorSelectionStart: ${this.priorSelectionStart};`);
     console.log(`currentInputValue: ${currentInputValue}; currentSelectionStart: ${currentSelectionStart};`);
     console.log(`keyboardEvent.key: ${keyboardEvent.key}; keyboardEvent.code: ${keyboardEvent.code};`);
     console.log("******************************************");
-    if (keyboardEvent.key == "Backspace") {
-      if (this.inputCurrencyElement.selectionStart > 0) {
-        let targetCharForRemoval = this.inputCurrencyElement.value.substr(this.inputCurrencyElement.selectionStart - 1, 1);
-        if (targetCharForRemoval == "," || targetCharForRemoval == ".") {
-          this.modifyBackspace = true;
-          this.targetCharForRemoval = targetCharForRemoval;
-          console.log("this.targetCharForRemoval: '" + this.targetCharForRemoval, "'")
-        }
+    if ((keyboardEvent.key >= "0" && keyboardEvent.key <= "9") ||
+      keyboardEvent.key == "-" ||
+      keyboardEvent.key == "Delete" ||
+      keyboardEvent.key == "Backspace") {
+      if (currentSelectionStart > indexOfDecimalPoint &&
+        (keyboardEvent.key != "Delete" &&  keyboardEvent.key != "Backspace")) {
+        // chop off last char
+        currentInputValue = currentInputValue.substring(0, currentInputValue.length - 1);
       }
-    }
-    else if (keyboardEvent.key == "Delete") {
-      let targetCharForRemoval = this.inputCurrencyElement.value.substr(this.inputCurrencyElement.selectionStart, 1);
-      if (targetCharForRemoval == "," || targetCharForRemoval == ".") {
-        this.modifyDelete = true;
-        this.targetCharForRemoval = targetCharForRemoval;
-        console.log("this.targetCharForRemoval: '" + this.targetCharForRemoval, "'")
+      if (currentInputValue == "0.00" || currentInputValue == "-0.00") {
+        currentSelectionStart = indexOfDecimalPoint;
       }
-    }
-    else if (keyboardEvent.key == "Enter") {
-      this.inputCompleted();
-    }
-    else if (keyboardEvent.key >= "0" && keyboardEvent.key <= "9") {
       // remove commas from currentInputValue adjusting currentSelectionStart as necessary
       for (let i = 0; i < currentInputValue.length - 1; i++) {
         if (currentInputValue.charAt(i) == "," && currentSelectionStart > i) {
@@ -118,8 +133,6 @@ export class AuInputCurrency {
         }
       }
       console.log(`updated currentSelectionStart: ${currentSelectionStart};`);
-      this.priorInputValue = currentInputValue;
-      this.priorSelectionStart = currentSelectionStart;
       console.log(`this.currencyAmt: ${this.currencyAmt};`);
 
       this.currencyAmt = currentCurrencyAmt;
@@ -127,182 +140,22 @@ export class AuInputCurrency {
       this.inputCurrencyElement.setSelectionRange(currentSelectionStart, currentSelectionStart);
       return true;
     }
-    else if (keyboardEvent.key == ".") {
-      // to be completed
-    }
-    else if (keyboardEvent.key == "-") {
-      // to be completed
-    }
-    else if (keyboardEvent.key == "Escape") {
+    if (keyboardEvent.key == "Escape") {
       this.currencyAmt = this.originalCurrencyAmt;
       this.inputCurrencyElement.value = this.originalInputValue;
       this.inputCurrencyElement.setSelectionRange(this.originalSelectionStart, this.originalSelectionStart);
+      return true;
     }
-    else if (keyboardEvent.key == "ArrowLeft" || keyboardEvent.key == "ArrowRight") {
-      this.priorSelectionStart = currentSelectionStart;
+    if (keyboardEvent.key == "Enter") {
+      this.inputCompleted();
+      return true;
     }
-    else {
-      // ignore any unacceptable key
-      keyboardEvent.preventDefault();
-      keyboardEvent.stopPropagation()
-      // return false;
-      /*
-            this.inputCurrencyElement.value = this.priorInputValue;
-            this.inputCurrencyElement.setSelectionRange(this.priorSelectionStart, this.priorSelectionStart);
-      */
-    }
-    //prepare for the next keyboard input if any
-    /*
-        this.priorInputValue = currentInputValue;
-        this.priorSelectionStart = currentSelectionStart;
-    */
+    // onKeydown() allowed no other keys to change this.inputCurrencyElement.value,
+    // nothing else to do at this point.
   }
   inputCompleted(): void {
     this.onCompleted({newBchgAmt: this.currencyAmt});
-  };
-
-  /*
-      following "if else if" stuff replaced by the above swtich statement
-      if (keyboardEvent.key == "Backspace") {
-        if (this.inputElement.selectionStart > 0) {
-          let targetCharForRemoval = this.inputElement.value.substr(this.inputElement.selectionStart - 1, 1);
-          if (targetCharForRemoval == "," || targetCharForRemoval == ".") {
-            this.modifyBackspace = true;
-            this.targetCharForRemoval = targetCharForRemoval;
-            console.log("this.targetCharForRemoval: '" + this.targetCharForRemoval, "'")
-          }
-        }
-      } else if (keyboardEvent.key == "Delete") {
-        let targetCharForRemoval = this.inputElement.value.substr(this.inputElement.selectionStart, 1);
-        if (targetCharForRemoval == "," || targetCharForRemoval == ".") {
-          this.modifyDelete = true;
-          this.targetCharForRemoval = targetCharForRemoval;
-          console.log("this.targetCharForRemoval: '" + this.targetCharForRemoval, "'")
-        }
-      } else if keyboardEvent.key == "Enter") {
-        console.log(`this.currencyAmt: ${this.currencyAmt}; currentCurrencyAmt: ${currentCurrencyAmt}`);
-        this.currencyAmt = currentCurrencyAmt;
-        console.log("calling this.onCompleted()");
-        this.onCompleted();
-      }
-      return true;
-    }
-  */
-
-  /*
-    onInput() {
-      let inputCurrencyElementValue = this.inputCurrencyElement.value;
-      console.log(`this.inputCurrencyElement.value: ${this.inputCurrencyElement.value};`);
-      let cursorPosition = this.inputCurrencyElement.selectionStart;
-      if (this.modifyBackspace) {
-        if (cursorPosition > 0) {
-          if (this.targetCharForRemoval == ",") {
-            inputCurrencyElementValue = inputCurrencyElementValue.substr(0, cursorPosition - 1) + inputCurrencyElementValue.substr(cursorPosition);
-          }
-          else if (this.targetCharForRemoval == ".") {
-            inputCurrencyElementValue = inputCurrencyElementValue.substr(0, cursorPosition - 1) + "." + inputCurrencyElementValue.substr(cursorPosition);
-          }
-          else {
-            // logic fault
-          }
-          cursorPosition = cursorPosition - 1;
-          this.modifyBackspace = false; // reset to default
-        }
-      }
-      else if (this.modifyDelete) {
-        if (this.targetCharForRemoval == ",") {
-          inputCurrencyElementValue = inputCurrencyElementValue.substr(0, cursorPosition) + inputCurrencyElementValue.substr(cursorPosition + 1);
-          cursorPosition = cursorPosition - 1;
-        }
-        else if (this.targetCharForRemoval == ".") {
-          inputCurrencyElementValue = inputCurrencyElementValue.substr(0, cursorPosition) + "." + inputCurrencyElementValue.substr(cursorPosition + 1);
-          cursorPosition = cursorPosition + 1;
-        }
-        else {
-          // logic fault
-        }
-        this.modifyDelete = false; // reset to default
-      }
-      let sanitizedValue = "";
-      let encounteredDecimalPoint = false;
-      let fractionLength = 0;
-      let char: string;
-      let i: number;
-      console.log("sanitizedValue = '" + sanitizedValue + "'; cursorPosition = ", cursorPosition);
-      for (let i = 0; i < inputCurrencyElementValue.length; i++) {
-        char = inputCurrencyElementValue.substr(i, 1);
-        if (i == 0 && char == "-") {
-          sanitizedValue += char;
-          console.log("sanitizedValue = ", sanitizedValue, "; cursorPosition = ", cursorPosition);
-        }
-        else if (char == ".") {
-          if (!encounteredDecimalPoint) {
-            // first encounter
-            encounteredDecimalPoint = true;
-            sanitizedValue += char;
-            console.log("sanitizedValue = ", sanitizedValue, "; cursorPosition = ", cursorPosition);
-          }
-        }
-        else if (char >= "0" && char <= "9") {
-          sanitizedValue += char;
-          console.log("sanitizedValue = ", sanitizedValue, "; cursorPosition = ", cursorPosition);
-          if (encounteredDecimalPoint) {
-            fractionLength++;
-          }
-        }
-        else {
-          //unacceptable char, don't append to sanitizedValue and put cursor back to prior position
-          if (i < cursorPosition) {
-            cursorPosition--;
-          }
-        }
-      }
-      // eliminate any leading zeros
-      if (sanitizedValue.substr(0, 1) == "0") {
-        sanitizedValue = sanitizedValue.substr(1);
-        console.log("sanitizedValue = ", sanitizedValue, "; cursorPosition = ", cursorPosition);
-        if (cursorPosition >= 1) {
-          cursorPosition--;
-        }
-      }
-      else if (sanitizedValue.substr(0, 2) == "-0") {
-        sanitizedValue = "-" + sanitizedValue.substr(2);
-        console.log("sanitizedValue = ", sanitizedValue, "; cursorPosition = ", cursorPosition);
-        if (cursorPosition >= 2) {
-          cursorPosition--;
-        }
-      }
-      // truncate any trailing characters in excess if 2 decimal places
-      let decimalPointPosition = sanitizedValue.indexOf(".");
-      fractionLength = sanitizedValue.substr(decimalPointPosition).length - 1;
-      if (fractionLength > 2) {
-        sanitizedValue = sanitizedValue.substr(0, decimalPointPosition + 3);
-        console.log("sanitizedValue = ", sanitizedValue, "; cursorPosition = ", cursorPosition);
-        if (cursorPosition > sanitizedValue.length) {
-          cursorPosition = sanitizedValue.length;
-        }
-      }
-      if (sanitizedValue === "") {
-        currentCurrencyAmt = 0;
-      }
-      else {
-        currentCurrencyAmt = parseFloat(sanitizedValue);
-      }
-      this.formattedCurrencyAmount = this.auCurrencyConverter.toView(currentCurrencyAmt);
-      // adjust cursor position for any digit group separaters added by formatting
-      for (let i = 0; i <= cursorPosition; i++) {
-        if (this.formattedCurrencyAmount.substr(i, 1) == ",") {
-          cursorPosition++;
-        }
-      }
-      this.inputCurrencyElement.value = this.formattedCurrencyAmount;
-      this.inputCurrencyElement.setSelectionRange(cursorPosition, cursorPosition);
-      /!*
-          console.log("sanitizedValue = ", sanitizedValue, "; cursorPosition = ", cursorPosition);
-          console.log("============ end of char processing ==============");
-      *!/
-    }
-  */
+  }
 }
 
 
