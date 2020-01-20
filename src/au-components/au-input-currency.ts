@@ -74,6 +74,7 @@ export class AuInputCurrency {
     }
     if (
       keyboardEvent.key == "Enter" ||
+      keyboardEvent.key == "Tab" ||
       keyboardEvent.key == "Escape" ||
       keyboardEvent.key == "ArrowLeft" ||
       keyboardEvent.key == "ArrowRight"
@@ -89,15 +90,27 @@ export class AuInputCurrency {
     return false;
   }
   onKeyup(keyboardEvent) {
+    console.log(`\n*** keyboardEvent.type: "${keyboardEvent.type}"; ***************`);
+    console.log(`keyboardEvent.key: "${keyboardEvent.key}";`);
     let currentInputValue = this.inputCurrencyElement.value;
     let currentSelectionStart = this.inputCurrencyElement.selectionStart;
-    let indexOfDecimalPoint = this.inputCurrencyElement.value.indexOf(".");
+    if (currentInputValue == "") {
+      currentInputValue = ".00";
+      currentSelectionStart = 0;
+    }
+    console.log(`currentInputValue: "${currentInputValue}"; currentSelectionStart: ${currentSelectionStart};`);
+    console.log("******************************************");
+    // if leading zero, remove it
+    if (currentInputValue.substring(0, 2) == "0." ||
+        currentInputValue.substring(0, 3) == "-0.") {
+      currentInputValue.replace("0", "");
+      currentSelectionStart--;
+    }
+    let indexOfDecimalPoint = currentInputValue.indexOf(".");
+    console.log(`currentInputValue: "${currentInputValue}"; currentSelectionStart: ${currentSelectionStart};   indexOfDecimalPoint: ${indexOfDecimalPoint};`);
+    console.log(`currentInputValue: "${currentInputValue}"; currentSelectionStart: ${currentSelectionStart};   indexOfDecimalPoint: ${indexOfDecimalPoint};`);
     let indexOfComma: number;
     let currentCurrencyAmt: number;
-    console.log(`\n*** keyboardEvent.type: "${keyboardEvent.type}"; ***************`);
-    console.log(`currentInputValue: ${currentInputValue}; currentSelectionStart: ${currentSelectionStart};`);
-    console.log(`keyboardEvent.key: ${keyboardEvent.key}; keyboardEvent.code: ${keyboardEvent.code};`);
-    console.log("******************************************");
     if ((keyboardEvent.key >= "0" && keyboardEvent.key <= "9") ||
       keyboardEvent.key == "-" ||
       keyboardEvent.key == "Delete" ||
@@ -111,21 +124,29 @@ export class AuInputCurrency {
         currentSelectionStart = indexOfDecimalPoint;
       }
       // remove commas from currentInputValue adjusting currentSelectionStart as necessary
-      for (let i = 0; i < currentInputValue.length - 1; i++) {
-        if (currentInputValue.charAt(i) == "," && currentSelectionStart > i) {
+      let indexOfComma: number;
+      while (true) {
+        indexOfComma = currentInputValue.indexOf(",");
+        if (indexOfComma < 0) {
+          break;
+        }
+        currentInputValue = currentInputValue.substring(0, indexOfComma - 1) +
+                            currentInputValue.substring(indexOfComma + 1);
+        if (currentSelectionStart > indexOfComma) {
           currentSelectionStart--;
         }
+        console.log(`removing commas - currentInputValue: "${currentInputValue}"; currentSelectionStart: ${currentSelectionStart};`);
       }
-      console.log(`updated currentSelectionStart after anticipating removal of any commas: ${currentSelectionStart};`);
-
-      currentInputValue = currentInputValue.replace(",", "");
-      console.log(`updated currentInputValue after removal of any commas: ${currentInputValue};`);
+      console.log(`after removal of commas - currentInputValue: "${currentInputValue}"; currentSelectionStart: ${currentSelectionStart};`);
       // convert currentInputValue (a string) to currentCurrencyAmt (a float)
       currentCurrencyAmt = parseFloat(currentInputValue);
       console.log(`parseFloat(currentInputValue): ${currentCurrencyAmt};`);
       // update currentInputValue based on new value of currentCurrencyAmt (a float)
       currentInputValue = this.auCurrencyConverter.toView(currentCurrencyAmt);
       console.log(`this.auCurrencyConverter.toView(currentCurrencyAmt): ${currentInputValue};`);
+      if (currentInputValue == "0.00") {
+        currentSelectionStart = 1;
+      }
       // update currentSelectionStart as necessary to account for any commas added by formatting
       for (let i = 0; i < currentInputValue.length - 1; i++) {
         if (currentInputValue.charAt(i) == "," && currentSelectionStart >= i) {
@@ -133,7 +154,7 @@ export class AuInputCurrency {
         }
       }
       console.log(`updated currentSelectionStart: ${currentSelectionStart};`);
-      console.log(`this.currencyAmt: ${this.currencyAmt};`);
+      console.log(`currentCurrencyAmt: ${currentCurrencyAmt};`);
 
       this.currencyAmt = currentCurrencyAmt;
       this.inputCurrencyElement.value = currentInputValue;
