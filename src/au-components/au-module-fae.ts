@@ -25,7 +25,7 @@ export class AuModuleFae {
     this.app.selectedFaeSide = null;
   }
 
-  bind() {
+  attach() {
     if (this.app.selectedAcct) {
       this.app.gridScrollerLink.setAttribute("href", `#${this.app.selectedAcct.id}`);
       this.app.gridScrollerLink.click();
