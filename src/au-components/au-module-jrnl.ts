@@ -47,7 +47,7 @@ export class AuModuleJrnl {
    this.app.selectedEquationSide = null;
    }
    */
-  attached() {
+  bind() {
     if (this.app.selectedTran) {
       this.app.gridScrollerLink.setAttribute("href", `#${this.app.selectedTran.id}`);
       this.app.gridScrollerLink.click();

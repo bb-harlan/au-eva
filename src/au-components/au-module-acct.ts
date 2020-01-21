@@ -120,7 +120,7 @@ export class AuModuleAcct {
     alert('"New tran..." not yet implemented.');
   }
 
-  attached() {
+  bind() {
     if (this.app.selectedBchg) {
       this.app.gridScrollerLink.setAttribute("href", `#${this.app.selectedBchg.id}`);
       this.app.gridScrollerLink.click();
