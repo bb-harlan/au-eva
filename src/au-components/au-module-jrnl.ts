@@ -50,7 +50,7 @@ export class AuModuleJrnl {
   attach() {
     if (this.app.selectedTran) {
       this.app.gridScrollerLink.setAttribute("href", `#${this.app.selectedTran.id}`);
-      this.app.gridScrollerLink.click();
+      // this.app.gridScrollerLink.click();
     } else {
       this.app.gridScrollerLink.setAttribute("href", `#`);
     }
