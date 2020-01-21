@@ -1,0 +1,4 @@
+
+au build --env prod
+
+Commit the changes and push to GitHub
