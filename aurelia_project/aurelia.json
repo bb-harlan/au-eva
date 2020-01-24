@@ -18,7 +18,7 @@
     "port": 8080,
     "hmr": false,
     "open": false,
-    "output": "docs"
+    "output": "dist"
   },
   "loader": {
     "id": "none",
