@@ -18,7 +18,8 @@ export class AuFaeSide {
     *  references
     *=====================================================
     */
-  popupTopLeft: HTMLElement; // <div class="aaRowData aaRowBgColorNonData"  element.ref="popupTopLeft">
+  popupTop: HTMLElement; // <div class="aaRowData aaRowBgColorNonData"  element.ref="popupTopLeft">
+  popupLeft: HTMLElement; // <div class="aaRowData aaRowBgColorNonData"  element.ref="popupTopLeft">
 
   rowOpsMenuModal: HTMLElement;
   rowOpsMenuContent: HTMLElement;

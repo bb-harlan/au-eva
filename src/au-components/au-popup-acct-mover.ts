@@ -24,10 +24,12 @@ export class AuPopupAcctMover {
   constructor(app) {
     this.app = app;
   }
-  open(popupTopLeft: HTMLElement, faeSide: FaeSide): void {
+  open(popupTop: HTMLElement, popupLeft: HTMLElement, faeSide: FaeSide): void {
     // set postion of moverDialogContent
-    let boundingClientRect = popupTopLeft.getBoundingClientRect();
+    let boundingClientRect;
+    boundingClientRect = popupTop.getBoundingClientRect();
     this.moverDialogContent.style.top = `${boundingClientRect.top}px`;
+    boundingClientRect = popupLeft.getBoundingClientRect();
     this.moverDialogContent.style.left = `${boundingClientRect.left}px`;
 
     // make copy of acctList for mover

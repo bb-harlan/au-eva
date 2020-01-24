@@ -26,7 +26,7 @@ export class AuPopupBchgMover {
 
   open(): void {
     // make copy of bchgList for mover
-    this.moverBchgList.push(...this.app.editableTran.bchgList);
+    this.moverBchgList.push(...this.app.candidateTran.bchgList);
     // position moverDialogContent
     let boundingClientRect = this.app.viewmodelModuleTran.popupTop.getBoundingClientRect();
     this.moverDialogContent.style.marginTop = `${boundingClientRect.top}px`;
@@ -63,7 +63,7 @@ export class AuPopupBchgMover {
       moverBchg.intraTranIndex = i;
     }
     this.moverBchgList.splice(0, this.moverBchgList.length); //donewith it, delete all members
-    this.app.editableTran.sortBchgList();
+    this.app.candidateTran.sortBchgList();
     this.moverDialogModal.style.display = "none";
   }
   cancel(event) {

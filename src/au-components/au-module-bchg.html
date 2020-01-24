@@ -5,7 +5,7 @@
   <require from="au-views/au-vertical-gridline.html"></require>
   <require from="au-converters/au-currency-converter"></require>
   <require from="au-converters/au-equation-side-converter"></require>
-  <div class="aaPanel aaPanelBoxShadow">
+  <div class="aaPanel aaPanelBoxShadow" css="${app.selectedModule == app.MODULE_BCHG ? '' : 'display: none;'}">
     <div class="aaPanelHeader aaPanelHeaderModule">Account balance change</div>
     <div class="aaPanelToolBar" style="text-align: center;">
       <button type="button" click.trigger="onGoAcct($event)"

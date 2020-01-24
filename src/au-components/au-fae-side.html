@@ -12,6 +12,7 @@
   <require from="au-converters/au-currency-converter"></require>
   <require from="au-converters/au-equation-side-converter"></require>
   <require from="au-components/au-popup-acct-mover"></require>
+  <require from="au-views/au-grid-acct-cells-heading.html"></require>
 
   <h1 css="text-align: ${faeSide.id == 'Assets' ? 'right' : 'left'};">
     ${faeSide.id}
@@ -20,7 +21,7 @@
     <div class="aaGridTitleBar" style="font-size: larger;">${faeSide.id | auEquationSideConverter:true: false}
       accounts
     </div>
-    <div class="aaPanelToolBar">
+    <div class="aaPanelToolBar" element.ref="popupTop">
       <button
         type="button"
         class="aaBtn"
@@ -32,25 +33,19 @@
       <button
         type="button"
         class="aaBtn"
-        click.trigger="app.viewmodelPopupAcctMover.open(popupTopLeft, faeSide)">
+        click.trigger="app.viewmodelPopupAcctMover.open(popupTop, popupLeft, faeSide)">
         <au-icon-row-mover></au-icon-row-mover>
         Move rows...
       </button>
     </div>
-    <div class="aaRow aaRowColumnHeaders aaFontLabel aaFontBold"
-    >
+    <div class="aaRow aaRowColumnHeaders aaFontLabel aaFontBold">
       <div class="aaRowOps aaHidden">
         <button type="button" class="aaBtn">
           <au-icon-nav-right></au-icon-nav-right>
         </button>
       </div>
-      <div class="aaVerticalGridline" style="background-color: #999;"></div>
-      <div class="aaRowData" element.ref="popupTopLeft">
-        <div class="aaCell aaCellAcctTitle">Title</div>
-        <div class="aaVerticalGridline" style="background-color: #999;"></div>
-        <div class="aaCell aaCellBchgBal">Balance</div>
-        <div class="aaVerticalGridline" style="background-color: #999;"></div>
-      </div>
+      <div class="aaVerticalGridline" style="background-color: #999;" element.ref="popupLeft"></div>
+      <au-grid-acct-cells-heading></au-grid-acct-cells-heading>
     </div>
     <div class="aaGridScrollableRows">
       <template repeat.for="listItem of faeSide.acctList">
@@ -100,6 +95,7 @@
           for creating a new account in the list, this end-of-list row provides
           a point to insert a new account at the end of the list.
       -->
+<!--
       <div id="End of equation side ${faeSide.id}"
            class="aaRow aaRowBgColorNonData"
            mouseenter.trigger="onRowEnter($event, null)"
@@ -118,6 +114,7 @@
         </div>
         <div class="aaVerticalGridline"></div>
       </div>
+-->
     </div>
     <div class="aaGridFooterBar"></div>
   </div>

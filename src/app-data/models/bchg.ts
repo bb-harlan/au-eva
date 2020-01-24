@@ -46,10 +46,10 @@ export class Bchg {
     clonedBchg.intraTranIndex = this.intraTranIndex;
     return clonedBchg;
   }
-  regToAcct() {
+  registerToAcct() {
     this.targetAcct.bchgList.push(this);
   }
-  unregFromAcct() {
+  unregisterFromAcct() {
     let thisIndex = this.targetAcct.bchgList.findIndex((element) => element.id == this.id);
     this.targetAcct.bchgList.splice(thisIndex, 1);
   }

@@ -3,12 +3,27 @@
   <require from="au-views/au-vertical-gridline.html"></require>
   <require from="au-views/au-grid-bchg-cells-spacer.html"></require>
   <require from="au-components/au-grid-bchg-cells"></require>
+  <require from="au-components/au-grid-bchg-cells-heading"></require>
 
-  <div class="aaPanel aaPanelBoxShadow">
+  <div class="aaPanel aaPanelBoxShadow" css="${app.selectedModule == app.MODULE_JRNL ? '' : 'display: none;'}">
     <div class="aaPanelHeader aaPanelHeaderModule">Transaction Journal</div>
     <div class="aaPanelBody">
       <div class="aaGridContainer">
         <div class="aaGridTitleBar">Transactions</div>
+        <div class="aaRow aaRowColumnHeaders aaFontLabel aaFontBold">
+          <div class="aaRowOps aaFontLabel aaHidden">
+            <span class="aaBtn">
+              <au-icon-nav-left></au-icon-nav-left>
+            </span>
+          </div>
+          <div class="aaVerticalGridline" style="background-color: #999; width: 3px;"></div>
+          <div class="aaRowData">
+            <au-grid-bchg-cells-heading fae-side.one-time="'asset'"></au-grid-bchg-cells-heading>
+            <div class="aaVerticalGridline" style="background-color: #999; width: 3px;"></div>
+            <au-grid-bchg-cells-heading fae-side.one-time="'equity'"></au-grid-bchg-cells-heading>
+          </div>
+          <div class="aaVerticalGridline" style="background-color: #999; width: 3px;"></div>
+        </div>
         <div class="aaGridScrollableRows" style="height: 33pc;" id="jrnlGridBodyContainer">
           <template repeat.for="tran of app.data.jrnl.tranList">
             <div class="aaRow"
@@ -27,7 +42,8 @@
               </div>
               <!--</template>-->
               <div class="aaVerticalGridline" style="width: 3px;"></div>
-              <div style="display: inline-flex; flex-direction: column; align-items: flex-start; justify-content: flex-start">
+              <div
+                style="display: inline-flex; flex-direction: column; align-items: flex-start; justify-content: flex-start">
                 <div class="aaRowBgColorData"
                      style="display: inline-flex; align-items: center; justify-content: center; border-bottom: 3px solid #ccc; padding: 0.4pc">
                   <div class="aaCell aaFontSizeData aaCellTranDate aaCellBorder">${tran.date}</div>
@@ -56,9 +72,9 @@
                   </template>
                 </div>
               </div>
-<!--
-              <div class="aaVerticalGridline"></div>
--->
+              <!--
+                            <div class="aaVerticalGridline"></div>
+              -->
             </div>
             <!-- End of tran -->
           </template>

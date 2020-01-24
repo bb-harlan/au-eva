@@ -5,7 +5,9 @@
   <div class="aaBchgCells">
     <!-- 1st row -->
     <div class="aaBchgCellsRow aaBchgCellsRowSeparation">
-      <!-- target account -->
+      <!-- target account
+           **************
+      -->
       <div class="aaCellWrapper">
         <div class="aaCell aaCellBorder aaCellAcctTitle">
           ${bchg.targetAcct.title}
@@ -19,11 +21,19 @@
     </div>
     <!-- 2nd row -->
     <div class="aaBchgCellsRow">
-      <!-- change description -->
-      <div class="aaCell aaCellBorder aaCellBchgDesc">
-        ${bchg.desc}
+      <!-- change description
+           ******************
+           declarations involving bchg.desc.length == 0
+           are for keeping the cell from collapsing vertically
+           when the change description is blank
+      -->
+      <div class="aaCell aaCellBorder aaCellBchgDesc"
+           css="${bchg.desc.length == 0 ? 'color: transparent;' : ''}">
+        ${bchg.desc.length == 0 ? "x" : bchg.desc}
       </div>
-      <!-- change amount -->
+      <!-- change amount
+           *************
+      -->
       <div class="aaCellWrapper"
            style="margin-left: 1pc;">
         <div class="aaCell aaCellBorder aaCellBchgAmt">

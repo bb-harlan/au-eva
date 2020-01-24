@@ -57,7 +57,8 @@ export class InputCurrency {
   format(number: number) {
     if (this.currencySymbol === true) {
       return new Intl.NumberFormat("en-US", {style: "currency", currency: "USD"}).format(number);
-    } else {
+    }
+    else {
       return new Intl.NumberFormat("en-US", {
         style: "decimal",
         minimumIntegerDigits: 1,

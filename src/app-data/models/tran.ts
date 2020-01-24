@@ -30,12 +30,10 @@ export class Tran {
     this.bchgList.sort((a: Bchg, b: Bchg) => a.compareToInTran(b));
   }
   refresh(): void {
-    console.log("in tran.refresh()");
     this.totalChangesAssets = 0.00;
     this.totalChangesEquities = 0.00;
     let intraTranIndex = 0;
     for (let bchg of this.bchgList) {
-      console.log(`bchg.amt: ${bchg.amt};`);
       bchg.intraTranIndex = intraTranIndex++;
       if (bchg.targetAcct) {
         switch (bchg.targetAcct.parentFaeSide.id) {
@@ -60,26 +58,21 @@ export class Tran {
   register(): void {
     this.parentJrnl.tranList.push(this);
     for (let bchg of this.bchgList) {
-      bchg.regToAcct();
+      bchg.registerToAcct();
     }
   }
   unregister(): void {
     for (let bchg of this.bchgList) {
-      bchg.unregFromAcct();
+      bchg.unregisterFromAcct();
     }
     this.bchgList = [];
     let thisIndex = this.parentJrnl.tranList.findIndex((element) => element.id == this.id);
     this.parentJrnl.tranList.splice(thisIndex, 1);
   }
-  regToAccts(): void {
-    for (let bchg of this.bchgList) {
-      bchg.regToAcct();
-    }
-  }
   clone():Tran {
     let clonedTran = new Tran(
       /*id*/ this.id,
-      /*parentJrnl*/ null,
+      /*parentJrnl*/ this.parentJrnl,
       /*date*/ this.date,
       /*intraDateSorter*/ this.intraDateSorter);
     clonedTran.totalChangesAssets = this.totalChangesAssets;

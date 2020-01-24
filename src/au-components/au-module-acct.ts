@@ -123,7 +123,7 @@ export class AuModuleAcct {
   attach() {
     if (this.app.selectedBchg) {
       this.app.gridScrollerLink.setAttribute("href", `#${this.app.selectedBchg.id}`);
-      // this.app.gridScrollerLink.click();
+      this.app.gridScrollerLink.click();
     } else {
       this.app.gridScrollerLink.setAttribute("href", `#`);
     }

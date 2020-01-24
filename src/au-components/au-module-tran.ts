@@ -1,5 +1,6 @@
 import {customElement, inject} from 'aurelia-framework';
 import {App} from "app";
+import {Tran} from 'app-data/models/tran';
 import {Bchg} from 'app-data/models/bchg';
 
 @customElement('au-module-tran')
@@ -35,7 +36,8 @@ export class AuModuleTran {
     if (listIndex > 0) {
       this.app.selectedBchg = null;
       this.app.selectedTran = tranList[listIndex - 1];
-    } else {
+    }
+    else {
       alert('Reached beginning of list.');
     }
   }
@@ -48,7 +50,8 @@ export class AuModuleTran {
     if (listIndex < tranList.length - 1) {
       this.app.selectedBchg = null;
       this.app.selectedTran = tranList[listIndex + 1];
-    } else {
+    }
+    else {
       alert('Reached end of list.');
     }
   }
@@ -74,53 +77,71 @@ export class AuModuleTran {
       event.target.children[2].classList.toggle('aaRowDataHover', false);
     }
   }
-  newBchg(currentBchg) {
+  pickerCallback(currentBchg, pickedAcct) {
+    let newBchgInsertionIndex: number;
     if (currentBchg) {
-      this.newBchgInsertionIndex = currentBchg.intraTranIndex;
-    } else {
-      this.newBchgInsertionIndex = this.app.editableTran.bchgList.length;
+      newBchgInsertionIndex = currentBchg.intraTranIndex;
     }
-    this.app.viewmodelPopupAcctPicker.open(this.newAcctPicked)
-  }
-
-  newAcctPicked(pickedAcct) {
-    console.log(pickedAcct);
+    else {
+      newBchgInsertionIndex = this.app.candidateTran.bchgList.length;
+    }
     let newBchg = new Bchg(
-      /*id `bchg${this.app.data.nextBchgId}`*/ "ID",
-      /*sourceTran*/ this.app.editableTran,
+      /*id*/`bchg${this.app.data.nextBchgId}`,
+      /*sourceTran*/ this.app.candidateTran,
       /*targetAcct*/ pickedAcct,
-      /*desc*/ "new bchg",
-      /*amt*/ 0.00);
-    this.app.editableTran.bchgList.splice(this.newBchgInsertionIndex, 0, newBchg);
-    this.app.editableTran.refresh(); // updates each bchg.intraTranIndex
+      /*desc*/"",
+      /*amt*/0.00
+      );
+    this.app.candidateTran.bchgList.splice(newBchgInsertionIndex, 0, newBchg);
+    // update each bchg.intraTranIndex and recalc side totals
+    this.app.candidateTran.refresh();
   }
-  rowDelete(bchg) {
+  bchgDelete(bchg) {
     let sourceTran = bchg.sourceTran;
     sourceTran.bchgList.splice(bchg.intraTranIndex, 1);
     sourceTran.refresh()
   }
   tranNew(event) {
-    alert('Not yet implemented.');
+    this.app.candidateTran = new Tran(
+      /*id*/ `tran${this.app.data.nextTranId}`,
+      /*parentJrnl*/ null,
+      /*date*/ "2020/01/22",
+      /*intraDateSorter*/ this.app.data.nextSorter);
+  }
+  tranNewDone(evenet) {
+    if (this.app.candidateTran.totalChangesAssets != this.app.candidateTran.totalChangesEquities) {
+      alert("Transaction is out of balance.")
+      return;
+    }
+    this.app.candidateTran.parentJrnl = this.app.data.jrnl;
+    this.app.candidateTran.register();
+    this.app.selectedTran = this.app.candidateTran;
+    this.app.selectedTran.parentJrnl.refresh();
+    this.app.candidateTran = null;
+  }
+  tranNewCancel(evenet) {
+    this.app.candidateTran = null;
   }
   tranEdit(event) {
-    this.app.editableTran = this.app.selectedTran.clone();
-    this.app.tranEditingMode = true;
+    this.app.candidateTran = this.app.selectedTran.clone();
+  }
+  tranEditDone(event) {
+    if (this.app.candidateTran.totalChangesAssets != this.app.candidateTran.totalChangesEquities) {
+      alert("Transaction is out of balance.")
+      return;
+    }
+    // this.app.candidateTran.parentJrnl = this.app.selectedTran.parentJrnl;
+    this.app.selectedTran.unregister();
+    this.app.candidateTran.register();
+    this.app.selectedTran = this.app.candidateTran;
+    this.app.data.jrnl.refresh();
+    this.app.candidateTran = null;
+  }
+  tranEditCancel(event) {
+    this.app.candidateTran = null;
   }
   tranDelete(event) {
     alert('Not yet implemented.');
-  }
-
-  saveEdits(event) {
-    this.app.editableTran.parentJrnl = this.app.selectedTran.parentJrnl;
-    this.app.selectedTran.unregister();
-    this.app.selectedTran = this.app.editableTran;
-    this.app.selectedTran.register();
-    this.app.data.jrnl.refresh();
-    this.app.tranEditingMode = false;
-  }
-  cancelEdits(event) {
-    this.app.editableTran = null;
-    this.app.tranEditingMode = false;
   }
 
   onPickAcct(event, bchg) {
@@ -143,8 +164,9 @@ export class AuModuleTran {
     if (this.app.selectedBchg) {
       this.app.gridScrollerLink.innerHTML = `#${this.app.selectedBchg.id}`;
       this.app.gridScrollerLink.setAttribute("href", `#${this.app.selectedBchg.id}`);
-      // this.app.gridScrollerLink.click();
-    } else {
+      this.app.gridScrollerLink.click();
+    }
+    else {
       this.app.gridScrollerLink.innerHTML = "#";
     }
   }

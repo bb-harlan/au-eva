@@ -64,12 +64,14 @@ export class App {
   selectedModuleMode = this.MODULE_MODE_NAVIGATING;
 
   selectedFaeSide: FaeSide = null;
-  editableFaeSide: FaeSide = null;
-  faesideEditingMode: boolean = false;
   selectedAcct: Acct = null;
   selectedTran: Tran = null;
-  editableTran: Tran = null // clone of selectedTran for editing
-  tranEditingMode: boolean = false;
+  candidateTran: Tran = null;
+  /*
+  * About candidateTran
+  * -------------------
+  *
+  */
   selectedBchg: Bchg = null;
   isEditing = false;
 

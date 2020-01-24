@@ -28,7 +28,7 @@ export class AuModuleFae {
   attach() {
     if (this.app.selectedAcct) {
       this.app.gridScrollerLink.setAttribute("href", `#${this.app.selectedAcct.id}`);
-      // this.app.gridScrollerLink.click();
+      this.app.gridScrollerLink.click();
     } else {
       this.app.gridScrollerLink.setAttribute("href", `#`);
     }

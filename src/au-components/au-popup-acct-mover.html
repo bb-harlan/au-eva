@@ -2,6 +2,7 @@
   <require from="au-views/au-icon-row-mover.html"></require>
   <require from="au-views/au-vertical-gridline.html"></require>
   <require from="au-views/au-vertical-gridline-spacer.html"></require>
+  <require from="au-views/au-grid-acct-cells-heading.html"></require>
   <require from="au-converters/au-currency-converter"></require>
   <require from="au-converters/au-equation-side-converter"></require>
 
@@ -16,6 +17,10 @@
           <button type="button" class="aaBtn" click.trigger="done()">Done</button>
           <button type="button" class="aaBtn" style="margin-left: 4pc;" click.trigger="cancel()">Cancel</button>
         </div>
+      </div>
+      <div class="aaRow aaRowColumnHeaders aaFontLabel aaFontBold">
+        <div class="aaVerticalGridline" style="background-color: #999;"></div>
+        <au-grid-acct-cells-heading></au-grid-acct-cells-heading>
       </div>
       <div class="aaGridScrollableRows"
            element.ref="moverGridRows"

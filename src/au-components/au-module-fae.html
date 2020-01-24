@@ -2,7 +2,7 @@
   <require from="au-components/au-fae-side"></require>
   <require from="au-attributes/au-fae-side-data"></require>
   <require from="au-components/au-popup-acct-mover"></require>
-  <div class="aaPanel aaPanelBoxShadow">
+  <div class="aaPanel aaPanelBoxShadow" css="${app.selectedModule == app.MODULE_FAE ? '' : 'display: none;'}">
     <div class="aaPanelHeader aaPanelHeaderModule">The fundamental accounting equation</div>
     <div class="aaPanelBody">
       <div class="aaEquSideContainer">
