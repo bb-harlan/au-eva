@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>experiment: flexbox</title>
+
+</head>
+<body>
+<style>
+  .aaFlex {
+    display: inline-flex;
+    align-items: center;
+    text-align: left;
+    white-space: nowrap;
+    font-size: 0;
+    border: 5px dotted red;
+  }
+
+  .aaFlexChild {
+    display: inline-block;
+    border: 5px dotted blue;
+  }
+</style>
+
+<div class="aaFlex">
+  <button type="button" style="font-size: 24pt;">Button</button>
+  <button type="button" style="font-size: 72pt;">Button</button>
+  <button type="button" style="font-size: small;">Button</button>
+  <div class="aaFlexChild" style="font-size: 24pt;">something</div>
+  <div class="aaFlexChild" style="font-size: 72pt;">something</div>
+  <div class="aaFlexChild" style="font-size: 9pt;">something</div>
+</div>
+
+</body>
+</html>
