@@ -26,6 +26,8 @@ export class AuModuleTran {
   onGoJrnl(event) {
     this.app.selectedBchg = null;
     this.app.selectedModule = this.app.MODULE_JRNL;
+    this.app.gridScrollerLink.setAttribute("href", `#${this.app.selectedTran.id}`);
+    this.app.gridScrollerLink.click();
   }
   onGoUp(event) {
     let selectedTranId = this.app.selectedTran.id;
@@ -64,6 +66,8 @@ export class AuModuleTran {
     this.app.selectedBchg = bchg;
     this.app.selectedAcct = bchg.targetAcct;
     this.app.selectedModule = this.app.MODULE_ACCT;
+    this.app.gridScrollerLink.setAttribute("href", `#${this.app.selectedBchg.id}`);
+    this.app.gridScrollerLink.click();
   }
   onRowEnter(event, bchg) {
     event.target.children[0].children[0].classList.toggle('aaRowOpsHover', true);
@@ -77,7 +81,7 @@ export class AuModuleTran {
       event.target.children[2].classList.toggle('aaRowDataHover', false);
     }
   }
-  pickerCallback(currentBchg, pickedAcct) {
+  pickAcctDone(currentBchg, pickedAcct) {
     let newBchgInsertionIndex: number;
     if (currentBchg) {
       newBchgInsertionIndex = currentBchg.intraTranIndex;
@@ -162,7 +166,6 @@ export class AuModuleTran {
 
   attach() {
     if (this.app.selectedBchg) {
-      this.app.gridScrollerLink.innerHTML = `#${this.app.selectedBchg.id}`;
       this.app.gridScrollerLink.setAttribute("href", `#${this.app.selectedBchg.id}`);
       this.app.gridScrollerLink.click();
     }

@@ -53,7 +53,6 @@
              class="aaRow"
              mouseenter.trigger="onRowEnter($event, listItem)"
              mouseleave.trigger="onRowLeave($event, listItem)">
-          <template if.bind="listItem.isAcct()">
             <div class="aaRowOps aaBgColorToolbar">
               <div class="aaRowOpsOpacity">
                 <button type="button" class="aaBtn" click.delegate="onGoAcct($event, listItem)">
@@ -61,31 +60,21 @@
                 </button>
               </div>
             </div>
-            <div class="aaVerticalGridline"></div>
-            <div
-              class="aaRowData aaRowBgColorData ${listItem.id == app.selectedAcct.id ? 'aaMostRecentlySelectedRow' : ''}">
+          <template if.bind="listItem.isAcct()">
+            <div class="aaRowData aaRowBgColorData ${listItem.id == app.selectedAcct.id ? 'aaMostRecentlySelectedRow' : ''}">
               <span class="aaCell aaCellAcctTitle">${listItem.title}</span>
               <div class="aaVerticalGridline"></div>
-              <span
-                class="aaCell aaCellBchgBal">${listItem.endingBalance | auCurrencyConverter}</span>
+              <span class="aaCell aaCellBchgBal">${listItem.endingBalance | auCurrencyConverter}</span>
             </div>
-            <div class="aaVerticalGridline"></div>
           </template>
           <template if.bind="listItem.isAnnotation()">
-            <div class="aaRowOps aaBgColorToolbar">
-              <button type="button" class="aaBtn" click.delegate="onGoAcct($event, listItem)">
-                <au-icon-nav-right></au-icon-nav-right>
-              </button>
-            </div>
-            <div class="aaVerticalGridline"></div>
-            <div
-              class="aaRowData aaRowBgColorData ${listItem.id == app.selectedAcct.id ? 'aaMostRecentlySelectedRow' : ''}">
+            <div class="aaRowData aaRowBgColorData ${listItem.id == app.selectedAcct.id ? 'aaMostRecentlySelectedRow' : ''}">
               <span class="aaCell aaCellAnnoTitle">${listItem.annoText}</span>
               <div class="aaVerticalGridline"></div>
               <span class="aaCell aaCellBchgBal"></span>
             </div>
-            <div class="aaVerticalGridline"></div>
           </template>
+          <div class="aaVerticalGridline"></div>
         </div>
       </template>
 

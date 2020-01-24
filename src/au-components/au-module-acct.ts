@@ -13,6 +13,8 @@ export class AuModuleAcct {
   onGoFae(event) {
     this.app.selectedBchg = null;
     this.app.selectedModule = this.app.MODULE_FAE;
+    this.app.gridScrollerLink.setAttribute("href", `#${this.app.selectedAcct.id}`);
+    this.app.gridScrollerLink.click();
   }
 
   onGoUp(event) {

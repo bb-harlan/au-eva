@@ -19,16 +19,11 @@ export class AuGridBchgCells {
     this.auModuleTran = auModuleTran;
   }
   pickAcct() {
-    console.log("*** in pickAcct()")
-    console.log(this.bchg);
-    this.app.viewmodelPopupAcctPicker.open(this.bchg, this.acctPickerCallback)
+    this.app.viewmodelPopupAcctPicker.open(this.bchg, this.pickAcctDone)
   }
-  acctPickerCallback(savedBchg: Bchg, pickedAcct: Acct) {
-    console.log("*** in acctPickerCallback()")
-    console.log(this.bchg);
-    console.log(savedBchg);
-    console.log(pickedAcct);
+  pickAcctDone(savedBchg: Bchg, pickedAcct: Acct) {
     savedBchg.targetAcct = pickedAcct;
+    savedBchg.sourceTran.refresh();
   }
   inputCurrencyCompleted(newBchgAmt: number) {
     console.log(`(In inputCurrencyCompleted) newBchgAmt: ${newBchgAmt};`);

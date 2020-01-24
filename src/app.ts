@@ -82,8 +82,8 @@ export class App {
   data = new Data();
 
   bind() {
-    // this.data.generateTestData();
-    this.data.generateExample1Data();
+    this.data.generateTestData();
+    // this.data.generateExample1Data();
   }
 
   onFaeModule(event) {
