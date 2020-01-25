@@ -61,22 +61,29 @@
                 </button>
               </div>
             </div>
-            <template if.bind="listItem.isAcct()">
-              <div
-                class="aaRowData aaRowBgColorData ${listItem.id == app.selectedAcct.id ? 'aaMostRecentlySelectedRow' : ''}">
-                <span class="aaCell aaCellAcctTitle">${listItem.title}</span>
-                <div class="aaVerticalGridline"></div>
-                <span class="aaCell aaCellBchgBal">${listItem.endingBalance | auCurrencyConverter}</span>
-              </div>
-            </template>
-            <template if.bind="listItem.isAnnotation()">
-              <div
-                class="aaRowData aaRowBgColorData ${listItem.id == app.selectedAcct.id ? 'aaMostRecentlySelectedRow' : ''}">
-                <span class="aaCell aaCellAnnoTitle">${listItem.annoText}</span>
-                <div class="aaVerticalGridline"></div>
-                <span class="aaCell aaCellBchgBal"></span>
-              </div>
-            </template>
+            <div class="aaVerticalGridline"></div>
+            <div
+              class="aaRowData aaRowBgColorData ${listItem.id == app.selectedAcct.id ? 'aaMostRecentlySelectedRow' : ''}">
+              <span class="aaCell aaCellAcctTitle">${listItem.title}</span>
+              <div class="aaVerticalGridline"></div>
+              <span
+                class="aaCell aaCellBchgBal">${listItem.endingBalance | auCurrencyConverter}</span>
+            </div>
+            <div class="aaVerticalGridline"></div>
+          </template>
+          <template if.bind="listItem.isAnnotation()">
+            <div class="aaRowOps aaBgColorToolbar">
+              <button type="button" class="aaBtn" click.delegate="onGoAcct($event, listItem)">
+                <au-icon-nav-right></au-icon-nav-right>
+              </button>
+            </div>
+            <div class="aaVerticalGridline"></div>
+            <div
+              class="aaRowData aaRowBgColorData ${listItem.id == app.selectedAcct.id ? 'aaMostRecentlySelectedRow' : ''}">
+              <span class="aaCell aaCellAnnoTitle">${listItem.annoText}</span>
+              <div class="aaVerticalGridline"></div>
+              <span class="aaCell aaCellBchgBal"></span>
+            </div>
             <div class="aaVerticalGridline"></div>
           </template>
         </div>
