@@ -30,31 +30,25 @@ export class AuModuleTran {
     this.app.gridScrollerLink.click();
   }
   onGoUp(event) {
-    let selectedTranId = this.app.selectedTran.id;
     let tranList = this.app.selectedTran.parentJrnl.tranList;
-    let listIndex = tranList.findIndex(function (tran) {
-      return tran.id === selectedTranId;
-    });
+    let listIndex = tranList.findIndex(tran =>  tran.id == this.app.selectedTran.id);
     if (listIndex > 0) {
       this.app.selectedBchg = null;
       this.app.selectedTran = tranList[listIndex - 1];
     }
     else {
-      alert('Reached beginning of list.');
+      alert('this is the first transaction in the journal.');
     }
   }
   onGoDown(event) {
-    let selectedTranId = this.app.selectedTran.id;
     let tranList = this.app.selectedTran.parentJrnl.tranList;
-    let listIndex = tranList.findIndex(function (tran) {
-      return tran.id === selectedTranId;
-    });
+    let listIndex = tranList.findIndex(tran =>  tran.id == this.app.selectedTran.id);
     if (listIndex < tranList.length - 1) {
       this.app.selectedBchg = null;
       this.app.selectedTran = tranList[listIndex + 1];
     }
     else {
-      alert('Reached end of list.');
+      alert('this is the last transaction in the journal.');
     }
   }
   showBchgDetail(event, bchg) {
@@ -147,33 +141,12 @@ export class AuModuleTran {
   tranDelete(event) {
     alert('Not yet implemented.');
   }
-
-  onPickAcct(event, bchg) {
-    alert(`bchg.id: ${bchg.id} - "Acct picker dialog" not yet implemented.`);
-  }
-
   onMenuClick(event, bchg) {
     alert(`bchg.id: ${bchg ? bchg.id : "End-of-list"} - "Row ops menu" not yet implemented.`);
   }
-
-  onMoverDialogOpen(event) {
-    alert('"Rearrange list sequence" not yet implemented.');
-  }
-
   onEditRows(event) {
     alert('Not yet implemented.')
   }
-
-  attach() {
-    if (this.app.selectedBchg) {
-      this.app.gridScrollerLink.setAttribute("href", `#${this.app.selectedBchg.id}`);
-      this.app.gridScrollerLink.click();
-    }
-    else {
-      this.app.gridScrollerLink.innerHTML = "#";
-    }
-  }
-
   acctPicked(message) {
     console.log(message);
   }

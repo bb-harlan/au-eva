@@ -15,7 +15,6 @@ export class AuModuleBchg {
     this.app.gridScrollerLink.setAttribute("href", `#${this.app.selectedBchg.id}`);
     this.app.gridScrollerLink.click();
   }
-
   onGoTran(event) {
     this.app.selectedModule = this.app.MODULE_TRAN;
     this.app.gridScrollerLink.setAttribute("href", `#${this.app.selectedBchg.id}`);
