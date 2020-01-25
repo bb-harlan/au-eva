@@ -5,10 +5,10 @@
   <require from="au-views/au-icon-new.html"></require>
   <require from="au-views/au-icon-delete.html"></require>
   <require from="au-views/au-text-ellipsis.html"></require>
-<!--
-  <require from="au-views/au-vertical-gridline.html"></require>
-  <require from="au-views/au-vertical-gridline-spacer.html"></require>
--->
+  <!--
+    <require from="au-views/au-vertical-gridline.html"></require>
+    <require from="au-views/au-vertical-gridline-spacer.html"></require>
+  -->
   <require from="au-converters/au-currency-converter"></require>
   <require from="au-converters/au-equation-side-converter"></require>
   <require from="au-components/au-popup-acct-mover"></require>
@@ -53,6 +53,7 @@
              class="aaRow"
              mouseenter.trigger="onRowEnter($event, listItem)"
              mouseleave.trigger="onRowLeave($event, listItem)">
+          <template if.bind="listItem.isAcct()">
             <div class="aaRowOps aaBgColorToolbar">
               <div class="aaRowOpsOpacity">
                 <button type="button" class="aaBtn" click.delegate="onGoAcct($event, listItem)">
@@ -60,59 +61,28 @@
                 </button>
               </div>
             </div>
-          <template if.bind="listItem.isAcct()">
-            <div class="aaRowData aaRowBgColorData ${listItem.id == app.selectedAcct.id ? 'aaMostRecentlySelectedRow' : ''}">
-              <span class="aaCell aaCellAcctTitle">${listItem.title}</span>
-              <div class="aaVerticalGridline"></div>
-              <span class="aaCell aaCellBchgBal">${listItem.endingBalance | auCurrencyConverter}</span>
-            </div>
+            <template if.bind="listItem.isAcct()">
+              <div
+                class="aaRowData aaRowBgColorData ${listItem.id == app.selectedAcct.id ? 'aaMostRecentlySelectedRow' : ''}">
+                <span class="aaCell aaCellAcctTitle">${listItem.title}</span>
+                <div class="aaVerticalGridline"></div>
+                <span class="aaCell aaCellBchgBal">${listItem.endingBalance | auCurrencyConverter}</span>
+              </div>
+            </template>
+            <template if.bind="listItem.isAnnotation()">
+              <div
+                class="aaRowData aaRowBgColorData ${listItem.id == app.selectedAcct.id ? 'aaMostRecentlySelectedRow' : ''}">
+                <span class="aaCell aaCellAnnoTitle">${listItem.annoText}</span>
+                <div class="aaVerticalGridline"></div>
+                <span class="aaCell aaCellBchgBal"></span>
+              </div>
+            </template>
+            <div class="aaVerticalGridline"></div>
           </template>
-          <template if.bind="listItem.isAnnotation()">
-            <div class="aaRowData aaRowBgColorData ${listItem.id == app.selectedAcct.id ? 'aaMostRecentlySelectedRow' : ''}">
-              <span class="aaCell aaCellAnnoTitle">${listItem.annoText}</span>
-              <div class="aaVerticalGridline"></div>
-              <span class="aaCell aaCellBchgBal"></span>
-            </div>
-          </template>
-          <div class="aaVerticalGridline"></div>
         </div>
       </template>
-
-      <!--
-          Following is the coding for an end-of-list row that is not associated
-          with any account. Since "insertion" is the facility provided to a user
-          for creating a new account in the list, this end-of-list row provides
-          a point to insert a new account at the end of the list.
-      -->
-<!--
-      <div id="End of equation side ${faeSide.id}"
-           class="aaRow aaRowBgColorNonData"
-           mouseenter.trigger="onRowEnter($event, null)"
-           mouseleave.trigger="onRowLeave($event, null)">
-        <div class="aaRowOps aaBgColorToolbar">
-          <button type="button" class="aaBtn aaHidden">
-            <au-icon-nav-right></au-icon-nav-right>
-          </button>
-        </div>
-        <div class="aaVerticalGridline"></div>
-        <div class="aaRowData aaRowBgColorNonData">
-          <span class="aaCell aaCellAcctTitle"><span
-            class="aaSansSerif aaCellTextEOL">${app.END_OF_LIST}</span></span>
-          <div class="aaVerticalGridline aaHidden"></div>
-          <span class="aaCell aaCellBchgBal"></span>
-        </div>
-        <div class="aaVerticalGridline"></div>
-      </div>
--->
     </div>
     <div class="aaGridFooterBar"></div>
-  </div>
-  <!--
-  Following is the coding for a row that shows the total of
-  all account balances. It is coded with invisible menu and nav buttons
-  as horizontal space holders to result in proper horizontal positioning
-  of the "Total" label amd the total amt.
-  -->
   </div>
   <!--<div class="aaGridTotals">-->
   <div class="aaGridContainer" style="border-color: transparent; background-color: transparent;">
@@ -132,7 +102,6 @@
       <div class="aaVerticalGridline aaHidden"></div>
     </div>
   </div>
-
 
   <div element.ref="rowOpsMenuModal" class="aaModal"
        style="background: transparent;"

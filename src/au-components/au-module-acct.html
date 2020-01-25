@@ -9,7 +9,7 @@
   <require from="au-converters/au-currency-converter"></require>
   <require from="au-converters/au-equation-side-converter"></require>
 
-  <div class="aaPanel aaPanelBoxShadow" css="${app.selectedModule == app.MODULE_ACCT ? '' : 'display: none;'}">
+  <div class="aaPanel aaPanelBoxShadow">
     <div class="aaPanelHeader aaPanelHeaderModule">${app.selectedAcct.isAcct() ? 'Account' : 'Annotation'}</div>
     <div class="aaPanelToolBar" if.bind="!app.isEditing">
       <button type="button"

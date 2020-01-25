@@ -1,3 +1,4 @@
+import {Acct, Annotation} from 'app-data/models/acct';
 import {customElement, inject} from 'aurelia-framework';
 import {App} from 'app';
 
@@ -5,6 +6,9 @@ import {App} from 'app';
 @inject(App)
 export class AuModuleAcct {
   app = null;
+
+  Acct: typeof Acct = Acct;
+  Annotation: typeof Annotation = Annotation;
 
   constructor(app) {
     this.app = app;

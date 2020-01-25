@@ -25,6 +25,8 @@ export class AuFaeSide {
   rowOpsMenuContent: HTMLElement;
   rowOpsBoundingClientRect;
 
+  Acct: typeof Acct = Acct;
+  Annotation: typeof Annotation = Annotation;
   /*
    * In the following two mouesenter/mouseleave handlers, the end-of-list
    * row passes a null value as listItem to signal that the call is from the
