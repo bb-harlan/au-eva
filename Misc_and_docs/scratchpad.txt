@@ -36,7 +36,7 @@ au-component: au-grid-bchg-cells-total
 
 <au-input-currency
   float-currency-amt.bind="bchg.amt"
-  on-completed.call="inputCurrencyCompleted(newBchgAmt)">
+  on-completed.call="inputCurrencyCompleted(newCurrencyAmt)">
 <au-input-currency>
 
 <input type=text

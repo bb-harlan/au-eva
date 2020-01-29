@@ -32,9 +32,8 @@
         <au-input-currency
           currency-amt.to-view="bchg.amt"
           classes-string.one-time="'aaCell aaCellBorder aaCellBchgAmt'"
-          on-completed.call="inputCurrencyCompleted(newBchgAmt)"
-          >
-<!--          on-completed.call="bchg.sourceTran.refresh()"-->
+          max-length.to-view="13"
+          on-completed.call="inputCurrencyCompleted(newCurrencyAmt)">
         </au-input-currency>
       </div>
       <div
