@@ -26,7 +26,7 @@ export class Tran {
         (this.date > b.date ? 1 : -1)
     )
   }
-  sortBchgList (): void {
+  sortBchgList(): void {
     this.bchgList.sort((a: Bchg, b: Bchg) => a.compareToInTran(b));
   }
   refresh(): void {
@@ -48,28 +48,27 @@ export class Tran {
         }
       }
     }
-    if (this.parentJrnl) {
-      // this.parentJrnl is set to null to signal that this is a temporary clone for editing
-      for (let bchg of this.bchgList) {
-        bchg.targetAcct.refresh();
-      }
+    for (let bchg of this.bchgList) {
+      bchg.targetAcct.refresh();
     }
   }
   register(): void {
     this.parentJrnl.tranList.push(this);
     for (let bchg of this.bchgList) {
       bchg.registerToAcct();
+      bchg.targetAcct.refresh();
     }
   }
   unregister(): void {
     for (let bchg of this.bchgList) {
       bchg.unregisterFromAcct();
+      bchg.targetAcct.refresh();
     }
     this.bchgList = [];
     let thisIndex = this.parentJrnl.tranList.findIndex((element) => element.id == this.id);
     this.parentJrnl.tranList.splice(thisIndex, 1);
   }
-  clone():Tran {
+  clone(): Tran {
     let clonedTran = new Tran(
       /*id*/ this.id,
       /*parentJrnl*/ this.parentJrnl,

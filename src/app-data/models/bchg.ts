@@ -52,6 +52,7 @@ export class Bchg {
   unregisterFromAcct() {
     let thisIndex = this.targetAcct.bchgList.findIndex((element) => element.id == this.id);
     this.targetAcct.bchgList.splice(thisIndex, 1);
+    this.targetAcct.refresh();
   }
   unregFromTran() {
     let thisIndex = this.sourceTran.bchgList.findIndex((element) => element.id == this.id);

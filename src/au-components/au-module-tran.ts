@@ -7,9 +7,19 @@ import {Bchg} from 'app-data/models/bchg';
 @inject(App)
 
 export class AuModuleTran {
-  newBchgInsertionIndex: number;
-  // Maybe use the following eventually to let user control header row soff o ron
-  showGridHeaderRow: boolean = true;
+  get NAV() {
+    return "nav";
+  }
+  get NEW() {
+    return "new";
+  }
+  get EDIT() {
+    return "edit";
+  }
+  get DELETE() {
+    return "delete";
+  }
+  tranView = this.NAV;
 
   // @injected item(s)
   app: App;
@@ -31,7 +41,7 @@ export class AuModuleTran {
   }
   onGoUp(event) {
     let tranList = this.app.selectedTran.parentJrnl.tranList;
-    let listIndex = tranList.findIndex(tran =>  tran.id == this.app.selectedTran.id);
+    let listIndex = tranList.findIndex(tran => tran.id == this.app.selectedTran.id);
     if (listIndex > 0) {
       this.app.selectedBchg = null;
       this.app.selectedTran = tranList[listIndex - 1];
@@ -42,7 +52,7 @@ export class AuModuleTran {
   }
   onGoDown(event) {
     let tranList = this.app.selectedTran.parentJrnl.tranList;
-    let listIndex = tranList.findIndex(tran =>  tran.id == this.app.selectedTran.id);
+    let listIndex = tranList.findIndex(tran => tran.id == this.app.selectedTran.id);
     if (listIndex < tranList.length - 1) {
       this.app.selectedBchg = null;
       this.app.selectedTran = tranList[listIndex + 1];
@@ -89,7 +99,7 @@ export class AuModuleTran {
       /*targetAcct*/ pickedAcct,
       /*desc*/"",
       /*amt*/0.00
-      );
+    );
     this.app.candidateTran.bchgList.splice(newBchgInsertionIndex, 0, newBchg);
     // update each bchg.intraTranIndex and recalc side totals
     this.app.candidateTran.refresh();
@@ -102,30 +112,35 @@ export class AuModuleTran {
   tranNew(event) {
     this.app.candidateTran = new Tran(
       /*id*/ `tran${this.app.data.nextTranId}`,
-      /*parentJrnl*/ null,
+      /*parentJrnl*/ this.app.data.jrnl,
       /*date*/ "2020/01/22",
       /*intraDateSorter*/ this.app.data.nextSorter);
+    this.tranView = this.NEW;
   }
   tranNewDone(evenet) {
     if (this.app.candidateTran.totalChangesAssets != this.app.candidateTran.totalChangesEquities) {
       alert("Transaction is out of balance.")
       return;
     }
-    this.app.candidateTran.parentJrnl = this.app.data.jrnl;
+    // this.app.candidateTran.parentJrnl = this.app.data.jrnl;
     this.app.candidateTran.register();
     this.app.selectedTran = this.app.candidateTran;
     this.app.selectedTran.parentJrnl.refresh();
     this.app.candidateTran = null;
+    this.tranView = this.NAV;
   }
   tranNewCancel(evenet) {
     this.app.candidateTran = null;
+    this.tranView = this.NAV;
   }
   tranEdit(event) {
     this.app.candidateTran = this.app.selectedTran.clone();
+    this.tranView = this.EDIT;
   }
   tranEditDone(event) {
     if (this.app.candidateTran.totalChangesAssets != this.app.candidateTran.totalChangesEquities) {
       alert("Transaction is out of balance.")
+      this.tranView = this.NAV;
       return;
     }
     // this.app.candidateTran.parentJrnl = this.app.selectedTran.parentJrnl;
@@ -134,12 +149,43 @@ export class AuModuleTran {
     this.app.selectedTran = this.app.candidateTran;
     this.app.data.jrnl.refresh();
     this.app.candidateTran = null;
+    this.tranView = this.NAV;
   }
   tranEditCancel(event) {
     this.app.candidateTran = null;
+    this.tranView = this.NAV;
   }
   tranDelete(event) {
-    alert('Not yet implemented.');
+    this.tranView = this.DELETE;
+  }
+  tranDeleteConfirmed(event) {
+    let nextTran: Tran;
+    let indexOfSelectedTran = this.app.selectedTran.parentJrnl.tranList.findIndex(tran => tran.id == this.app.selectedTran.id);
+    if (this.app.selectedTran.parentJrnl.tranList.length == 1) {
+      // selectedTran is the only tran in jrnl
+      nextTran = null;
+    }
+    else if (indexOfSelectedTran < this.app.selectedTran.parentJrnl.tranList.length - 1) {
+      // selected tran is not the last tran in jrnl and at least one follows it.
+      nextTran = this.app.selectedTran.parentJrnl.tranList[indexOfSelectedTran + 1];
+    }
+    else {
+      // selectedTran is the last tran in jrnl and at least one precedes it.
+      nextTran = this.app.selectedTran.parentJrnl.tranList[indexOfSelectedTran - 1];
+    }
+    this.app.selectedTran.unregister();
+    if (nextTran) {
+      this.app.selectedTran = nextTran;
+      this.tranView = this.NAV;
+    }
+    else {
+      // nextTran is null
+      this.tranView = this.NAV;
+      this.onGoJrnl(event);
+    }
+  }
+  tranDeleteCancel(event) {
+    this.tranView = this.NAV;
   }
   onMenuClick(event, bchg) {
     alert(`bchg.id: ${bchg ? bchg.id : "End-of-list"} - "Row ops menu" not yet implemented.`);

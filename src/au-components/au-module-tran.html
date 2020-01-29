@@ -22,49 +22,77 @@
 
   <div class="aaPanel aaPanelBoxShadow" css="${app.selectedModule == app.MODULE_TRAN ? '' : 'display: none;'}">
     <div class="aaPanelHeader aaPanelHeaderModule">Transaction</div>
-    <template if.bind="!app.candidateTran">
-      <div class="aaPanelToolBar">
-        <div class="aaInlineBlock">
+    <template if.bind="tranView == NAV || tranView == DELETE">
+      <template if.bind="tranView == NAV">
+        <div class="aaPanelToolBar">
+          <div class="aaInlineBlock">
+            <button type="button"
+                    class="aaBtn"
+                    click.trigger="onGoUp($event)">
+              <au-icon-nav-up></au-icon-nav-up>
+            </button>
+            <button type="button"
+                    class="aaBtn"
+                    click.trigger="onGoDown($event)">
+              <au-icon-nav-down></au-icon-nav-down>
+            </button>
+            <button type="button"
+                    class="aaBtn"
+                    click.trigger="onGoJrnl($event)">
+              Transaction journal
+              <au-icon-nav-right></au-icon-nav-right>
+            </button>
+          </div>
+          <span class="aaToolBarDivider">.</span>
           <button type="button"
                   class="aaBtn"
-                  click.trigger="onGoUp($event)">
-            <au-icon-nav-up></au-icon-nav-up>
+                  click.trigger="tranNew($event)">
+            <au-icon-new></au-icon-new>
+            New
+            <au-text-ellipsis></au-text-ellipsis>
           </button>
           <button type="button"
                   class="aaBtn"
-                  click.trigger="onGoDown($event)">
-            <au-icon-nav-down></au-icon-nav-down>
+                  click.trigger="tranEdit($event)">
+            <au-icon-edit></au-icon-edit>
+            Edit
           </button>
           <button type="button"
                   class="aaBtn"
-                  click.trigger="onGoJrnl($event)">
-            Transaction journal
-            <au-icon-nav-right></au-icon-nav-right>
+                  click.trigger="tranDelete($event)">
+            <au-icon-delete></au-icon-delete>
+            Delete
+            <au-text-ellipsis></au-text-ellipsis>
           </button>
+          <span class="aaToolBarDivider">.</span>
         </div>
-        <span class="aaToolBarDivider">.</span>
-        <button type="button"
-                class="aaBtn"
-                click.trigger="tranNew($event)">
-          <au-icon-new></au-icon-new>
-          New
-          <au-text-ellipsis></au-text-ellipsis>
-        </button>
-        <button type="button"
-                class="aaBtn"
-                click.trigger="tranEdit($event)">
-          <au-icon-edit></au-icon-edit>
-          Edit
-        </button>
-        <button type="button"
-                class="aaBtn"
-                click.trigger="tranDelete($event)">
-          <au-icon-delete></au-icon-delete>
-          Delete
-          <au-text-ellipsis></au-text-ellipsis>
-        </button>
-        <span class="aaToolBarDivider">.</span>
-      </div>
+      </template>
+      <template if.bind="tranView == DELETE">
+        <div class="aaPanelToolBar">
+          <div class="aaInlineBlock aaHidden">
+            <button type="button"
+                    class="aaBtn">
+              <au-icon-nav-up></au-icon-nav-up>
+            </button>
+            <button type="button"
+                    class="aaBtn">
+              <au-icon-nav-down></au-icon-nav-down>
+            </button>
+            <button type="button"
+                    class="aaBtn">
+              Transaction journal
+              <au-icon-nav-right></au-icon-nav-right>
+            </button>
+          </div>
+          <span class="aaToolBarDivider">.</span>
+          <span class="aaFontLabel aaFontBold">Delete transaction:</span>
+          <span class="aaToolBarDivider aaHidden">.</span>
+          <button type="button" class="aaBtn" click.trigger="tranDeleteConfirmed($event)">Confirm</button>
+          <span class="aaToolBarDivider aaHidden">.</span>
+          <button type="button" class="aaBtn" click.trigger="tranDeleteCancel($event)">Cancel</button>
+          <span class="aaToolBarDivider">.</span>
+        </div>
+      </template>
       <div class="aaPanelBody">
         <table border="0" style="border-collapse: collapse;">
           <tr>
@@ -76,8 +104,7 @@
         </table>
         <div class="aaGridContainer">
           <div class="aaGridTitleBar">Account balance changes</div>
-          <div class="aaRow aaRowColumnHeaders aaFontLabel aaFontBold"
-               css="${showGridHeaderRow ? '' : 'display: none;'}">
+          <div class="aaRow aaRowColumnHeaders aaFontLabel aaFontBold">
             <div class="aaRowOps aaFontLabel aaHidden">
               <button type="button" class="aaBtn">
                 <au-icon-nav-left></au-icon-nav-left>
@@ -101,7 +128,7 @@
                    mouseenter.trigger="onRowEnter($event, bchg)"
                    mouseleave.trigger="onRowLeave($event, bchg)">
                 <div class="aaRowOps aaBgColorToolbar aaFontSizeLabel">
-                  <div class="aaRowOpsOpacity">
+                  <div class="aaRowOpsOpacity ${tranView==DELETE ? 'aaHidden' : ''}">
                     <span class="aaBtn" click.delegate="showBchgInAcct($event, bchg)">
                       <au-icon-nav-left-left></au-icon-nav-left-left>
                     </span>
@@ -186,7 +213,7 @@
         </div>
       </div>
     </template>
-    <template if.bind="app.candidateTran">
+    <template if.bind="tranView == NEW || tranView == EDIT">
       <div class="aaPanelToolBar">
         <div class="aaInlineBlock aaHidden">
           <button type="button"
@@ -204,7 +231,7 @@
           </button>
         </div>
         <span class="aaToolBarDivider">.</span>
-        <template if.bind="app.candidateTran.parentJrnl">
+        <template if.bind="tranView == EDIT">
           <span class="aaFontLabel aaFontBold">Editing transaction:</span>
           <span class="aaToolBarDivider aaHidden">.</span>
           <button type="button" class="aaBtn" click.trigger="tranEditDone($event)">Done</button>
@@ -212,7 +239,7 @@
           <button type="button" class="aaBtn" click.trigger="tranEditCancel($event)">Cancel</button>
           <span class="aaToolBarDivider">.</span>
         </template>
-        <template if.bind="!app.candidateTran.parentJrnl">
+        <template if.bind="tranView == NEW">
           <span class="aaFontLabel aaFontBold">Creating new transaction:</span>
           <span class="aaToolBarDivider aaHidden">.</span>
           <button type="button" class="aaBtn" click.trigger="tranNewDone($event)">Done</button>
@@ -267,10 +294,10 @@
                    mouseleave.trigger="onRowLeave($event, bchg)">
                 <div class="aaRowOps aaBgColorToolbar aaFontSizeLabel">
                   <div class="aaRowOpsOpacity">
-                    <span class="aaBtn" click.trigger="app.viewmodelPopupAcctPicker.open(bchg, pickAcctDone)">
+                    <span class="aaBtn" title="Insert new row..." click.trigger="app.viewmodelPopupAcctPicker.open(bchg, pickAcctDone)">
                       <au-icon-new></au-icon-new>
                     </span>
-                    <span class="aaBtn" click.trigger="bchgDelete(bchg)">
+                    <span class="aaBtn" title="Delete row..." click.trigger="bchgDelete(bchg)">
                       <au-icon-delete></au-icon-delete>
                     </span>
                   </div>
@@ -303,7 +330,7 @@
                  mouseleave.trigger="onRowLeave($event, null)">
               <div class="aaRowOps aaBgColorToolbar aaFontSizeLabel">
                 <div class="aaRowOpsOpacity">
-                    <span class="aaBtn" click.trigger="app.viewmodelPopupAcctPicker.open(null, pickAcctDone)">
+                    <span class="aaBtn" title="Insert new row..." click.trigger="app.viewmodelPopupAcctPicker.open(null, pickAcctDone)">
                       <au-icon-new></au-icon-new>
                     </span>
                   <span class="aaBtn aaHidden">

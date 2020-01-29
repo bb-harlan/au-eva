@@ -1,6 +1,5 @@
 import { Acct, Annotation } from './acct';
 
-//
 export class FaeSide {
   id: string;   // 'Assets' or 'Equities'
   acctList: Array<Acct | Annotation> = [];
