@@ -115,11 +115,6 @@ export class AuPopupAcctMover {
       return;
     }
     let nextSibling = this.selectedMoverRow.nextElementSibling;
-/*
-    if (nextSibling.id == `${this.app.END_OF_LIST}`) {
-      nextSibling = null;
-    }
-*/
     if (nextSibling && mouseY >= nextSibling.getBoundingClientRect().top) {
       moverGridRows.insertBefore(nextSibling, this.selectedMoverRow);
       return;

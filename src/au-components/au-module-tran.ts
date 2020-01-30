@@ -159,29 +159,30 @@ export class AuModuleTran {
     this.tranView = this.DELETE;
   }
   tranDeleteConfirmed(event) {
-    let nextTran: Tran;
-    let indexOfSelectedTran = this.app.selectedTran.parentJrnl.tranList.findIndex(tran => tran.id == this.app.selectedTran.id);
     if (this.app.selectedTran.parentJrnl.tranList.length == 1) {
-      // selectedTran is the only tran in jrnl
-      nextTran = null;
-    }
-    else if (indexOfSelectedTran < this.app.selectedTran.parentJrnl.tranList.length - 1) {
-      // selected tran is not the last tran in jrnl and at least one follows it.
-      nextTran = this.app.selectedTran.parentJrnl.tranList[indexOfSelectedTran + 1];
+      // selectedTran is the only tran in jrnl.tranList and
+      // unregistering it will leave no tran in the jrnl.tranList
+      this.app.selectedTran.unregister();
+      this.onGoJrnl(event);
+      this.tranView = this.NAV;
+      this.app.selectedTran = null;
     }
     else {
-      // selectedTran is the last tran in jrnl and at least one precedes it.
-      nextTran = this.app.selectedTran.parentJrnl.tranList[indexOfSelectedTran - 1];
-    }
-    this.app.selectedTran.unregister();
-    if (nextTran) {
+      // determine which tran will replace this.app.selectedTran after
+      // this.app.selectedTran is unregistered
+      let nextTran;
+      let indexOfSelectedTran = this.app.selectedTran.parentJrnl.tranList.findIndex(tran => tran.id == this.app.selectedTran.id);
+      if (indexOfSelectedTran < this.app.selectedTran.parentJrnl.tranList.length - 1) {
+        // selectedTran is not the last tran in jrnl.tranList so that at least one tran follows it.
+        nextTran = this.app.selectedTran.parentJrnl.tranList[indexOfSelectedTran + 1];
+      }
+      else {
+        // selectedTran is the last tran in jrnl.tranList and at least one tran precedes it.
+        nextTran = this.app.selectedTran.parentJrnl.tranList[indexOfSelectedTran - 1];
+      }
+      this.app.selectedTran.unregister();
       this.app.selectedTran = nextTran;
       this.tranView = this.NAV;
-    }
-    else {
-      // nextTran is null
-      this.tranView = this.NAV;
-      this.onGoJrnl(event);
     }
   }
   tranDeleteCancel(event) {

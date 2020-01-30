@@ -32,7 +32,8 @@
       <button type="button"
               class="aaBtn"
               click.trigger="onEdit($event)">
-        <au-icon-edit></au-icon-edit> Edit
+        <au-icon-edit></au-icon-edit>
+        Edit
       </button>
       <button type="button"
               class="aaBtn"
@@ -74,134 +75,98 @@
       </div>
     </div>
     <div class="aaPanelBody">
-      <template if.bind="app.selectedAcct.isAcct()">
-        <div class="aaForm">
-          <table border="0" style="border-collapse: collapse;">
-            <tr>
-              <td class="aaFormItemLabel">Equation side:</td>
-              <td class="aaFormItemData">${app.selectedAcct.parentFaeSide.id | auEquationSideConverter:true:true}</td>
-            </tr>
-            <tr>
-              <td class="aaFormItemLabel">Title:</td>
-              <template if.bind="!app.isEditing">
-                <td class="aaFormItemData">
-                  <input type="text" disabled class="aaFormInputText aaCellAcctTitle" value="${app.selectedAcct.title}">
-                </td>
-              </template>
-              <template if.bind="app.isEditing">
-                <td class="aaFormItemData">
-                  <input type="text" class="aaFormInputText aaCellAcctTitle" value="${app.selectedAcct.title}">
-                </td>
-              </template>
-            </tr>
-          </table>
-        </div>
-
-        <div class="aaGridContainer">
-          <div class="aaGridTitleBar">Balance changes</div>
-          <div class="aaRow aaRowColumnHeaders aaFontLabel aaFontBold">
-            <div class="aaRowOps aaFontLabel aaHidden">
-              <button type="button" class="aaBtn">
-                <au-icon-nav-right></au-icon-nav-right>
-              </button>
-              <button type="button" class="aaBtn">
-                <au-icon-nav-right-right></au-icon-nav-right-right>
-              </button>
-            </div>
-            <div class="aaVerticalGridline" style="background-color: #fff"></div>
-            <div class="aaRowData">
-              <div class="aaCell aaCellTranDate">Date</div>
-              <div class="aaVerticalGridline" style="background-color: #fff"></div>
-              <div class="aaCell aaCellBchgDesc">Change description</div>
-              <div class="aaVerticalGridline" style="background-color: #fff"></div>
-              <div class="aaCell aaCellBchgAmt">Change amount</div>
-              <div class="aaVerticalGridline" style="background-color: #fff"></div>
-              <div class="aaCell aaCellBchgBal">New balance</div>
-              <div class="aaVerticalGridline" style="background-color: #fff"></div>
-            </div>
-          </div>
-          <div class="aaGridScrollableRows" id="acctModule-${app.selectedAcct.id}">
-            <template repeat.for="bchg of app.selectedAcct.bchgList">
-              <div id="${bchg.id}"
-                   class="aaRow aaRowBgColorToolbar"
-                   mouseenter.trigger="onRowEnter($event, bchg)"
-                   mouseleave.trigger="onRowLeave($event, bchg)">
-                <div class="aaRowOps aaBgColorToolbar aaFontSizeLabel">
-                  <div class="aaRowOpsOpacity">
-                    <button type="button" class="aaBtn" click.delegate="showBchgDetail($event, bchg)">
-                      <au-icon-nav-right></au-icon-nav-right>
-                    </button>
-                    <button type="button" class="aaBtn aaBtnInRowOps" click.delegate="showBchgInTran($event, bchg)">
-                      <au-icon-nav-right-right></au-icon-nav-right-right>
-                    </button>
-                  </div>
-                </div>
-                <div class="aaVerticalGridline"></div>
-                <div
-                  class="aaRowData aaRowBgColorData ${bchg.id == app.selectedBchg.id ? 'aaMostRecentlySelectedRow' : ''}">
-                  <div class="aaCell aaFontSizeData aaCellTranDate">${bchg.sourceTran.date}</div>
-                  <div class="aaVerticalGridline"></div>
-                  <div class="aaCell aaFontSizeData aaCellBchgDesc">${bchg.desc}</div>
-                  <div class="aaVerticalGridline"></div>
-                  <div class="aaCell aaFontSizeData aaCellBchgAmt">${bchg.amt | auCurrencyConverter}</div>
-                  <div class="aaVerticalGridline"></div>
-                  <div class="aaCell aaFontSizeData aaCellBchgBal">${bchg.newBalance | auCurrencyConverter}</div>
-                </div>
-                <div class="aaVerticalGridline"></div>
-              </div>
+      <div class="aaForm">
+        <table border="0" style="border-collapse: collapse;">
+          <tr>
+            <td class="aaFormItemLabel">Equation side:</td>
+            <td class="aaFormItemData">${app.selectedAcct.parentFaeSide.id | auEquationSideConverter:true:true}</td>
+          </tr>
+          <tr>
+            <td class="aaFormItemLabel">Title:</td>
+            <template if.bind="!app.isEditing">
+              <td class="aaFormItemData">
+                <input type="text" disabled class="aaFormInputText aaCellAcctTitle" value="${app.selectedAcct.title}">
+              </td>
             </template>
-            <!--
-            The purpose of having the following invisible end-of-list row
-            is to cause an empty "Account" grid to have
-            the same width as one that is populated.
-            -->
-            <div class="aaRow" style="visibility: hidden;">
-              <div class="aaCellRowOps ">
-                <span class="aaBtn aaHidden"><i class="fa fa-chevron-right fa-fw" aria-hidden="true"></i></span>
+            <template if.bind="app.isEditing">
+              <td class="aaFormItemData">
+                <input type="text" class="aaFormInputText aaCellAcctTitle" value="${app.selectedAcct.title}">
+              </td>
+            </template>
+          </tr>
+        </table>
+      </div>
+      <div class="aaGridContainer">
+        <div class="aaGridTitleBar">Balance changes</div>
+        <div class="aaRow aaRowColumnHeaders aaFontLabel aaFontBold">
+          <div class="aaRowOps aaFontLabel aaHidden">
+            <button type="button" class="aaBtn">
+              <au-icon-nav-right></au-icon-nav-right>
+            </button>
+            <button type="button" class="aaBtn">
+              <au-icon-nav-right-right></au-icon-nav-right-right>
+            </button>
+          </div>
+          <div class="aaVerticalGridline" style="background-color: #fff"></div>
+          <div class="aaRowData">
+            <div class="aaCell aaCellTranDate">Date</div>
+            <div class="aaVerticalGridline" style="background-color: #fff"></div>
+            <div class="aaCell aaCellBchgDesc">Change description</div>
+            <div class="aaVerticalGridline" style="background-color: #fff"></div>
+            <div class="aaCell aaCellBchgAmt">Change amount</div>
+            <div class="aaVerticalGridline" style="background-color: #fff"></div>
+            <div class="aaCell aaCellBchgBal">New balance</div>
+            <div class="aaVerticalGridline" style="background-color: #fff"></div>
+          </div>
+        </div>
+        <div class="aaGridScrollableRows" id="acctModule-${app.selectedAcct.id}">
+          <template repeat.for="bchg of app.selectedAcct.bchgList">
+            <div class="aaRow aaRowBgColorToolbar"
+                 id="${bchg.id}"
+                 mouseenter.trigger="onRowEnter($event, bchg)"
+                 mouseleave.trigger="onRowLeave($event, bchg)">
+              <div class="aaRowOps aaBgColorToolbar aaFontSizeLabel">
+                <div class="aaRowOpsOpacity">
+                  <button type="button" class="aaBtn" click.delegate="showBchgDetail($event, bchg)">
+                    <au-icon-nav-right></au-icon-nav-right>
+                  </button>
+                  <button type="button" class="aaBtn aaBtnInRowOps" click.delegate="showBchgInTran($event, bchg)">
+                    <au-icon-nav-right-right></au-icon-nav-right-right>
+                  </button>
+                </div>
               </div>
               <div class="aaVerticalGridline"></div>
-              <div class="aaCell aaFontData aaCellTranDate"><span class="aaSansSerif aaCellTextEOL">${app.END_OF_LIST}</span>
+              <div
+                class="aaRowData aaRowBgColorData ${bchg.id == app.selectedBchg.id ? 'aaMostRecentlySelectedRow' : ''}">
+                <div class="aaCell aaFontSizeData aaCellTranDate">${bchg.sourceTran.date}</div>
+                <div class="aaVerticalGridline"></div>
+                <div class="aaCell aaFontSizeData aaCellBchgDesc">${bchg.desc}</div>
+                <div class="aaVerticalGridline"></div>
+                <div class="aaCell aaFontSizeData aaCellBchgAmt">${bchg.amt | auCurrencyConverter}</div>
+                <div class="aaVerticalGridline"></div>
+                <div class="aaCell aaFontSizeData aaCellBchgBal">${bchg.newBalance | auCurrencyConverter}</div>
               </div>
-              <div class="aaVerticalGridline"></div>
-              <div class="aaCell aaFontData aaCellBchgDesc"></div>
-              <div class="aaVerticalGridline"></div>
-              <div class="aaCell aaFontData aaCellBchgAmt"></div>
-              <div class="aaVerticalGridline"></div>
-              <div class="aaCell aaFontData aaCellBchgBal"></div>
               <div class="aaVerticalGridline"></div>
             </div>
-          </div>
-          <div class="aaGridFooterBar"></div>
-        </div>
-      </template>
-      <template if.bind="app.selectedAcct.isAnnotation()">
-        <div class="aaForm">
-          <template if.bind="!app.isEditing">
-            <span class="aaSansSerif">Annotation:</span>
-            <input class="aaInputText aaCellAnnoTitle aaSansSerif" type="text" value="${app.selectedAcct.annoText}"
-                   disabled>
-            <br>
           </template>
-          <template if.bind="app.isEditing">
-            <span class="aaSansSerif">Annotation:</span>
-            <input class="aaInputText aaCellAnnoTitle aaSansSerif" type="text" value="${app.selectedAcct.annoText}">
-            <br>
-          </template>
-        </div>
-        <div class="aaGridScrollableRows" style="height: 2pc; visibility: hidden;">
           <!--
           The purpose of having the following invisible end-of-list row
-          is to cause this "Annotation" panel to have the same width as that
-          of an "Account" panel.
+          is to provide an invisible horizontal spacer if acct.bchgList is empty
+          so as to display the colmn headings row properly..
           -->
-          <div class="aaRow aaRowDelimiter">
-            <div class="aaCellRowOps">
-              <span class="aaBtn aaHidden"><i class="fa fa-chevron-right fa-fw" aria-hidden="true"></i></span>
+          <div class="aaRow aaHidden">
+            <div class="aaRowOps aaBgColorToolbar aaFontSizeLabel">
+              <div class="aaRowOpsOpacity">
+                <button type="button" class="aaBtn">
+                  <au-icon-nav-right></au-icon-nav-right>
+                </button>
+                <button type="button" class="aaBtn aaBtnInRowOps">
+                  <au-icon-nav-right-right></au-icon-nav-right-right>
+                </button>
+              </div>
             </div>
             <div class="aaVerticalGridline"></div>
-            <div class="aaCell aaFontData aaCellTranDate">
-              <span class="aaSansSerif aaCellTextEOL">${app.END_OF_LIST}</span>
-            </div>
+            <div class="aaCell aaFontData aaCellTranDate"></div>
             <div class="aaVerticalGridline"></div>
             <div class="aaCell aaFontData aaCellBchgDesc"></div>
             <div class="aaVerticalGridline"></div>
@@ -211,7 +176,8 @@
             <div class="aaVerticalGridline"></div>
           </div>
         </div>
-      </template>
+        <div class="aaGridFooterBar"></div>
+      </div>
     </div>
   </div>
 </template>

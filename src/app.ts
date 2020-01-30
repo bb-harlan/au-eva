@@ -21,9 +21,6 @@ export class App {
   get MODULE_JRNL() {
     return "jrnl";
   }
-  get END_OF_LIST() {
-    return "- End of list -";
-  }
   get ROW_SELECTED_CHAR() {
     // return String.fromCharCode(0xf111); // FontAwesome fa-circle
     return "&#xf111;" // FontAwesome fa-circle

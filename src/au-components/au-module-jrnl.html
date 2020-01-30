@@ -78,6 +78,29 @@
             </div>
             <!-- End of tran -->
           </template>
+          <!--
+          End of list row
+          (In case no rows in the list, this hidden end-of-row list is needed to
+          take as much horizontal space as of there where some rows to make the
+          grid column heading to look right.)
+          -->
+          <div class="aaRow aaHidden" style="border-bottom-width: 3px;">
+            <div class="aaRowOps aaBgColorToolbar aaFontSizeLabel"
+                 style="border-bottom: 3px solid #ccc;">
+              <div class="aaRowOpsOpacity">
+                    <span class="aaBtn">
+                      <au-icon-nav-left></au-icon-nav-left>
+                    </span>
+              </div>
+            </div>
+            <div class="aaVerticalGridline" style="width: 3px;"></div>
+            <div class="aaRowData aaHidden">
+              <au-grid-bchg-cells-spacer></au-grid-bchg-cells-spacer>
+              <div class="aaVerticalGridline" style="width: 3px;"></div>
+              <au-grid-bchg-cells-spacer></au-grid-bchg-cells-spacer>
+            </div>
+            <div class="aaVerticalGridline" style="width: 3px;"></div>
+          </div>
         </div>
         <div class="aaGridFooterBar"></div>
       </div>

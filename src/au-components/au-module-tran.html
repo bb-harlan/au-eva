@@ -48,20 +48,20 @@
                   class="aaBtn"
                   click.trigger="tranNew($event)">
             <au-icon-new></au-icon-new>
-            New
+            New transaction
             <au-text-ellipsis></au-text-ellipsis>
           </button>
           <button type="button"
                   class="aaBtn"
                   click.trigger="tranEdit($event)">
             <au-icon-edit></au-icon-edit>
-            Edit
+            Edit this transaction
           </button>
           <button type="button"
                   class="aaBtn"
                   click.trigger="tranDelete($event)">
             <au-icon-delete></au-icon-delete>
-            Delete
+            Delete this transaction
             <au-text-ellipsis></au-text-ellipsis>
           </button>
           <span class="aaToolBarDivider">.</span>
@@ -156,28 +156,31 @@
                 <div class="aaVerticalGridline" style="width: 3px;"></div>
               </div>
             </template>
-
-            <!-- End of list row -->
             <!--
-                        <template if.bind="app.isEditing">
-                          <div class="aaRowOps aaBgColorToolbar">
-                            <span class="aaBtn aaHidden" click.delegate="onMenuClick($event, bchg)">
-                                <i class="fa fa-bars fa-fw" aria-hidden="true"></i>
-                              </span>
-                          </div>
-                        </template>
+            End of list row
+            (In case no rows in the list, this hidden end-of-row list is needed to
+            take as much horizontal space as of there where some rows to make the
+            grid column heading to look right.)
             -->
-            <div class="aaVerticalGridline"></div>
-            <div class="aaRowData">
-              <div class="aaCell aaFontData aaHidden" style="position: absolute;"><span
-                class="aaSansSerif aaCellTextEOL">${app.END_OF_LIST}</span></div>
-              <au-grid-bchg-cells-spacer></au-grid-bchg-cells-spacer>
-              <au-vertical-gridline-spacer></au-vertical-gridline-spacer>
-              <au-grid-bchg-cells-spacer></au-grid-bchg-cells-spacer>
+            <div class="aaRow aaHidden" style="border-bottom-width: 3px;">
+              <div class="aaRowOps aaBgColorToolbar aaFontSizeLabel">
+                <div class="aaRowOpsOpacity ${tranView==DELETE ? 'aaHidden' : ''}">
+                    <span class="aaBtn">
+                      <au-icon-nav-left-left></au-icon-nav-left-left>
+                    </span>
+                  <span class="aaBtn">
+                      <au-icon-nav-left></au-icon-nav-left>
+                    </span>
+                </div>
+              </div>
+              <div class="aaVerticalGridline" style="width: 3px;"></div>
+              <div class="aaRowData aaHidden">
+                <au-grid-bchg-cells-spacer></au-grid-bchg-cells-spacer>
+                <div class="aaVerticalGridline" style="width: 3px;"></div>
+                <au-grid-bchg-cells-spacer></au-grid-bchg-cells-spacer>
+              </div>
+              <div class="aaVerticalGridline" style="width: 3px;"></div>
             </div>
-            <!--
-                        <div class="aaVerticalGridline"></div>
-            -->
           </div>
           <div class="aaGridFooterBar"></div>
         </div>
@@ -294,7 +297,8 @@
                    mouseleave.trigger="onRowLeave($event, bchg)">
                 <div class="aaRowOps aaBgColorToolbar aaFontSizeLabel">
                   <div class="aaRowOpsOpacity">
-                    <span class="aaBtn" title="Insert new row..." click.trigger="app.viewmodelPopupAcctPicker.open(bchg, pickAcctDone)">
+                    <span class="aaBtn" title="Insert new row..."
+                          click.trigger="app.viewmodelPopupAcctPicker.open(bchg, pickAcctDone)">
                       <au-icon-new></au-icon-new>
                     </span>
                     <span class="aaBtn" title="Delete row..." click.trigger="bchgDelete(bchg)">
@@ -330,7 +334,8 @@
                  mouseleave.trigger="onRowLeave($event, null)">
               <div class="aaRowOps aaBgColorToolbar aaFontSizeLabel">
                 <div class="aaRowOpsOpacity">
-                    <span class="aaBtn" title="Insert new row..." click.trigger="app.viewmodelPopupAcctPicker.open(null, pickAcctDone)">
+                    <span class="aaBtn" title="Insert new row..."
+                          click.trigger="app.viewmodelPopupAcctPicker.open(null, pickAcctDone)">
                       <au-icon-new></au-icon-new>
                     </span>
                   <span class="aaBtn aaHidden">

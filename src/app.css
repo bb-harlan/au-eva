@@ -429,7 +429,7 @@ h1 {
   font-weight: bold;
 }
 .aaCellBorder {
-  border: 0.05pc solid #ccc;
+  border: 0.05pc solid #999;
 }
 .aaBchgCells {
   display: inline-flex;
@@ -491,7 +491,7 @@ h1 {
   align-items: center;
   color: #000;
   background-color: #ddd;
-  border: 1px solid #ccc;
+  border: 1px solid #999;
   border-left-style: none;
 }
 .aaHelperBtn {
