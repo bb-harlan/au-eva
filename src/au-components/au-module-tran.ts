@@ -165,9 +165,9 @@ export class AuModuleTran {
       // selectedTran is the only tran in jrnl.tranList and
       // unregistering it will leave no tran in the jrnl.tranList
       this.app.selectedTran.unregister();
-      this.onGoJrnl(event);
       this.tranView = this.NAV;
       this.app.selectedTran = null;
+      this.onGoJrnl(event);
     }
     else {
       // determine which tran will replace this.app.selectedTran after
