@@ -36,8 +36,10 @@ export class AuModuleTran {
   onGoJrnl(event) {
     this.app.selectedBchg = null;
     this.app.selectedModule = this.app.MODULE_JRNL;
-    this.app.gridScrollerLink.setAttribute("href", `#${this.app.selectedTran.id}`);
-    this.app.gridScrollerLink.click();
+    if (this.app.selectedTran) {
+      this.app.gridScrollerLink.setAttribute("href", `#${this.app.selectedTran.id}`);
+      this.app.gridScrollerLink.click();
+    }
   }
   onGoUp(event) {
     let tranList = this.app.selectedTran.parentJrnl.tranList;
