@@ -21,7 +21,7 @@ export class AuModuleAcct {
     this.app.gridScrollerLink.click();
   }
   onGoUp(event) {
-    let selectedAcctId = this.app.selectedAcct.id;
+    // let selectedAcctId = this.app.selectedAcct.id;
     let acctList = this.app.selectedAcct.parentFaeSide.acctList.filter(listItem => listItem instanceof Acct);
     let listIndex = acctList.findIndex(acct => acct.id == this.app.selectedAcct.id);
     if (listIndex > 0) {

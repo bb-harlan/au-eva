@@ -124,7 +124,6 @@ export class AuModuleTran {
       alert("Transaction is out of balance.")
       return;
     }
-    // this.app.candidateTran.parentJrnl = this.app.data.jrnl;
     this.app.candidateTran.register();
     this.app.selectedTran = this.app.candidateTran;
     this.app.selectedTran.parentJrnl.refresh();
@@ -145,7 +144,6 @@ export class AuModuleTran {
       this.tranView = this.NAV;
       return;
     }
-    // this.app.candidateTran.parentJrnl = this.app.selectedTran.parentJrnl;
     this.app.selectedTran.unregister();
     this.app.candidateTran.register();
     this.app.selectedTran = this.app.candidateTran;
