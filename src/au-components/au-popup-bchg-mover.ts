@@ -40,16 +40,15 @@ export class AuPopupBchgMover {
     a div for each row of the mover datagrid as follows.
 
       <template repeat.for="bchg of moverBchgList">
-        <div
-        class="aaRow"
-         mover-bchg.bind="moverBchg"
+        <div class="aaRow"
+             mover-bchg.bind="moverBchg"
         /
         /
         /
 
     In that loop note that
 
-        mover-bchg.bind="bchg"
+        mover-bchg.one-time="bchg"
 
     creates a property named moverBchg on each row element, a div of type HTMLElement.
     The value of that property is set to the iterator bchg.
@@ -62,7 +61,7 @@ export class AuPopupBchgMover {
       let moverBchg = (<any>this.moverGridRows.children[i]).moverBchg as Bchg;
       moverBchg.intraTranIndex = i;
     }
-    this.moverBchgList.splice(0, this.moverBchgList.length); //donewith it, delete all members
+    this.moverBchgList.splice(0, this.moverBchgList.length); //done with it, delete all members
     this.app.candidateTran.sortBchgList();
     this.moverDialogModal.style.display = "none";
   }

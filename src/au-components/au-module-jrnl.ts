@@ -10,6 +10,12 @@ export class AuModuleJrnl {
   constructor(app) {
     this.app = app;
   }
+  attached() {
+    if (this.app.selectdTran) {
+      this.app.gridScrollerLink.setAttribute("href", `#${this.app.selectedTran.id}`);
+      this.app.gridScrollerLink.click();
+    }
+  }
   onRowEnter(event) {
     /*row ops*/
     event.target.children[0].children[0].classList.toggle('aaRowOpsHover', true);

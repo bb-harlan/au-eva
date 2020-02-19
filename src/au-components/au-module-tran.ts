@@ -33,13 +33,15 @@ export class AuModuleTran {
   constructor(app) {
     this.app = app;
   }
+  attached() {
+    if (this.app.selectedBchg) {
+      this.app.gridScrollerLink.setAttribute("href", `#${this.app.selectedBchg.id}`);
+      this.app.gridScrollerLink.click();
+    }
+  }
   onGoJrnl(event) {
     this.app.selectedBchg = null;
     this.app.selectedModule = this.app.MODULE_JRNL;
-    if (this.app.selectedTran) {
-      this.app.gridScrollerLink.setAttribute("href", `#${this.app.selectedTran.id}`);
-      this.app.gridScrollerLink.click();
-    }
   }
   onGoUp(event) {
     let tranList = this.app.selectedTran.parentJrnl.tranList;
@@ -72,8 +74,6 @@ export class AuModuleTran {
     this.app.selectedBchg = bchg;
     this.app.selectedAcct = bchg.targetAcct;
     this.app.selectedModule = this.app.MODULE_ACCT;
-    this.app.gridScrollerLink.setAttribute("href", `#${this.app.selectedBchg.id}`);
-    this.app.gridScrollerLink.click();
   }
   onRowEnter(event, bchg) {
     event.target.children[0].children[0].classList.toggle('aaRowOpsHover', true);

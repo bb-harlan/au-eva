@@ -30,10 +30,10 @@
       <div class="aaCellWrapper"
            style="margin-left: 1pc;">
         <au-input-currency
-          currency-amt.to-view="bchg.amt"
           classes-string.one-time="'aaCell aaCellBorder aaCellBchgAmt'"
           max-length.to-view="13"
-          on-completed.call="inputCurrencyCompleted(newCurrencyAmt)">
+          currency-amt.to-view="bchg.amt"
+          on-user-changed-currency-amt.call="userChangedCurrencyAmt(newCurrencyAmt)">
         </au-input-currency>
       </div>
       <div

@@ -28,7 +28,7 @@
            mouseleave.trigger="onListMouseLeave($event)">
         <template repeat.for="listItem of moverAcctList">
           <div class="aaRow"
-               list-item.bind="listItem"
+               list-item.to-view="listItem"
                mouseenter.trigger="onRowMouseEnter($event, listItem)"
                mouseleave.trigger="onRowMouseLeave($event, listItem)"
                mousedown.trigger="onRowMouseDown($event)"

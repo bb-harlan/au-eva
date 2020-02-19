@@ -16,6 +16,12 @@ export class AuModuleFae {
   constructor(app) {
     this.app = app;
   }
+  attached() {
+    if (this.app.selectedAcct) {
+      this.app.gridScrollerLink.setAttribute("href", `#${this.app.selectedAcct.id}`);
+      this.app.gridScrollerLink.click();
+    }
+  }
   selectSide(faeSide) {
     this.app.selectedFaeSide = faeSide;
   }

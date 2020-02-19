@@ -13,12 +13,15 @@ export class AuModuleAcct {
   constructor(app) {
     this.app = app;
   }
-
+  attached() {
+    if (this.app.selectedBchg) {
+      this.app.gridScrollerLink.setAttribute("href", `#${this.app.selectedBchg.id}`);
+      this.app.gridScrollerLink.click();
+    }
+  }
   onGoFae(event) {
     this.app.selectedBchg = null;
     this.app.selectedModule = this.app.MODULE_FAE;
-    this.app.gridScrollerLink.setAttribute("href", `#${this.app.selectedAcct.id}`);
-    this.app.gridScrollerLink.click();
   }
   onGoUp(event) {
     // let selectedAcctId = this.app.selectedAcct.id;
@@ -53,7 +56,6 @@ export class AuModuleAcct {
     this.app.selectedBchg = bchg;
     this.app.selectedModule = this.app.MODULE_TRAN;
   }
-
   onRowEnter(event, listItem) {
     event.target.children[0].children[0].classList.toggle('aaRowOpsHover', true);
     event.target.children[2].classList.toggle('aaRowDataHover', true);

@@ -9,11 +9,6 @@
   <require from="au-components/au-popup-acct-picker"></require>
   <require from="au-components/au-popup-bchg-mover"></require>
 
-<!--
-  <a element.ref="gridScrollerLink"
-     href="#"
-    style="display: none; position: absolute; top: -10pc;">#</a>
--->
   <a element.ref="gridScrollerLink" href="#" style="display: none;">#</a>
 
   <div class="aaPanelContainer" css="visibility: ${isEditing ? 'hidden' : 'visible'}">
@@ -67,13 +62,6 @@
     </div>
   </div>
   <div class="aaPanelContainer">
-<!--
-    <au-module-fae view-model.ref="viewmodelModuleFAE" if.bind="selectedModule == MODULE_FAE"></au-module-fae>
-    <au-module-acct view-model.ref="viewmodelModuleAcct" if.bind="selectedModule == MODULE_ACCT"></au-module-acct>
-    <au-module-bchg view-model.ref="viewmodelModuleBchg" if.bind="selectedModule == MODULE_BCHG"></au-module-bchg>
-    <au-module-tran view-model.ref="viewmodelModuleTran" if.bind="selectedModule == MODULE_TRAN"></au-module-tran>
-    <au-module-jrnl view-model.ref="viewmodelModuleJrnl" if.bind="selectedModule == MODULE_JRNL"></au-module-jrnl>
--->
     <au-module-fae view-model.ref="viewmodelModuleFAE" css="${selectedModule == MODULE_FAE ? '' : 'display: none;'}"></au-module-fae>
     <au-module-acct view-model.ref="viewmodelModuleAcct" css="${selectedModule == MODULE_ACCT ? '' : 'display: none;'}"></au-module-acct>
     <au-module-bchg view-model.ref="viewmodelModuleBchg" css="${selectedModule == MODULE_BCHG ? '' : 'display: none;'}"></au-module-bchg>

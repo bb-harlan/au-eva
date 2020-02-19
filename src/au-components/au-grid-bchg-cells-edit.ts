@@ -25,7 +25,7 @@ export class AuGridBchgCells {
     savedBchg.targetAcct = pickedAcct;
     savedBchg.sourceTran.refresh();
   }
-  inputCurrencyCompleted(newCurrencyAmt: number) {
+  userChangedCurrencyAmt(newCurrencyAmt: number) {
     console.log(`(In inputCurrencyCompleted) newCurrencyAmt: ${newCurrencyAmt};`);
     this.bchg.amt = newCurrencyAmt;
     this.bchg.sourceTran.refresh();
