@@ -42,8 +42,8 @@
               </div>
               <!--</template>-->
               <div class="aaVerticalGridline" style="width: 3px;"></div>
-              <div
-                style="display: inline-flex; flex-direction: column; align-items: flex-start; justify-content: flex-start">
+              <div class="${tran.id == app.selectedTran.id ? 'aaMostRecentlySelectedRow' : ''}"
+                   style="display: inline-flex; flex-direction: column; align-items: flex-start; justify-content: flex-start; padding: 3px;">
                 <div class="aaRowBgColorData"
                      style="display: inline-flex; align-items: center; justify-content: center; border-bottom: 3px solid #ccc; padding: 0.4pc">
                   <div class="aaCell aaFontSizeData aaCellTranDate aaCellBorder">${tran.date}</div>
