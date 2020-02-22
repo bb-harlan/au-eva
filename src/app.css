@@ -205,6 +205,9 @@ h1 {
   flex-direction: row;
   justify-content: flex-start;
 }
+.aaVisible {
+  visibility: visible;
+}
 .aaHidden {
   visibility: hidden;
 }

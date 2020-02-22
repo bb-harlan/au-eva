@@ -8,8 +8,167 @@
   <require from="au-components/au-popup-acct-mover"></require>
   <require from="au-components/au-popup-acct-picker"></require>
   <require from="au-components/au-popup-bchg-mover"></require>
+  <require from="au-views/au-icon-nav-left.html"></require>
+  <require from="au-views/au-icon-nav-right.html"></require>
 
   <a element.ref="gridScrollerLink" href="#" style="display: none;">#</a>
+  <style>
+    .aaNavigator {
+      display: inline-flex;
+      flex-direction: row;
+      align-items: flex-start;
+      padding: 5px;
+      background-color: #fff;
+      border: 1px solid black;
+      font-family: sans-serif;
+      font-size: small;
+    }
+    .aaNavModuleColumn {
+      display: inline-flex;
+      flex-direction: column;
+      align-items: flex-start;
+      /*margin: 1px;*/
+      /*padding: 2px;*/
+    }
+    .aaNavOpsColumn {
+      display: inline-flex;
+      flex-direction: column;
+      align-items: flex-start;
+      /*margin: 1px;*/
+      /*padding: 2px;*/
+    }
+    .aaNavCell {
+      display: inline-flex;
+      flex-direction: row;
+      align-items: center;
+      height: 25px;
+      /*background-color: lightblue;*/
+      /*margin: 1px;*/
+      /*padding-top: 2px;*/
+      /*padding-bottom: 2px;*/
+      /*border: 1px solid transparent;*/
+    }
+    .aaNavModule {
+      margin: 1px 3px;
+      padding-left: 5px;
+      padding-right: 5px;
+      border: 1px solid black;
+    }
+    .aaNavModuleSelected {
+      color: #fff;
+      background-color: #6D99C5;
+      border-color: #fff;
+      outline: 2px solid #6D99C5;
+    }
+    .aaNavOp {
+      /*margin: 1px 3px;*/
+      /*border: 1px dotted black;*/
+      visibility: hidden;
+    }
+  </style>
+  <div class="aaNavigator">
+    <div class="aaNavModuleColumn">
+      <div class="aaNavCell aaNavModule ${selectedModule == MODULE_FAE ? 'aaNavModuleSelected' : ''}">
+        Assets = Equities
+      </div>
+    </div>
+    <div class="aaNavOpsColumn">
+      <div class="aaNavCell aaNavOp"
+           css="${selectedModule != MODULE_FAE ? 'visibility: visible;' : ''}">
+        <button type="button" class="aaBtn" click.trigger="onFaeModule($event)">
+          <au-icon-nav-left></au-icon-nav-left>
+        </button>
+      </div>
+      <div class="aaNavCell aaNavOp"
+           css="${selectedModule == MODULE_FAE ? 'visibility: visible;' : ''}">
+        <button type="button" class="aaBtn">
+          <au-icon-nav-right></au-icon-nav-right>
+        </button>
+      </div>
+    </div>
+    <div class="aaNavModuleColumn">
+      <div class="aaNavCell">
+        &nbsp;
+      </div>
+      <div class="aaNavCell aaNavModule ${selectedModule == MODULE_ACCT ? 'aaNavModuleSelected' : ''}">
+        Account
+      </div>
+    </div>
+    <div class="aaNavOpsColumn">
+      <div class="aaNavCell aaNavOp">
+        x
+      </div>
+      <div class="aaNavCell aaNavOp"
+           css="${selectedModule == MODULE_TRAN || selectedModule == MODULE_BCHG ? 'visibility: visible;' : ''}">
+        <button type="button" class="aaBtn">
+          <au-icon-nav-left></au-icon-nav-left>
+        </button>
+      </div>
+      <div class="aaNavCell aaNavOp"
+           css="${selectedModule == MODULE_ACCT ? 'visibility: visible;' : ''}">
+        <button type="button" class="aaBtn">
+          <au-icon-nav-right></au-icon-nav-right>
+        </button>
+      </div>
+    </div>
+    <div class="aaNavModuleColumn">
+      <div class="aaNavCell aaHidden">
+        x
+      </div>
+      <div class="aaNavCell aaHidden">
+        x
+      </div>
+      <div class="aaNavCell aaNavModule ${selectedModule == MODULE_BCHG ? 'aaNavModuleSelected' : ''}">
+        Account balance change
+      </div>
+    </div>
+    <div class="aaNavOpsColumn">
+      <div class="aaNavCell aaNavOp aaHidden">
+        x
+      </div>
+      <div class="aaNavCell aaNavOp"
+           css="${selectedModule == MODULE_ACCT || selectedModule == MODULE_BCHG ? 'visibility: visible;' : ''}">
+        <button type="button" class="aaBtn">
+          <au-icon-nav-right></au-icon-nav-right>
+        </button>
+      </div>
+      <div class="aaNavCell aaNavOp"
+           css="${selectedModule == MODULE_TRAN ? 'visibility: visible;' : ''}">
+        <button type="button" class="aaBtn">
+          <au-icon-nav-left></au-icon-nav-left>
+        </button>
+
+      </div>
+    </div>
+    <div class="aaNavModuleColumn">
+      <div class="aaNavCell">
+        &nbsp;
+      </div>
+      <div class="aaNavCell aaNavModule ${selectedModule == MODULE_TRAN ? 'aaNavModuleSelected' : ''}">
+        Transaction
+      </div>
+    </div>
+    <div class="aaNavOpsColumn">
+      <div class="aaNavCell aaNavOp"
+           css="${selectedModule != MODULE_JRNL ? 'visibility: visible;' : ''}">
+        <button type="button" class="aaBtn" click.trigger="onJrnlModule($event)">
+          <au-icon-nav-right></au-icon-nav-right>
+        </button>
+      </div>
+      <div class="aaNavCell aaNavOp"
+           css="${selectedModule == MODULE_JRNL ? 'visibility: visible;' : ''}">
+        <button type="button" class="aaBtn">
+          <au-icon-nav-left></au-icon-nav-left>
+        </button>
+      </div>
+    </div>
+    <div class="aaNavModuleColumn">
+      <div class="aaNavCell aaNavModule ${selectedModule == MODULE_JRNL ? 'aaNavModuleSelected' : ''}">
+        Transaction journal
+      </div>
+    </div>
+
+  </div>
 
   <div class="aaPanelContainer" css="visibility: ${isEditing ? 'hidden' : 'visible'}">
     <div class="aaPanel aaPanelBoxShadow" style="font-size: small;">
