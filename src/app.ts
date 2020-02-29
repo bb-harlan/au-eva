@@ -62,6 +62,7 @@ export class App {
 
   selectedFaeSide: FaeSide = null;
   selectedAcct: Acct = null;
+  selectedBchg: Bchg = null;
   selectedTran: Tran = null;
   candidateTran: Tran = null;
   /*
@@ -69,7 +70,6 @@ export class App {
   * -------------------
   *
   */
-  selectedBchg: Bchg = null;
   isEditing = false;
 
   /*=====================================================
@@ -101,6 +101,62 @@ export class App {
 
   onMenuClick(event, listItem) {
   }
+  selectAcct(listItem): void {
+    if (listItem.isAcct()) {
+      this.selectedAcct = listItem;
+    }
+  }
+  selectBchg(bchg): void {
+    this.selectedBchg = bchg;
+    this.selectedAcct = bchg.targetAcct;
+    this.selectedTran = bchg.sourceTran;
+  }
+  selectTran(tran): void {
+    this.selectedTran = tran;
+  }
+  goFaeModule(event) {
+    // this.selectedBchg = null;
+    // this.selectedTran = null;
+    this.selectedModule = this.MODULE_FAE;
+  }
+  goAcctModule(acct) {
+    // this.selectedAcct = null;
+    if (acct) {
+      this.selectedAcct = acct;
+    }
+    else {
+      if (!this.selectedAcct) {
+        throw new Error(`Logic error in app.goAcctModule()`);
+      }
+    }
+    if (this.selectedBchg && this.selectedBchg.targetAcct.id != this.selectedAcct.id) {
+      this.selectedBchg = null;
+    }
+    this.selectedModule = this.MODULE_ACCT;
+  }
+  goBchgModule() {
+    this.selectedModule = this.MODULE_BCHG;
+  }
+  goTranModule(tran) {
+    if (tran) {
+      this.selectedTran = tran;
+    }
+    else {
+      if (!this.selectedTran) {
+        throw new Error(`Logic error in app.goAcctModule()`);
+      }
+    }
+    if (this.selectedBchg && this.selectedBchg.sourceTran.id != this.selectedTran.id) {
+      this.selectedBchg = null;
+    }
+    this.selectedModule = this.MODULE_TRAN;
+  }
+  goJrnlModule(event) {
+    // this.selectedBchg = null;
+    // this.selectedAcct = null;
+    this.selectedModule = this.MODULE_JRNL;
+  }
+
 }
 
 

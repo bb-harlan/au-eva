@@ -10,19 +10,37 @@
   <require from="au-components/au-popup-bchg-mover"></require>
   <require from="au-views/au-icon-nav-left.html"></require>
   <require from="au-views/au-icon-nav-right.html"></require>
+  <require from="au-views/au-icon-map-marker.html"></require>
+  <require from="au-views/au-icon-map-marker-candidate.html"></require>
+  <require from="au-views/au-icon-map-marker-not-yet.html"></require>
 
   <a element.ref="gridScrollerLink" href="#" style="display: none;">#</a>
   <style>
     .aaNavigator {
       display: inline-flex;
-      flex-direction: row;
-      align-items: flex-start;
-      padding: 5px;
+      flex-direction: column;
+      align-items: center;
       background-color: #fff;
       border: 1px solid black;
+      padding: 5px 10px;
       font-family: sans-serif;
       font-size: small;
     }
+
+    .aaNavMapHeader {
+      display: inline-flex;
+      flex-direction: row;
+      align-items: center;
+      letter-spacing: 2px;
+      font-weight: bold;
+    }
+
+    .aaNavMapBody {
+      display: inline-flex;
+      flex-direction: row;
+      align-items: flex-start;
+    }
+
     .aaNavModuleColumn {
       display: inline-flex;
       flex-direction: column;
@@ -30,36 +48,44 @@
       /*margin: 1px;*/
       /*padding: 2px;*/
     }
-    .aaNavOpsColumn {
+
+    .aaNavGutterColumn {
       display: inline-flex;
       flex-direction: column;
       align-items: flex-start;
-      /*margin: 1px;*/
-      /*padding: 2px;*/
+      width: 10px;
     }
+
     .aaNavCell {
       display: inline-flex;
       flex-direction: row;
       align-items: center;
       height: 25px;
-      /*background-color: lightblue;*/
-      /*margin: 1px;*/
-      /*padding-top: 2px;*/
-      /*padding-bottom: 2px;*/
-      /*border: 1px solid transparent;*/
     }
+
     .aaNavModule {
-      margin: 1px 3px;
+      /*margin: 1px 3px;*/
       padding-left: 5px;
       padding-right: 5px;
       border: 1px solid black;
+      background-color: #EEEEEE;
     }
+
+/*
     .aaNavModuleSelected {
       color: #fff;
       background-color: #6D99C5;
       border-color: #fff;
       outline: 2px solid #6D99C5;
     }
+*/
+    .aaNavModuleSelected {
+      /*border-style: none;*/
+      -webkit-box-shadow: 0px 0px 3px 1px #6d99c5;
+      -moz-box-shadow: 0px 0px 3px 1px #6d99c5;
+      box-shadow: 0px 0px 3px 1px #6D99C5;
+    }
+
     .aaNavOp {
       /*margin: 1px 3px;*/
       /*border: 1px dotted black;*/
@@ -67,124 +93,140 @@
     }
   </style>
   <div class="aaNavigator">
-    <div class="aaNavModuleColumn">
-      <div class="aaNavCell aaNavModule ${selectedModule == MODULE_FAE ? 'aaNavModuleSelected' : ''}">
-        Assets = Equities
+    <div class="aaNavMapHeader">Navigation map</div>
+    <div class="aaNavMapBody">
+      <div class="aaNavModuleColumn">
+        <div class="aaNavCell">
+          <template if.bind="selectedModule == MODULE_FAE">
+            <au-icon-map-marker></au-icon-map-marker>
+            <button type="button" disabled class="aaNavModuleSelected">
+              Assets = Equities
+            </button>
+          </template>
+          <template if.bind="selectedModule != MODULE_FAE">
+            <au-icon-map-marker-candidate></au-icon-map-marker-candidate>
+            <button type="button" click.trigger="goFaeModule()">
+              Assets = Equities
+            </button>
+          </template>
+        </div>
+      </div>
+      <div class="aaNavGutterColumn"></div>
+      <div class="aaNavModuleColumn">
+        <div class="aaNavCell">&nbsp;</div>
+        <div class="aaNavCell">
+          <template if.bind="selectedModule == MODULE_ACCT">
+            <au-icon-map-marker></au-icon-map-marker>
+            <button type="button" disabled class="aaNavModuleSelected">
+              Account
+            </button>
+          </template>
+          <template if.bind="selectedModule != MODULE_ACCT">
+            <template if.bind="selectedAcct" )>
+              <au-icon-map-marker-candidate></au-icon-map-marker-candidate>
+              <button type="button" click.trigger="goAcctModule()">
+                Account
+              </button>
+            </template>
+            <template if.bind="!selectedAcct">
+              <au-icon-map-marker-not-yet></au-icon-map-marker-not-yet>
+              <button type="button" disabled>
+                Account
+              </button>
+            </template>
+          </template>
+        </div>
+      </div>
+      <div class="aaNavGutterColumn"></div>
+      <div class="aaNavModuleColumn">
+        <div class="aaNavCell">&nbsp;</div>
+        <div class="aaNavCell">&nbsp;</div>
+        <div class="aaNavCell">
+          <template if.bind="selectedModule == MODULE_BCHG">
+            <au-icon-map-marker></au-icon-map-marker>
+            <button type="button" disabled class="aaNavModuleSelected">
+              Account balance changet
+            </button>
+          </template>
+          <template if.bind="selectedModule != MODULE_BCHG">
+            <template if.bind="selectedBchg" )>
+              <au-icon-map-marker-candidate></au-icon-map-marker-candidate>
+              <button type="button" click.trigger="goBchgModule()">
+                Account balance change
+              </button>
+            </template>
+            <template if.bind="!selectedBchg">
+              <au-icon-map-marker-not-yet></au-icon-map-marker-not-yet>
+              <button type="button" disabled>
+                Account balance change
+              </button>
+            </template>
+          </template>
+        </div>
+      </div>
+      <div class="aaNavGutterColumn"></div>
+      <div class="aaNavModuleColumn">
+        <div class="aaNavCell">&nbsp;</div>
+        <div class="aaNavCell">
+          <template if.bind="selectedModule == MODULE_TRAN">
+            <au-icon-map-marker></au-icon-map-marker>
+            <button type="button" disabled class="aaNavModuleSelected">
+              Transaction
+            </button>
+          </template>
+          <template if.bind="selectedModule != MODULE_TRAN">
+            <template if.bind="selectedTran">
+              <au-icon-map-marker-candidate></au-icon-map-marker-candidate>
+              <button type="button" click.trigger="goTranModule()">
+                Transaction
+              </button>
+            </template>
+            <template if.bind="!selectedTran">
+              <au-icon-map-marker-not-yet></au-icon-map-marker-not-yet>
+              <button type="button" disabled>
+                Transaction
+              </button>
+            </template>
+          </template>
+        </div>
+      </div>
+      <div class="aaNavGutterColumn"></div>
+      <div class="aaNavModuleColumn">
+        <div class="aaNavCell">
+          <template if.bind="selectedModule == MODULE_JRNL">
+            <au-icon-map-marker></au-icon-map-marker>
+            <button type="button" disabled class="aaNavModuleSelected">
+              Transaction journal
+            </button>
+          </template>
+          <template if.bind="selectedModule != MODULE_JRNL">
+            <au-icon-map-marker-candidate></au-icon-map-marker-candidate>
+            <button type="button" click.trigger="goJrnlModule()">
+              Transaction journal
+            </button>
+          </template>
+        </div>
       </div>
     </div>
-    <div class="aaNavOpsColumn">
-      <div class="aaNavCell aaNavOp"
-           css="${selectedModule != MODULE_FAE ? 'visibility: visible;' : ''}">
-        <button type="button" class="aaBtn" click.trigger="onFaeModule($event)">
-          <au-icon-nav-left></au-icon-nav-left>
-        </button>
-      </div>
-      <div class="aaNavCell aaNavOp"
-           css="${selectedModule == MODULE_FAE ? 'visibility: visible;' : ''}">
-        <button type="button" class="aaBtn">
-          <au-icon-nav-right></au-icon-nav-right>
-        </button>
-      </div>
-    </div>
-    <div class="aaNavModuleColumn">
-      <div class="aaNavCell">
-        &nbsp;
-      </div>
-      <div class="aaNavCell aaNavModule ${selectedModule == MODULE_ACCT ? 'aaNavModuleSelected' : ''}">
-        Account
-      </div>
-    </div>
-    <div class="aaNavOpsColumn">
-      <div class="aaNavCell aaNavOp">
-        x
-      </div>
-      <div class="aaNavCell aaNavOp"
-           css="${selectedModule == MODULE_TRAN || selectedModule == MODULE_BCHG ? 'visibility: visible;' : ''}">
-        <button type="button" class="aaBtn">
-          <au-icon-nav-left></au-icon-nav-left>
-        </button>
-      </div>
-      <div class="aaNavCell aaNavOp"
-           css="${selectedModule == MODULE_ACCT ? 'visibility: visible;' : ''}">
-        <button type="button" class="aaBtn">
-          <au-icon-nav-right></au-icon-nav-right>
-        </button>
-      </div>
-    </div>
-    <div class="aaNavModuleColumn">
-      <div class="aaNavCell aaHidden">
-        x
-      </div>
-      <div class="aaNavCell aaHidden">
-        x
-      </div>
-      <div class="aaNavCell aaNavModule ${selectedModule == MODULE_BCHG ? 'aaNavModuleSelected' : ''}">
-        Account balance change
-      </div>
-    </div>
-    <div class="aaNavOpsColumn">
-      <div class="aaNavCell aaNavOp aaHidden">
-        x
-      </div>
-      <div class="aaNavCell aaNavOp"
-           css="${selectedModule == MODULE_ACCT || selectedModule == MODULE_BCHG ? 'visibility: visible;' : ''}">
-        <button type="button" class="aaBtn">
-          <au-icon-nav-right></au-icon-nav-right>
-        </button>
-      </div>
-      <div class="aaNavCell aaNavOp"
-           css="${selectedModule == MODULE_TRAN ? 'visibility: visible;' : ''}">
-        <button type="button" class="aaBtn">
-          <au-icon-nav-left></au-icon-nav-left>
-        </button>
-
-      </div>
-    </div>
-    <div class="aaNavModuleColumn">
-      <div class="aaNavCell">
-        &nbsp;
-      </div>
-      <div class="aaNavCell aaNavModule ${selectedModule == MODULE_TRAN ? 'aaNavModuleSelected' : ''}">
-        Transaction
-      </div>
-    </div>
-    <div class="aaNavOpsColumn">
-      <div class="aaNavCell aaNavOp"
-           css="${selectedModule != MODULE_JRNL ? 'visibility: visible;' : ''}">
-        <button type="button" class="aaBtn" click.trigger="onJrnlModule($event)">
-          <au-icon-nav-right></au-icon-nav-right>
-        </button>
-      </div>
-      <div class="aaNavCell aaNavOp"
-           css="${selectedModule == MODULE_JRNL ? 'visibility: visible;' : ''}">
-        <button type="button" class="aaBtn">
-          <au-icon-nav-left></au-icon-nav-left>
-        </button>
-      </div>
-    </div>
-    <div class="aaNavModuleColumn">
-      <div class="aaNavCell aaNavModule ${selectedModule == MODULE_JRNL ? 'aaNavModuleSelected' : ''}">
-        Transaction journal
-      </div>
-    </div>
-
   </div>
 
-  <div class="aaPanelContainer" css="visibility: ${isEditing ? 'hidden' : 'visible'}">
+  <div class="aaPanelContainer" css="display: none; visibility: ${isEditing ? 'hidden' : 'visible'}">
     <div class="aaPanel aaPanelBoxShadow" style="font-size: small;">
       <div class="aaPanelHeader">Navigation map</div>
       <div class="aaPanelBody" style="padding: 0.5pc;">
         <table class="aaSansSerif aaInlineBlock" style="color: #333;">
           <tr>
             <td class="aaNavCell">
-              <div class="aaNavBtn ${selectedModule == MODULE_FAE ? 'aaNavBtnSelected' : ''}" click.trigger="onFaeModule($event)">Assets = Equities
+              <div class="aaNavBtn ${selectedModule == MODULE_FAE ? 'aaNavBtnSelected' : ''}"
+                   click.trigger="onFaeModule($event)">Assets = Equities
               </div>
             </td>
             <td></td>
             <td></td>
             <td></td>
             <td class="aaNavCell">
-              <div class="aaNavBtn ${selectedModule == MODULE_JRNL ? 'aaNavBtnSelected' : ''}" click.trigger="onJrnlModule($event)">Transaction journal
+              <div class="aaNavBtn ${selectedModule == MODULE_JRNL ? 'aaNavBtnSelected' : ''}"
+                   click.trigger="onJrnlModule($event)">Transaction journal
               </div>
             </td>
           </tr>
@@ -205,27 +247,32 @@
             </td>
             <td></td>
           </tr>
-            <tr>
-              <td></td>
-              <td></td>
-              <td class="aaNavCell">
-                <div class="aaNavBtnInert ${selectedModule == MODULE_BCHG ? 'aaNavBtnSelected' : ''}">
-                  Account balance change
-                </div>
-              </td>
-              <td></td>
-              <td></td>
+          <tr>
+            <td></td>
+            <td></td>
+            <td class="aaNavCell">
+              <div class="aaNavBtnInert ${selectedModule == MODULE_BCHG ? 'aaNavBtnSelected' : ''}">
+                Account balance change
+              </div>
+            </td>
+            <td></td>
+            <td></td>
           </tr>
         </table>
       </div>
     </div>
   </div>
   <div class="aaPanelContainer">
-    <au-module-fae view-model.ref="viewmodelModuleFAE" css="${selectedModule == MODULE_FAE ? '' : 'display: none;'}"></au-module-fae>
-    <au-module-acct view-model.ref="viewmodelModuleAcct" css="${selectedModule == MODULE_ACCT ? '' : 'display: none;'}"></au-module-acct>
-    <au-module-bchg view-model.ref="viewmodelModuleBchg" css="${selectedModule == MODULE_BCHG ? '' : 'display: none;'}"></au-module-bchg>
-    <au-module-tran view-model.ref="viewmodelModuleTran" css="${selectedModule == MODULE_TRAN ? '' : 'display: none;'}"></au-module-tran>
-    <au-module-jrnl view-model.ref="viewmodelModuleJrnl" css="${selectedModule == MODULE_JRNL ? '' : 'display: none;'}"></au-module-jrnl>
+    <au-module-fae view-model.ref="viewmodelModuleFAE"
+                   css="${selectedModule == MODULE_FAE ? '' : 'display: none;'}"></au-module-fae>
+    <au-module-acct view-model.ref="viewmodelModuleAcct"
+                    css="${selectedModule == MODULE_ACCT ? '' : 'display: none;'}"></au-module-acct>
+    <au-module-bchg view-model.ref="viewmodelModuleBchg"
+                    css="${selectedModule == MODULE_BCHG ? '' : 'display: none;'}"></au-module-bchg>
+    <au-module-tran view-model.ref="viewmodelModuleTran"
+                    css="${selectedModule == MODULE_TRAN ? '' : 'display: none;'}"></au-module-tran>
+    <au-module-jrnl view-model.ref="viewmodelModuleJrnl"
+                    css="${selectedModule == MODULE_JRNL ? '' : 'display: none;'}"></au-module-jrnl>
   </div>
 
   <au-popup-acct-mover view-model.ref="viewmodelPopupAcctMover"></au-popup-acct-mover>

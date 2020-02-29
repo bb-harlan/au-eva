@@ -2,6 +2,8 @@
   <require from="au-views/au-icon-nav-left.html"></require>
   <require from="au-views/au-vertical-gridline.html"></require>
   <require from="au-views/au-grid-bchg-cells-spacer.html"></require>
+  <require from="au-views/au-icon-radio-unselected.html"></require>
+  <require from="au-views/au-icon-radio-selected.html"></require>
   <require from="au-components/au-grid-bchg-cells"></require>
   <require from="au-components/au-grid-bchg-cells-heading"></require>
 
@@ -12,9 +14,9 @@
         <div class="aaGridTitleBar">Transactions</div>
         <div class="aaRow aaRowColumnHeaders aaFontLabel aaFontBold">
           <div class="aaRowOps aaFontLabel aaHidden">
-            <span class="aaBtn">
-              <au-icon-nav-left></au-icon-nav-left>
-            </span>
+            <div class="aaRadioBtn">
+              <au-icon-radio-unselected></au-icon-radio-unselected>
+            </div>
           </div>
           <div class="aaVerticalGridline" style="background-color: #999; width: 3px;"></div>
           <div class="aaRowData">
@@ -30,20 +32,30 @@
                  id="${tran.id}"
                  style="border-bottom-width: 1.5pc;"
                  mouseenter.trigger="onRowEnter($event)"
-                 mouseleave.trigger="onRowLeave($event)">
+                 mouseleave.trigger="onRowLeave($event)"
+                 click.trigger="app.selectTran(tran)">
               <div class="aaRowOps aaBgColorToolbar aaFontSizeLabel"
                    style="border-bottom: 3px solid #ccc;">
-                <div class="aaRowOpsOpacity">
-                    <span class="aaBtn"
-                          click.delegate="onGoTran($event, tran)">
-                      <au-icon-nav-left></au-icon-nav-left>
-                    </span>
+                <!--
+                                <div class="aaRowOpsOpacity">
+                                    <span class="aaBtn"
+                                          click.delegate="onGoTran($event, tran)">
+                                      <au-icon-nav-left></au-icon-nav-left>
+                                    </span>
+                                </div>
+                -->
+                <div class="aaRadioBtn">
+                  <template if.bind="app.selectedTran.id == tran.id">
+                    <au-icon-radio-selected></au-icon-radio-selected>
+                  </template>
+                  <template if.bind="app.selectedTran.id != tran.id">
+                    <au-icon-radio-unselected></au-icon-radio-unselected>
+                  </template>
                 </div>
               </div>
               <!--</template>-->
               <div class="aaVerticalGridline" style="width: 3px;"></div>
-              <div class="${tran.id == app.selectedTran.id ? 'aaMostRecentlySelectedRow' : ''}"
-                   style="display: inline-flex; flex-direction: column; align-items: flex-start; justify-content: flex-start; padding: 3px;">
+              <div style="display: inline-flex; flex-direction: column; align-items: flex-start; justify-content: flex-start; padding: 3px;">
                 <div class="aaRowBgColorData"
                      style="display: inline-flex; align-items: center; justify-content: center; border-bottom: 3px solid #ccc; padding: 0.4pc">
                   <div class="aaCell aaFontSizeData aaCellTranDate aaCellBorder">${tran.date}</div>

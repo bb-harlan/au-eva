@@ -1,5 +1,4 @@
-import {valueConverter, inject} from "aurelia-framework";
-import {AuInputCurrency} from 'au-components/au-input-currency';
+import {valueConverter} from "aurelia-framework";
 
 @valueConverter("auCurrencyConverter")
 export class AuCurrencyConverter {
@@ -7,6 +6,7 @@ export class AuCurrencyConverter {
     return Intl.NumberFormat("en-US",
                              {
                                style: "decimal",
+                               useGrouping: true,
                                minimumIntegerDigits: 1,
                                minimumFractionDigits: 2,
                                maximumFractionDigits: 2

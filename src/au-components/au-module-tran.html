@@ -9,6 +9,8 @@
   <require from="au-views/au-icon-delete.html"></require>
   <require from="au-views/au-icon-row-mover.html"></require>
   <require from="au-views/au-icon-ellipsis.html"></require>
+  <require from="au-views/au-icon-radio-unselected.html"></require>
+  <require from="au-views/au-icon-radio-selected.html"></require>
   <require from="au-views/au-text-ellipsis.html"></require>
   <require from="au-views/au-grid-bchg-cells-spacer.html"></require>
   <require from="au-views/au-vertical-gridline.html"></require>
@@ -25,65 +27,33 @@
     <template if.bind="tranView == NAV || tranView == DELETE">
       <template if.bind="tranView == NAV">
         <div class="aaPanelToolBar">
-          <div class="aaInlineBlock">
+          <div class="aaInlineFlex" style="justify-content: center;">
+            <span class="aaToolBarDivider">.</span>
             <button type="button"
                     class="aaBtn"
-                    click.trigger="onGoUp($event)">
-              <au-icon-nav-up></au-icon-nav-up>
+                    click.trigger="tranNew($event)">
+              <au-icon-new></au-icon-new>
+              New transaction
             </button>
             <button type="button"
                     class="aaBtn"
-                    click.trigger="onGoDown($event)">
-              <au-icon-nav-down></au-icon-nav-down>
+                    click.trigger="tranEdit($event)">
+              <au-icon-edit></au-icon-edit>
+              Edit this transaction
             </button>
             <button type="button"
                     class="aaBtn"
-                    click.trigger="onGoJrnl($event)">
-              Transaction journal
-              <au-icon-nav-right></au-icon-nav-right>
+                    click.trigger="tranDelete($event)">
+              <au-icon-delete></au-icon-delete>
+              Delete this transaction
+              <au-text-ellipsis></au-text-ellipsis>
             </button>
+            <span class="aaToolBarDivider">.</span>
           </div>
-          <span class="aaToolBarDivider">.</span>
-          <button type="button"
-                  class="aaBtn"
-                  click.trigger="tranNew($event)">
-            <au-icon-new></au-icon-new>
-            New transaction
-            <au-text-ellipsis></au-text-ellipsis>
-          </button>
-          <button type="button"
-                  class="aaBtn"
-                  click.trigger="tranEdit($event)">
-            <au-icon-edit></au-icon-edit>
-            Edit this transaction
-          </button>
-          <button type="button"
-                  class="aaBtn"
-                  click.trigger="tranDelete($event)">
-            <au-icon-delete></au-icon-delete>
-            Delete this transaction
-            <au-text-ellipsis></au-text-ellipsis>
-          </button>
-          <span class="aaToolBarDivider">.</span>
         </div>
       </template>
       <template if.bind="tranView == DELETE">
         <div class="aaPanelToolBar">
-          <div class="aaInlineBlock aaHidden">
-            <button type="button"
-                    class="aaBtn">
-              <au-icon-nav-up></au-icon-nav-up>
-            </button>
-            <button type="button"
-                    class="aaBtn">
-              <au-icon-nav-down></au-icon-nav-down>
-            </button>
-            <button type="button"
-                    class="aaBtn">
-              Transaction journal
-              <au-icon-nav-right></au-icon-nav-right>
-            </button>
-          </div>
           <span class="aaToolBarDivider">.</span>
           <span class="aaFontLabel aaFontBold">Delete transaction:</span>
           <span class="aaToolBarDivider aaHidden">.</span>
@@ -106,12 +76,9 @@
           <div class="aaGridTitleBar">Account balance changes</div>
           <div class="aaRow aaRowColumnHeaders aaFontLabel aaFontBold">
             <div class="aaRowOps aaFontLabel aaHidden">
-              <button type="button" class="aaBtn">
-                <au-icon-nav-left></au-icon-nav-left>
-              </button>
-              <button type="button" class="aaBtn">
-                <au-icon-nav-left-left></au-icon-nav-left-left>
-              </button>
+              <div class="aaRadioBtn">
+                <au-icon-radio-unselected></au-icon-radio-unselected>
+              </div>
             </div>
             <div class="aaVerticalGridline" style="background-color: #999; width: 3px;"></div>
             <div class="aaRowData">
@@ -126,20 +93,30 @@
             <template repeat.for="bchg of app.selectedTran.bchgList">
               <div class="aaRow" style="border-bottom-width: 3px;"
                    mouseenter.trigger="onRowEnter($event, bchg)"
-                   mouseleave.trigger="onRowLeave($event, bchg)">
+                   mouseleave.trigger="onRowLeave($event, bchg)"
+                   click.trigger="app.selectBchg(bchg)">
                 <div class="aaRowOps aaBgColorToolbar aaFontSizeLabel">
-                  <div class="aaRowOpsOpacity ${tranView==DELETE ? 'aaHidden' : ''}">
-                    <span class="aaBtn" click.delegate="showBchgInAcct($event, bchg)">
-                      <au-icon-nav-left-left></au-icon-nav-left-left>
-                    </span>
-                    <span class="aaBtn" click.delegate="showBchgDetail($event, bchg)">
-                      <au-icon-nav-left></au-icon-nav-left>
-                    </span>
+                  <!--
+                                    <div class="aaRowOpsOpacity ${tranView==DELETE ? 'aaHidden' : ''}">
+                                      <span class="aaBtn" click.delegate="showBchgInAcct($event, bchg)">
+                                        <au-icon-nav-left-left></au-icon-nav-left-left>
+                                      </span>
+                                      <span class="aaBtn" click.delegate="showBchgDetail($event, bchg)">
+                                        <au-icon-nav-left></au-icon-nav-left>
+                                      </span>
+                                    </div>
+                  -->
+                  <div class="aaRadioBtn">
+                    <template if.bind="app.selectedBchg.id == bchg.id">
+                      <au-icon-radio-selected></au-icon-radio-selected>
+                    </template>
+                    <template if.bind="app.selectedBchg.id != bchg.id">
+                      <au-icon-radio-unselected></au-icon-radio-unselected>
+                    </template>
                   </div>
                 </div>
                 <div class="aaVerticalGridline" style="width: 3px;"></div>
-                <div class="aaRowData aaRowBgColorData
-                           ${bchg.id == app.selectedBchg.id ? 'aaMostRecentlySelectedRow' : ''}">
+                <div class="aaRowData aaRowBgColorData">
                   <template if.bind="bchg.targetAcct.parentFaeSide.id == 'Equities'">
                     <!-- blank space in change-to-asset column -->
                     <au-grid-bchg-cells-spacer></au-grid-bchg-cells-spacer>
@@ -164,13 +141,8 @@
             -->
             <div class="aaRow aaHidden" style="border-bottom-width: 3px;">
               <div class="aaRowOps aaBgColorToolbar aaFontSizeLabel">
-                <div class="aaRowOpsOpacity ${tranView==DELETE ? 'aaHidden' : ''}">
-                    <span class="aaBtn">
-                      <au-icon-nav-left-left></au-icon-nav-left-left>
-                    </span>
-                  <span class="aaBtn">
-                      <au-icon-nav-left></au-icon-nav-left>
-                    </span>
+                <div class="aaRadioBtn">
+                  <au-icon-radio-unselected></au-icon-radio-unselected>
                 </div>
               </div>
               <div class="aaVerticalGridline" style="width: 3px;"></div>
@@ -189,12 +161,9 @@
              style="border-color: transparent; background-color: transparent;">
           <div class="aaRow aaFontLabel" style="border-color: transparent; background-color: transparent;">
             <div class="aaRowOps aaFontLabel aaHidden">
-              <button type="button" class="aaBtn">
-                <au-icon-nav-left></au-icon-nav-left>
-              </button>
-              <button type="button" class="aaBtn">
-                <au-icon-nav-left-left></au-icon-nav-left-left>
-              </button>
+              <div class="aaRadioBtn">
+                <au-icon-radio-unselected></au-icon-radio-unselected>
+              </div>
             </div>
             <div class="aaVerticalGridline aaHidden" style="width: 3px;"></div>
             <div class="aaRowData">
@@ -218,21 +187,6 @@
     </template>
     <template if.bind="tranView == NEW || tranView == EDIT">
       <div class="aaPanelToolBar">
-        <div class="aaInlineBlock aaHidden">
-          <button type="button"
-                  class="aaBtn">
-            <au-icon-nav-up></au-icon-nav-up>
-          </button>
-          <button type="button"
-                  class="aaBtn">
-            <au-icon-nav-down></au-icon-nav-down>
-          </button>
-          <button type="button"
-                  class="aaBtn">
-            Transaction journal
-            <au-icon-nav-right></au-icon-nav-right>
-          </button>
-        </div>
         <span class="aaToolBarDivider">.</span>
         <template if.bind="tranView == EDIT">
           <span class="aaFontLabel aaFontBold">Editing transaction:</span>
@@ -265,10 +219,9 @@
         <div class="aaGridContainer">
           <div class="aaGridTitleBar">Account balance changes</div>
           <div class="aaPanelToolBar" style="text-align: center;">
-            <button
-              type="button"
-              class="aaBtn"
-              click.trigger="app.viewmodelPopupBchgMover.open()">
+            <button type="button"
+                    class="aaBtn"
+                    click.trigger="app.viewmodelPopupBchgMover.open()">
               Move rows
               <au-text-ellipsis></au-text-ellipsis>
             </button>
@@ -307,8 +260,7 @@
                   </div>
                 </div>
                 <div class="aaVerticalGridline" style="width: 3px;"></div>
-                <div class="aaRowData aaRowBgColorData
-                           ${bchg.id == app.selectedBchg.id ? 'aaMostRecentlySelectedRow' : ''}">
+                <div class="aaRowData aaRowBgColorData">
                   <!-- spacer if equities side -->
                   <template if.bind="bchg.targetAcct.parentFaeSide.id == 'Equities'">
                     <!-- blank space in change-to-asset column -->

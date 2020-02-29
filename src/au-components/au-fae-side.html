@@ -4,11 +4,9 @@
   <require from="au-views/au-icon-row-mover.html"></require>
   <require from="au-views/au-icon-new.html"></require>
   <require from="au-views/au-icon-delete.html"></require>
+  <require from="au-views/au-icon-radio-unselected.html"></require>
+  <require from="au-views/au-icon-radio-selected.html"></require>
   <require from="au-views/au-text-ellipsis.html"></require>
-  <!--
-    <require from="au-views/au-vertical-gridline.html"></require>
-    <require from="au-views/au-vertical-gridline-spacer.html"></require>
-  -->
   <require from="au-converters/au-currency-converter"></require>
   <require from="au-converters/au-equation-side-converter"></require>
   <require from="au-components/au-popup-acct-mover"></require>
@@ -22,27 +20,25 @@
       accounts
     </div>
     <div class="aaPanelToolBar" element.ref="popupTop">
-      <button
-        type="button"
-        class="aaBtn"
-        click.trigger="onEditRows($event)">
+      <button type="button"
+              class="aaBtn"
+              click.trigger="onEditRows($event)">
         <au-icon-edit></au-icon-edit>
         Edit rows
         <au-text-ellipsis></au-text-ellipsis>
       </button>
-      <button
-        type="button"
-        class="aaBtn"
-        click.trigger="app.viewmodelPopupAcctMover.open(popupTop, popupLeft, faeSide)">
+      <button type="button"
+              class="aaBtn"
+              click.trigger="app.viewmodelPopupAcctMover.open(popupTop, popupLeft, faeSide)">
         <au-icon-row-mover></au-icon-row-mover>
         Move rows...
       </button>
     </div>
     <div class="aaRow aaRowColumnHeaders aaFontLabel aaFontBold">
       <div class="aaRowOps aaHidden">
-        <button type="button" class="aaBtn">
-          <au-icon-nav-right></au-icon-nav-right>
-        </button>
+        <div class="aaRadioBtn">
+            <au-icon-radio-unselected></au-icon-radio-unselected>
+        </div>
       </div>
       <div class="aaVerticalGridline" style="background-color: #999;" element.ref="popupLeft"></div>
       <au-grid-acct-cells-heading></au-grid-acct-cells-heading>
@@ -52,18 +48,22 @@
         <div id="${listItem.id}"
              class="aaRow"
              mouseenter.trigger="onRowEnter($event, listItem)"
-             mouseleave.trigger="onRowLeave($event, listItem)">
+             mouseleave.trigger="onRowLeave($event, listItem)"
+             click.trigger="app.selectAcct(listItem)">
           <template if.bind="listItem.isAcct()">
             <div class="aaRowOps aaBgColorToolbar">
-              <div class="aaRowOpsOpacity">
-                <button type="button" class="aaBtn" click.delegate="onGoAcct($event, listItem)">
-                  <au-icon-nav-right></au-icon-nav-right>
-                </button>
+              <div class="aaRadioBtn">
+                <template if.bind="app.selectedAcct.id == listItem.id">
+                  <au-icon-radio-selected></au-icon-radio-selected>
+                </template>
+                <template if.bind="app.selectedAcct.id != listItem.id">
+                  <au-icon-radio-unselected></au-icon-radio-unselected>
+                </template>
               </div>
             </div>
             <div class="aaVerticalGridline"></div>
             <div
-              class="aaRowData aaRowBgColorData ${listItem.id == app.selectedAcct.id ? 'aaMostRecentlySelectedRow' : ''}">
+              class="aaRowData aaRowBgColorData">
               <span class="aaCell aaCellAcctTitle">${listItem.title}</span>
               <div class="aaVerticalGridline"></div>
               <span
@@ -79,7 +79,7 @@
             </div>
             <div class="aaVerticalGridline"></div>
             <div
-              class="aaRowData aaRowBgColorData ${listItem.id == app.selectedAcct.id ? 'aaMostRecentlySelectedRow' : ''}">
+              class="aaRowData aaRowBgColorData">
               <span class="aaCell aaCellAnnoTitle">${listItem.annoText}</span>
               <div class="aaVerticalGridline"></div>
               <span class="aaCell aaCellBchgBal"></span>

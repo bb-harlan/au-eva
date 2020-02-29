@@ -5,6 +5,8 @@
   <require from="au-views/au-icon-nav-right.html"></require>
   <require from="au-views/au-icon-nav-right-right.html"></require>
   <require from="au-views/au-icon-edit.html"></require>
+  <require from="au-views/au-icon-radio-unselected.html"></require>
+  <require from="au-views/au-icon-radio-selected.html"></require>
   <require from="au-views/au-vertical-gridline.html"></require>
   <require from="au-converters/au-currency-converter"></require>
   <require from="au-converters/au-equation-side-converter"></require>
@@ -12,12 +14,6 @@
   <div class="aaPanel aaPanelBoxShadow">
     <div class="aaPanelHeader aaPanelHeaderModule">${app.selectedAcct.isAcct() ? 'Account' : 'Annotation'}</div>
     <div class="aaPanelToolBar" if.bind="!app.isEditing">
-      <button type="button"
-              class="aaBtn"
-              click.trigger="onGoFae($event)">
-        <au-icon-nav-left></au-icon-nav-left>
-        Assets = Equities
-      </button>
       <button type="button"
               class="aaBtn"
               click.trigger="onGoUp($event)">
@@ -100,12 +96,9 @@
         <div class="aaGridTitleBar">Balance changes</div>
         <div class="aaRow aaRowColumnHeaders aaFontLabel aaFontBold">
           <div class="aaRowOps aaFontLabel aaHidden">
-            <button type="button" class="aaBtn">
-              <au-icon-nav-right></au-icon-nav-right>
-            </button>
-            <button type="button" class="aaBtn">
-              <au-icon-nav-right-right></au-icon-nav-right-right>
-            </button>
+            <div class="aaRadioBtn">
+                <au-icon-radio-unselected></au-icon-radio-unselected>
+            </div>
           </div>
           <div class="aaVerticalGridline" style="background-color: #fff"></div>
           <div class="aaRowData">
@@ -124,8 +117,10 @@
             <div class="aaRow aaRowBgColorToolbar"
                  id="${bchg.id}"
                  mouseenter.trigger="onRowEnter($event, bchg)"
-                 mouseleave.trigger="onRowLeave($event, bchg)">
+                 mouseleave.trigger="onRowLeave($event, bchg)"
+                 click.trigger="app.selectBchg(bchg)">
               <div class="aaRowOps aaBgColorToolbar aaFontSizeLabel">
+<!--
                 <div class="aaRowOpsOpacity">
                   <button type="button" class="aaBtn" click.delegate="showBchgDetail($event, bchg)">
                     <au-icon-nav-right></au-icon-nav-right>
@@ -134,10 +129,19 @@
                     <au-icon-nav-right-right></au-icon-nav-right-right>
                   </button>
                 </div>
+-->
+                <div class="aaRadioBtn">
+                  <template if.bind="app.selectedBchg.id == bchg.id">
+                    <au-icon-radio-selected></au-icon-radio-selected>
+                  </template>
+                  <template if.bind="app.selectedBchg.id != bchg.id">
+                    <au-icon-radio-unselected></au-icon-radio-unselected>
+                  </template>
+                </div>
               </div>
               <div class="aaVerticalGridline"></div>
               <div
-                class="aaRowData aaRowBgColorData ${bchg.id == app.selectedBchg.id ? 'aaMostRecentlySelectedRow' : ''}">
+                class="aaRowData aaRowBgColorData">
                 <div class="aaCell aaFontSizeData aaCellTranDate">${bchg.sourceTran.date}</div>
                 <div class="aaVerticalGridline"></div>
                 <div class="aaCell aaFontSizeData aaCellBchgDesc">${bchg.desc}</div>
@@ -155,15 +159,9 @@
           so as to display the colmn headings row properly..
           -->
           <div class="aaRow aaHidden">
-            <div class="aaRowOps aaBgColorToolbar aaFontSizeLabel">
-              <div class="aaRowOpsOpacity">
-                <button type="button" class="aaBtn">
-                  <au-icon-nav-right></au-icon-nav-right>
-                </button>
-                <button type="button" class="aaBtn aaBtnInRowOps">
-                  <au-icon-nav-right-right></au-icon-nav-right-right>
-                </button>
-              </div>
+            <div class="aaRadioBtn">
+              <au-icon-radio-unselected></au-icon-radio-unselected>
+            </div>
             </div>
             <div class="aaVerticalGridline"></div>
             <div class="aaCell aaFontData aaCellTranDate"></div>
@@ -175,8 +173,8 @@
             <div class="aaCell aaFontData aaCellBchgBal"></div>
             <div class="aaVerticalGridline"></div>
           </div>
-        </div>
         <div class="aaGridFooterBar"></div>
+        </div>
       </div>
     </div>
   </div>
