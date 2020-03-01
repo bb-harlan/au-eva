@@ -118,18 +118,9 @@
                  id="${bchg.id}"
                  mouseenter.trigger="onRowEnter($event, bchg)"
                  mouseleave.trigger="onRowLeave($event, bchg)"
-                 click.trigger="app.selectBchg(bchg)">
+                 click.trigger="app.selectBchg(bchg)"
+                 dblclick.trigger="app.selectAcctBchgGoTran(bchg)">
               <div class="aaRowOps aaBgColorToolbar aaFontSizeLabel">
-<!--
-                <div class="aaRowOpsOpacity">
-                  <button type="button" class="aaBtn" click.delegate="showBchgDetail($event, bchg)">
-                    <au-icon-nav-right></au-icon-nav-right>
-                  </button>
-                  <button type="button" class="aaBtn aaBtnInRowOps" click.delegate="showBchgInTran($event, bchg)">
-                    <au-icon-nav-right-right></au-icon-nav-right-right>
-                  </button>
-                </div>
--->
                 <div class="aaRadioBtn">
                   <template if.bind="app.selectedBchg.id == bchg.id">
                     <au-icon-radio-selected></au-icon-radio-selected>
@@ -156,7 +147,7 @@
           <!--
           The purpose of having the following invisible end-of-list row
           is to provide an invisible horizontal spacer if acct.bchgList is empty
-          so as to display the colmn headings row properly..
+          so as to display the column headings row properly..
           -->
           <div class="aaRow aaHidden">
             <div class="aaRadioBtn">

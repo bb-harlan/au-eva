@@ -64,12 +64,6 @@ export class AuFaeSide {
     }
   }
 
-  onGoAcct(event, listItem) {
-    this.app.selectedBchg = null;
-    this.app.selectedAcct = listItem;
-    this.app.selectedModule = this.app.MODULE_ACCT;
-  }
-
   onEditRows(event) {
     alert('Not yet implemented.')
   }

@@ -94,18 +94,9 @@
               <div class="aaRow" style="border-bottom-width: 3px;"
                    mouseenter.trigger="onRowEnter($event, bchg)"
                    mouseleave.trigger="onRowLeave($event, bchg)"
-                   click.trigger="app.selectBchg(bchg)">
+                   click.trigger="app.selectBchg(bchg)"
+                   dblclick.trigger="app.selectTranBchgGoAcct(bchg)">
                 <div class="aaRowOps aaBgColorToolbar aaFontSizeLabel">
-                  <!--
-                                    <div class="aaRowOpsOpacity ${tranView==DELETE ? 'aaHidden' : ''}">
-                                      <span class="aaBtn" click.delegate="showBchgInAcct($event, bchg)">
-                                        <au-icon-nav-left-left></au-icon-nav-left-left>
-                                      </span>
-                                      <span class="aaBtn" click.delegate="showBchgDetail($event, bchg)">
-                                        <au-icon-nav-left></au-icon-nav-left>
-                                      </span>
-                                    </div>
-                  -->
                   <div class="aaRadioBtn">
                     <template if.bind="app.selectedBchg.id == bchg.id">
                       <au-icon-radio-selected></au-icon-radio-selected>
@@ -134,10 +125,9 @@
               </div>
             </template>
             <!--
-            End of list row
-            (In case no rows in the list, this hidden end-of-row list is needed to
-            take as much horizontal space as of there where some rows to make the
-            grid column heading to look right.)
+            The purpose of having the following invisible end-of-list row
+            is to provide an invisible horizontal spacer if tran.bchgList is empty
+            so as to display the column headings row properly..
             -->
             <div class="aaRow aaHidden" style="border-bottom-width: 3px;">
               <div class="aaRowOps aaBgColorToolbar aaFontSizeLabel">

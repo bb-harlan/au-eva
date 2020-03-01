@@ -33,17 +33,10 @@
                  style="border-bottom-width: 1.5pc;"
                  mouseenter.trigger="onRowEnter($event)"
                  mouseleave.trigger="onRowLeave($event)"
-                 click.trigger="app.selectTran(tran)">
+                 click.trigger="app.selectTran(tran)"
+                 dblclick.trigger="app.selectJrnlTranGoTran(tran)">
               <div class="aaRowOps aaBgColorToolbar aaFontSizeLabel"
                    style="border-bottom: 3px solid #ccc;">
-                <!--
-                                <div class="aaRowOpsOpacity">
-                                    <span class="aaBtn"
-                                          click.delegate="onGoTran($event, tran)">
-                                      <au-icon-nav-left></au-icon-nav-left>
-                                    </span>
-                                </div>
-                -->
                 <div class="aaRadioBtn">
                   <template if.bind="app.selectedTran.id == tran.id">
                     <au-icon-radio-selected></au-icon-radio-selected>

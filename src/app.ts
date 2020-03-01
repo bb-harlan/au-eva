@@ -25,7 +25,7 @@ export class App {
     // return String.fromCharCode(0xf111); // FontAwesome fa-circle
     return "&#xf111;" // FontAwesome fa-circle
   }
-   get NAV_RIGHT_CHAR() {
+  get NAV_RIGHT_CHAR() {
     return String.fromCharCode(0xf054); // FontAwesome
   }
   // remove following when I have finished abandoning it
@@ -106,13 +106,35 @@ export class App {
       this.selectedAcct = listItem;
     }
   }
+  selectSideAcctGoAcct(listItem): void {
+    if (listItem.isAcct()) {
+      this.selectedAcct = listItem;
+      this.selectedModule = this.MODULE_ACCT;
+    }
+  }
   selectBchg(bchg): void {
     this.selectedBchg = bchg;
     this.selectedAcct = bchg.targetAcct;
     this.selectedTran = bchg.sourceTran;
   }
+  selectAcctBchgGoTran(bchg): void {
+    this.selectedBchg = bchg;
+    this.selectedAcct = bchg.targetAcct;
+    this.selectedTran = bchg.sourceTran;
+    this.selectedModule = this.MODULE_TRAN;
+  }
+  selectTranBchgGoAcct(bchg): void {
+    this.selectedBchg = bchg;
+    this.selectedAcct = bchg.targetAcct;
+    this.selectedTran = bchg.sourceTran;
+    this.selectedModule = this.MODULE_ACCT;
+  }
   selectTran(tran): void {
     this.selectedTran = tran;
+  }
+  selectJrnlTranGoTran(tran): void {
+    this.selectedTran = tran;
+    this.selectedModule = this.MODULE_TRAN;
   }
   goFaeModule(event) {
     // this.selectedBchg = null;

@@ -26,7 +26,6 @@
       font-family: sans-serif;
       font-size: small;
     }
-
     .aaNavMapHeader {
       display: inline-flex;
       flex-direction: row;
@@ -34,35 +33,28 @@
       letter-spacing: 2px;
       font-weight: bold;
     }
-
     .aaNavMapBody {
       display: inline-flex;
       flex-direction: row;
       align-items: flex-start;
     }
-
     .aaNavModuleColumn {
       display: inline-flex;
       flex-direction: column;
       align-items: flex-start;
-      /*margin: 1px;*/
-      /*padding: 2px;*/
     }
-
     .aaNavGutterColumn {
       display: inline-flex;
       flex-direction: column;
       align-items: flex-start;
       width: 10px;
     }
-
     .aaNavCell {
       display: inline-flex;
       flex-direction: row;
       align-items: center;
       height: 25px;
     }
-
     .aaNavModule {
       /*margin: 1px 3px;*/
       padding-left: 5px;
@@ -70,26 +62,10 @@
       border: 1px solid black;
       background-color: #EEEEEE;
     }
-
-/*
     .aaNavModuleSelected {
-      color: #fff;
-      background-color: #6D99C5;
-      border-color: #fff;
-      outline: 2px solid #6D99C5;
-    }
-*/
-    .aaNavModuleSelected {
-      /*border-style: none;*/
       -webkit-box-shadow: 0px 0px 3px 1px #6d99c5;
       -moz-box-shadow: 0px 0px 3px 1px #6d99c5;
       box-shadow: 0px 0px 3px 1px #6D99C5;
-    }
-
-    .aaNavOp {
-      /*margin: 1px 3px;*/
-      /*border: 1px dotted black;*/
-      visibility: hidden;
     }
   </style>
   <div class="aaNavigator">
@@ -124,7 +100,7 @@
           <template if.bind="selectedModule != MODULE_ACCT">
             <template if.bind="selectedAcct" )>
               <au-icon-map-marker-candidate></au-icon-map-marker-candidate>
-              <button type="button" click.trigger="goAcctModule()">
+              <button element.ref="goAcctBtn" type="button" click.trigger="goAcctModule()">
                 Account
               </button>
             </template>

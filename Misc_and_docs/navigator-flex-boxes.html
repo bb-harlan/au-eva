@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Navigator Flexboxes</title>
+</head>
+<body>
+<style>
+  .aaHidden {
+    visibility: hidden;
+  }
+  .aaNavigator {
+    display: inline-flex;
+    flex-direction: row;
+    align-items: flex-start;
+    padding: 5px;
+    border: 1px solid black;
+    font-family: sans-serif;
+    font-size: small;
+  }
+  .aaNavModuleColumn {
+    display: inline-flex;
+    flex-direction: column;
+    align-items: flex-start;
+    /*margin: 1px;*/
+    /*padding: 2px;*/
+  }
+  .aaNavOpsColumn {
+    display: inline-flex;
+    flex-direction: column;
+    align-items: flex-start;
+    /*margin: 1px;*/
+    /*padding: 2px;*/
+  }
+  .aaNavCell {
+    display: inline-flex;
+    flex-direction: column;
+    align-items: flex-start;
+    /*background-color: lightblue;*/
+    margin: 1px;
+    padding-top: 2px;
+    padding-bottom: 2px;
+    border: 1px solid transparent;
+  }
+  .aaNavModule {
+    margin: 1px 3px;
+    padding-left: 5px;
+    padding-right: 5px;
+    border: 1px solid black;
+  }
+  .aaNavOp {
+    margin: 1px 3px;
+    border: 1px dotted black;
+  }
+</style>
+<div class="aaNavigator">
+  <div class="aaNavModuleColumn">
+    <!-- row #1 -->
+    <div class="aaNavCell aaNavModule">
+      Assets = Equities
+    </div>
+  </div>
+  <div class="aaNavOpsColumn">
+    <div class="aaNavCell aaNavOp">
+      &lt;
+    </div>
+    <div class="aaNavCell aaNavOp">
+      &gt;
+    </div>
+  </div>
+  <div class="aaNavModuleColumn">
+    <div class="aaNavCell">
+      &nbsp;
+    </div>
+    <div class="aaNavCell aaNavModule">
+      Account
+    </div>
+  </div>
+  <div class="aaNavOpsColumn">
+    <div class="aaNavCell aaNavOp aaHidden">
+      x
+    </div>
+    <div class="aaNavCell aaNavOp">
+      &lt;
+    </div>
+    <div class="aaNavCell aaNavOp">
+      &gt;
+    </div>
+  </div>
+  <div class="aaNavModuleColumn">
+    <div class="aaNavCell aaHidden">
+      x
+    </div>
+    <div class="aaNavCell aaHidden">
+      x
+    </div>
+    <div class="aaNavCell aaNavModule">
+      Account balance change
+    </div>
+  </div>
+  <div class="aaNavOpsColumn">
+    <div class="aaNavCell aaNavOp aaHidden">
+      x
+    </div>
+    <div class="aaNavCell aaNavOp">
+      &gt;
+    </div>
+    <div class="aaNavCell aaNavOp">
+      &lt;
+    </div>
+  </div>
+  <div class="aaNavModuleColumn">
+    <div class="aaNavCell">
+      &nbsp;
+    </div>
+    <div class="aaNavCell aaNavModule">
+      Transaction
+    </div>
+  </div>
+  <div class="aaNavOpsColumn">
+    <div class="aaNavCell aaNavOp">
+      &gt;
+    </div>
+    <div class="aaNavCell aaNavOp">
+      &lt;
+    </div>
+  </div>
+  <div class="aaNavModuleColumn">
+    <!-- row #1 -->
+    <div class="aaNavCell aaNavModule">
+      Transaction journal
+    </div>
+  </div>
+
+</div>
+
+</body>
+</html>
