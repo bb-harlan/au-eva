@@ -10,7 +10,6 @@
   <require from="au-converters/au-currency-converter"></require>
   <require from="au-converters/au-equation-side-converter"></require>
   <require from="au-components/au-popup-acct-mover"></require>
-  <require from="au-views/au-grid-acct-cells-heading.html"></require>
 
   <h1 css="text-align: ${faeSide.id == 'Assets' ? 'right' : 'left'};">
     ${faeSide.id}
@@ -40,8 +39,13 @@
             <au-icon-radio-unselected></au-icon-radio-unselected>
         </div>
       </div>
-      <div class="aaVerticalGridline" style="background-color: #999;" element.ref="popupLeft"></div>
-      <au-grid-acct-cells-heading></au-grid-acct-cells-heading>
+      <div class="aaVerticalGridline" style="background-color: #fff;" element.ref="popupLeft"></div>
+      <div class="aaRowData">
+        <div class="aaCell aaCellAcctTitle">Title</div>
+        <div class="aaVerticalGridline" style="background-color: #fff;"></div>
+        <div class="aaCell aaCellBchgBal">Balance</div>
+        <div class="aaVerticalGridline" style="background-color: #fff;"></div>
+      </div>
     </div>
     <div class="aaGridScrollableRows">
       <template repeat.for="listItem of faeSide.acctList">
@@ -67,8 +71,7 @@
               class="aaRowData aaRowBgColorData">
               <span class="aaCell aaCellAcctTitle">${listItem.title}</span>
               <div class="aaVerticalGridline"></div>
-              <span
-                class="aaCell aaCellBchgBal">${listItem.endingBalance | auCurrencyConverter}</span>
+              <span class="aaCell aaCellBchgBal">${listItem.endingBalance | auCurrencyConverter}</span>
             </div>
             <div class="aaVerticalGridline"></div>
           </template>

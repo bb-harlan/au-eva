@@ -1,6 +1,5 @@
 
 <template bindable="isBlank, acctTitle, bchgDesc, bchgAmt, autoBalanceItem, gridlineWidth, gridlineColor">
-  <require from="au-views/au-vertical-gridline.html"></require>
   <div css="display: inline-block; border-bottom: 0px solid ${gridlineColor};">
     <template if.bind="!isBlank">
       <template if.bind="!app.isEditing">

@@ -1,6 +1,5 @@
 <template>
   <require from="au-views/au-icon-nav-left.html"></require>
-  <require from="au-views/au-vertical-gridline.html"></require>
   <require from="au-views/au-grid-bchg-cells-spacer.html"></require>
   <require from="au-views/au-icon-radio-unselected.html"></require>
   <require from="au-views/au-icon-radio-selected.html"></require>
@@ -18,13 +17,19 @@
               <au-icon-radio-unselected></au-icon-radio-unselected>
             </div>
           </div>
-          <div class="aaVerticalGridline" style="background-color: #999; width: 3px;"></div>
+          <div class="aaVerticalGridlineSpacer" style="width: 2px;"></div>
+          <div class="aaVerticalGridline" style="background-color: #fff;"></div>
+          <div class="aaVerticalGridlineSpacer" style="width: 2px;"></div>
           <div class="aaRowData">
             <au-grid-bchg-cells-heading fae-side.one-time="'asset'"></au-grid-bchg-cells-heading>
-            <div class="aaVerticalGridline" style="background-color: #999; width: 3px;"></div>
+            <div class="aaVerticalGridlineSpacer" style="width: 2px;"></div>
+            <div class="aaVerticalGridline" style="background-color: #fff;"></div>
+            <div class="aaVerticalGridlineSpacer" style="width: 2px;"></div>
             <au-grid-bchg-cells-heading fae-side.one-time="'equity'"></au-grid-bchg-cells-heading>
           </div>
-          <div class="aaVerticalGridline" style="background-color: #999; width: 3px;"></div>
+          <div class="aaVerticalGridlineSpacer" style="width: 2px;"></div>
+          <div class="aaVerticalGridline" style="background-color: #fff;"></div>
+          <div class="aaVerticalGridlineSpacer" style="width: 2px;"></div>
         </div>
         <div class="aaGridScrollableRows" style="height: 33pc;" id="jrnlGridBodyContainer">
           <template repeat.for="tran of app.data.jrnl.tranList">

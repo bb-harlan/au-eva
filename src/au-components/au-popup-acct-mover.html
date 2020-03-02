@@ -1,8 +1,5 @@
 <template>
   <require from="au-views/au-icon-row-mover.html"></require>
-  <require from="au-views/au-vertical-gridline.html"></require>
-  <require from="au-views/au-vertical-gridline-spacer.html"></require>
-  <require from="au-views/au-grid-acct-cells-heading.html"></require>
   <require from="au-converters/au-currency-converter"></require>
   <require from="au-converters/au-equation-side-converter"></require>
 
@@ -19,8 +16,12 @@
         </div>
       </div>
       <div class="aaRow aaRowColumnHeaders aaFontLabel aaFontBold">
-        <div class="aaVerticalGridline" style="background-color: #999;"></div>
-        <au-grid-acct-cells-heading></au-grid-acct-cells-heading>
+        <div class="aaRowData">
+          <div class="aaCell aaCellAcctTitle">Title</div>
+          <div class="aaVerticalGridline" style="background-color: #fff;"></div>
+          <div class="aaCell aaCellBchgBal">Balance</div>
+          <div class="aaVerticalGridline" style="background-color: #fff;"></div>
+        </div>
       </div>
       <div class="aaGridScrollableRows"
            element.ref="moverGridRows"
