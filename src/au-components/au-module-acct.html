@@ -11,7 +11,7 @@
   <require from="au-converters/au-equation-side-converter"></require>
 
   <div class="aaPanel aaPanelBoxShadow">
-    <div class="aaPanelHeader aaPanelHeaderModule">${app.selectedAcct.isAcct() ? 'Account' : 'Annotation'}</div>
+    <div class="aaPanelHeader aaPanelHeaderModule">Account</div>
     <div class="aaPanelToolBar" if.bind="!app.isEditing">
       <button type="button"
               class="aaBtn"
@@ -96,7 +96,7 @@
         <div class="aaRow aaRowColumnHeaders aaFontLabel aaFontBold">
           <div class="aaRowOps aaFontLabel aaHidden">
             <div class="aaRadioBtn">
-                <au-icon-radio-unselected></au-icon-radio-unselected>
+              <au-icon-radio-unselected></au-icon-radio-unselected>
             </div>
           </div>
           <div class="aaVerticalGridline" style="background-color: #fff"></div>
@@ -130,8 +130,7 @@
                 </div>
               </div>
               <div class="aaVerticalGridline"></div>
-              <div
-                class="aaRowData aaRowBgColorData">
+              <div class="aaRowData aaRowBgColorData">
                 <div class="aaCell aaFontSizeData aaCellTranDate">${bchg.sourceTran.date}</div>
                 <div class="aaVerticalGridline"></div>
                 <div class="aaCell aaFontSizeData aaCellBchgDesc">${bchg.desc}</div>
@@ -149,22 +148,25 @@
           so as to display the column headings row properly..
           -->
           <div class="aaRow aaHidden">
-            <div class="aaRadioBtn">
-              <au-icon-radio-unselected></au-icon-radio-unselected>
+            <div class="aaRowOps aaBgColorToolbar aaFontSizeLabel">
+              <div class="aaRadioBtn">
+                  <au-icon-radio-unselected></au-icon-radio-unselected>
+              </div>
             </div>
+            <div class="aaVerticalGridline"></div>
+            <div class="aaRowData aaRowBgColorData">
+              <div class="aaCell aaFontSizeData aaCellTranDate"></div>
+              <div class="aaVerticalGridline"></div>
+              <div class="aaCell aaFontSizeData aaCellBchgDesc"></div>
+              <div class="aaVerticalGridline"></div>
+              <div class="aaCell aaFontSizeData aaCellBchgAmt"></div>
+              <div class="aaVerticalGridline"></div>
+              <div class="aaCell aaFontSizeData aaCellBchgBal"></div>
             </div>
-            <div class="aaVerticalGridline"></div>
-            <div class="aaCell aaFontData aaCellTranDate"></div>
-            <div class="aaVerticalGridline"></div>
-            <div class="aaCell aaFontData aaCellBchgDesc"></div>
-            <div class="aaVerticalGridline"></div>
-            <div class="aaCell aaFontData aaCellBchgAmt"></div>
-            <div class="aaVerticalGridline"></div>
-            <div class="aaCell aaFontData aaCellBchgBal"></div>
             <div class="aaVerticalGridline"></div>
           </div>
-        <div class="aaGridFooterBar"></div>
         </div>
+        <div class="aaGridFooterBar"></div>
       </div>
     </div>
   </div>

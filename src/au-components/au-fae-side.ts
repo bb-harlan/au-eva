@@ -42,7 +42,6 @@ export class AuFaeSide {
     this.app = app;
     this.auModuleFae = auModuleFae;
   }
-
   onRowEnter(event, listItem) {
     event.target.children[0].children[0].classList.toggle('aaRowOpsHover', true);
     event.target.children[2].classList.toggle('aaRowDataHover', true);

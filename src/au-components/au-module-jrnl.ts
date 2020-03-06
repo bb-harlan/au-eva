@@ -31,8 +31,10 @@ export class AuModuleJrnl {
     this.app.selectedTran = tran;
     this.app.selectedModule = this.app.MODULE_TRAN;
   }
-  onNewTran(event) {
-    alert('"New transaction" dialog not yet implemented.');
+  tranNew(event) {
+    this.app.invokingModule = this.app.MODULE_JRNL;
+    this.app.selectedModule = this.app.MODULE_TRAN;
+    this.app.viewmodelModuleTran.tranNew();
   }
 
 }

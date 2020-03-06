@@ -1,10 +1,17 @@
+import {TaskQueue, inject } from 'aurelia-framework';
 import {Data} from "app-data/data";
 import {Acct} from 'app-data/models/acct';
 import {FaeSide} from 'app-data/models/fae-side';
 import {Tran} from 'app-data/models/tran';
 import {Bchg} from 'app-data/models/bchg';
 
+@inject(TaskQueue)
 export class App {
+  taskQueue: TaskQueue;
+
+  constructor(TaskQueue) {
+    this.taskQueue = TaskQueue;
+  }
 
   get MODULE_FAE() {
     return "fae";
@@ -57,6 +64,7 @@ export class App {
    *=====================================================
    */
   selectedModule = this.MODULE_FAE;
+  invokingModule = null;
   // remove following when I have finished abandoning it
   selectedModuleMode = this.MODULE_MODE_NAVIGATING;
 
@@ -79,27 +87,8 @@ export class App {
   data = new Data();
 
   bind() {
-    // this.data.generateTestData();
-    this.data.generateExample1Data();
-  }
-
-  onFaeModule(event) {
-    this.selectedAcct = null;
-    this.selectedBchg = null;
-    this.selectedTran = null;
-    this.selectedModule = this.MODULE_FAE;
-    this.selectedFaeSide = null;
-  }
-
-  onJrnlModule(event) {
-    this.selectedAcct = null;
-    this.selectedBchg = null;
-    this.selectedTran = null;
-    this.selectedModule = this.MODULE_JRNL;
-    this.selectedFaeSide = null;
-  }
-
-  onMenuClick(event, listItem) {
+    this.data.generateTestData();
+    // this.data.generateExample1Data();
   }
   selectAcct(listItem): void {
     if (listItem.isAcct()) {
@@ -136,10 +125,18 @@ export class App {
     this.selectedTran = tran;
     this.selectedModule = this.MODULE_TRAN;
   }
-  goFaeModule(event) {
+  goFaeModule() {
     // this.selectedBchg = null;
     // this.selectedTran = null;
-    this.selectedModule = this.MODULE_FAE;
+      this.selectedModule = this.MODULE_FAE;
+      if (this.selectedAcct) {
+        this.gridScrollerLink.setAttribute("href", `#${this.selectedAcct.id}`);
+        this.gridScrollerLink.click();
+      }
+  }
+  scrollFaeModule() {
+    this.gridScrollerLink.click();
+    console.log("clicked scroller")
   }
   goAcctModule(acct) {
     // this.selectedAcct = null;
@@ -173,12 +170,15 @@ export class App {
     }
     this.selectedModule = this.MODULE_TRAN;
   }
-  goJrnlModule(event) {
+  goJrnlModule() {
     // this.selectedBchg = null;
     // this.selectedAcct = null;
     this.selectedModule = this.MODULE_JRNL;
+    if (this.selectedTran) {
+      this.gridScrollerLink.setAttribute("href", `#${this.selectedTran.id}`);
+      this.gridScrollerLink.click();
+    }
   }
-
 }
 
 

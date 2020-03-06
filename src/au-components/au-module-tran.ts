@@ -119,7 +119,7 @@ export class AuModuleTran {
       /*intraDateSorter*/ this.app.data.nextSorter);
     this.tranView = this.NEW;
   }
-  tranNewDone(evenet) {
+  tranNewDone(event) {
     if (this.app.candidateTran.totalChangesAssets != this.app.candidateTran.totalChangesEquities) {
       alert("Transaction is out of balance.")
       return;
@@ -129,10 +129,18 @@ export class AuModuleTran {
     this.app.selectedTran.parentJrnl.refresh();
     this.app.candidateTran = null;
     this.tranView = this.NAV;
+    if (this.app.invokingModule == this.app.MODULE_TRAN) {
+      this.app.invokingModule = null;
+      this.app.goJrnlModule;
+    }
   }
-  tranNewCancel(evenet) {
+  tranNewCancel(event) {
     this.app.candidateTran = null;
     this.tranView = this.NAV;
+    if (this.app.invokingModule) {
+      this.app.selectedModule = this.app.invokingModule;
+      this.app.invokingModule = null;
+    }
   }
   tranEdit(event) {
     this.app.candidateTran = this.app.selectedTran.clone();
@@ -165,7 +173,7 @@ export class AuModuleTran {
       this.app.selectedTran.unregister();
       this.tranView = this.NAV;
       this.app.selectedTran = null;
-      this.onGoJrnl(event);
+      this.app.goJrnlModule();
     }
     else {
       // determine which tran will replace this.app.selectedTran after

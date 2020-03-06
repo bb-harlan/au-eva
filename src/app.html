@@ -13,8 +13,9 @@
   <require from="au-views/au-icon-map-marker.html"></require>
   <require from="au-views/au-icon-map-marker-candidate.html"></require>
   <require from="au-views/au-icon-map-marker-not-yet.html"></require>
-
-  <a element.ref="gridScrollerLink" href="#" style="display: none;">#</a>
+  <a element.ref="gridScrollerLink"
+     href="#"
+     style="position: absolute; top: -10pc;">#</a>
   <style>
     .aaNavigator {
       display: inline-flex;
@@ -194,7 +195,7 @@
           <tr>
             <td class="aaNavCell">
               <div class="aaNavBtn ${selectedModule == MODULE_FAE ? 'aaNavBtnSelected' : ''}"
-                   click.trigger="onFaeModule($event)">Assets = Equities
+                   click.trigger="goFaeModule($event)">Assets = Equities
               </div>
             </td>
             <td></td>
@@ -202,7 +203,7 @@
             <td></td>
             <td class="aaNavCell">
               <div class="aaNavBtn ${selectedModule == MODULE_JRNL ? 'aaNavBtnSelected' : ''}"
-                   click.trigger="onJrnlModule($event)">Transaction journal
+                   click.trigger="goJrnlModule()">Transaction journal
               </div>
             </td>
           </tr>

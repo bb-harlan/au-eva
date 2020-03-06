@@ -1,5 +1,8 @@
 <template>
   <require from="au-views/au-icon-nav-left.html"></require>
+  <require from="au-views/au-icon-new.html"></require>
+  <require from="au-views/au-icon-edit.html"></require>
+  <require from="au-views/au-icon-delete.html"></require>
   <require from="au-views/au-grid-bchg-cells-spacer.html"></require>
   <require from="au-views/au-icon-radio-unselected.html"></require>
   <require from="au-views/au-icon-radio-selected.html"></require>
@@ -11,6 +14,31 @@
     <div class="aaPanelBody">
       <div class="aaGridContainer">
         <div class="aaGridTitleBar">Transactions</div>
+        <div class="aaPanelToolBar">
+          <div class="aaInlineFlex" style="justify-content: center;">
+            <span class="aaToolBarDivider">.</span>
+            <button type="button"
+                    class="aaBtn"
+                    click.trigger="tranNew($event)">
+              <au-icon-new></au-icon-new>
+              &nbsp;New transaction
+            </button>
+            <button type="button"
+                    class="aaBtn"
+                    click.trigger="tranEdit($event)">
+              <au-icon-edit></au-icon-edit>
+              &nbsp;Edit this transaction
+            </button>
+            <button type="button"
+                    class="aaBtn"
+                    click.trigger="tranDelete($event)">
+              <au-icon-delete></au-icon-delete>
+              &nbsp;Delete this transaction
+              <au-text-ellipsis></au-text-ellipsis>
+            </button>
+            <span class="aaToolBarDivider">.</span>
+          </div>
+        </div>
         <div class="aaRow aaRowColumnHeaders aaFontLabel aaFontBold">
           <div class="aaRowOps aaFontLabel aaHidden">
             <div class="aaRadioBtn">
