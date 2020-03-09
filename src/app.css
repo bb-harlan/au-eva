@@ -379,15 +379,10 @@ h1 {
 .aaRowColumnHeaders {
   color: #fff;
   background-color: #bbb;
-  /*
-  border-top: 3px solid #999;
-  border-bottom: 3px solid #999;
-  */
-  border-top: 1px solid #999;
-  border-bottom: 1px solid #999;
-  -webkit-box-shadow: 0px 0px 3px 1px #999 inset;
-  -moz-box-shadow: 0px 0px 3px 1px #999 inset;
-  box-shadow: 0px 0px 3px 1px #999 inset;
+  border-bottom: 1px solid #333;
+ /* -webkit-box-shadow: 0px 0px 3px 1px #666 inset;
+  -moz-box-shadow: 0px 0px 3px 1px #666 inset;
+  box-shadow: 0px 0px 3px 1px #666 inset;*/
 }
 .aaRowTotals {
   position: relative;

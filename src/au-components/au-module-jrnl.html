@@ -45,25 +45,19 @@
               <au-icon-radio-unselected></au-icon-radio-unselected>
             </div>
           </div>
-          <div class="aaVerticalGridlineSpacer" style="width: 2px;"></div>
-          <div class="aaVerticalGridline" style="background-color: #fff;"></div>
-          <div class="aaVerticalGridlineSpacer" style="width: 2px;"></div>
+          <div class="aaVerticalGridline" style="background-color: #fff; width: 3px;"></div>
           <div class="aaRowData">
             <au-grid-bchg-cells-heading fae-side.one-time="'asset'"></au-grid-bchg-cells-heading>
-            <div class="aaVerticalGridlineSpacer" style="width: 2px;"></div>
-            <div class="aaVerticalGridline" style="background-color: #fff;"></div>
-            <div class="aaVerticalGridlineSpacer" style="width: 2px;"></div>
+            <div class="aaVerticalGridline" style="background-color: #fff; width: 3px;"></div>
             <au-grid-bchg-cells-heading fae-side.one-time="'equity'"></au-grid-bchg-cells-heading>
           </div>
-          <div class="aaVerticalGridlineSpacer" style="width: 2px;"></div>
-          <div class="aaVerticalGridline" style="background-color: #fff;"></div>
-          <div class="aaVerticalGridlineSpacer" style="width: 2px;"></div>
+          <div class="aaVerticalGridline" style="background-color: #fff; width: 3px;"></div>
         </div>
         <div class="aaGridScrollableRows" style="height: 33pc;" id="jrnlGridBodyContainer">
           <template repeat.for="tran of app.data.jrnl.tranList">
             <div class="aaRow"
                  id="${tran.id}"
-                 style="border-bottom-width: 1.5pc;"
+                 style="margin-bottom: 1.5pc;"
                  mouseenter.trigger="onRowEnter($event)"
                  mouseleave.trigger="onRowLeave($event)"
                  click.trigger="app.selectTran(tran)"
@@ -81,7 +75,7 @@
               </div>
               <!--</template>-->
               <div class="aaVerticalGridline" style="width: 3px;"></div>
-              <div style="display: inline-flex; flex-direction: column; align-items: flex-start; justify-content: flex-start; padding: 3px;">
+              <div style="display: inline-flex; flex-direction: column; align-items: flex-start; justify-content: flex-start;">
                 <div class="aaRowBgColorData"
                      style="display: inline-flex; align-items: center; justify-content: center; border-bottom: 3px solid #ccc; padding: 0.4pc">
                   <div class="aaCell aaFontSizeData aaCellTranDate aaCellBorder">${tran.date}</div>
@@ -125,10 +119,16 @@
           <div class="aaRow aaHidden" style="border-bottom-width: 3px;">
             <div class="aaRowOps aaBgColorToolbar aaFontSizeLabel"
                  style="border-bottom: 3px solid #ccc;">
-              <div class="aaRowOpsOpacity">
-                    <span class="aaBtn">
-                      <au-icon-nav-left></au-icon-nav-left>
-                    </span>
+              <div class="aaRowOps aaBgColorToolbar aaFontSizeLabel"
+                   style="border-bottom: 3px solid #ccc;">
+                <div class="aaRadioBtn">
+                  <template if.bind="app.selectedTran.id == tran.id">
+                    <au-icon-radio-selected></au-icon-radio-selected>
+                  </template>
+                  <template if.bind="app.selectedTran.id != tran.id">
+                    <au-icon-radio-unselected></au-icon-radio-unselected>
+                  </template>
+                </div>
               </div>
             </div>
             <div class="aaVerticalGridline" style="width: 3px;"></div>
