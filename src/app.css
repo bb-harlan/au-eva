@@ -100,18 +100,18 @@ h1 {
   cursor: pointer;
 }
 .aaNavBtn:active {
-  -webkit-box-shadow: 0px 0px 3px 1px #6d99c5;
-  -moz-box-shadow: 0px 0px 3px 1px #6d99c5;
-  box-shadow: 0px 0px 3px 1px #6D99C5;
+  -webkit-box-shadow: 0px 0px 3px 1px #58b;
+  -moz-box-shadow: 0px 0px 3px 1px #58b;
+  box-shadow: 0px 0px 3px 1px #58b;
   background-color: #fff !important;
   cursor: pointer;
 }
 
 .aaNavBtnSelected {
   /*border-style: none;*/
-  -webkit-box-shadow: 0px 0px 3px 1px #6d99c5;
-  -moz-box-shadow: 0px 0px 3px 1px #6d99c5;
-  box-shadow: 0px 0px 3px 1px #6D99C5;
+  -webkit-box-shadow: 0px 0px 3px 1px #58b;
+  -moz-box-shadow: 0px 0px 3px 1px #58b;
+  box-shadow: 0px 0px 3px 1px #58b;
   /*background-color: #ffffee;*/
   background-color: #edf2f7 !important;
 }
@@ -140,7 +140,7 @@ h1 {
 .aaPanelHeader {
   padding: 0.25pc;
   color: #fff;
-  background-color: #6d99c5;
+  background-color: #58b;
   font-family: sans-serif, SansSerif;
   font-weight: normal;
   letter-spacing: 1px;
@@ -379,7 +379,7 @@ h1 {
 .aaRowColumnHeaders {
   color: #fff;
   background-color: #bbb;
-  border-bottom: 1px solid #333;
+  border-bottom: 1px solid #58b;
  /* -webkit-box-shadow: 0px 0px 3px 1px #666 inset;
   -moz-box-shadow: 0px 0px 3px 1px #666 inset;
   box-shadow: 0px 0px 3px 1px #666 inset;*/
@@ -493,9 +493,8 @@ h1 {
   text-decoration: underline;
 }
 .aaCellTranDate {
-  width: 7pc;
+  min-width: 7pc;
   text-align: center;
-  /*text-align: left;*/
 }
 .aaCellBchgDesc {
   width: 25pc;
@@ -524,7 +523,7 @@ h1 {
   padding: 2px;
   margin: 0 2px;
 }
-.aaTranOutOfBalance {
+.aaCellErrorIndicater {
   color: red;
   border-color: red;
   -webkit-box-shadow: 0px 0px 3px 1px red;
@@ -608,9 +607,9 @@ h1 {
 }
 .aaDragging {
   cursor: n-resize;
-  -webkit-box-shadow: 0px 0px 3px 1px #6D99C5 inset;
-  -moz-box-shadow: 0px 0px 3px 1px #6D99C5 inset;
-  box-shadow: 0 0 3px 1px #6D99C5 inset;
+  -webkit-box-shadow: 0px 0px 3px 1px #58b inset;
+  -moz-box-shadow: 0px 0px 3px 1px #58b inset;
+  box-shadow: 0 0 3px 1px #58b inset;
   /*background-color: #edf2f7 !important;*/
   background-color: #fff !important;
 }
@@ -618,7 +617,7 @@ h1 {
   pointer-events: none;
 }
 .aaMostRecentlySelectedRow {
-  -webkit-box-shadow: 0px 0px 3px 1px #6D99C5 inset;
-  -moz-box-shadow: 0px 0px 3px 1px #6D99C5 inset;
-  box-shadow: 0 0 3px 1px #6D99C5 inset;
+  -webkit-box-shadow: 0px 0px 3px 1px #58b inset;
+  -moz-box-shadow: 0px 0px 3px 1px #58b inset;
+  box-shadow: 0 0 3px 1px #58b inset;
 }

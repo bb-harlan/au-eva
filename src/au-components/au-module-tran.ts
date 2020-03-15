@@ -115,7 +115,7 @@ export class AuModuleTran {
     this.app.candidateTran = new Tran(
       /*id*/ `tran${this.app.data.nextTranId}`,
       /*parentJrnl*/ this.app.data.jrnl,
-      /*date*/ "2020/01/22",
+      /*date*/ new Date().toISOString().slice(0,10),
       /*intraDateSorter*/ this.app.data.nextSorter);
     this.tranView = this.NEW;
   }
@@ -124,6 +124,11 @@ export class AuModuleTran {
       alert("Transaction is out of balance.")
       return;
     }
+    if (this.app.candidateTran.date == "") {
+      alert("Transaction date is missing or invalid.")
+      return;
+    }
+    this.app.candidateTran.intraDateSorter = this.app.data.nextSorter;
     this.app.candidateTran.register();
     this.app.selectedTran = this.app.candidateTran;
     this.app.selectedTran.parentJrnl.refresh();
@@ -149,9 +154,17 @@ export class AuModuleTran {
   tranEditDone(event) {
     if (this.app.candidateTran.totalChangesAssets != this.app.candidateTran.totalChangesEquities) {
       alert("Transaction is out of balance.")
-      this.tranView = this.NAV;
       return;
     }
+    if (this.app.candidateTran.date == "") {
+      alert("Transaction date is missing or invalid.")
+      return;
+    }
+    if (this.app.candidateTran.date != this.app.selectedTran.date) {
+      this.app.candidateTran.intraDateSorter = this.app.data.nextSorter;
+    }
+    console.log(`tranEditDone() -  app.selectedTran.date: "${this.app.selectedTran.date}"; app.selectedTran.intraDateSorter: "${this.app.selectedTran.intraDateSorter}";`)
+    console.log(`tranEditDone() - app.candidateTran.date: "${this.app.candidateTran.date}"; app.candiateTran.intraDateSorter: "${this.app.candidateTran.intraDateSorter}";`)
     this.app.selectedTran.unregister();
     this.app.candidateTran.register();
     this.app.selectedTran = this.app.candidateTran;

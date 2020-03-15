@@ -8,140 +8,144 @@
   <require from="au-views/au-icon-radio-selected.html"></require>
   <require from="au-components/au-grid-bchg-cells"></require>
   <require from="au-components/au-grid-bchg-cells-heading"></require>
-
-  <div class="aaPanel aaPanelBoxShadow" css="${app.selectedModule == app.MODULE_JRNL ? '' : 'display: none;'}">
-    <div class="aaPanelHeader aaPanelHeaderModule">Transaction Journal</div>
-    <div class="aaPanelBody">
-      <div class="aaGridContainer">
-        <div class="aaGridTitleBar">Transactions</div>
-        <div class="aaPanelToolBar">
-          <div class="aaInlineFlex" style="justify-content: center;">
-            <span class="aaToolBarDivider">.</span>
-            <button type="button"
-                    class="aaBtn"
-                    click.trigger="tranNew($event)">
-              <au-icon-new></au-icon-new>
-              &nbsp;New transaction
-            </button>
-            <button type="button"
-                    class="aaBtn"
-                    click.trigger="tranEdit($event)">
-              <au-icon-edit></au-icon-edit>
-              &nbsp;Edit this transaction
-            </button>
-            <button type="button"
-                    class="aaBtn"
-                    click.trigger="tranDelete($event)">
-              <au-icon-delete></au-icon-delete>
-              &nbsp;Delete this transaction
-              <au-text-ellipsis></au-text-ellipsis>
-            </button>
-            <span class="aaToolBarDivider">.</span>
-          </div>
-        </div>
-        <div class="aaRow aaRowColumnHeaders aaFontLabel aaFontBold">
-          <div class="aaRowOps aaFontLabel aaHidden">
-            <div class="aaRadioBtn">
-              <au-icon-radio-unselected></au-icon-radio-unselected>
+    <div class="aaPanel aaPanelBoxShadow" css="${app.selectedModule == app.MODULE_JRNL ? '' : 'display: none;'}">
+      <div class="aaPanelHeader aaPanelHeaderModule">Transaction Journal</div>
+      <div class="aaPanelBody">
+        <div class="aaGridContainer">
+          <div class="aaGridTitleBar">Transactions</div>
+          <div class="aaPanelToolBar">
+            <div class="aaInlineFlex" style="justify-content: center;">
+              <span class="aaToolBarDivider">.</span>
+              <button type="button"
+                      class="aaBtn"
+                      click.trigger="scrollSelectedRowIntoView()">
+                &nbsp;Scroll selected row into view
+              </button>
+              <button type="button"
+                      class="aaBtn"
+                      click.trigger="tranNew($event)">
+                <au-icon-new></au-icon-new>
+                &nbsp;New transaction
+              </button>
+              <button type="button"
+                      class="aaBtn"
+                      click.trigger="tranEdit($event)">
+                <au-icon-edit></au-icon-edit>
+                &nbsp;Edit this transaction
+              </button>
+              <button type="button"
+                      class="aaBtn"
+                      click.trigger="tranDelete($event)">
+                <au-icon-delete></au-icon-delete>
+                &nbsp;Delete this transaction
+                <au-text-ellipsis></au-text-ellipsis>
+              </button>
+              <span class="aaToolBarDivider">.</span>
             </div>
           </div>
-          <div class="aaVerticalGridline" style="background-color: #fff; width: 3px;"></div>
-          <div class="aaRowData">
-            <au-grid-bchg-cells-heading fae-side.one-time="'asset'"></au-grid-bchg-cells-heading>
+          <div class="aaRow aaRowColumnHeaders aaFontLabel aaFontBold">
+            <div class="aaRowOps aaFontLabel aaHidden">
+              <div class="aaRadioBtn">
+                <au-icon-radio-unselected></au-icon-radio-unselected>
+              </div>
+            </div>
             <div class="aaVerticalGridline" style="background-color: #fff; width: 3px;"></div>
-            <au-grid-bchg-cells-heading fae-side.one-time="'equity'"></au-grid-bchg-cells-heading>
+            <div class="aaRowData">
+              <au-grid-bchg-cells-heading fae-side.one-time="'asset'"></au-grid-bchg-cells-heading>
+              <div class="aaVerticalGridline" style="background-color: #fff; width: 3px;"></div>
+              <au-grid-bchg-cells-heading fae-side.one-time="'equity'"></au-grid-bchg-cells-heading>
+            </div>
+            <div class="aaVerticalGridline" style="background-color: #fff; width: 3px;"></div>
           </div>
-          <div class="aaVerticalGridline" style="background-color: #fff; width: 3px;"></div>
-        </div>
-        <div class="aaGridScrollableRows" style="height: 33pc;" id="jrnlGridBodyContainer">
-          <template repeat.for="tran of app.data.jrnl.tranList">
-            <div class="aaRow"
-                 id="${tran.id}"
-                 style="margin-bottom: 1.5pc;"
-                 mouseenter.trigger="onRowEnter($event)"
-                 mouseleave.trigger="onRowLeave($event)"
-                 click.trigger="app.selectTran(tran)"
-                 dblclick.trigger="app.selectJrnlTranGoTran(tran)">
-              <div class="aaRowOps aaBgColorToolbar aaFontSizeLabel"
-                   style="border-bottom: 3px solid #ccc;">
-                <div class="aaRadioBtn">
-                  <template if.bind="app.selectedTran.id == tran.id">
-                    <au-icon-radio-selected></au-icon-radio-selected>
-                  </template>
-                  <template if.bind="app.selectedTran.id != tran.id">
-                    <au-icon-radio-unselected></au-icon-radio-unselected>
-                  </template>
+          <div class="aaGridScrollableRows" style="height: 33pc;" id="jrnlGridBodyContainer">
+            <template repeat.for="tran of app.data.jrnl.tranList">
+              <div class="aaRow"
+                   id="${tran.id}"
+                   style="margin-bottom: 1.5pc;"
+                   mouseenter.trigger="onRowEnter($event)"
+                   mouseleave.trigger="onRowLeave($event)"
+                   click.trigger="app.selectTran(tran)"
+                   dblclick.trigger="app.selectJrnlTranGoTran(tran)">
+                <div class="aaRowOps aaBgColorToolbar aaFontSizeLabel"
+                     style="border-bottom: 3px solid #ccc;">
+                  <div class="aaRadioBtn">
+                    <template if.bind="app.selectedTran.id == tran.id">
+                      <au-icon-radio-selected></au-icon-radio-selected>
+                    </template>
+                    <template if.bind="app.selectedTran.id != tran.id">
+                      <au-icon-radio-unselected></au-icon-radio-unselected>
+                    </template>
+                  </div>
                 </div>
-              </div>
-              <!--</template>-->
-              <div class="aaVerticalGridline" style="width: 3px;"></div>
-              <div style="display: inline-flex; flex-direction: column; align-items: flex-start; justify-content: flex-start;">
-                <div class="aaRowBgColorData"
-                     style="display: inline-flex; align-items: center; justify-content: center; border-bottom: 3px solid #ccc; padding: 0.4pc">
-                  <div class="aaCell aaFontSizeData aaCellTranDate aaCellBorder">${tran.date}</div>
-                </div>
-                <div class="aaRowBgColorData"
-                     style="display: flex; flex-direction: column; align-items: flex-start; justify-content: flex-start">
-                  <template repeat.for="bchg of tran.bchgList">
-                    <div class="aaRow" style="border-bottom-width: 3px;">
-                      <div class="aaRowData">
-                        <!-- spacer if equities side -->
-                        <template if.bind="bchg.targetAcct.parentFaeSide.id == 'Equities'">
-                          <!-- put blank space in change-to-asset column -->
-                          <au-grid-bchg-cells-spacer></au-grid-bchg-cells-spacer>
-                          <div class="aaVerticalGridline" style="width: 3px;"></div>
-                        </template>
-                        <!-- simulate data cells with spacer -->
-                        <au-grid-bchg-cells bchg.one-way="bchg"></au-grid-bchg-cells>
-                        <template if.bind="bchg.targetAcct.parentFaeSide.id == 'Assets'">
-                          <!-- put blank space in change-to-equity column -->
-                          <div class="aaVerticalGridline" style="width: 3px;"></div>
-                          <au-grid-bchg-cells-spacer></au-grid-bchg-cells-spacer>
-                        </template>
+                <!--</template>-->
+                <div class="aaVerticalGridline" style="width: 3px;"></div>
+                <div style="display: inline-flex; flex-direction: column; align-items: flex-start; justify-content: flex-start;">
+                  <div class="aaRowBgColorData"
+                       style="display: inline-flex; align-items: center; justify-content: center; border-bottom: 3px solid #ccc; padding: 0.4pc">
+                    <div class="aaCell aaFontSizeData aaCellTranDate aaCellBorder">${tran.date}</div>
+                  </div>
+                  <div class="aaRowBgColorData"
+                       style="display: flex; flex-direction: column; align-items: flex-start; justify-content: flex-start">
+                    <template repeat.for="bchg of tran.bchgList">
+                      <div class="aaRow" style="border-bottom-width: 3px;">
+                        <div class="aaRowData">
+                          <!-- spacer if equities side -->
+                          <template if.bind="bchg.targetAcct.parentFaeSide.id == 'Equities'">
+                            <!-- put blank space in change-to-asset column -->
+                            <au-grid-bchg-cells-spacer></au-grid-bchg-cells-spacer>
+                            <div class="aaVerticalGridline" style="width: 3px;"></div>
+                          </template>
+                          <!-- simulate data cells with spacer -->
+                          <au-grid-bchg-cells bchg.one-way="bchg"></au-grid-bchg-cells>
+                          <template if.bind="bchg.targetAcct.parentFaeSide.id == 'Assets'">
+                            <!-- put blank space in change-to-equity column -->
+                            <div class="aaVerticalGridline" style="width: 3px;"></div>
+                            <au-grid-bchg-cells-spacer></au-grid-bchg-cells-spacer>
+                          </template>
+                        </div>
+                        <div class="aaVerticalGridline" style="width: 3px;"></div>
                       </div>
-                      <div class="aaVerticalGridline" style="width: 3px;"></div>
-                    </div>
-                  </template>
+                    </template>
+                  </div>
                 </div>
+                <!--
+                              <div class="aaVerticalGridline"></div>
+                -->
               </div>
-              <!--
-                            <div class="aaVerticalGridline"></div>
-              -->
-            </div>
-            <!-- End of tran -->
-          </template>
-          <!--
-          End of list row
-          (In case no rows in the list, this hidden end-of-row list is needed to
-          take as much horizontal space as of there where some rows to make the
-          grid column heading to look right.)
-          -->
-          <div class="aaRow aaHidden" style="border-bottom-width: 3px;">
-            <div class="aaRowOps aaBgColorToolbar aaFontSizeLabel"
-                 style="border-bottom: 3px solid #ccc;">
+              <!-- End of tran -->
+            </template>
+            <!--
+            End of list row
+            (In case no rows in the list, this hidden end-of-row list is needed to
+            take as much horizontal space as of there where some rows to make the
+            grid column heading to look right.)
+            -->
+            <div class="aaRow aaHidden" style="border-bottom-width: 3px;">
               <div class="aaRowOps aaBgColorToolbar aaFontSizeLabel"
                    style="border-bottom: 3px solid #ccc;">
-                <div class="aaRadioBtn">
-                  <template if.bind="app.selectedTran.id == tran.id">
-                    <au-icon-radio-selected></au-icon-radio-selected>
-                  </template>
-                  <template if.bind="app.selectedTran.id != tran.id">
-                    <au-icon-radio-unselected></au-icon-radio-unselected>
-                  </template>
+                <div class="aaRowOps aaBgColorToolbar aaFontSizeLabel"
+                     style="border-bottom: 3px solid #ccc;">
+                  <div class="aaRadioBtn">
+                    <template if.bind="app.selectedTran.id == tran.id">
+                      <au-icon-radio-selected></au-icon-radio-selected>
+                    </template>
+                    <template if.bind="app.selectedTran.id != tran.id">
+                      <au-icon-radio-unselected></au-icon-radio-unselected>
+                    </template>
+                  </div>
                 </div>
               </div>
-            </div>
-            <div class="aaVerticalGridline" style="width: 3px;"></div>
-            <div class="aaRowData aaHidden">
-              <au-grid-bchg-cells-spacer></au-grid-bchg-cells-spacer>
               <div class="aaVerticalGridline" style="width: 3px;"></div>
-              <au-grid-bchg-cells-spacer></au-grid-bchg-cells-spacer>
+              <div class="aaRowData aaHidden">
+                <au-grid-bchg-cells-spacer></au-grid-bchg-cells-spacer>
+                <div class="aaVerticalGridline" style="width: 3px;"></div>
+                <au-grid-bchg-cells-spacer></au-grid-bchg-cells-spacer>
+              </div>
+              <div class="aaVerticalGridline" style="width: 3px;"></div>
             </div>
-            <div class="aaVerticalGridline" style="width: 3px;"></div>
           </div>
+          <div class="aaGridFooterBar"></div>
         </div>
-        <div class="aaGridFooterBar"></div>
       </div>
     </div>
-  </div>
 </template>

@@ -42,6 +42,22 @@ export class AuFaeSide {
     this.app = app;
     this.auModuleFae = auModuleFae;
   }
+/*
+  attached() {
+    console.log(`ATTACHED() - <au-fae-side> ${this.faeSide.id}`);
+    if (this.app.selectedAcct) {
+      this.app.gridScrollerLink.setAttribute("href", `#${this.app.selectedAcct.id}`);
+      this.app.gridScrollerLink.click();
+    }
+  }
+  detached() {
+    console.log(`DETACHED() - <au-fae-side> ${this.faeSide.id}`);
+    if (this.app.selectedAcct) {
+      this.app.gridScrollerLink.setAttribute("href", `#${this.app.selectedAcct.id}`);
+      this.app.gridScrollerLink.click();
+    }
+  }
+*/
   onRowEnter(event, listItem) {
     event.target.children[0].children[0].classList.toggle('aaRowOpsHover', true);
     event.target.children[2].classList.toggle('aaRowDataHover', true);

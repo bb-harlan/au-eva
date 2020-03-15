@@ -10,6 +10,24 @@ export class AuModuleJrnl {
   constructor(app) {
     this.app = app;
   }
+  scrollSelectedRowIntoView() {
+    if (this.app.selectedTran) {
+      console.log(this.app.selectedTran);
+      document.getElementById(this.app.selectedTran.id).scrollIntoView();
+      /*
+            this.gridScrollerLink.setAttribute("href", `#${this.selectedTran.id}`);
+            this.gridScrollerLink.click();
+      */
+    }
+  }
+  attached() {
+    console.log(`ATTACHED() - <au-module-jrnl>`);
+    if (this.app.selectedTran) {
+      this.app.gridScrollerLink.setAttribute("href", `#${this.app.selectedTrant.id}`);
+      this.app.gridScrollerLink.click();
+    }
+  }
+
   onRowEnter(event) {
     /*row ops*/
     event.target.children[0].children[0].classList.toggle('aaRowOpsHover', true);

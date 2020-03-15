@@ -86,7 +86,7 @@ export class Data {
       sourceTran = new Tran(
         /*id*/ `tran${this.nextTranId}`,
         /*parentJrnl*/ this.jrnl,
-        /*date*/ (i % 2 ? "2016/02/03" : "2016/02/20"),
+        /*date*/ (i % 2 ? "2016-02-03" : "2016-02-20"),
         /*intraDateSorter*/ this.nextSorter);
 
       randomAcct = acctList[(Math.random() * (acctList.length - 1)).toFixed(0)];
@@ -162,7 +162,7 @@ export class Data {
     sourceTran = new Tran(
       /*id*/ `tran${this.nextTranId}`,
       /*parentJrnl*/ this.jrnl,
-      /*date*/ "2018/08/01",
+      /*date*/ "2018-08-01",
       /*intraDateSorter*/ this.nextSorter);
 
     targetAcct = this.faeSideAssets.acctList[0] as Acct;
@@ -207,7 +207,7 @@ export class Data {
     sourceTran = new Tran(
       /*id*/ `tran${this.nextTranId}`,
       /*parentJrnl*/ this.jrnl,
-      /*date*/ "2018/08/05",
+      /*date*/ "2018-08-05",
       /*intraDateSorter*/ this.nextSorter);
 
     targetAcct = this.faeSideAssets.acctList[0] as Acct;

@@ -16,7 +16,7 @@
       </div>
       <!-- change amount -->
       <div class="aaCellWrapper" style="margin-left: 1pc;">
-        <div class="aaCell aaCellBorder aaCellBchgAmt ${sideTotalChanges != otherSideTotalChanges ? 'aaTranOutOfBalance' : ''}">
+        <div class="aaCell aaCellBorder aaCellBchgAmt ${sideTotalChanges != otherSideTotalChanges ? 'aaCellErrorIndicater' : ''}">
           ${sideTotalChanges | auCurrencyConverter}
         </div>
         <div class="aaCellHelper aaHidden">

@@ -22,5 +22,16 @@ export class AuModuleFae {
   deselectSide(event) {
     this.app.selectedFaeSide = null;
   }
+  attached() {
+    console.log(`ATTACHED() - <au-module-fae>`);
+    if (this.app.selectedAcct) {
+      this.app.gridScrollerLink.setAttribute("href", `#${this.app.selectedAcct.id}`);
+      this.app.gridScrollerLink.click();
+    }
+  }
+  detached() {
+    console.log(`DETACHED() - <au-module-fae>`);
+  }
+
 }
 

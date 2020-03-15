@@ -61,14 +61,13 @@
         </div>
       </template>
       <div class="aaPanelBody">
-        <table border="0" style="border-collapse: collapse;">
-          <tr>
-            <td class="aaFormItemLabel">Date:</td>
-            <td>
-              <span class="aaCell aaCellBorder aaCellTranDate">${app.selectedTran.date}</span>
-            </td>
-          </tr>
-        </table>
+        <div class="aaRow"
+             style="border-bottom-style: none;">
+          <label class="aaFormItemLabel">
+            Date:&nbsp;&nbsp;
+          </label>
+          <span class="aaCell aaCellBorder aaCellTranDate">${app.selectedTran.date}</span>
+        </div>
         <div class="aaGridContainer">
           <div class="aaGridTitleBar">Account balance changes</div>
           <div class="aaRow aaRowColumnHeaders aaFontLabel aaFontBold">
@@ -195,14 +194,16 @@
   </div>
   <div class="aaPanelBody"
        element.ref="popupTop">
-    <table border="0" style="border-collapse: collapse;">
-      <tr>
-        <td class="aaFormItemLabel">Date:</td>
-        <td>
-          <span class="aaCell aaCellBorder aaCellTranDate">${app.candidateTran.date}</span>
-        </td>
-      </tr>
-    </table>
+    <div class="aaRow"
+         style="border-bottom-style: none;">
+      <label class="aaFormItemLabel">
+        Date:&nbsp;&nbsp;
+      </label>
+        <input type="date"
+               class="aaCell aaFontData aaCellBorder aaCellTranDate  ${app.candidateTran.date.length == 0 ? 'aaCellErrorIndicater' : ''}"
+               autofocus
+               value.bind="app.candidateTran.date">
+    </div>
     <div class="aaGridContainer">
       <div class="aaGridTitleBar">Account balance changes</div>
       <div class="aaPanelToolBar" style="text-align: center;">

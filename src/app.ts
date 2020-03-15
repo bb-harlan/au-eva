@@ -49,11 +49,11 @@ export class App {
 
   /* element.ref properties */
   gridScrollerLink: HTMLElement; //<a> tag used to scroll grid to row having specifid Id
-  viewmodelModuleFAE; // <au-module-fae view-model.ref="viewmodelModuleFAE" if.bind="selectedModule == MODULE_FAE"></au-module-fae>
-  viewmodelModuleAcct; // <au-module-acct view-model.ref="viewmodelModuleAcct" ...></au-module-fae>
-  viewmodelModuleBchg; // <au-module-bchg view-model.ref="viewmodelModuleBchg" ...></au-module-fae>
-  viewmodelModuleTran; // <au-module-tran view-model.ref="viewmodelModuleTran" ...></au-module-fae>
-  viewmodelModuleJrnl; // <au-module-jrnl view-model.ref="viewmodelModuleJrnl ...></au-module-fae>
+  viewmodelModuleFAE; // <au-module-fae view-model.ref="viewmodelModuleFAE"></au-module-fae>
+  viewmodelModuleAcct; // <au-module-acct view-model.ref="viewmodelModuleAcct"></au-module-fae>
+  viewmodelModuleBchg; // <au-module-bchg view-model.ref="viewmodelModuleBchg"></au-module-fae>
+  viewmodelModuleTran; // <au-module-tran view-model.ref="viewmodelModuleTran"></au-module-fae>
+  viewmodelModuleJrnl; // <au-module-jrnl view-model.ref="viewmodelModuleJrnl</au-module-fae>
 
   viewmodelPopupAcctMover; // <au-popup-acct-mover view-model.ref="viewmodelPopupAcctMover">
   viewmodelPopupAcctPicker; // <au-popup-acct-picker view-model.ref="viewmodelPopupAcctPicker">
@@ -175,8 +175,12 @@ export class App {
     // this.selectedAcct = null;
     this.selectedModule = this.MODULE_JRNL;
     if (this.selectedTran) {
+      console.log(this.selectedTran);
+      document.getElementById(this.selectedTran.id).scrollIntoView();
+/*
       this.gridScrollerLink.setAttribute("href", `#${this.selectedTran.id}`);
       this.gridScrollerLink.click();
+*/
     }
   }
 }
