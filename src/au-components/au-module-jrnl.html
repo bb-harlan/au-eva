@@ -8,7 +8,10 @@
   <require from="au-views/au-icon-radio-selected.html"></require>
   <require from="au-components/au-grid-bchg-cells"></require>
   <require from="au-components/au-grid-bchg-cells-heading"></require>
-    <div class="aaPanel aaPanelBoxShadow" css="${app.selectedModule == app.MODULE_JRNL ? '' : 'display: none;'}">
+    <div class="aaPanel aaPanelBoxShadow"
+         css="${app.selectedModule == app.MODULE_JRNL ? '' : 'display: none;'}"
+         element.ref="rootDivOfJrnl"
+         id="observedElement">
       <div class="aaPanelHeader aaPanelHeaderModule">Transaction Journal</div>
       <div class="aaPanelBody">
         <div class="aaGridContainer">
@@ -16,11 +19,6 @@
           <div class="aaPanelToolBar">
             <div class="aaInlineFlex" style="justify-content: center;">
               <span class="aaToolBarDivider">.</span>
-              <button type="button"
-                      class="aaBtn"
-                      click.trigger="scrollSelectedRowIntoView()">
-                &nbsp;Scroll selected row into view
-              </button>
               <button type="button"
                       class="aaBtn"
                       click.trigger="tranNew($event)">

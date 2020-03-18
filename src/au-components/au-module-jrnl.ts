@@ -6,28 +6,30 @@ import {App} from 'app';
 export class AuModuleJrnl {
   //
   app = null;
+  rootDivOfJrnl: Element = null;
+  mutationObserver = null;
 
   constructor(app) {
     this.app = app;
   }
-  scrollSelectedRowIntoView() {
-    if (this.app.selectedTran) {
-      console.log(this.app.selectedTran);
-      document.getElementById(this.app.selectedTran.id).scrollIntoView();
-      /*
-            this.gridScrollerLink.setAttribute("href", `#${this.selectedTran.id}`);
-            this.gridScrollerLink.click();
-      */
-    }
-  }
   attached() {
-    console.log(`ATTACHED() - <au-module-jrnl>`);
-    if (this.app.selectedTran) {
-      this.app.gridScrollerLink.setAttribute("href", `#${this.app.selectedTrant.id}`);
-      this.app.gridScrollerLink.click();
+    /*
+     * NOTE: I don't know exactly WHY the use of MutationObserver below works to solve
+     * the problem of scrolling to the grid row of the selectedTran, but it does.
+     */
+    this.mutationObserver = new MutationObserver(this.mutationObserverCallback);
+    this.mutationObserver.app = this.app; // add new property for use by callback function
+    this.mutationObserver.observe(this.rootDivOfJrnl, {childList: false, attributes: true, attributeOldValue: true,  subtree: false});
+  }
+  mutationObserverCallback(mutationList, observer) {
+    if (observer.app.selectedTran) {
+      document.getElementById(observer.app.selectedTran.id).scrollIntoView();
+/*   *** The following does not work***
+      observer.app.gridScrollerLink.setAttribute("href", `#${observer.app.selectedTrant.id}`);
+      observer.app.gridScrollerLink.click();
+*/
     }
   }
-
   onRowEnter(event) {
     /*row ops*/
     event.target.children[0].children[0].classList.toggle('aaRowOpsHover', true);
