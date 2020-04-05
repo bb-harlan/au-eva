@@ -56,9 +56,17 @@
             </div>
             <div class="aaVerticalGridline" style="width: 3px;"></div>
           </div>
-          <!--
-                      <div class="aaVerticalGridline" style="width: 3px;"></div>
-          -->
+        </template>
+        <template if.bind="moverBchgList.length == 0">
+          <div class="aaRow aaHidden" style="border-bottom-width: 3px;">
+            <div class="aaVerticalGridline" style="width: 3px;"></div>
+            <div class="aaRowData aaRowBgColorData">
+                <au-grid-bchg-cells-spacer></au-grid-bchg-cells-spacer>
+                <div class="aaVerticalGridline" style="width: 3px;"></div>
+                <au-grid-bchg-cells-spacer></au-grid-bchg-cells-spacer>
+            </div>
+            <div class="aaVerticalGridline" style="width: 3px;"></div>
+          </div>
         </template>
       </div>
       <div class="aaGridFooterBar"></div>

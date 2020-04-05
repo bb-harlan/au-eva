@@ -1,9 +1,10 @@
-import {TaskQueue, inject } from 'aurelia-framework';
+import {TaskQueue, inject} from 'aurelia-framework';
 import {Data} from "app-data/data";
-import {Acct} from 'app-data/models/acct';
+import {Acct, Annotation} from 'app-data/models/acct';
 import {FaeSide} from 'app-data/models/fae-side';
 import {Tran} from 'app-data/models/tran';
 import {Bchg} from 'app-data/models/bchg';
+import {Jrnl} from 'app-data/models/jrnl';
 
 @inject(TaskQueue)
 export class App {
@@ -84,55 +85,158 @@ export class App {
    *  Reference to  accounting entity's data
    *=====================================================
    */
-  data = new Data();
+  data = new Data(
+    1,
+    1,
+    1,
+    1,
+    "");
 
   bind() {
-    this.data.generateTestData();
-    // this.data.generateExample1Data();
+    // this.data.generateEmptyData();
+    // this.data.generateTestData();
+    this.data.generateExample1Data();
+
+    /*
+    * *************************
+    * *** Experimental code ***
+    * *************************
+    */
+    console.log("***** stringifiedData *****");
+    let stringifiedData = JSON.stringify(this.data, this.replacer);
+    console.log(stringifiedData);
+
+    console.log("***** parsedData *****");
+    let parsedData = JSON.parse(stringifiedData);
+    console.log(parsedData);
+    let revivedData = new Data(
+      parsedData._nextSorter,
+      parsedData._nextAcctId,
+      parsedData._nextTranId,
+      parsedData._nextBchgId,
+      parsedData.entityName);
+    console.log("***** revivedData *****");
+    let revivedFaeSide;
+    let revivedListItem;
+    let revivedTran;
+    let revivedBchg;
+    let allAccts;
+    for (let parsedFaeSide of [parsedData.faeSideAssets, parsedData.faeSideEquities]) {
+      revivedFaeSide = (parsedFaeSide.id == 'Assets' ? revivedData.faeSideAssets : revivedData.faeSideEquities);
+      for (let listItem of parsedFaeSide.acctList) {
+        if (listItem.id.substring(0, 4) == "anno") {
+          revivedListItem = new Annotation(
+            /*annoId*/ listItem.id,
+            /*faeSide*/ revivedFaeSide,
+            /*intraSideSorter*/ listItem.intraSideSorter,
+            /*annoText*/ listItem.annoText);
+        }
+        else {
+          revivedListItem = new Acct(
+            /*annoId*/ listItem.id,
+            /*faeSide*/ revivedFaeSide,
+            /*intraSideSorter*/ listItem.intraSideSorter,
+            /*annoText*/ listItem.title,
+            /*normalBalance*/ listItem.normalBalance);
+          revivedListItem.endingBalance = listItem.endingBalance;
+        }
+        revivedFaeSide.acctList.push(revivedListItem);
+      }
+      allAccts = revivedData.faeSideAssets.acctList.concat(revivedData.faeSideEquities.acctList);
+      revivedFaeSide.refresh();
+    }
+    for (let tran of parsedData.jrnl.tranList) {
+      revivedTran = new Tran(
+        /*id*/ tran.id,
+        /*parentJrnl*/ revivedData.jrnl,
+        /*date*/ tran.date,
+        /*intraDateSorter*/ tran.intraDateSorter);
+      for (let bchg of tran.bchgList) {
+        revivedBchg = new Bchg(
+          /*id*/ bchg.id,
+          /*sourceTran*/ revivedTran,
+          /*targetAcct*/ allAccts.find(element => element.id == bchg.targetAcct),
+          /*desc*/ bchg.desc,
+          /*amt*/ bchg.amt);
+        revivedTran.bchgList.push(revivedBchg);
+      }
+      revivedTran.register();
+    }
+    revivedData.jrnl.refresh();
+    console.log(revivedData);
+    this.data = null;
+    alert("Wait");
+    this.data = revivedData;
   }
-  selectAcct(listItem): void {
-    if (listItem.isAcct()) {
+  replacer(key, value) {
+    if (key == "parentFaeSide" ||
+      key == "sourceTran" ||
+      key == "targetAcct" ||
+      key == "parentJrnl") {
+      return value.id;
+    }
+    return value;
+  }
+
+  selectAcct(listItem)
+    :
+    void {
+    if (listItem.isAcct()
+    ) {
       this.selectedAcct = listItem;
     }
   }
-  selectSideAcctGoAcct(listItem): void {
-    if (listItem.isAcct()) {
+  selectSideAcctGoAcct(listItem)
+    :
+    void {
+    if (listItem.isAcct()
+    ) {
       this.selectedAcct = listItem;
       this.selectedModule = this.MODULE_ACCT;
     }
   }
-  selectBchg(bchg): void {
+  selectBchg(bchg)
+    :
+    void {
     this.selectedBchg = bchg;
     this.selectedAcct = bchg.targetAcct;
     this.selectedTran = bchg.sourceTran;
   }
-  selectAcctBchgGoTran(bchg): void {
+  selectAcctBchgGoTran(bchg)
+    :
+    void {
     this.selectedBchg = bchg;
     this.selectedAcct = bchg.targetAcct;
     this.selectedTran = bchg.sourceTran;
     this.selectedModule = this.MODULE_TRAN;
   }
-  selectTranBchgGoAcct(bchg): void {
+  selectTranBchgGoAcct(bchg)
+    :
+    void {
     this.selectedBchg = bchg;
     this.selectedAcct = bchg.targetAcct;
     this.selectedTran = bchg.sourceTran;
     this.selectedModule = this.MODULE_ACCT;
   }
-  selectTran(tran): void {
+  selectTran(tran)
+    :
+    void {
     this.selectedTran = tran;
   }
-  selectJrnlTranGoTran(tran): void {
+  selectJrnlTranGoTran(tran)
+    :
+    void {
     this.selectedTran = tran;
     this.selectedModule = this.MODULE_TRAN;
   }
   goFaeModule() {
     // this.selectedBchg = null;
     // this.selectedTran = null;
-      this.selectedModule = this.MODULE_FAE;
-      if (this.selectedAcct) {
-        this.gridScrollerLink.setAttribute("href", `#${this.selectedAcct.id}`);
-        this.gridScrollerLink.click();
-      }
+    this.selectedModule = this.MODULE_FAE;
+    if (this.selectedAcct) {
+      this.gridScrollerLink.setAttribute("href", `#${this.selectedAcct.id}`);
+      this.gridScrollerLink.click();
+    }
   }
   scrollFaeModule() {
     this.gridScrollerLink.click();
@@ -177,10 +281,10 @@ export class App {
     if (this.selectedTran) {
       console.log(this.selectedTran);
       document.getElementById(this.selectedTran.id).scrollIntoView();
-/*
-      this.gridScrollerLink.setAttribute("href", `#${this.selectedTran.id}`);
-      this.gridScrollerLink.click();
-*/
+      /*
+            this.gridScrollerLink.setAttribute("href", `#${this.selectedTran.id}`);
+            this.gridScrollerLink.click();
+      */
     }
   }
 }

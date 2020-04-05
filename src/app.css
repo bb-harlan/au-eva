@@ -140,11 +140,11 @@ h1 {
 .aaPanelHeader {
   padding: 0.25pc;
   color: #fff;
-  text-shadow:1px 1px 0 #000;
+  text-shadow:3px 3px 0 #000;
   background-color: #58b;
   font-family: sans-serif, SansSerif;
-  font-weight: normal;
-  letter-spacing: 1px;
+  font-weight: bold;
+  letter-spacing: 2px;
 }
 .aaPanelHeaderModule {
   font-size: 150%;
@@ -379,6 +379,7 @@ h1 {
 }
 .aaRowColumnHeaders {
   color: #fff;
+  text-shadow: 1px 1px 0 #000;
   background-color: #bbb;
   border-bottom: 1px solid #58b;
  /* -webkit-box-shadow: 0px 0px 3px 1px #666 inset;

@@ -7,8 +7,9 @@
        style="display: none; flex-direction: row; align-items: flex-start; justify-content: center;"
        element.ref="moverDialogModal">
     <div class="aaModalContent aaInlineBlock aaPanelBoxShadow"
-         element.ref = "moverDialogContent">
-      <div class="aaGridTitleBar" style="font-size: larger;">Move rows<br><span class="aaFontLabel">&mdash; Drag & drop row(s) to desired list position(s). &mdash;</span></div>
+         element.ref="moverDialogContent">
+      <div class="aaGridTitleBar" style="font-size: larger;">Move rows<br><span class="aaFontLabel">&mdash; Drag & drop row(s) to desired list position(s). &mdash;</span>
+      </div>
       <div class="aaPanelToolBar">
         <div style="text-align: center;">
           <button type="button" class="aaBtn" click.trigger="done()">Done</button>
@@ -33,7 +34,7 @@
                mouseenter.trigger="onRowMouseEnter($event, listItem)"
                mouseleave.trigger="onRowMouseLeave($event, listItem)"
                mousedown.trigger="onRowMouseDown($event)"
-                mouseup.trigger="onRowMouseUp($event)">
+               mouseup.trigger="onRowMouseUp($event)">
             <div class="aaRowData aaRowBgColorData">
               <template if.bind="listItem.isAcct()">
                 <span class="aaCell aaFontSizeData aaCellAcctTitle">${listItem.title}</span>
@@ -45,6 +46,16 @@
                 <div class="aaVerticalGridline"></div>
                 <span class="aaCell aaFontSizeData aaCellBchgBal"></span>
               </template>
+              <div class="aaVerticalGridline"></div>
+            </div>
+          </div>
+        </template>
+        <template if.bind="moverAcctList.length == 0">
+          <div class="aaRow aaHidden">
+            <div class="aaRowData aaRowBgColorData">
+              <span class="aaCell aaFontSizeData aaCellAcctTitle">x</span>
+              <div class="aaVerticalGridline"></div>
+              <span class="aaCell aaFontSizeData aaCellBchgBal">0</span>
               <div class="aaVerticalGridline"></div>
             </div>
           </div>

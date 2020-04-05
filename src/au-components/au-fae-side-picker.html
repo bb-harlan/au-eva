@@ -33,6 +33,15 @@
           <div class="aaVerticalGridline"></div>
         </div>
       </template>
+      <template if.bind="faeSide.acctList.length == 0">
+        <div class="aaRowOps aaHidden">
+          <button type="button"
+                  class="aaBtn aaCellAcctTitle">
+            x
+          </button>
+        </div>
+      </template>
+
     </div>
     <div class="aaGridFooterBar"></div>
   </div>

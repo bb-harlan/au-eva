@@ -35,9 +35,33 @@ export class Data {
   faeSideEquities: FaeSide = new FaeSide(/*id*/ 'Equities');
   jrnl: Jrnl = new Jrnl(/*id*/ 'Journal');
 
+  constructor(
+      _nextSorter: number,
+      _nextAcctId: number,
+      _nextTranId: number,
+      _nextBchgId: number,
+       entityName: string) {
+    this._nextSorter = _nextSorter;
+    this._nextAcctId = _nextAcctId;
+    this._nextTranId = _nextTranId;
+    this._nextBchgId = _nextBchgId;
+    this.entityName = entityName;
+  }
 
+
+  generateEmptyData() {
+    console.log('\n********************************************\nGenerating test data...');
+    this.entityName = "<programmatically generated empty data for testing>";
+    let newAnno: Annotation;
+    let newAcct: Acct;
+    let randomAcct: Acct;
+    let sourceTran: Tran;
+    let newBchg: Bchg;
+    let acctId: string;
+    let annoId: string;
+  }
   generateTestData() {
-    console.log('Generating test data...');
+    console.log('\n********************************************\nGenerating test data...');
     this.entityName = "<programmatically generated test data for testing>";
     let newAnno: Annotation;
     let newAcct: Acct;
@@ -51,10 +75,10 @@ export class Data {
      */
     annoId = `anno${this.nextAcctId}`;
     newAnno = new Annotation(
-      /*id*/ annoId,
+      /*annoId*/ annoId,
       /*faeSide*/ this.faeSideAssets,
       /*intraSideSorter*/ this.nextSorter,
-      /*title*/ `Test annotation (equationSide: ${this.faeSideAssets.id}; annoId: ${annoId};)`);
+      /*annoText*/ `Test annotation (equationSide: ${this.faeSideAssets.id}; annoId: ${annoId};)`);
     this.faeSideAssets.acctList.push(newAnno);
     for (let intraSideSorter = 15; intraSideSorter > 0; intraSideSorter--) {
       acctId = `acct${this.nextAcctId}`;
@@ -75,9 +99,8 @@ export class Data {
         /*normalBalance*/  1);
       this.faeSideEquities.acctList.push(newAcct);
     }
-    console.log('Created some accounts (order scrambled from normal order)');
     /*
-     Create some transactions**********************************************************
+     * Create some transactions**********************************************************
      */
     let filteredAssetAcctList = this.faeSideAssets.acctList.filter((listItem) => listItem instanceof Acct);
     let filteredEquityAcctList = this.faeSideEquities.acctList.filter((listItem) => listItem instanceof Acct);
@@ -113,10 +136,7 @@ export class Data {
       this.jrnl.tranList.push(sourceTran);
     }
     this.jrnl.refresh(); // cascades to refresh all
-    console.log('Created some transactions (order scrambled from normal order)');
-    console.log(this.faeSideAssets);
-    console.log(this.faeSideEquities);
-    console.log(this.jrnl);
+    console.log(this);
     console.log('Generation of test data completed!');
   }
 
@@ -236,12 +256,18 @@ export class Data {
     /* end of transaction */
 
     this.jrnl.refresh(); // cascades to refresh all
-    console.log(this.faeSideAssets);
-    console.log(this.faeSideEquities);
-    console.log(this.jrnl);
+    console.log(this);
     console.log('\nGeneration of example data completed!\n********************************************');
   }
+  replacer(key, value) {
+    if (key == "parentFaeSide" ||
+        key == "sourceTran" ||
+        key == "targetAcct" ||
+        key == "parentJrnl") {
+      return value.id;
+    }
+    return value;
+  }
 }
-
 
 

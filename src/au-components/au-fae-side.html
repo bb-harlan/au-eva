@@ -92,6 +92,23 @@
           </template>
         </div>
       </template>
+      <template if.bind="faeSide.acctList.length == 0">
+        <div class="aaRow aaHidden">
+            <div class="aaRowOps aaBgColorToolbar">
+              <div class="aaRadioBtn">
+                  <au-icon-radio-selected></au-icon-radio-selected>
+              </div>
+            </div>
+            <div class="aaVerticalGridline"></div>
+            <div
+              class="aaRowData aaRowBgColorData">
+              <span class="aaCell aaCellAcctTitle">x</span>
+              <div class="aaVerticalGridline"></div>
+              <span class="aaCell aaCellBchgBal">0</span>
+            </div>
+            <div class="aaVerticalGridline"></div>
+        </div>
+      </template>
     </div>
     <div class="aaGridFooterBar"></div>
   </div>
