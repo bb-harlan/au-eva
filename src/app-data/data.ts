@@ -142,7 +142,7 @@ export class Data {
 
   generateExample1Data() {
     console.log('\n********************************************\nGenerating example data...');
-    this.entityName = "Rene (an sindividual)";
+    this.entityName = "Rene (an individual)";
     let newAnno: Annotation;
     let newAcct: Acct;
     let sourceTran: Tran;
