@@ -165,7 +165,7 @@ export class App {
     revivedData.jrnl.refresh();
     console.log(revivedData);
     this.data = null;
-    alert("Wait");
+    // alert("Wait");
     this.data = revivedData;
   }
   replacer(key, value) {
