@@ -186,7 +186,7 @@ export class AuModuleTran {
       this.app.selectedTran.unregister();
       this.tranView = this.NAV;
       this.app.selectedTran = null;
-      this.app.goJrnlModule();
+      // this.app.goJrnlModule();
     }
     else {
       // determine which tran will replace this.app.selectedTran after

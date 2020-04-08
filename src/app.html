@@ -27,6 +27,7 @@
       font-family: sans-serif;
       font-size: small;
     }
+
     .aaNavMapHeader {
       display: inline-flex;
       flex-direction: row;
@@ -34,22 +35,26 @@
       letter-spacing: 2px;
       font-weight: bold;
     }
+
     .aaNavMapBody {
       display: inline-flex;
       flex-direction: row;
       align-items: flex-start;
     }
+
     .aaNavModuleColumn {
       display: inline-flex;
       flex-direction: column;
       align-items: flex-start;
     }
+
     .aaNavGutterColumn {
       display: inline-flex;
       flex-direction: column;
       align-items: flex-start;
       width: 10px;
     }
+
     .aaNavMapCell {
       display: inline-flex;
       flex-direction: row;
@@ -57,17 +62,27 @@
       height: 25px;
       letter-spacing: 1px;
     }
-    .aaNavModule {
-      /*margin: 1px 3px;*/
+
+    .aaNavMapBtn {
       padding: 0 5px;
       letter-spacing: 1px;
       border: 1px solid black;
       background-color: #EEEEEE;
     }
-    .aaNavModule:disabled {
+
+    .aaNavMapBtn:disabled {
+      border-style: dotted;
       color: #aaa;
+      background-color: #fff;
     }
-    .aaNavModuleSelected {
+
+    .aaNavMapBtnHover {
+      outline: 2px solid #5588BB;
+    }
+
+    .aaNavMapBtnSelected {
+      outline-style: none;
+      outline: 2px solid #5588BB;
       padding: 0 5px;
       color: #fff;
       letter-spacing: 1px;
@@ -79,182 +94,182 @@
       /*box-shadow: 0px 0px 2px 2px #58b;*/
     }
   </style>
-  <div class="aaNavigator">
-    <div class="aaNavMapHeader">Navigation map</div>
-    <div class="aaNavMapBody">
-      <div class="aaNavModuleColumn">
-        <div class="aaNavMapCell">
-          <template if.bind="selectedModule == MODULE_FAE">
-            <au-icon-map-marker></au-icon-map-marker>
-            <button type="button" disabled class="aaNavModuleSelected">
+  <div style="display: flex; flex-direction: column; align-items: center;">
+
+    <div class="aaNavigator">
+      <div class="aaNavMapHeader">Navigation map</div>
+      <div class="aaNavMapBody">
+        <div class="aaNavModuleColumn">
+          <div class="aaNavMapCell">
+            <i class="fas fa-map-marker-alt"
+               css="color: ${selectedModule == MODULE_FAE ? '#EA4335' : '#ddd'};
+             font-size: large;
+             margin-right: 5px"></i>
+            <button type="button"
+                    class="aaNavMapBtn ${selectedModule == MODULE_FAE ? 'aaNavMapBtnSelected' : ''}"
+                    mouseenter.trigger="addHovering($event)"
+                    mouseleave.trigger="removeHovering($event)"
+                    click.trigger="goFaeModule($event)"
+                    element.ref="navBtnFae">
               Assets = Equities
             </button>
-          </template>
-          <template if.bind="selectedModule != MODULE_FAE">
-            <au-icon-map-marker-candidate></au-icon-map-marker-candidate>
-            <button type="button" class="aaNavModule" click.trigger="goFaeModule()">
-              Assets = Equities
-            </button>
-          </template>
+          </div>
         </div>
-      </div>
-      <div class="aaNavGutterColumn"></div>
-      <div class="aaNavModuleColumn">
-        <div class="aaNavMapCell">&nbsp;</div>
-        <div class="aaNavMapCell">
-          <template if.bind="selectedModule == MODULE_ACCT">
-            <au-icon-map-marker></au-icon-map-marker>
-            <button type="button" class="aaNavModuleSelected" disabled>
+        <div class="aaNavGutterColumn"></div>
+        <div class="aaNavModuleColumn">
+          <div class="aaNavMapCell">&nbsp;</div>
+          <div class="aaNavMapCell">
+            <i class="fas fa-map-marker-alt ${!selectedAcct ? 'aaHidden' : ''}"
+               css="color: ${selectedModule == MODULE_ACCT ? '#EA4335' : '#ddd'};
+             font-size: large;
+             margin-right: 5px"></i>
+            <button type="button"
+                    class="aaNavMapBtn ${selectedModule == MODULE_ACCT ? 'aaNavMapBtnSelected' : ''}"
+                    disabled.bind="!selectedAcct"
+                    mouseenter.trigger="addHovering($event)"
+                    mouseleave.trigger="removeHovering($event)"
+                    click.trigger="goAcctModule($event)"
+                    element.ref="navBtnAcct">
               Account
             </button>
-          </template>
-          <template if.bind="selectedModule != MODULE_ACCT">
-            <template if.bind="selectedAcct" )>
-              <au-icon-map-marker-candidate></au-icon-map-marker-candidate>
-              <button element.ref="goAcctBtn" type="button" class="aaNavModule" click.trigger="goAcctModule()">
-                Account
-              </button>
-            </template>
-            <template if.bind="!selectedAcct">
-              <au-icon-map-marker-not-yet></au-icon-map-marker-not-yet>
-              <button type="button" class="aaNavModule" disabled>
-                Account
-              </button>
-            </template>
-          </template>
+          </div>
         </div>
-      </div>
-      <div class="aaNavGutterColumn"></div>
-      <div class="aaNavModuleColumn">
-        <div class="aaNavMapCell">&nbsp;</div>
-        <div class="aaNavMapCell">&nbsp;</div>
-        <div class="aaNavMapCell">
-          <template if.bind="selectedModule == MODULE_BCHG">
-            <au-icon-map-marker></au-icon-map-marker>
-            <button type="button" class="aaNavModuleSelected" disabled>
+        <div class="aaNavGutterColumn"></div>
+        <div class="aaNavModuleColumn">
+          <div class="aaNavMapCell">&nbsp;</div>
+          <div class="aaNavMapCell">&nbsp;</div>
+          <div class="aaNavMapCell">
+            <i class="fas fa-map-marker-alt ${!selectedBchg ? 'aaHidden' : ''}"
+               css="color: ${selectedModule == MODULE_BCHG ? '#EA4335' : '#ddd'};
+             font-size: large;
+             margin-right: 5px"></i>
+            <button type="button"
+                    class="aaNavMapBtn ${selectedModule == MODULE_BCHG ? 'aaNavMapBtnSelected' : ''}"
+                    disabled.bind="!selectedBchg"
+                    mouseenter.trigger="addHovering($event)"
+                    mouseleave.trigger="removeHovering($event)"
+                    click.trigger="goBchgModule($event)"
+                    element.ref="navBtnBchg">
               Account balance change
             </button>
-          </template>
-          <template if.bind="selectedModule != MODULE_BCHG">
-            <template if.bind="selectedBchg">
-              <au-icon-map-marker-candidate></au-icon-map-marker-candidate>
-              <button type="button" class="aaNavModule" click.trigger="goBchgModule()">
-                Account balance change
-              </button>
-            </template>
-            <template if.bind="!selectedBchg">
-              <au-icon-map-marker-not-yet></au-icon-map-marker-not-yet>
-              <button type="button" class="aaNavModule" disabled>
-                Account balance change
-              </button>
-            </template>
-          </template>
+          </div>
         </div>
-      </div>
-      <div class="aaNavGutterColumn"></div>
-      <div class="aaNavModuleColumn">
-        <div class="aaNavMapCell">&nbsp;</div>
-        <div class="aaNavMapCell">
-          <template if.bind="selectedModule == MODULE_TRAN">
-            <au-icon-map-marker></au-icon-map-marker>
-            <button type="button" disabled class="aaNavModuleSelected">
+        <div class="aaNavGutterColumn"></div>
+        <div class="aaNavModuleColumn">
+          <div class="aaNavMapCell">&nbsp;</div>
+          <div class="aaNavMapCell">
+            <i class="fas fa-map-marker-alt ${!selectedTran ? 'aaHidden' : ''}"
+               css="color: ${selectedModule == MODULE_TRAN ? '#EA4335' : '#ddd'};
+             font-size: large;
+             margin-right: 5px"></i>
+            <button type="button"
+                    class="aaNavMapBtn ${selectedModule == MODULE_TRAN ? 'aaNavMapBtnSelected' : ''}"
+                    disabled.bind="!selectedTran"
+                    mouseenter.trigger="addHovering($event)"
+                    mouseleave.trigger="removeHovering($event)"
+                    click.trigger="goTranModule($event)"
+                    element.ref="navBtnTran">
               Transaction
             </button>
-          </template>
-          <template if.bind="selectedModule != MODULE_TRAN">
-            <template if.bind="selectedTran">
+          </div>
+        </div>
+        <div class="aaNavGutterColumn"></div>
+        <div class="aaNavModuleColumn">
+          <div class="aaNavMapCell">
+            <i class="fas fa-map-marker-alt"
+               css="color: ${selectedModule == MODULE_JRNL ? '#EA4335' : '#ddd'};
+             font-size: large;
+             margin-right: 5px"></i>
+            <button type="button"
+                    class="aaNavMapBtn ${selectedModule == MODULE_JRNL ? 'aaNavMapBtnSelected' : ''}"
+                    mouseenter.trigger="addHovering($event)"
+                    mouseleave.trigger="removeHovering($event)"
+                    click.trigger="goJrnlModule($event)"
+                    element.ref="navBtnJrnl">
+              Transaction journal
+            </button>
+<!--
+            <template if.bind="selectedModule == MODULE_JRNL">
+              <au-icon-map-marker></au-icon-map-marker>
+              <button type="button" class="aaNavMapBtnSelected" disabled>
+                Transaction journal
+              </button>
+            </template>
+            <template if.bind="selectedModule != MODULE_JRNL">
               <au-icon-map-marker-candidate></au-icon-map-marker-candidate>
-              <button type="button" class="aaNavModule" click.trigger="goTranModule()">
-                Transaction
+              <button type="button"
+                      class="aaNavMapBtn"
+                      mouseenter.trigger="addHovering($event)"
+                      mouseleave.trigger="removeHovering($event)"
+                      click.trigger="goJrnlModule($event)">
+                Transaction journal
               </button>
             </template>
-            <template if.bind="!selectedTran">
-              <au-icon-map-marker-not-yet></au-icon-map-marker-not-yet>
-              <button type="button" class="aaNavModule" disabled>
-                Transaction
-              </button>
-            </template>
-          </template>
-        </div>
-      </div>
-      <div class="aaNavGutterColumn"></div>
-      <div class="aaNavModuleColumn">
-        <div class="aaNavMapCell">
-          <template if.bind="selectedModule == MODULE_JRNL">
-            <au-icon-map-marker></au-icon-map-marker>
-            <button type="button" class="aaNavModuleSelected" disabled>
-              Transaction journal
-            </button>
-          </template>
-          <template if.bind="selectedModule != MODULE_JRNL">
-            <au-icon-map-marker-candidate></au-icon-map-marker-candidate>
-            <button type="button" class="aaNavModule" click.trigger="goJrnlModule()">
-              Transaction journal
-            </button>
-          </template>
+-->
+          </div>
         </div>
       </div>
     </div>
-  </div>
 
-  <div class="aaPanelContainer" css="display: none; visibility: ${isEditing ? 'hidden' : 'visible'}">
-    <div class="aaPanel aaPanelBoxShadow" style="font-size: small;">
-      <div class="aaPanelHeader">Navigation map</div>
-      <div class="aaPanelBody" style="padding: 0.5pc;">
-        <table class="aaSansSerif aaInlineBlock" style="color: #333;">
-          <tr>
-            <td class="aaNavMapCell">
-              <div class="aaNavBtn ${selectedModule == MODULE_FAE ? 'aaNavBtnSelected' : ''}"
-                   click.trigger="goFaeModule($event)">Assets = Equities
-              </div>
-            </td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td class="aaNavMapCell">
-              <div class="aaNavBtn ${selectedModule == MODULE_JRNL ? 'aaNavBtnSelected' : ''}"
-                   click.trigger="goJrnlModule()">Transaction journal
-              </div>
-            </td>
-          </tr>
-          <tr>
-            <td></td>
-            <td class="aaNavMapCell">
-              <div class="aaNavBtnInert ${selectedModule == MODULE_ACCT ? 'aaNavBtnSelected' : ''}">
-                Account
-              </div>
-            </td>
-            <td>
-              <div style="width: 1pc;"></div>
-            </td>
-            <td class="aaNavMapCell">
-              <div class="aaNavBtnInert ${selectedModule == MODULE_TRAN ? 'aaNavBtnSelected' : ''}">
-                Transaction
-              </div>
-            </td>
-            <td></td>
-          </tr>
-          <tr>
-            <td></td>
-            <td></td>
-            <td class="aaNavMapCell">
-              <div class="aaNavBtnInert ${selectedModule == MODULE_BCHG ? 'aaNavBtnSelected' : ''}">
-                Account balance change
-              </div>
-            </td>
-            <td></td>
-            <td></td>
-          </tr>
-        </table>
+    <div class="aaPanelContainer" css="display: none; visibility: ${isEditing ? 'hidden' : 'visible'}">
+      <div class="aaPanel aaPanelBoxShadow" style="font-size: small;">
+        <div class="aaPanelHeader">Navigation map</div>
+        <div class="aaPanelBody" style="padding: 0.5pc;">
+          <table class="aaSansSerif aaInlineBlock" style="color: #333;">
+            <tr>
+              <td class="aaNavMapCell">
+                <div class="aaNavBtn ${selectedModule == MODULE_FAE ? 'aaNavBtnSelected' : ''}"
+                     click.trigger="goFaeModule($event)">Assets = Equities
+                </div>
+              </td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td class="aaNavMapCell">
+                <div class="aaNavBtn ${selectedModule == MODULE_JRNL ? 'aaNavBtnSelected' : ''}"
+                     click.trigger="goJrnlModule()">Transaction journal
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td></td>
+              <td class="aaNavMapCell">
+                <div class="aaNavBtnInert ${selectedModule == MODULE_ACCT ? 'aaNavBtnSelected' : ''}">
+                  Account
+                </div>
+              </td>
+              <td>
+                <div style="width: 1pc;"></div>
+              </td>
+              <td class="aaNavMapCell">
+                <div class="aaNavBtnInert ${selectedModule == MODULE_TRAN ? 'aaNavBtnSelected' : ''}">
+                  Transaction
+                </div>
+              </td>
+              <td></td>
+            </tr>
+            <tr>
+              <td></td>
+              <td></td>
+              <td class="aaNavMapCell">
+                <div class="aaNavBtnInert ${selectedModule == MODULE_BCHG ? 'aaNavBtnSelected' : ''}">
+                  Account balance change
+                </div>
+              </td>
+              <td></td>
+              <td></td>
+            </tr>
+          </table>
+        </div>
       </div>
     </div>
-  </div>
-  <div class="aaPanelContainer">
-    <au-module-fae view-model.ref="viewmodelModuleFAE"></au-module-fae>
-    <au-module-acct view-model.ref="viewmodelModuleAcct"></au-module-acct>
-    <au-module-bchg view-model.ref="viewmodelModuleBchg"></au-module-bchg>
-    <au-module-tran view-model.ref="viewmodelModuleTran"></au-module-tran>
-    <au-module-jrnl view-model.ref="viewmodelModuleJrnl"></au-module-jrnl>
+    <div class="aaPanelContainer">
+      <au-module-fae view-model.ref="viewmodelModuleFAE"></au-module-fae>
+      <au-module-acct view-model.ref="viewmodelModuleAcct"></au-module-acct>
+      <au-module-bchg view-model.ref="viewmodelModuleBchg"></au-module-bchg>
+      <au-module-tran view-model.ref="viewmodelModuleTran"></au-module-tran>
+      <au-module-jrnl view-model.ref="viewmodelModuleJrnl"></au-module-jrnl>
+    </div>
   </div>
 
   <au-popup-acct-mover view-model.ref="viewmodelPopupAcctMover"></au-popup-acct-mover>

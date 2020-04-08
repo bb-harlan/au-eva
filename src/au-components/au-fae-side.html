@@ -15,23 +15,23 @@
     ${faeSide.id}
   </h1>
   <div class="aaGridContainer">
-    <div class="aaGridTitleBar" style="font-size: larger;">${faeSide.id | auEquationSideConverter:true: false}
-      accounts
-    </div>
     <div class="aaPanelToolBar" element.ref="popupTop">
       <button type="button"
               class="aaBtn"
               click.trigger="onEditRows($event)">
         <au-icon-edit></au-icon-edit>
-        Edit rows
+        &nbsp;Edit rows
         <au-text-ellipsis></au-text-ellipsis>
       </button>
       <button type="button"
               class="aaBtn"
               click.trigger="app.viewmodelPopupAcctMover.open(popupTop, popupLeft, faeSide)">
         <au-icon-row-mover></au-icon-row-mover>
-        Move rows...
+        &nbsp;Move rows<au-text-ellipsis></au-text-ellipsis>
       </button>
+    </div>
+    <div class="aaGridTitleBar" style="font-size: larger;">${faeSide.id | auEquationSideConverter:true: false}
+      accounts
     </div>
     <div class="aaRow aaRowColumnHeaders aaFontLabel aaFontBold">
       <div class="aaRowOps aaHidden">

@@ -167,6 +167,7 @@ export class App {
     this.data = null;
     // alert("Wait");
     this.data = revivedData;
+  // *** IT WORKS!!!! ***
   }
   replacer(key, value) {
     if (key == "parentFaeSide" ||
@@ -229,9 +230,16 @@ export class App {
     this.selectedTran = tran;
     this.selectedModule = this.MODULE_TRAN;
   }
-  goFaeModule() {
+   addHovering(event) {
+    event.target.classList.toggle("aaNavMapBtnHover", true);
+   }
+   removeHovering(event) {
+    event.target.classList.toggle("aaNavMapBtnHover", false);
+  }
+  goFaeModule(event) {
     // this.selectedBchg = null;
     // this.selectedTran = null;
+    event.target.classList.toggle("aaNavModuleHover", false);
     this.selectedModule = this.MODULE_FAE;
     if (this.selectedAcct) {
       this.gridScrollerLink.setAttribute("href", `#${this.selectedAcct.id}`);
@@ -242,6 +250,7 @@ export class App {
     this.gridScrollerLink.click();
     console.log("clicked scroller")
   }
+/*
   goAcctModule(acct) {
     // this.selectedAcct = null;
     if (acct) {
@@ -257,26 +266,27 @@ export class App {
     }
     this.selectedModule = this.MODULE_ACCT;
   }
-  goBchgModule() {
+*/
+  goAcctModule(event) {
+    if (this.selectedBchg && this.selectedBchg.targetAcct.id != this.selectedAcct.id) {
+      this.selectedBchg = null;
+    }
+    event.target.classList.toggle("aaNavModuleBtnHover", false);
+    this.selectedModule = this.MODULE_ACCT;
+  }
+  goBchgModule(event) {
+    event.target.classList.toggle("aaNavModuleBtnHover", false);
     this.selectedModule = this.MODULE_BCHG;
   }
-  goTranModule(tran) {
-    if (tran) {
-      this.selectedTran = tran;
-    }
-    else {
-      if (!this.selectedTran) {
-        throw new Error(`Logic error in app.goAcctModule()`);
-      }
-    }
+  goTranModule(event) {
     if (this.selectedBchg && this.selectedBchg.sourceTran.id != this.selectedTran.id) {
       this.selectedBchg = null;
     }
+    event.target.classList.toggle("aaNavModuleBtnHover", false);
     this.selectedModule = this.MODULE_TRAN;
   }
-  goJrnlModule() {
-    // this.selectedBchg = null;
-    // this.selectedAcct = null;
+  goJrnlModule(event) {
+    event.target.classList.toggle("aaNavModuleHover", false);
     this.selectedModule = this.MODULE_JRNL;
     if (this.selectedTran) {
       console.log(this.selectedTran);
