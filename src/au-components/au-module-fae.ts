@@ -4,8 +4,16 @@ import {App} from 'app';
 @customElement('au-module-fae')
 @inject(App)
 export class AuModuleFae {
-  //
-  app = null;
+  get NAV() {
+    return "nav";
+  }
+  get EDIT() {
+    return "edit";
+  }
+  faeView = this.NAV;
+
+  // @injected item(s)
+  app: App;
 
   /*=====================================================
    *  reference(s)
@@ -15,6 +23,16 @@ export class AuModuleFae {
 
   constructor(app) {
     this.app = app;
+  }
+  faeSidesEdit(event) {
+    this.app.candidateFaeSideAssets = this.app.data.faeSideAssets.clone();
+    this.app.candidateFaeSideEquities = this.app.data.faeSideEquities.clone();
+/*
+    console.log("*** clones of faeSides ***")
+    console.log(this.app.candidateFaeSideAssets);
+    console.log(this.app.candidateFaeSideEquities);
+*/
+    this.faeView = this.EDIT;
   }
   selectSide(faeSide) {
     this.app.selectedFaeSide = faeSide;

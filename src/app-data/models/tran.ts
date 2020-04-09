@@ -77,7 +77,7 @@ export class Tran {
     clonedTran.totalChangesAssets = this.totalChangesAssets;
     clonedTran.totalChangesEquities = this.totalChangesEquities;
     for (let bchg of this.bchgList) {
-      let clonedBchg = bchg.clone(clonedTran);
+      let clonedBchg = bchg.clone(clonedTran, bchg.targetAcct);
       clonedTran.bchgList.push(clonedBchg);
     }
     return clonedTran;

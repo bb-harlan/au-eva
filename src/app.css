@@ -1,10 +1,10 @@
 body {
   text-align: center;
-  /*background-color: #fff;*/
-   background-color: #ABABAB;
-  /* background-color: #c0c0c0; */
+  /*background-color: #ABABAB;*/
+  /*background-color: #c0c0c0; */
   /*background-color: #d0d0d0;*/
-  background-color: #808080;
+  /*background-color: #808080;*/
+  background-color: #fff;
   font-family: Cambria, serif, Serif;
   /*font-weight: bold;*/
   font-size: medium;
@@ -127,7 +127,7 @@ h1 {
   display: inline-block;
   border: 1px solid #58b;
   border-radius: 0.5pc;
-  background-color: #eee;
+  background-color: #f0f0f0;
   background-clip: border-box;
   overflow: hidden;
   font-size: medium;
@@ -140,7 +140,7 @@ h1 {
 }
 .aaPanelHeader {
   padding: 0.25pc;
-  color: #eee;
+  color: #f0f0f0;
   text-shadow:3px 3px 0 #000;
   background-color: #58b;
   font-family: sans-serif, SansSerif;
@@ -164,7 +164,7 @@ h1 {
 .aaPanelBody {
   padding: 1pc;
   white-space: nowrap;
-  background-color: #eee;
+  background-color: #f0f0f0;
 }
 .aaForm {
   /*margin-top: 1pc;*/
@@ -328,7 +328,7 @@ h1 {
 .aaGridTitleBar {
   padding: 0.25pc;
   color: #333;
-  text-shadow: 1px 1px 0 #eee;
+  text-shadow: 1px 1px 0 #f0f0f0;
   background-color: #b6cbe2;
   border-bottom: 1px solid #999;
   font-family: sans-serif, SansSerif;
@@ -363,10 +363,10 @@ h1 {
   background-color: #fff;
 }
 .aaRowBgColorData {
-  background-color: #eee;
+  background-color: #f0f0f0;
 }
 .aaRowBgColorNonData {
-  background-color: #eee;
+  background-color: #f0f0f0;
 }
 .aaRow {
   display: flex;

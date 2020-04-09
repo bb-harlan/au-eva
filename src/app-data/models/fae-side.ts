@@ -20,4 +20,14 @@ export class FaeSide {
       }
     }
   }
+  clone(): FaeSide {
+    let clonedFaeSide = new FaeSide(
+      /*id*/ this.id);
+    clonedFaeSide.listTotal = this.listTotal;
+    for (let listItem of this.acctList) {
+      let clonedListItem = listItem.clone();
+      clonedFaeSide.acctList.push(clonedListItem);
+    }
+    return clonedFaeSide;
+  }
 }

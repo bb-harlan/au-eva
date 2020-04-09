@@ -74,6 +74,8 @@ export class App {
   selectedBchg: Bchg = null;
   selectedTran: Tran = null;
   candidateTran: Tran = null;
+  candidateFaeSideAssets: FaeSide = null;
+  candidateFaeSideEquities: FaeSide = null;
   /*
   * About candidateTran
   * -------------------

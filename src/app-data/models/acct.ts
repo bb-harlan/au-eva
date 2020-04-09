@@ -32,9 +32,20 @@ export class Annotation extends EquationSideItem {
   //
   annoText: string;
 
-  constructor(id: string, faeSide: FaeSide, intraSideSorter: number, annoText: string) {
-    super(id, faeSide, intraSideSorter);
+  constructor(id: string,
+              parentFaeSide: FaeSide,
+              intraSideSorter: number,
+              annoText: string) {
+    super(id, parentFaeSide, intraSideSorter);
     this.annoText = annoText;
+  }
+  clone() {
+    let clonedAnno = new Annotation(
+      this.id,
+      this.parentFaeSide,
+      this.intraSideSorter,
+      this.annoText)
+  return clonedAnno;
   }
 }
 
@@ -46,8 +57,12 @@ export class Acct extends EquationSideItem {
   bchgList: Array<Bchg> = [];
   endingBalance: number = 0.00;
 
-  constructor(id: string, faeSide: FaeSide, intraSideSorter: number, title: string, normalBalance: number) {
-    super(id, faeSide, intraSideSorter);
+  constructor(id: string,
+              parentFaeSide: FaeSide,
+              intraSideSorter: number,
+              title: string,
+              normalBalance: number) {
+    super(id, parentFaeSide, intraSideSorter);
     this.title = title;
     this.normalBalance = normalBalance;
   }
@@ -62,5 +77,19 @@ export class Acct extends EquationSideItem {
         bchg.newBalance = this.endingBalance;
     }
     this.parentFaeSide.refresh();
+  }
+  clone() {
+    let clonedAcct = new Acct(
+      this.id,
+      this.parentFaeSide,
+      this.intraSideSorter,
+      this.title,
+      this.normalBalance)
+    clonedAcct.endingBalance = this.endingBalance;
+    for (let bchg of this.bchgList) {
+      let clonedBchg = bchg.clone(bchg.sourceTran, clonedAcct);
+      clonedAcct.bchgList.push(clonedBchg);
+    }
+    return clonedAcct;
   }
 }

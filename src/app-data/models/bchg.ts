@@ -36,11 +36,11 @@ export class Bchg {
         1 :
         (this.intraTranIndex < b.intraTranIndex ? -1 : 0));
   }
-  clone(sourceTran: Tran): Bchg {
+  clone(sourceTran: Tran, targetAcct: Acct): Bchg {
     let clonedBchg =  new Bchg(
       this.id,
       sourceTran,
-      this.targetAcct,
+      targetAcct,
       this.desc,
       this.amt);
     clonedBchg.intraTranIndex = this.intraTranIndex;

@@ -1,10 +1,21 @@
 <template>
+  <require from="au-views/au-icon-edit.html"></require>
+  <require from="au-views/au-text-ellipsis.html"></require>
   <require from="au-components/au-fae-side"></require>
   <require from="au-attributes/au-fae-side-data"></require>
   <require from="au-components/au-popup-acct-mover"></require>
   <template if.bind="app.selectedModule == app.MODULE_FAE">
     <div class="aaPanel aaPanelBoxShadow" css="true || ${app.selectedModule == app.MODULE_FAE ? '' : 'display: none;'}">
       <div class="aaPanelHeader aaPanelHeaderModule">The fundamental accounting equation</div>
+      <div class="aaPanelToolBar" element.ref="popupTop">
+        <button type="button"
+                class="aaBtn"
+                click.trigger="faeSidesEdit($event)">
+          <au-icon-edit></au-icon-edit>
+          &nbsp;Edit account lists
+          <au-text-ellipsis></au-text-ellipsis>
+        </button>
+      </div>
       <div class="aaPanelBody">
         <div class="aaEquSideContainer">
           <au-fae-side
@@ -14,7 +25,7 @@
           </au-fae-side>
         </div>
         <div class="aaEquSideContainer" style="padding: 0 1pc;">
-          <h1>=</h1>
+          <h1 style="margin: 0;">=</h1>
         </div>
         <div class="aaEquSideContainer">
           <au-fae-side
