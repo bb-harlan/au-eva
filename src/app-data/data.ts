@@ -167,6 +167,8 @@ export class Data {
       /*title*/ "Tallahassee Bank - checking account",
       /*normalBalance*/ 1);
     this.faeSideAssets.acctList.push(newAcct);
+    this.faeSideAssets.reindexAcctList();
+
     newAcct = new Acct(
       /*id*/ `acct${this.nextAcctId}`,
       /*parentFaeSide*/ this.faeSideEquities,
@@ -174,6 +176,7 @@ export class Data {
       /*title*/ "Rene's equity",
       /*normalBalance*/ 1);
     this.faeSideEquities.acctList.push(newAcct);
+    this.faeSideEquities.reindexAcctList();
     /*
     *************************************************
     * create opening position transaction

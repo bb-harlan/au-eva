@@ -11,7 +11,13 @@ export class FaeSide {
   sortAcctList(): void {
     this.acctList.sort((a, b) => a.compareTo(b));
   }
-  refresh(): void {
+  reindexAcctList() {
+    for (let i = 0; i <= this.acctList.length - 1; i++) {
+      this.acctList[i].intraSideSorter = i;
+  }
+}
+
+refresh(): void {
     this.sortAcctList();
     this.listTotal = 0.00;
     for (let acct of this.acctList) {

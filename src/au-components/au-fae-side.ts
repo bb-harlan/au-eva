@@ -13,6 +13,7 @@ export class AuFaeSide {
   auModuleFae: AuModuleFae;
 
   @bindable faeSide: FaeSide;
+  @bindable candidateFaeSide: FaeSide;
 
   /*=====================================================
     *  references
@@ -42,22 +43,22 @@ export class AuFaeSide {
     this.app = app;
     this.auModuleFae = auModuleFae;
   }
-/*
-  attached() {
-    console.log(`ATTACHED() - <au-fae-side> ${this.faeSide.id}`);
-    if (this.app.selectedAcct) {
-      this.app.gridScrollerLink.setAttribute("href", `#${this.app.selectedAcct.id}`);
-      this.app.gridScrollerLink.click();
+  /*
+    attached() {
+      console.log(`ATTACHED() - <au-fae-side> ${this.faeSide.id}`);
+      if (this.app.selectedAcct) {
+        this.app.gridScrollerLink.setAttribute("href", `#${this.app.selectedAcct.id}`);
+        this.app.gridScrollerLink.click();
+      }
     }
-  }
-  detached() {
-    console.log(`DETACHED() - <au-fae-side> ${this.faeSide.id}`);
-    if (this.app.selectedAcct) {
-      this.app.gridScrollerLink.setAttribute("href", `#${this.app.selectedAcct.id}`);
-      this.app.gridScrollerLink.click();
+    detached() {
+      console.log(`DETACHED() - <au-fae-side> ${this.faeSide.id}`);
+      if (this.app.selectedAcct) {
+        this.app.gridScrollerLink.setAttribute("href", `#${this.app.selectedAcct.id}`);
+        this.app.gridScrollerLink.click();
+      }
     }
-  }
-*/
+  */
   onRowEnter(event, listItem) {
     event.target.children[0].children[0].classList.toggle('aaRowOpsHover', true);
     event.target.children[2].classList.toggle('aaRowDataHover', true);
@@ -81,5 +82,49 @@ export class AuFaeSide {
 
   onEditRows(event) {
     alert('Not yet implemented.')
+  }
+  acctNew(event, currentListItem) {
+    let insertionIndex: number;
+    let newAcct: Acct;
+    if (currentListItem) {
+      insertionIndex = currentListItem.intraSideSorter;
+    }
+    else {
+      insertionIndex = this.candidateFaeSide.acctList.length;
+    }
+    newAcct = new Acct(
+      /*id*/ `acct${this.app.data.nextAcctId}`,
+      /*parentFaeSide*/ this.candidateFaeSide,
+      /*intraSideSorter*/ 0,
+      /*title*/ "<new account>",
+      /*normalBalance*/ 1);
+    this.candidateFaeSide.acctList.splice(insertionIndex, 0, newAcct);
+    this.candidateFaeSide.reindexAcctList();
+  }
+  annotationNew(event, currentListItem) {
+    let insertionIndex: number;
+    let newAnnotation: Annotation;
+    if (currentListItem) {
+      insertionIndex = currentListItem.intraSideSorter;
+    }
+    else {
+      insertionIndex = this.candidateFaeSide.acctList.length;
+    }
+    newAnnotation = new Annotation(
+      /*id*/ `acct${this.app.data.nextAcctId}`,
+      /*parentFaeSide*/ this.candidateFaeSide,
+      /*intraSideSorter*/ 0,
+      /*annoText*/ "<new annotation>");
+    this.candidateFaeSide.acctList.splice(insertionIndex, 0, newAnnotation);
+    this.candidateFaeSide.reindexAcctList();
+  }
+  listItemDelete(event, currentListItem) {
+    if (currentListItem instanceof Acct && currentListItem.bchgList.length != 0) {
+      alert("cannot delete");
+      return
+    }
+    let removalIndex = currentListItem.intraSideSorter;
+    this.candidateFaeSide.acctList.splice(removalIndex, 1);
+    this.candidateFaeSide.reindexAcctList();
   }
 }

@@ -140,7 +140,8 @@ h1 {
 }
 .aaPanelHeader {
   padding: 0.25pc;
-  color: #f0f0f0;
+  /*color: #f0f0f0;*/
+  color: #fff;
   text-shadow:3px 3px 0 #000;
   background-color: #58b;
   font-family: sans-serif, SansSerif;
@@ -327,8 +328,8 @@ h1 {
 }
 .aaGridTitleBar {
   padding: 0.25pc;
-  color: #333;
-  text-shadow: 1px 1px 0 #f0f0f0;
+  color: #000;
+  /*text-shadow: 1px 1px 0 #f0f0f0;*/
   background-color: #b6cbe2;
   border-bottom: 1px solid #999;
   font-family: sans-serif, SansSerif;

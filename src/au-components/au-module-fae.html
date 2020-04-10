@@ -8,18 +8,30 @@
     <div class="aaPanel aaPanelBoxShadow" css="true || ${app.selectedModule == app.MODULE_FAE ? '' : 'display: none;'}">
       <div class="aaPanelHeader aaPanelHeaderModule">The fundamental accounting equation</div>
       <div class="aaPanelToolBar" element.ref="popupTop">
-        <button type="button"
-                class="aaBtn"
-                click.trigger="faeSidesEdit($event)">
-          <au-icon-edit></au-icon-edit>
-          &nbsp;Edit account lists
-          <au-text-ellipsis></au-text-ellipsis>
-        </button>
+        <span class="aaToolBarDivider">.</span>
+        <template if.bind="faeView == NAV">
+          <button type="button"
+                  class="aaBtn"
+                  click.trigger="faeSidesEdit($event)">
+            <au-icon-edit></au-icon-edit>
+            &nbsp;Edit account lists
+            <au-text-ellipsis></au-text-ellipsis>
+          </button>
+        </template>
+        <template if.bind="faeView == EDIT">
+          <span class="aaFontLabel aaFontBold">Editing account lists:</span>
+          <span class="aaToolBarDivider aaHidden">.</span>
+          <button type="button" class="aaBtn" click.trigger="faeSidesEditDone($event)">Done</button>
+          <span class="aaToolBarDivider aaHidden">.</span>
+          <button type="button" class="aaBtn" click.trigger="faeSidesEditCancel($event)">Cancel</button>
+        </template>
+        <span class="aaToolBarDivider">.</span>
       </div>
       <div class="aaPanelBody">
         <div class="aaEquSideContainer">
           <au-fae-side
-            fae-side.one-time="app.data.faeSideAssets"
+            fae-side.to-view="app.data.faeSideAssets"
+            candidate-fae-side.to-view="app.candidateFaeSideAssets"
             mouseenter.trigger="selectSide(app.data.faeSideAssets)"
             mouseleave.trigger="deselectSide()">
           </au-fae-side>
@@ -29,7 +41,8 @@
         </div>
         <div class="aaEquSideContainer">
           <au-fae-side
-            fae-side.one-time="app.data.faeSideEquities"
+            fae-side.to-view="app.data.faeSideEquities"
+            candidate-fae-side.to-view="app.candidateFaeSideEquities"
             mouseenter.trigger="selectSide(app.data.faeSideEquities)"
             mouseleave.trigger="deselectSide()">
           </au-fae-side>

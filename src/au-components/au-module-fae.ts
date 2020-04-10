@@ -21,7 +21,7 @@ export class AuModuleFae {
    */
   viewmodelPopupAcctMover; // <au-popup-acct-mover view-model.ref="viewmodelPopupAcctMover"></au-popup-acct-mover>
 
-  constructor(app) {
+  constructor(app, auModuleFae) {
     this.app = app;
   }
   faeSidesEdit(event) {
@@ -33,6 +33,16 @@ export class AuModuleFae {
     console.log(this.app.candidateFaeSideEquities);
 */
     this.faeView = this.EDIT;
+  }
+  faeSidesEditDone(event) {
+    this.app.data.faeSideAssets = this.app.candidateFaeSideAssets;
+    this.app.data.faeSideEquities = this.app.candidateFaeSideEquities;
+    this.faeView = this.NAV;
+  }
+  faeSidesEditCancel(event) {
+    this.app.candidateFaeSideAssets = null;
+    this.app.candidateFaeSideEquities = null;
+    this.faeView = this.NAV;
   }
   selectSide(faeSide) {
     this.app.selectedFaeSide = faeSide;
