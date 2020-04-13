@@ -68,8 +68,7 @@
                 </button>
               </div>
               <div class="aaVerticalGridline"></div>
-              <div
-                class="aaRowData aaRowBgColorData">
+              <div class="aaRowData aaRowBgColorData">
                 <span class="aaCell aaCellAnnoTitle">${listItem.annoText}</span>
                 <div class="aaVerticalGridline"></div>
                 <span class="aaCell aaCellBchgBal"></span>
@@ -154,7 +153,14 @@
               <div class="aaVerticalGridline"></div>
               <div
                 class="aaRowData aaRowBgColorData">
+                <input type="text"
+                       class="aaFormInputText aaCellAcctTitle"
+                       xstyle="border-color: transparent;"
+                       placeholder="<account title>"
+                       value.bind="listItem.title">
+<!--
                 <span class="aaCell aaCellAcctTitle">${listItem.title}</span>
+-->
                 <div class="aaVerticalGridline"></div>
                 <span class="aaCell aaCellBchgBal">${listItem.endingBalance | auCurrencyConverter}</span>
               </div>
@@ -177,9 +183,15 @@
                 </div>
               </div>
               <div class="aaVerticalGridline"></div>
-              <div
-                class="aaRowData aaRowBgColorData">
+              <div class="aaRowData aaRowBgColorData">
+                <input type="text"
+                       class="aaFormInputText aaCellAnnoTitle"
+                       xstyle="border-color: transparent;"
+                       placeholder="<annotation text>"
+                       value.bind="listItem.annoText">
+<!--
                 <span class="aaCell aaCellAnnoTitle">${listItem.annoText}</span>
+-->
                 <div class="aaVerticalGridline"></div>
                 <span class="aaCell aaCellBchgBal"></span>
               </div>
