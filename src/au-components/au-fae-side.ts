@@ -79,15 +79,11 @@ export class AuFaeSide {
       this.rowOpsMenuModal.style.display = "none";
     }
   }
-
-  onEditRows(event) {
-    alert('Not yet implemented.')
-  }
   acctNew(event, currentListItem) {
     let insertionIndex: number;
     let newAcct: Acct;
     if (currentListItem) {
-      insertionIndex = currentListItem.intraSideSorter;
+      insertionIndex = currentListItem.intraSideIndex;
     }
     else {
       insertionIndex = this.candidateFaeSide.acctList.length;
@@ -95,7 +91,7 @@ export class AuFaeSide {
     newAcct = new Acct(
       /*id*/ `acct${this.app.data.nextAcctId}`,
       /*parentFaeSide*/ this.candidateFaeSide,
-      /*intraSideSorter*/ 0,
+      /*intraSideIndex*/ 0,
       /*title*/ "<new account>",
       /*normalBalance*/ 1);
     this.candidateFaeSide.acctList.splice(insertionIndex, 0, newAcct);
@@ -105,7 +101,7 @@ export class AuFaeSide {
     let insertionIndex: number;
     let newAnnotation: Annotation;
     if (currentListItem) {
-      insertionIndex = currentListItem.intraSideSorter;
+      insertionIndex = currentListItem.intraSideIndex;
     }
     else {
       insertionIndex = this.candidateFaeSide.acctList.length;
@@ -113,7 +109,7 @@ export class AuFaeSide {
     newAnnotation = new Annotation(
       /*id*/ `acct${this.app.data.nextAcctId}`,
       /*parentFaeSide*/ this.candidateFaeSide,
-      /*intraSideSorter*/ 0,
+      /*intraSideIndex*/ 0,
       /*annoText*/ "<new annotation>");
     this.candidateFaeSide.acctList.splice(insertionIndex, 0, newAnnotation);
     this.candidateFaeSide.reindexAcctList();
@@ -123,7 +119,7 @@ export class AuFaeSide {
       alert("cannot delete");
       return
     }
-    let removalIndex = currentListItem.intraSideSorter;
+    let removalIndex = currentListItem.intraSideIndex;
     this.candidateFaeSide.acctList.splice(removalIndex, 1);
     this.candidateFaeSide.reindexAcctList();
   }

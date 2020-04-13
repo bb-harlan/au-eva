@@ -9,7 +9,7 @@
       <div class="aaPanelHeader aaPanelHeaderModule">The fundamental accounting equation</div>
       <div class="aaPanelToolBar" element.ref="popupTop">
         <span class="aaToolBarDivider">.</span>
-        <template if.bind="faeView == NAV">
+        <template if.bind="app.viewNavMode">
           <button type="button"
                   class="aaBtn"
                   click.trigger="faeSidesEdit($event)">
@@ -18,7 +18,7 @@
             <au-text-ellipsis></au-text-ellipsis>
           </button>
         </template>
-        <template if.bind="faeView == EDIT">
+        <template if.bind="!app.viewNavMode">
           <span class="aaFontLabel aaFontBold">Editing account lists:</span>
           <span class="aaToolBarDivider aaHidden">.</span>
           <button type="button" class="aaBtn" click.trigger="faeSidesEditDone($event)">Done</button>

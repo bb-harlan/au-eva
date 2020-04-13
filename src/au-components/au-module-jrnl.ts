@@ -17,6 +17,7 @@ export class AuModuleJrnl {
      * NOTE: I don't know exactly WHY the use of MutationObserver below works to solve
      * the problem of scrolling to the grid row of the selectedTran, but it does.
      */
+
     this.mutationObserver = new MutationObserver(this.mutationObserverCallback);
     this.mutationObserver.app = this.app; // add new property for use by callback function
     this.mutationObserver.observe(this.rootDivOfJrnl, {childList: false, attributes: true, attributeOldValue: true,  subtree: false});

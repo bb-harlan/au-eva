@@ -67,7 +67,7 @@ export class AuPopupAcctMover {
     this.moverAcctList.splice(0, this.moverAcctList.length); //done with it, delete all members
     for (let i = 0; i <= this.moverGridRows.childElementCount - 1; i++) {
       let listItem = (<any>this.moverGridRows.children[i]).listItem as Acct | Annotation;
-      listItem.intraSideSorter = i;
+      listItem.intraSideIndex = i;
     }
     this.faeSide.sortAcctList();
     this.moverDialogModal.style.display = "none";

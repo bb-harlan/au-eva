@@ -4,13 +4,6 @@ import {App} from 'app';
 @customElement('au-module-fae')
 @inject(App)
 export class AuModuleFae {
-  get NAV() {
-    return "nav";
-  }
-  get EDIT() {
-    return "edit";
-  }
-  faeView = this.NAV;
 
   // @injected item(s)
   app: App;
@@ -27,22 +20,21 @@ export class AuModuleFae {
   faeSidesEdit(event) {
     this.app.candidateFaeSideAssets = this.app.data.faeSideAssets.clone();
     this.app.candidateFaeSideEquities = this.app.data.faeSideEquities.clone();
-/*
-    console.log("*** clones of faeSides ***")
-    console.log(this.app.candidateFaeSideAssets);
-    console.log(this.app.candidateFaeSideEquities);
-*/
-    this.faeView = this.EDIT;
+    this.app.viewNavMode = false;
   }
   faeSidesEditDone(event) {
     this.app.data.faeSideAssets = this.app.candidateFaeSideAssets;
+    this.app.candidateFaeSideAssets = null;
+    this.app.data.faeSideAssets.refresh();
     this.app.data.faeSideEquities = this.app.candidateFaeSideEquities;
-    this.faeView = this.NAV;
+    this.app.candidateFaeSideEquities = null;
+    this.app.data.faeSideEquities.refresh();
+    this.app.viewNavMode = true;;
   }
   faeSidesEditCancel(event) {
     this.app.candidateFaeSideAssets = null;
     this.app.candidateFaeSideEquities = null;
-    this.faeView = this.NAV;
+    this.app.viewNavMode = true;;
   }
   selectSide(faeSide) {
     this.app.selectedFaeSide = faeSide;

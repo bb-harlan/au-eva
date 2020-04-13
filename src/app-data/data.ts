@@ -77,15 +77,15 @@ export class Data {
     newAnno = new Annotation(
       /*annoId*/ annoId,
       /*faeSide*/ this.faeSideAssets,
-      /*intraSideSorter*/ this.nextSorter,
+      /*intraSideIndex*/ this.nextSorter,
       /*annoText*/ `Test annotation (equationSide: ${this.faeSideAssets.id}; annoId: ${annoId};)`);
     this.faeSideAssets.acctList.push(newAnno);
-    for (let intraSideSorter = 15; intraSideSorter > 0; intraSideSorter--) {
+    for (let intraSideIndex = 15; intraSideIndex > 0; intraSideIndex--) {
       acctId = `acct${this.nextAcctId}`;
       newAcct = new Acct(
         /*id*/ acctId,
         /*parentFaeSide*/ this.faeSideAssets,
-        /*intraSideSorter*/ this.nextSorter,
+        /*intraSideIndex*/ this.nextSorter,
         /*title*/ `Test account (equationSide: ${this.faeSideAssets.id}, acctId: ${acctId};)`,
         /*normalBalance*/ 1);
       this.faeSideAssets.acctList.push(newAcct);
@@ -94,7 +94,7 @@ export class Data {
       newAcct = new Acct(
         /*id*/ acctId,
         /*parentFaeSide*/ this.faeSideEquities,
-        /*intraSideSorter*/ this.nextSorter,
+        /*intraSideIndex*/ this.nextSorter,
         /*title*/ `Test account (equationSide: ${this.faeSideEquities.id}; acctId: ${acctId};)`,
         /*normalBalance*/  1);
       this.faeSideEquities.acctList.push(newAcct);
@@ -156,14 +156,14 @@ export class Data {
     newAcct = new Acct(
       /*id*/ `acct${this.nextAcctId}`,
       /*parentFaeSide*/ this.faeSideAssets,
-      /*intraSideSorter*/ this.nextSorter,
+      /*intraSideIndex*/ this.nextSorter,
       /*title*/ "Pocket money",
       /*normalBalance*/ 1);
     this.faeSideAssets.acctList.push(newAcct);
     newAcct = new Acct(
       /*id*/ `acct${this.nextAcctId}`,
       /*parentFaeSide*/ this.faeSideAssets,
-      /*intraSideSorter*/ this.nextSorter,
+      /*intraSideIndex*/ this.nextSorter,
       /*title*/ "Tallahassee Bank - checking account",
       /*normalBalance*/ 1);
     this.faeSideAssets.acctList.push(newAcct);
@@ -172,7 +172,7 @@ export class Data {
     newAcct = new Acct(
       /*id*/ `acct${this.nextAcctId}`,
       /*parentFaeSide*/ this.faeSideEquities,
-      /*intraSideSorter*/ this.nextSorter,
+      /*intraSideIndex*/ this.nextSorter,
       /*title*/ "Rene's equity",
       /*normalBalance*/ 1);
     this.faeSideEquities.acctList.push(newAcct);

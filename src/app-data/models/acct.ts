@@ -5,12 +5,12 @@ import {FaeSide} from './fae-side';
 export abstract class EquationSideItem {
   id: string;
   parentFaeSide: FaeSide;
-  intraSideSorter: number;
+  intraSideIndex: number;
 
-  constructor(id: string, parentFaeSide: FaeSide, intraSideSorter: number) {
+  constructor(id: string, parentFaeSide: FaeSide, intraSideIndex: number) {
     this.id = id;
     this.parentFaeSide = parentFaeSide;
-    this.intraSideSorter = intraSideSorter;
+    this.intraSideIndex = intraSideIndex;
   }
   isAcct(): boolean {
     return (this instanceof Acct);
@@ -21,7 +21,7 @@ export abstract class EquationSideItem {
   compareTo(b: EquationSideItem): number {
     return (
       this.parentFaeSide.id == b.parentFaeSide.id ?
-        (this.intraSideSorter > b.intraSideSorter ? 1 : -1) :
+        (this.intraSideIndex > b.intraSideIndex ? 1 : -1) :
         (this.parentFaeSide.id > b.parentFaeSide.id ? 1 : -1)
     );
   }
@@ -34,16 +34,16 @@ export class Annotation extends EquationSideItem {
 
   constructor(id: string,
               parentFaeSide: FaeSide,
-              intraSideSorter: number,
+              intraSideIndex: number,
               annoText: string) {
-    super(id, parentFaeSide, intraSideSorter);
+    super(id, parentFaeSide, intraSideIndex);
     this.annoText = annoText;
   }
   clone() {
     let clonedAnno = new Annotation(
       this.id,
       this.parentFaeSide,
-      this.intraSideSorter,
+      this.intraSideIndex,
       this.annoText)
   return clonedAnno;
   }
@@ -59,10 +59,10 @@ export class Acct extends EquationSideItem {
 
   constructor(id: string,
               parentFaeSide: FaeSide,
-              intraSideSorter: number,
+              intraSideIndex: number,
               title: string,
               normalBalance: number) {
-    super(id, parentFaeSide, intraSideSorter);
+    super(id, parentFaeSide, intraSideIndex);
     this.title = title;
     this.normalBalance = normalBalance;
   }
@@ -76,15 +76,14 @@ export class Acct extends EquationSideItem {
         this.endingBalance += bchg.amt;
         bchg.newBalance = this.endingBalance;
     }
-    this.parentFaeSide.refresh();
   }
   clone() {
     let clonedAcct = new Acct(
       this.id,
       this.parentFaeSide,
-      this.intraSideSorter,
+      this.intraSideIndex,
       this.title,
-      this.normalBalance)
+      this.normalBalance);
     clonedAcct.endingBalance = this.endingBalance;
     for (let bchg of this.bchgList) {
       let clonedBchg = bchg.clone(bchg.sourceTran, clonedAcct);

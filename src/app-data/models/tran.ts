@@ -48,9 +48,11 @@ export class Tran {
         }
       }
     }
+/*
     for (let bchg of this.bchgList) {
       bchg.targetAcct.refresh();
     }
+*/
   }
   register(): void {
     this.parentJrnl.tranList.push(this);
@@ -80,6 +82,12 @@ export class Tran {
       let clonedBchg = bchg.clone(clonedTran, bchg.targetAcct);
       clonedTran.bchgList.push(clonedBchg);
     }
+/*
+    console.log("*** selectedTran & clonedTran before editing ***");
+    console.log(this);
+    console.log(clonedTran);
+    console.log("*******************************");
+*/
     return clonedTran;
   }
 }

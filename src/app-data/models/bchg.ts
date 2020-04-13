@@ -44,18 +44,20 @@ export class Bchg {
       this.desc,
       this.amt);
     clonedBchg.intraTranIndex = this.intraTranIndex;
+    clonedBchg.newBalance = this.newBalance;
     return clonedBchg;
   }
   registerToAcct() {
     this.targetAcct.bchgList.push(this);
+    this.targetAcct.parentFaeSide.refresh();
   }
   unregisterFromAcct() {
     let thisIndex = this.targetAcct.bchgList.findIndex((element) => element.id == this.id);
     this.targetAcct.bchgList.splice(thisIndex, 1);
-    this.targetAcct.refresh();
+    this.targetAcct.parentFaeSide.refresh();
   }
-  unregFromTran() {
-    let thisIndex = this.sourceTran.bchgList.findIndex((element) => element.id == this.id);
+  unregisterFromTran() {
+    let thisIndex = this.sourceTran.bchgList.findIndex((arrayElement) => arrayElement.id == this.id);
     this.sourceTran.bchgList.splice(thisIndex, 1);
   }
   setAmtToBalanceTran() {

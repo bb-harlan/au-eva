@@ -7,19 +7,16 @@ import {Bchg} from 'app-data/models/bchg';
 @inject(App)
 
 export class AuModuleTran {
-  get NAV() {
-    return "nav";
-  }
-  get NEW() {
+  get TRAN_OP_NEW() {
     return "new";
   }
-  get EDIT() {
+  get TRAN_OP_EDIT() {
     return "edit";
   }
-  get DELETE() {
-    return "delete";
+  get TRAN_OP_DELETE() {
+    return "deleteedit";
   }
-  tranView = this.NAV;
+  tranOp = "";
 
   // @injected item(s)
   app: App;
@@ -117,7 +114,8 @@ export class AuModuleTran {
       /*parentJrnl*/ this.app.data.jrnl,
       /*date*/ new Date().toISOString().slice(0,10),
       /*intraDateSorter*/ this.app.data.nextSorter);
-    this.tranView = this.NEW;
+    this.app.viewNavMode = false;
+    this.tranOp = this.TRAN_OP_NEW;
   }
   tranNewDone(event) {
     if (this.app.candidateTran.totalChangesAssets != this.app.candidateTran.totalChangesEquities) {
@@ -133,7 +131,8 @@ export class AuModuleTran {
     this.app.selectedTran = this.app.candidateTran;
     this.app.selectedTran.parentJrnl.refresh();
     this.app.candidateTran = null;
-    this.tranView = this.NAV;
+    this.tranOp = null;
+    this.app.viewNavMode = true;;
     if (this.app.invokingModule == this.app.MODULE_TRAN) {
       this.app.invokingModule = null;
       this.app.goJrnlModule;
@@ -141,7 +140,8 @@ export class AuModuleTran {
   }
   tranNewCancel(event) {
     this.app.candidateTran = null;
-    this.tranView = this.NAV;
+    this.tranOp = null;
+    this.app.viewNavMode = true;;
     if (this.app.invokingModule) {
       this.app.selectedModule = this.app.invokingModule;
       this.app.invokingModule = null;
@@ -149,9 +149,19 @@ export class AuModuleTran {
   }
   tranEdit(event) {
     this.app.candidateTran = this.app.selectedTran.clone();
-    this.tranView = this.EDIT;
+    console.log("*** selectedTran & candidateTran before editing ***");
+    console.log(this.app.selectedTran);
+    console.log(this.app.candidateTran);
+    console.log("*******************************");
+    this.tranOp = this.TRAN_OP_EDIT;
+    this.app.viewNavMode = false;
   }
   tranEditDone(event) {
+    console.log("*** selectedTran & candidateTran after editing ***");
+    console.log(this.app.selectedTran);
+    console.log(this.app.candidateTran);
+    console.log("*******************************");
+    let jrnlSortNeeded = false;
     if (this.app.candidateTran.totalChangesAssets != this.app.candidateTran.totalChangesEquities) {
       alert("Transaction is out of balance.")
       return;
@@ -162,37 +172,49 @@ export class AuModuleTran {
     }
     if (this.app.candidateTran.date != this.app.selectedTran.date) {
       this.app.candidateTran.intraDateSorter = this.app.data.nextSorter;
+      jrnlSortNeeded = true;
     }
-    console.log(`tranEditDone() -  app.selectedTran.date: "${this.app.selectedTran.date}"; app.selectedTran.intraDateSorter: "${this.app.selectedTran.intraDateSorter}";`)
-    console.log(`tranEditDone() - app.candidateTran.date: "${this.app.candidateTran.date}"; app.candiateTran.intraDateSorter: "${this.app.candidateTran.intraDateSorter}";`)
+    this.app.candidateTran.refresh();
     this.app.selectedTran.unregister();
     this.app.candidateTran.register();
     this.app.selectedTran = this.app.candidateTran;
-    this.app.data.jrnl.refresh();
     this.app.candidateTran = null;
-    this.tranView = this.NAV;
+    this.app.selectedAcct = null;
+    this.app.data.jrnl.refresh();
+    if (jrnlSortNeeded) {
+      this.app.data.jrnl.sortTranList();
+    }
+    this.app.data.faeSideAssets.refresh();
+    this.app.data.faeSideEquities.refresh();
+    this.tranOp = null;
+    this.app.viewNavMode = true;;
   }
   tranEditCancel(event) {
     this.app.candidateTran = null;
-    this.tranView = this.NAV;
+    this.tranOp = null;
+    this.app.viewNavMode = true;;
   }
   tranDelete(event) {
-    this.tranView = this.DELETE;
+    this.tranOp = this.TRAN_OP_DELETE;
+    this.app.viewNavMode = false;
   }
   tranDeleteConfirmed(event) {
     if (this.app.selectedTran.parentJrnl.tranList.length == 1) {
       // selectedTran is the only tran in jrnl.tranList and
       // unregistering it will leave no tran in the jrnl.tranList
       this.app.selectedTran.unregister();
-      this.tranView = this.NAV;
+      this.app.data.faeSideAssets.refresh();
+      this.app.data.faeSideEquities.refresh();
       this.app.selectedTran = null;
-      // this.app.goJrnlModule();
+      this.tranOp = null;
+      this.app.viewNavMode = true;;
+      this.app.goJrnlModule(event);
     }
     else {
       // determine which tran will replace this.app.selectedTran after
       // this.app.selectedTran is unregistered
       let nextTran;
-      let indexOfSelectedTran = this.app.selectedTran.parentJrnl.tranList.findIndex(tran => tran.id == this.app.selectedTran.id);
+      let indexOfSelectedTran = this.app.selectedTran.parentJrnl.tranList.findIndex(arrayElement => arrayElement.id == this.app.selectedTran.id);
       if (indexOfSelectedTran < this.app.selectedTran.parentJrnl.tranList.length - 1) {
         // selectedTran is not the last tran in jrnl.tranList so that at least one tran follows it.
         nextTran = this.app.selectedTran.parentJrnl.tranList[indexOfSelectedTran + 1];
@@ -202,18 +224,18 @@ export class AuModuleTran {
         nextTran = this.app.selectedTran.parentJrnl.tranList[indexOfSelectedTran - 1];
       }
       this.app.selectedTran.unregister();
+      this.app.data.faeSideAssets.refresh();
+      this.app.data.faeSideEquities.refresh();
       this.app.selectedTran = nextTran;
-      this.tranView = this.NAV;
+      this.tranOp = null;
+      this.app.viewNavMode = true;;
     }
   }
   tranDeleteCancel(event) {
-    this.tranView = this.NAV;
+    this.app.viewNavMode = true;;
   }
   onMenuClick(event, bchg) {
     alert(`bchg.id: ${bchg ? bchg.id : "End-of-list"} - "Row ops menu" not yet implemented.`);
-  }
-  onEditRows(event) {
-    alert('Not yet implemented.')
   }
   acctPicked(message) {
     console.log(message);

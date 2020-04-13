@@ -1,4 +1,4 @@
-import {TaskQueue, inject} from 'aurelia-framework';
+// import {TaskQueue, inject} from 'aurelia-framework';
 import {Data} from "app-data/data";
 import {Acct, Annotation} from 'app-data/models/acct';
 import {FaeSide} from 'app-data/models/fae-side';
@@ -6,13 +6,7 @@ import {Tran} from 'app-data/models/tran';
 import {Bchg} from 'app-data/models/bchg';
 import {Jrnl} from 'app-data/models/jrnl';
 
-@inject(TaskQueue)
 export class App {
-  taskQueue: TaskQueue;
-
-  constructor(TaskQueue) {
-    this.taskQueue = TaskQueue;
-  }
 
   get MODULE_FAE() {
     return "fae";
@@ -36,17 +30,6 @@ export class App {
   get NAV_RIGHT_CHAR() {
     return String.fromCharCode(0xf054); // FontAwesome
   }
-  // remove following when I have finished abandoning it
-  get MODULE_MODE_NAVIGATING() {
-    return "navigating";
-  }
-  // remove following when I have finished abandoning it
-  get MODULE_MODE_EDITING() {
-    return "editing";
-  }
-  get MODULE_MODE_MOVING_ROWS() {
-    return "moving rows";
-  }
 
   /* element.ref properties */
   gridScrollerLink: HTMLElement; //<a> tag used to scroll grid to row having specifid Id
@@ -66,8 +49,7 @@ export class App {
    */
   selectedModule = this.MODULE_FAE;
   invokingModule = null;
-  // remove following when I have finished abandoning it
-  selectedModuleMode = this.MODULE_MODE_NAVIGATING;
+  viewNavMode = true;
 
   selectedFaeSide: FaeSide = null;
   selectedAcct: Acct = null;
@@ -130,14 +112,14 @@ export class App {
           revivedListItem = new Annotation(
             /*annoId*/ listItem.id,
             /*faeSide*/ revivedFaeSide,
-            /*intraSideSorter*/ listItem.intraSideSorter,
+            /*intraSideIndex*/ listItem.intraSideIndex,
             /*annoText*/ listItem.annoText);
         }
         else {
           revivedListItem = new Acct(
             /*annoId*/ listItem.id,
             /*faeSide*/ revivedFaeSide,
-            /*intraSideSorter*/ listItem.intraSideSorter,
+            /*intraSideIndex*/ listItem.intraSideIndex,
             /*annoText*/ listItem.title,
             /*normalBalance*/ listItem.normalBalance);
           revivedListItem.endingBalance = listItem.endingBalance;

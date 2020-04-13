@@ -18,7 +18,7 @@
     <div class="aaGridTitleBar" style="font-size: larger;">${faeSide.id | auEquationSideConverter:true: false}
       accounts
     </div>
-    <template if.bind="auModuleFae.faeView ==  auModuleFae.NAV">
+    <template if.bind="app.viewNavMode">
       <div class="aaRow aaRowColumnHeaders aaFontLabel aaFontBold">
         <div class="aaRowOps aaHidden">
           <div class="aaRadioBtn">
@@ -98,7 +98,7 @@
       </div>
       <div class="aaGridFooterBar"></div>
     </template>
-    <template if.bind="auModuleFae.faeView ==  auModuleFae.EDIT">
+    <template if.bind="!app.viewNavMode">
       <div class="aaPanelToolBar" element.ref="popupTop">
         <button type="button"
                 class="aaBtn"
@@ -110,7 +110,7 @@
       </div>
       <div class="aaRow aaRowColumnHeaders aaFontLabel aaFontBold">
         <div class="aaRowOps aaHidden">
-                    <span class="aaBtn">
+          <span class="aaBtn">
                       <au-icon-new></au-icon-new>
                     </span>
           <span class="aaBtn">
@@ -134,8 +134,7 @@
                class="aaRow"
                mouseenter.trigger="onRowEnter($event, listItem)"
                mouseleave.trigger="onRowLeave($event, listItem)"
-               click.trigger="app.selectAcct(listItem)"
-               dblclick.trigger="app.selectSideAcctGoAcct(listItem)">
+               click.trigger="app.selectAcct(listItem)">
             <template if.bind="listItem.isAcct()">
               <div class="aaRowOps aaBgColorToolbar aaFontSizeLabel">
                 <div class="aaRowOpsOpacity">
@@ -207,13 +206,13 @@
                     </span>
             </div>
           </div>
-          <div class="aaVerticalGridline" style="width: 3px;"></div>
+          <div class="aaVerticalGridline"></div>
           <div class="aaRowData aaHidden">
             <span class="aaCell aaCellAcctTitle">x</span>
             <div class="aaVerticalGridline"></div>
             <span class="aaCell aaCellBchgBal">0</span>
           </div>
-          <div class="aaVerticalGridline" style="width: 3px;"></div>
+          <div class="aaVerticalGridline"></div>
         </div>
         <template if.bind="faeSide.acctList.length == 0">
           <div class="aaRow aaHidden">
@@ -239,9 +238,22 @@
   <div class="aaGridContainer" style="border-color: transparent; background-color: transparent;">
     <div class="aaRow" style="border-bottom-color: transparent; background-color: transparent;">
       <div class="aaRowOps aaHidden">
-        <button type="button" class="aaBtn">
-          <au-icon-nav-right></au-icon-nav-right>
-        </button>
+        <template if.bind="app.viewNavMode">
+          <button type="button" class="aaBtn">
+            <au-icon-nav-right></au-icon-nav-right>
+          </button>
+        </template>
+        <template if.bind="!app.viewNavMode">
+          <span class="aaBtn">
+                      <au-icon-new></au-icon-new>
+                    </span>
+          <span class="aaBtn">
+                      <au-icon-new></au-icon-new>
+                    </span>
+          <span class="aaBtn">
+                      <au-icon-delete></au-icon-delete>
+                    </span>
+        </template>
       </div>
       <div class="aaVerticalGridline aaHidden"></div>
       <div class="aaRowData">
