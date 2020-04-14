@@ -30,12 +30,11 @@ export class FaeSide {
   clone(): FaeSide {
     let clonedFaeSide = new FaeSide(
       /*id*/ this.id);
-    clonedFaeSide.acctList= this.acctList;
-    clonedFaeSide.listTotal = this.listTotal;
-   /* for (let listItem of this.acctList) {
+    for (let listItem of this.acctList) {
       let clonedListItem = listItem.clone();
       clonedFaeSide.acctList.push(clonedListItem);
-    }*/
+    }
+    clonedFaeSide.listTotal = this.listTotal;
     return clonedFaeSide;
   }
 }

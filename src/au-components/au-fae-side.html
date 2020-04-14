@@ -35,13 +35,13 @@
       </div>
       <div class="aaGridScrollableRows">
         <template repeat.for="listItem of faeSide.acctList">
-          <div id="${listItem.id}"
-               class="aaRow"
-               mouseenter.trigger="onRowEnter($event, listItem)"
-               mouseleave.trigger="onRowLeave($event, listItem)"
-               click.trigger="app.selectAcct(listItem)"
-               dblclick.trigger="app.selectSideAcctGoAcct(listItem)">
-            <template if.bind="listItem.isAcct()">
+          <template if.bind="listItem.isAcct()">
+            <div id="${listItem.id}"
+                 class="aaRow"
+                 mouseenter.trigger="onRowEnter($event, listItem)"
+                 mouseleave.trigger="onRowLeave($event, listItem)"
+                 click.trigger="app.selectAcct(listItem)"
+                 dblclick.trigger="app.selectAcctAndGo(listItem)">
               <div class="aaRowOps aaBgColorToolbar">
                 <div class="aaRadioBtn">
                   <template if.bind="app.selectedAcct.id == listItem.id">
@@ -60,8 +60,13 @@
                 <span class="aaCell aaCellBchgBal">${listItem.endingBalance | auCurrencyConverter}</span>
               </div>
               <div class="aaVerticalGridline"></div>
-            </template>
-            <template if.bind="listItem.isAnnotation()">
+            </div>
+          </template>
+          <template if.bind="listItem.isAnnotation()">
+            <div id="${listItem.id}"
+                 class="aaRow"
+                 mouseenter.trigger="onRowEnter($event, listItem)"
+                 mouseleave.trigger="onRowLeave($event, listItem)">
               <div class="aaRowOps aaBgColorToolbar">
                 <button type="button" class="aaBtn aaHidden">
                   <au-icon-radio-unselected></au-icon-radio-unselected>
@@ -74,8 +79,8 @@
                 <span class="aaCell aaCellBchgBal"></span>
               </div>
               <div class="aaVerticalGridline"></div>
-            </template>
-          </div>
+            </div>
+          </template>
         </template>
         <template if.bind="faeSide.acctList.length == 0">
           <div class="aaRow aaHidden">
@@ -101,7 +106,7 @@
       <div class="aaPanelToolBar" element.ref="popupTop">
         <button type="button"
                 class="aaBtn"
-                click.trigger="app.viewmodelPopupAcctMover.open(popupTop, popupLeft, candidateFaeSide)">
+                click.trigger="app.viewmodelPopupAcctMover.open(popupTop, popupLeft, faeSide)">
           <au-icon-row-mover></au-icon-row-mover>
           &nbsp;Move rows
           <au-text-ellipsis></au-text-ellipsis>
@@ -121,14 +126,14 @@
         </div>
         <div class="aaVerticalGridline" style="background-color: #fff;" element.ref="popupLeft"></div>
         <div class="aaRowData">
-          <div class="aaCell aaCellAcctTitle">Title</div>
+          <div class="aaCell aaCellAcctTitle aaCellInGrid">Title</div>
           <div class="aaVerticalGridline" style="background-color: #fff;"></div>
           <div class="aaCell aaCellBchgBal">Balance</div>
           <div class="aaVerticalGridline" style="background-color: #fff;"></div>
         </div>
       </div>
       <div class="aaGridScrollableRows">
-        <template repeat.for="listItem of candidateFaeSide.acctList">
+        <template repeat.for="listItem of faeSide.acctList">
           <div id="${listItem.id}"
                class="aaRow"
                mouseenter.trigger="onRowEnter($event, listItem)"
@@ -154,13 +159,12 @@
               <div
                 class="aaRowData aaRowBgColorData">
                 <input type="text"
-                       class="aaFormInputText aaCellAcctTitle"
-                       xstyle="border-color: transparent;"
+                       class="aaFormInputText aaCellAcctTitle aaCellInGrid"
                        placeholder="<account title>"
                        value.bind="listItem.title">
-<!--
-                <span class="aaCell aaCellAcctTitle">${listItem.title}</span>
--->
+                <!--
+                                <span class="aaCell aaCellAcctTitle">${listItem.title}</span>
+                -->
                 <div class="aaVerticalGridline"></div>
                 <span class="aaCell aaCellBchgBal">${listItem.endingBalance | auCurrencyConverter}</span>
               </div>
@@ -185,13 +189,12 @@
               <div class="aaVerticalGridline"></div>
               <div class="aaRowData aaRowBgColorData">
                 <input type="text"
-                       class="aaFormInputText aaCellAnnoTitle"
-                       xstyle="border-color: transparent;"
+                       class="aaFormInputText aaCellAnnoTitle aaCellInGrid"
                        placeholder="<annotation text>"
                        value.bind="listItem.annoText">
-<!--
-                <span class="aaCell aaCellAnnoTitle">${listItem.annoText}</span>
--->
+                <!--
+                                <span class="aaCell aaCellAnnoTitle">${listItem.annoText}</span>
+                -->
                 <div class="aaVerticalGridline"></div>
                 <span class="aaCell aaCellBchgBal"></span>
               </div>

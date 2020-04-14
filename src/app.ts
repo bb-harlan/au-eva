@@ -53,6 +53,7 @@ export class App {
 
   selectedFaeSide: FaeSide = null;
   selectedAcct: Acct = null;
+  filteredAcctList: Array<Acct | Annotation>;
   selectedBchg: Bchg = null;
   selectedTran: Tran = null;
   candidateTran: Tran = null;
@@ -151,7 +152,7 @@ export class App {
     this.data = null;
     // alert("Wait");
     this.data = revivedData;
-  // *** IT WORKS!!!! ***
+    // *** IT WORKS!!!! ***
   }
   replacer(key, value) {
     if (key == "parentFaeSide" ||
@@ -163,63 +164,50 @@ export class App {
     return value;
   }
 
-  selectAcct(listItem)
-    :
-    void {
-    if (listItem.isAcct()
-    ) {
-      this.selectedAcct = listItem;
-    }
+  selectAcct(acct): void {
+    this.selectedAcct = acct;
   }
-  selectSideAcctGoAcct(listItem)
-    :
-    void {
-    if (listItem.isAcct()
-    ) {
-      this.selectedAcct = listItem;
-      this.selectedModule = this.MODULE_ACCT;
-    }
+  selectAcctAndGo(acct): void {
+    this.selectedAcct = acct;
+    this.filteredAcctList = this.selectedAcct.parentFaeSide.acctList.filter(listItem => listItem instanceof Acct);
+    this.goAcctModule(event);
   }
-  selectBchg(bchg)
-    :
-    void {
+  selectBchg(bchg): void {
     this.selectedBchg = bchg;
     this.selectedAcct = bchg.targetAcct;
     this.selectedTran = bchg.sourceTran;
   }
-  selectAcctBchgGoTran(bchg)
-    :
-    void {
+  selectAcctBchgGoTran(bchg): void {
     this.selectedBchg = bchg;
     this.selectedAcct = bchg.targetAcct;
     this.selectedTran = bchg.sourceTran;
     this.selectedModule = this.MODULE_TRAN;
   }
-  selectTranBchgGoAcct(bchg)
-    :
-    void {
+  selectTranBchgGoAcct(bchg): void {
     this.selectedBchg = bchg;
     this.selectedAcct = bchg.targetAcct;
+    this.filteredAcctList = this.selectedAcct.parentFaeSide.acctList.filter(listItem => listItem instanceof Acct);
     this.selectedTran = bchg.sourceTran;
     this.selectedModule = this.MODULE_ACCT;
   }
-  selectTran(tran)
-    :
-    void {
+  selectTran(tran): void {
     this.selectedTran = tran;
   }
-  selectJrnlTranGoTran(tran)
-    :
-    void {
+  selectTranAndGo(tran): void {
     this.selectedTran = tran;
     this.selectedModule = this.MODULE_TRAN;
   }
-   addHovering(event) {
+  addHovering(event) {
     event.target.classList.toggle("aaNavMapBtnHover", true);
-   }
-   removeHovering(event) {
+  }
+  removeHovering(event) {
     event.target.classList.toggle("aaNavMapBtnHover", false);
   }
+  scrollFaeModule() {
+    this.gridScrollerLink.click();
+    console.log("clicked scroller")
+  }
+
   goFaeModule(event) {
     // this.selectedBchg = null;
     // this.selectedTran = null;
@@ -230,32 +218,12 @@ export class App {
       this.gridScrollerLink.click();
     }
   }
-  scrollFaeModule() {
-    this.gridScrollerLink.click();
-    console.log("clicked scroller")
-  }
-/*
-  goAcctModule(acct) {
-    // this.selectedAcct = null;
-    if (acct) {
-      this.selectedAcct = acct;
-    }
-    else {
-      if (!this.selectedAcct) {
-        throw new Error(`Logic error in app.goAcctModule()`);
-      }
-    }
-    if (this.selectedBchg && this.selectedBchg.targetAcct.id != this.selectedAcct.id) {
-      this.selectedBchg = null;
-    }
-    this.selectedModule = this.MODULE_ACCT;
-  }
-*/
   goAcctModule(event) {
     if (this.selectedBchg && this.selectedBchg.targetAcct.id != this.selectedAcct.id) {
       this.selectedBchg = null;
     }
     event.target.classList.toggle("aaNavModuleBtnHover", false);
+    this.filteredAcctList = this.selectedAcct.parentFaeSide.acctList.filter(listItem => listItem instanceof Acct);
     this.selectedModule = this.MODULE_ACCT;
   }
   goBchgModule(event) {
@@ -280,6 +248,23 @@ export class App {
             this.gridScrollerLink.click();
       */
     }
+  }
+
+  goPrevAcct(event) {
+    let selectedAcctIndex = this.filteredAcctList.findIndex(element => element.id == this.selectedAcct.id);
+    this.selectedAcct = this.filteredAcctList[selectedAcctIndex - 1] as Acct;
+  }
+  goNextAcct(event) {
+    let selectedAcctIndex = this.filteredAcctList.findIndex(element => element.id == this.selectedAcct.id);
+    this.selectedAcct = this.filteredAcctList[selectedAcctIndex + 1] as Acct;
+  }
+  goPrevTran(event) {
+    let selectedTranIndex = this.data.jrnl.tranList.findIndex(element => element.id == this.selectedTran.id);
+    this.selectedTran = this.data.jrnl.tranList[selectedTranIndex - 1];
+  }
+  goNextTran(event) {
+    let selectedTranIndex = this.data.jrnl.tranList.findIndex(element => element.id == this.selectedTran.id);
+    this.selectedTran = this.data.jrnl.tranList[selectedTranIndex + 1];
   }
 }
 

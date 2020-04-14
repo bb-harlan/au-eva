@@ -129,7 +129,9 @@ export class AuModuleTran {
     this.app.candidateTran.intraDateSorter = this.app.data.nextSorter;
     this.app.candidateTran.register();
     this.app.selectedTran = this.app.candidateTran;
-    this.app.selectedTran.parentJrnl.refresh();
+    this.app.data.jrnl.refresh();
+    this.app.data.faeSideAssets.refresh();
+    this.app.data.faeSideEquities.refresh();
     this.app.candidateTran = null;
     this.tranOp = null;
     this.app.viewNavMode = true;;
@@ -149,18 +151,10 @@ export class AuModuleTran {
   }
   tranEdit(event) {
     this.app.candidateTran = this.app.selectedTran.clone();
-    console.log("*** selectedTran & candidateTran before editing ***");
-    console.log(this.app.selectedTran);
-    console.log(this.app.candidateTran);
-    console.log("*******************************");
     this.tranOp = this.TRAN_OP_EDIT;
     this.app.viewNavMode = false;
   }
   tranEditDone(event) {
-    console.log("*** selectedTran & candidateTran after editing ***");
-    console.log(this.app.selectedTran);
-    console.log(this.app.candidateTran);
-    console.log("*******************************");
     let jrnlSortNeeded = false;
     if (this.app.candidateTran.totalChangesAssets != this.app.candidateTran.totalChangesEquities) {
       alert("Transaction is out of balance.")

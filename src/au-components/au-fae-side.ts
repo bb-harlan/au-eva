@@ -13,7 +13,6 @@ export class AuFaeSide {
   auModuleFae: AuModuleFae;
 
   @bindable faeSide: FaeSide;
-  @bindable candidateFaeSide: FaeSide;
 
   /*=====================================================
     *  references
@@ -86,16 +85,16 @@ export class AuFaeSide {
       insertionIndex = currentListItem.intraSideIndex;
     }
     else {
-      insertionIndex = this.candidateFaeSide.acctList.length;
+      insertionIndex = this.faeSide.acctList.length;
     }
     newAcct = new Acct(
       /*id*/ `acct${this.app.data.nextAcctId}`,
-      /*parentFaeSide*/ this.candidateFaeSide,
+      /*parentFaeSide*/ this.faeSide,
       /*intraSideIndex*/ 0,
-      /*title*/ "<new account>",
+      /*title*/ "",
       /*normalBalance*/ 1);
-    this.candidateFaeSide.acctList.splice(insertionIndex, 0, newAcct);
-    this.candidateFaeSide.reindexAcctList();
+    this.faeSide.acctList.splice(insertionIndex, 0, newAcct);
+    this.faeSide.reindexAcctList();
   }
   annotationNew(event, currentListItem) {
     let insertionIndex: number;
@@ -104,15 +103,15 @@ export class AuFaeSide {
       insertionIndex = currentListItem.intraSideIndex;
     }
     else {
-      insertionIndex = this.candidateFaeSide.acctList.length;
+      insertionIndex = this.faeSide.acctList.length;
     }
     newAnnotation = new Annotation(
       /*id*/ `acct${this.app.data.nextAcctId}`,
-      /*parentFaeSide*/ this.candidateFaeSide,
+      /*parentFaeSide*/ this.faeSide,
       /*intraSideIndex*/ 0,
-      /*annoText*/ "<new annotation>");
-    this.candidateFaeSide.acctList.splice(insertionIndex, 0, newAnnotation);
-    this.candidateFaeSide.reindexAcctList();
+      /*annoText*/ "");
+    this.faeSide.acctList.splice(insertionIndex, 0, newAnnotation);
+    this.faeSide.reindexAcctList();
   }
   listItemDelete(event, currentListItem) {
     if (currentListItem instanceof Acct && currentListItem.bchgList.length != 0) {
@@ -120,7 +119,7 @@ export class AuFaeSide {
       return
     }
     let removalIndex = currentListItem.intraSideIndex;
-    this.candidateFaeSide.acctList.splice(removalIndex, 1);
-    this.candidateFaeSide.reindexAcctList();
+    this.faeSide.acctList.splice(removalIndex, 1);
+    this.faeSide.reindexAcctList();
   }
 }

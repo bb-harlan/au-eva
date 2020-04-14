@@ -49,12 +49,12 @@ export class Bchg {
   }
   registerToAcct() {
     this.targetAcct.bchgList.push(this);
-    this.targetAcct.parentFaeSide.refresh();
+    // this.targetAcct.parentFaeSide.refresh();
   }
   unregisterFromAcct() {
     let thisIndex = this.targetAcct.bchgList.findIndex((element) => element.id == this.id);
     this.targetAcct.bchgList.splice(thisIndex, 1);
-    this.targetAcct.parentFaeSide.refresh();
+    // this.targetAcct.parentFaeSide.refresh();
   }
   unregisterFromTran() {
     let thisIndex = this.sourceTran.bchgList.findIndex((arrayElement) => arrayElement.id == this.id);

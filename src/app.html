@@ -8,8 +8,8 @@
   <require from="au-components/au-popup-acct-mover"></require>
   <require from="au-components/au-popup-acct-picker"></require>
   <require from="au-components/au-popup-bchg-mover"></require>
-  <require from="au-views/au-icon-nav-left.html"></require>
-  <require from="au-views/au-icon-nav-right.html"></require>
+  <require from="au-views/au-icon-nav-up.html"></require>
+  <require from="au-views/au-icon-nav-down.html"></require>
   <require from="au-views/au-icon-map-marker.html"></require>
   <require from="au-views/au-icon-map-marker-candidate.html"></require>
   <require from="au-views/au-icon-map-marker-not-yet.html"></require>
@@ -50,7 +50,7 @@
     .aaNavModuleColumn {
       display: inline-flex;
       flex-direction: column;
-      align-items: flex-start;
+      align-items: center;
     }
 
     .aaNavGutterColumn {
@@ -90,7 +90,7 @@
       /*-webkit-box-shadow: 0 0 0 1px #58b;
       -moz-box-shadow: 0 0 0 1px #58b;
       box-shadow: 0 0 0 1px #58b;*/
-      background-color:#C8D9E9;
+      background-color: #C8D9E9;
     }
 
     .aaNavMapBtnSelected {
@@ -101,7 +101,7 @@
       box-shadow: 0 0 0 2px #58b;
       padding: 0 5px;
       color: #000;
-      background-color:#C8D9E9;
+      background-color: #C8D9E9;
       letter-spacing: 1px;
       /*text-shadow: 1px 1px 0 #000;*/
       /*background-color: #5588BB;*/
@@ -113,7 +113,6 @@
     }
   </style>
   <div style="display: flex; flex-direction: column; align-items: center;">
-
     <div class="aaNavigator ${!viewNavMode ? 'aaHidden' : ''}">
       <div class="aaNavMapHeader">Navigation map</div>
       <div class="aaNavMapBody">
@@ -135,7 +134,15 @@
         </div>
         <div class="aaNavGutterColumn"></div>
         <div class="aaNavModuleColumn">
-          <div class="aaNavMapCell">&nbsp;</div>
+          <div class="aaNavMapCell">
+            <button type="button"
+                    class="aaBtn ${selectedModule != MODULE_ACCT ||
+                                   selectedAcct.id == filteredAcctList[0].id ?
+                                   'aaHidden' : ''}"
+                    click.trigger="goPrevAcct($event)">
+              <au-icon-nav-up></au-icon-nav-up>
+            </button>
+          </div>
           <div class="aaNavMapCell">
             <i class="fas fa-map-marker-alt ${!selectedAcct ? 'aaHidden' : ''}"
                css="color: ${selectedModule == MODULE_ACCT ? '#EA4335' : '#bbb'};
@@ -149,6 +156,15 @@
                     click.trigger="goAcctModule($event)"
                     element.ref="navBtnAcct">
               Account
+            </button>
+          </div>
+          <div class="aaNavMapCell">
+            <button type="button"
+                    class="aaBtn ${selectedModule != MODULE_ACCT ||
+                                   selectedAcct.id == filteredAcctList[filteredAcctList.length - 1].id ?
+                                   'aaHidden' : ''}"
+                    click.trigger="goNextAcct($event)">
+              <au-icon-nav-down></au-icon-nav-down>
             </button>
           </div>
         </div>
@@ -174,7 +190,15 @@
         </div>
         <div class="aaNavGutterColumn"></div>
         <div class="aaNavModuleColumn">
-          <div class="aaNavMapCell">&nbsp;</div>
+          <div class="aaNavMapCell">
+            <button type="button"
+                    class="aaBtn ${selectedModule != MODULE_TRAN ||
+                                   selectedTran.id == data.jrnl.tranList[0].id ?
+                                   'aaHidden' : ''}"
+                    click.trigger="goPrevTran($event)">
+              <au-icon-nav-up></au-icon-nav-up>
+            </button>
+          </div>
           <div class="aaNavMapCell">
             <i class="fas fa-map-marker-alt ${!selectedTran ? 'aaHidden' : ''}"
                css="color: ${selectedModule == MODULE_TRAN ? '#EA4335' : '#bbb'};
@@ -188,6 +212,15 @@
                     click.trigger="goTranModule($event)"
                     element.ref="navBtnTran">
               Transaction
+            </button>
+          </div>
+          <div class="aaNavMapCell">
+            <button type="button"
+                    class="aaBtn ${selectedModule != MODULE_TRAN ||
+                                   selectedTran.id == data.jrnl.tranList[data.jrnl.tranList.length - 1].id ?
+                                   'aaHidden' : ''}"
+                    click.trigger="goNextTran($event)">
+              <au-icon-nav-down></au-icon-nav-down>
             </button>
           </div>
         </div>

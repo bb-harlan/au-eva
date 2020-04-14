@@ -64,7 +64,7 @@ export class Tran {
   unregister(): void {
     for (let bchg of this.bchgList) {
       bchg.unregisterFromAcct();
-      bchg.targetAcct.refresh();
+      // bchg.targetAcct.refresh();
     }
     this.bchgList = [];
     let thisIndex = this.parentJrnl.tranList.findIndex((element) => element.id == this.id);
@@ -82,12 +82,6 @@ export class Tran {
       let clonedBchg = bchg.clone(clonedTran, bchg.targetAcct);
       clonedTran.bchgList.push(clonedBchg);
     }
-/*
-    console.log("*** selectedTran & clonedTran before editing ***");
-    console.log(this);
-    console.log(clonedTran);
-    console.log("*******************************");
-*/
     return clonedTran;
   }
 }

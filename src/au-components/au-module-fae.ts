@@ -1,5 +1,6 @@
 import {customElement, bindable, inject} from 'aurelia-framework';
 import {App} from 'app';
+import {Acct} from 'app-data/models/acct';
 
 @customElement('au-module-fae')
 @inject(App)
@@ -24,10 +25,10 @@ export class AuModuleFae {
   }
   faeSidesEditDone(event) {
     this.app.data.faeSideAssets = this.app.candidateFaeSideAssets;
-    this.app.candidateFaeSideAssets = null;
-    this.app.data.faeSideAssets.refresh();
     this.app.data.faeSideEquities = this.app.candidateFaeSideEquities;
+    this.app.candidateFaeSideAssets = null;
     this.app.candidateFaeSideEquities = null;
+    this.app.data.faeSideAssets.refresh();
     this.app.data.faeSideEquities.refresh();
     this.app.viewNavMode = true;;
   }
@@ -35,12 +36,6 @@ export class AuModuleFae {
     this.app.candidateFaeSideAssets = null;
     this.app.candidateFaeSideEquities = null;
     this.app.viewNavMode = true;;
-  }
-  selectSide(faeSide) {
-    this.app.selectedFaeSide = faeSide;
-  }
-  deselectSide(event) {
-    this.app.selectedFaeSide = null;
   }
   attached() {
     console.log(`ATTACHED() - <au-module-fae>`);

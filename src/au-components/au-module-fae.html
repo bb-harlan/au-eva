@@ -7,9 +7,9 @@
   <template if.bind="app.selectedModule == app.MODULE_FAE">
     <div class="aaPanel aaPanelBoxShadow" css="true || ${app.selectedModule == app.MODULE_FAE ? '' : 'display: none;'}">
       <div class="aaPanelHeader aaPanelHeaderModule">The fundamental accounting equation</div>
-      <div class="aaPanelToolBar" element.ref="popupTop">
-        <span class="aaToolBarDivider">.</span>
-        <template if.bind="app.viewNavMode">
+      <template if.bind="app.viewNavMode">
+        <div class="aaPanelToolBar" element.ref="popupTop">
+          <span class="aaToolBarDivider">.</span>
           <button type="button"
                   class="aaBtn"
                   click.trigger="faeSidesEdit($event)">
@@ -17,37 +17,50 @@
             &nbsp;Edit account lists
             <au-text-ellipsis></au-text-ellipsis>
           </button>
-        </template>
-        <template if.bind="!app.viewNavMode">
+          <span class="aaToolBarDivider">.</span>
+        </div>
+        <div class="aaPanelBody">
+          <div class="aaEquSideContainer">
+            <au-fae-side
+              fae-side.to-view="app.data.faeSideAssets">
+            </au-fae-side>
+          </div>
+          <div class="aaEquSideContainer" style="padding: 0 1pc;">
+            <h1 style="margin: 0;">=</h1>
+          </div>
+          <div class="aaEquSideContainer">
+            <au-fae-side
+              fae-side.to-view="app.data.faeSideEquities">
+            </au-fae-side>
+          </div>
+        </div>
+      </template>
+      <template if.bind="!app.viewNavMode">
+        <div class="aaPanelToolBar" element.ref="popupTop">
+          <span class="aaToolBarDivider">.</span>
           <span class="aaFontLabel aaFontBold">Editing account lists:</span>
           <span class="aaToolBarDivider aaHidden">.</span>
           <button type="button" class="aaBtn" click.trigger="faeSidesEditDone($event)">Done</button>
           <span class="aaToolBarDivider aaHidden">.</span>
           <button type="button" class="aaBtn" click.trigger="faeSidesEditCancel($event)">Cancel</button>
-        </template>
-        <span class="aaToolBarDivider">.</span>
-      </div>
-      <div class="aaPanelBody">
-        <div class="aaEquSideContainer">
-          <au-fae-side
-            fae-side.to-view="app.data.faeSideAssets"
-            candidate-fae-side.to-view="app.candidateFaeSideAssets"
-            mouseenter.trigger="selectSide(app.data.faeSideAssets)"
-            mouseleave.trigger="deselectSide()">
-          </au-fae-side>
+          <span class="aaToolBarDivider">.</span>
         </div>
-        <div class="aaEquSideContainer" style="padding: 0 1pc;">
-          <h1 style="margin: 0;">=</h1>
+        <div class="aaPanelBody">
+          <div class="aaEquSideContainer">
+            <au-fae-side
+              fae-side.to-view="app.candidateFaeSideAssets">
+            </au-fae-side>
+          </div>
+          <div class="aaEquSideContainer" style="padding: 0 1pc;">
+            <h1 style="margin: 0;">=</h1>
+          </div>
+          <div class="aaEquSideContainer">
+            <au-fae-side
+              fae-side.to-view="app.candidateFaeSideEquities">
+            </au-fae-side>
+          </div>
         </div>
-        <div class="aaEquSideContainer">
-          <au-fae-side
-            fae-side.to-view="app.data.faeSideEquities"
-            candidate-fae-side.to-view="app.candidateFaeSideEquities"
-            mouseenter.trigger="selectSide(app.data.faeSideEquities)"
-            mouseleave.trigger="deselectSide()">
-          </au-fae-side>
-        </div>
-      </div>
+      </template>
     </div>
   </template>
 </template>

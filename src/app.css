@@ -462,6 +462,9 @@ h1 {
 .aaCellBorder {
   border: 0.05pc solid #999;
 }
+.aaCellInGrid {
+  margin: 4px;
+}
 .aaBchgCells {
   display: inline-flex;
   flex-direction: column;
