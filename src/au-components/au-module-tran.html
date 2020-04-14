@@ -255,7 +255,7 @@
         <template if.bind="tranOp == TRAN_OP_EDIT">
           <span class="aaFontLabel aaFontBold">Editing transaction:</span>
           <span class="aaToolBarDivider aaHidden">.</span>
-          <button type="button" class="aaBtn" click.trigger="tranEditDone($event)">Done</button>
+          <button type="button" class="aaBtn" click.trigger="tranEditDone($event)">Save changes</button>
           <span class="aaToolBarDivider aaHidden">.</span>
           <button type="button" class="aaBtn" click.trigger="tranEditCancel($event)">Cancel</button>
           <span class="aaToolBarDivider">.</span>
@@ -263,7 +263,7 @@
         <template if.bind="tranOp == TRAN_OP_NEW">
           <span class="aaFontLabel aaFontBold">Creating new transaction:</span>
           <span class="aaToolBarDivider aaHidden">.</span>
-          <button type="button" class="aaBtn" click.trigger="tranNewDone($event)">Done</button>
+          <button type="button" class="aaBtn" click.trigger="tranNewDone($event)">Save changes</button>
           <span class="aaToolBarDivider aaHidden">.</span>
           <button type="button" class="aaBtn" click.trigger="tranNewCancel($event)">Cancel</button>
           <span class="aaToolBarDivider">.</span>

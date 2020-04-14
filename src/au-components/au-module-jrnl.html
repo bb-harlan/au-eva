@@ -12,7 +12,7 @@
          css="${app.selectedModule == app.MODULE_JRNL ? '' : 'display: none;'}"
          element.ref="rootDivOfJrnl"
          id="observedElement">
-      <div class="aaPanelHeader aaPanelHeaderModule">Transaction Journal</div>
+      <div class="aaPanelHeader aaPanelHeaderModule">Journal</div>
       <div class="aaPanelBody">
         <div class="aaGridContainer">
           <div class="aaGridTitleBar">Transactions</div>
@@ -27,13 +27,15 @@
               </button>
               <button type="button"
                       class="aaBtn"
-                      click.trigger="tranEdit($event)">
+                      click.trigger="tranEdit($event)"
+                      disabled.bind="!app.selectedTran">
                 <au-icon-edit></au-icon-edit>
                 &nbsp;Edit selected transaction
               </button>
               <button type="button"
                       class="aaBtn"
-                      click.trigger="tranDelete($event)">
+                      click.trigger="tranDelete($event)"
+                      disabled.bind="!app.selectedTran">
                 <au-icon-delete></au-icon-delete>
                 &nbsp;Delete selected transaction
                 <au-text-ellipsis></au-text-ellipsis>

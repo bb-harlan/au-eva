@@ -14,16 +14,6 @@
     <div class="aaPanelHeader aaPanelHeaderModule">Account</div>
     <template  if.bind="!app.isEditing">
       <div class="aaPanelToolBar">
-        <button type="button"
-                class="aaBtn"
-                click.trigger="onGoUp($event)">
-          <au-icon-nav-up></au-icon-nav-up>
-        </button>
-        <button type="button"
-                class="aaBtn"
-                click.trigger="onGoDown($event)">
-          <au-icon-nav-down></au-icon-nav-down>
-        </button>
         <span class="aaToolBarDivider">.</span>
         <button type="button"
                 class="aaBtn"
@@ -38,22 +28,6 @@
           <span class="fa fa-minus-circle fa-fw aaIconRed" aria-hidden="true"></span> Delete
         </button>
         <span class="aaToolBarDivider">.</span>
-        <!--
-        <div class="btn-group">
-          <a class="aaBtn dropdown-toggle" data-toggle="dropdown" click.trigger="onMenuClick($event, app.selectedAcct)">
-            <span class="fa fa-bars fa-fw" aria-hidden="true"></span>
-          </a>
-          <ul class="dropdown-menu aaSansSerif">
-            <li><a><i class="fa fa-plus-circle fa-fw aaIconGreen"></i> Insert new account row</a></li>
-            <li><a><i class="fa fa-plus-circle fa-fw aaIconGreen"></i> Insert new annotation row</a></li>
-            <li class="divider"></li>
-            <li><a><i class="fa fa-minus-circle fa-fw aaIconRed"></i> Delete row...</a></li>
-            <li class="divider"></li>
-            <li><a><i class="fa fa-arrows-v fa-fw aaIconBlue"></i> Re-position row...</a>
-            </li>
-          </ul>
-        </div>
-  -->
       </div>
     </template>
     <template  if.bind="app.isEditing">

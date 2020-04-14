@@ -57,6 +57,20 @@ export class AuModuleJrnl {
     this.app.selectedModule = this.app.MODULE_TRAN;
     this.app.viewmodelModuleTran.tranNew();
   }
+  tranEdit(event) {
+    if (this.app.selectedTran) {
+      this.app.invokingModule = this.app.MODULE_JRNL;
+      this.app.selectedModule = this.app.MODULE_TRAN;
+      this.app.viewmodelModuleTran.tranEdit();
+    }
+  }
+  tranDelete(event) {
+    if (this.app.selectedTran) {
+      this.app.invokingModule = this.app.MODULE_JRNL;
+      this.app.selectedModule = this.app.MODULE_TRAN;
+      this.app.viewmodelModuleTran.tranDelete();
+    }
+  }
 
 }
 

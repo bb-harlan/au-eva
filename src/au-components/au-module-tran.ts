@@ -135,9 +135,9 @@ export class AuModuleTran {
     this.app.candidateTran = null;
     this.tranOp = null;
     this.app.viewNavMode = true;;
-    if (this.app.invokingModule == this.app.MODULE_TRAN) {
+    if (this.app.invokingModule) {
+      this.app.selectedModule = this.app.invokingModule;
       this.app.invokingModule = null;
-      this.app.goJrnlModule;
     }
   }
   tranNewCancel(event) {
@@ -181,12 +181,21 @@ export class AuModuleTran {
     this.app.data.faeSideAssets.refresh();
     this.app.data.faeSideEquities.refresh();
     this.tranOp = null;
-    this.app.viewNavMode = true;;
+    this.app.viewNavMode = true;
+    if (this.app.invokingModule) {
+      this.app.selectedModule = this.app.invokingModule;
+      this.app.invokingModule = null;
+    }
+
   }
   tranEditCancel(event) {
     this.app.candidateTran = null;
     this.tranOp = null;
-    this.app.viewNavMode = true;;
+    this.app.viewNavMode = true;
+    if (this.app.invokingModule) {
+      this.app.selectedModule = this.app.invokingModule;
+      this.app.invokingModule = null;
+    }
   }
   tranDelete(event) {
     this.tranOp = this.TRAN_OP_DELETE;
@@ -222,11 +231,20 @@ export class AuModuleTran {
       this.app.data.faeSideEquities.refresh();
       this.app.selectedTran = nextTran;
       this.tranOp = null;
-      this.app.viewNavMode = true;;
+      this.app.viewNavMode = true;
     }
+    if (this.app.invokingModule) {
+      this.app.selectedModule = this.app.invokingModule;
+      this.app.invokingModule = null;
+    }
+
   }
   tranDeleteCancel(event) {
-    this.app.viewNavMode = true;;
+    this.app.viewNavMode = true;
+    if (this.app.invokingModule) {
+      this.app.selectedModule = this.app.invokingModule;
+      this.app.invokingModule = null;
+    }
   }
   onMenuClick(event, bchg) {
     alert(`bchg.id: ${bchg ? bchg.id : "End-of-list"} - "Row ops menu" not yet implemented.`);
