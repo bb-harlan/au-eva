@@ -12,41 +12,6 @@
 
   <div class="aaPanel aaPanelBoxShadow" css="${app.selectedModule == app.MODULE_ACCT ? '' : 'display: none;'}">
     <div class="aaPanelHeader aaPanelHeaderModule">Account</div>
-    <template  if.bind="!app.isEditing">
-      <div class="aaPanelToolBar">
-        <span class="aaToolBarDivider">.</span>
-        <button type="button"
-                class="aaBtn"
-                click.trigger="onEdit($event)">
-          <au-icon-edit></au-icon-edit>
-          Edit
-        </button>
-        <button type="button"
-                class="aaBtn"
-                style="margin-left: 1pc;"
-                click.trigger="onDelete($event)">
-          <span class="fa fa-minus-circle fa-fw aaIconRed" aria-hidden="true"></span> Delete
-        </button>
-        <span class="aaToolBarDivider">.</span>
-      </div>
-    </template>
-    <template  if.bind="app.isEditing">
-      <div class="aaPanelToolBar">
-        <div style="text-align: left;">
-          <span class="aaToolBarDivider">.</span>
-          <button type="button"
-                  class="aaBtn"
-                  click.trigger="onSaveEdits($event)">Save
-          </button>
-          <button type="button"
-                  class="aaBtn"
-                  style="margin-left: 3pc;"
-                  click.trigger="onCancelEdits($event)">Cancel
-          </button>
-          <span class="aaToolBarDivider">.</span>
-        </div>
-      </div>
-    </template>
     <div class="aaPanelBody">
       <div class="aaForm">
         <table border="0" style="border-collapse: collapse;">
@@ -56,16 +21,9 @@
           </tr>
           <tr>
             <td class="aaFormItemLabel">Title:</td>
-            <template if.bind="!app.isEditing">
               <td class="aaFormItemData">
-                <input type="text" disabled class="aaFormInputText aaCellAcctTitle" value="${app.selectedAcct.title}">
+                ${app.selectedAcct.title}
               </td>
-            </template>
-            <template if.bind="app.isEditing">
-              <td class="aaFormItemData">
-                <input type="text" class="aaFormInputText aaCellAcctTitle" value="${app.selectedAcct.title}">
-              </td>
-            </template>
           </tr>
         </table>
       </div>
@@ -128,7 +86,7 @@
           <div class="aaRow aaHidden">
             <div class="aaRowOps aaBgColorToolbar aaFontSizeLabel">
               <div class="aaRadioBtn">
-                  <au-icon-radio-unselected></au-icon-radio-unselected>
+                <au-icon-radio-unselected></au-icon-radio-unselected>
               </div>
             </div>
             <div class="aaVerticalGridline"></div>
