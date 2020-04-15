@@ -64,23 +64,22 @@ export class App {
   * -------------------
   *
   */
-  isEditing = false;
 
   /*=====================================================
    *  Reference to  accounting entity's data
    *=====================================================
    */
   data = new Data(
+    "",
     1,
     1,
     1,
-    1,
-    "");
+    1);
 
   bind() {
     // this.data.generateEmptyData();
-    // this.data.generateTestData();
-    this.data.generateExample1Data();
+    this.data.generateTestData();
+    // this.data.generateExample1Data();
 
     /*
     * *************************
@@ -95,11 +94,11 @@ export class App {
     let parsedData = JSON.parse(stringifiedData);
     console.log(parsedData);
     let revivedData = new Data(
+      parsedData.entityName,
       parsedData._nextSorter,
       parsedData._nextAcctId,
       parsedData._nextTranId,
-      parsedData._nextBchgId,
-      parsedData.entityName);
+      parsedData._nextBchgId);
     console.log("***** revivedData *****");
     let revivedFaeSide;
     let revivedListItem;
@@ -145,6 +144,9 @@ export class App {
           /*amt*/ bchg.amt);
         revivedTran.bchgList.push(revivedBchg);
       }
+      revivedData.faeSideAssets.refresh();
+      revivedData.faeSideEquities.refresh();
+      revivedData.jrnl.refresh();
       revivedTran.register();
     }
     revivedData.jrnl.refresh();
@@ -212,6 +214,7 @@ export class App {
     // this.selectedBchg = null;
     // this.selectedTran = null;
     event.target.classList.toggle("aaNavModuleHover", false);
+    this.selectedModule = null;
     this.selectedModule = this.MODULE_FAE;
     if (this.selectedAcct) {
       this.gridScrollerLink.setAttribute("href", `#${this.selectedAcct.id}`);
@@ -224,10 +227,12 @@ export class App {
     }
     event.target.classList.toggle("aaNavModuleBtnHover", false);
     this.filteredAcctList = this.selectedAcct.parentFaeSide.acctList.filter(listItem => listItem instanceof Acct);
+    this.selectedModule = null;
     this.selectedModule = this.MODULE_ACCT;
   }
   goBchgModule(event) {
     event.target.classList.toggle("aaNavModuleBtnHover", false);
+    this.selectedModule = null;
     this.selectedModule = this.MODULE_BCHG;
   }
   goTranModule(event) {
@@ -235,10 +240,12 @@ export class App {
       this.selectedBchg = null;
     }
     event.target.classList.toggle("aaNavModuleBtnHover", false);
+    this.selectedModule = null;
     this.selectedModule = this.MODULE_TRAN;
   }
   goJrnlModule(event) {
     event.target.classList.toggle("aaNavModuleHover", false);
+    this.selectedModule = null;
     this.selectedModule = this.MODULE_JRNL;
     if (this.selectedTran) {
       console.log(this.selectedTran);

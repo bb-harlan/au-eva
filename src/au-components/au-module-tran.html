@@ -19,7 +19,8 @@
   <require from="au-components/au-grid-bchg-cells-edit"></require>
   <require from="au-components/au-grid-bchg-cells-total"></require>
 
-  <div class="aaPanel aaPanelBoxShadow" css="${app.selectedModule == app.MODULE_TRAN ? '' : 'display: none;'}">
+  <div class="aaPanel aaPanelBoxShadow"
+       css="${app.selectedModule == app.MODULE_TRAN ? '' : 'display: none;'}">
     <div class="aaPanelHeader aaPanelHeaderModule">Transaction</div>
     <template if.bind="app.viewNavMode">
       <div class="aaPanelToolBar">

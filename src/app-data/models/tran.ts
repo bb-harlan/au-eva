@@ -48,11 +48,6 @@ export class Tran {
         }
       }
     }
-/*
-    for (let bchg of this.bchgList) {
-      bchg.targetAcct.refresh();
-    }
-*/
   }
   register(): void {
     this.parentJrnl.tranList.push(this);
@@ -64,7 +59,6 @@ export class Tran {
   unregister(): void {
     for (let bchg of this.bchgList) {
       bchg.unregisterFromAcct();
-      // bchg.targetAcct.refresh();
     }
     this.bchgList = [];
     let thisIndex = this.parentJrnl.tranList.findIndex((element) => element.id == this.id);

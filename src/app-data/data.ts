@@ -35,23 +35,23 @@ export class Data {
   faeSideEquities: FaeSide = new FaeSide(/*id*/ 'Equities');
   jrnl: Jrnl = new Jrnl(/*id*/ 'Journal');
 
-  constructor(
-      _nextSorter: number,
-      _nextAcctId: number,
-      _nextTranId: number,
-      _nextBchgId: number,
-       entityName: string) {
+  constructor(entityName: string,
+              _nextSorter: number,
+              _nextAcctId: number,
+              _nextTranId: number,
+              _nextBchgId: number) {
+    this.entityName = entityName;
     this._nextSorter = _nextSorter;
     this._nextAcctId = _nextAcctId;
     this._nextTranId = _nextTranId;
     this._nextBchgId = _nextBchgId;
-    this.entityName = entityName;
   }
 
 
   generateEmptyData() {
     console.log('\n********************************************\nGenerating test data...');
     this.entityName = "<programmatically generated empty data for testing>";
+/*
     let newAnno: Annotation;
     let newAcct: Acct;
     let randomAcct: Acct;
@@ -59,6 +59,7 @@ export class Data {
     let newBchg: Bchg;
     let acctId: string;
     let annoId: string;
+*/
   }
   generateTestData() {
     console.log('\n********************************************\nGenerating test data...');
@@ -135,11 +136,12 @@ export class Data {
       sourceTran.bchgList[0].setAmtToBalanceTran();
       this.jrnl.tranList.push(sourceTran);
     }
+    this.faeSideAssets.refresh();
+    this.faeSideEquities.refresh();
     this.jrnl.refresh(); // cascades to refresh all
     console.log(this);
     console.log('Generation of test data completed!');
   }
-
   generateExample1Data() {
     console.log('\n********************************************\nGenerating example data...');
     this.entityName = "Rene (an individual)";
@@ -257,7 +259,8 @@ export class Data {
 
     this.jrnl.tranList.push(sourceTran);
     /* end of transaction */
-
+    this.faeSideAssets.refresh();
+    this.faeSideEquities.refresh();
     this.jrnl.refresh(); // cascades to refresh all
     console.log(this);
     console.log('\nGeneration of example data completed!\n********************************************');

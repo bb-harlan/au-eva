@@ -30,48 +30,6 @@ export class AuModuleTran {
   constructor(app) {
     this.app = app;
   }
-  onGoJrnl(event) {
-    this.app.selectedBchg = null;
-    this.app.selectedModule = this.app.MODULE_JRNL;
-    if (this.app.selectedTran) {
-      this.app.gridScrollerLink.setAttribute("href", `#${this.app.selectedTran.id}`);
-      this.app.gridScrollerLink.click();
-    }
-  }
-  onGoUp(event) {
-    let tranList = this.app.selectedTran.parentJrnl.tranList;
-    let listIndex = tranList.findIndex(tran => tran.id == this.app.selectedTran.id);
-    if (listIndex > 0) {
-      this.app.selectedBchg = null;
-      this.app.selectedTran = tranList[listIndex - 1];
-    }
-    else {
-      alert('this is the first transaction in the journal.');
-    }
-  }
-  onGoDown(event) {
-    let tranList = this.app.selectedTran.parentJrnl.tranList;
-    let listIndex = tranList.findIndex(tran => tran.id == this.app.selectedTran.id);
-    if (listIndex < tranList.length - 1) {
-      this.app.selectedBchg = null;
-      this.app.selectedTran = tranList[listIndex + 1];
-    }
-    else {
-      alert('this is the last transaction in the journal.');
-    }
-  }
-  showBchgDetail(event, bchg) {
-    this.app.selectedBchg = bchg;
-    this.app.selectedAcct = bchg.targetAcct;
-    this.app.selectedModule = this.app.MODULE_BCHG;
-  }
-  showBchgInAcct(event, bchg) {
-    this.app.selectedBchg = bchg;
-    this.app.selectedAcct = bchg.targetAcct;
-    this.app.selectedModule = this.app.MODULE_ACCT;
-    this.app.gridScrollerLink.setAttribute("href", `#${this.app.selectedBchg.id}`);
-    this.app.gridScrollerLink.click();
-  }
   onRowEnter(event, bchg) {
     event.target.children[0].children[0].classList.toggle('aaRowOpsHover', true);
     if (bchg) {
