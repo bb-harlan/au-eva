@@ -6,25 +6,22 @@ import {Acct} from 'app-data/models/acct';
 @inject(App)
 export class AuModuleFae {
 
-  // @injected item(s)
+  /* @injected object(s) */
   app: App;
 
-  // other properties
+  /* other properties */
   moduleRootElement: Element;
   mutationObserver = new MutationObserver(this.mutationObserverCallback);
 
-  /*=====================================================
-   *  reference(s)
-   *=====================================================
-   */
-  viewmodelPopupAcctMover; // <au-popup-acct-mover view-model.ref="viewmodelPopupAcctMover"></au-popup-acct-mover>
+  /* element reference(s) */
+  viewmodelPopupAcctMover;
 
   constructor(app, auModuleFae) {
     this.app = app;
   }
 
   observeRootElement() {
-    (this.mutationObserver as any).app = this.app; // cas as "any" to programmatically add property
+    (this.mutationObserver as any).app = this.app; // cast as "any" to programmatically add property
     this.mutationObserver.observe(this.moduleRootElement,
                                   {childList: false,
                                     attributes: true,
@@ -58,16 +55,5 @@ export class AuModuleFae {
     this.app.candidateFaeSideEquities = null;
     this.app.viewNavMode = true;;
   }
-  attached() {
-    console.log(`ATTACHED() - <au-module-fae>`);
-    if (this.app.selectedAcct) {
-      this.app.gridScrollerLink.setAttribute("href", `#${this.app.selectedAcct.id}`);
-      this.app.gridScrollerLink.click();
-    }
-  }
-  detached() {
-    console.log(`DETACHED() - <au-module-fae>`);
-  }
-
 }
 

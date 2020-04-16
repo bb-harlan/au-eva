@@ -32,8 +32,7 @@ export class App {
   }
 
   /* element.ref properties */
-  gridScrollerLink: HTMLElement; //<a> tag used to scroll grid to row having specifid Id
-  viewmodelFAE; // <au-module-fae view-model.ref="viewmodelFAE"></au-module-fae>
+  viewmodelFae; // <au-module-fae view-model.ref="viewmodelFae"></au-module-fae>
   viewmodelAcct; // <au-module-acct view-model.ref="viewmodelAcct"></au-module-fae>
   viewmodelBchg; // <au-module-bchg view-model.ref="viewmodelBchg"></au-module-fae>
   viewmodelTran; // <au-module-tran view-model.ref="viewmodelTran"></au-module-fae>
@@ -208,36 +207,12 @@ export class App {
   removeHovering(event) {
     event.target.classList.toggle("aaNavMapBtnHover", false);
   }
-  scrollFaeModule() {
-    this.gridScrollerLink.click();
-    console.log("clicked scroller")
-  }
-
-  observeOptions = {childList: false,
-                     attributes: true,
-                     attributeOldValue: true,
-                     subtree: false};
-  mutationObserver = new MutationObserver(this.mutationObserverCallback);
-  mutationObserverCallback(mutationList, mutationObserver) {
-    document.getElementById(mutationObserver.app.selectedTran.id).scrollIntoView();
-
-    mutationObserver.disconnect();
-  }
-  observeMuatationOfModuleDiv(targetDiv, scrollIntoViewElement) {
-    this.mutationObserver.observe(targetDiv, this.observeOptions);
-  }
 
   goFaeModule(event) {
     event.target.classList.toggle("aaNavModuleHover", false);
     this.selectedModule = null;
-    this.viewmodelFAE.observeRootElement();
+    this.viewmodelFae.observeRootElement();
     this.selectedModule = this.MODULE_FAE;
-/*
-    if (this.selectedAcct) {
-      this.gridScrollerLink.setAttribute("href", `#${this.selectedAcct.id}`);
-      this.gridScrollerLink.click();
-    }
-*/
   }
   goAcctModule(event) {
     if (this.selectedBchg && this.selectedBchg.targetAcct.id != this.selectedAcct.id) {
@@ -246,6 +221,7 @@ export class App {
     event.target.classList.toggle("aaNavModuleBtnHover", false);
     this.filteredAcctList = this.selectedAcct.parentFaeSide.acctList.filter(listItem => listItem instanceof Acct);
     this.selectedModule = null;
+    this.viewmodelAcct.observeRootElement();
     this.selectedModule = this.MODULE_ACCT;
   }
   goBchgModule(event) {
@@ -259,6 +235,7 @@ export class App {
     }
     event.target.classList.toggle("aaNavModuleBtnHover", false);
     this.selectedModule = null;
+    this.viewmodelTran.observeRootElement();
     this.selectedModule = this.MODULE_TRAN;
   }
   goJrnlModule(event) {

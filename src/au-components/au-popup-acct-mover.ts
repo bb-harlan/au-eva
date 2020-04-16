@@ -7,7 +7,7 @@ import {App} from 'app';
 @inject(App)
 export class AuPopupAcctMover {
 
-  /* @injected item(s) */
+  /* @injected object(s) */
   app: App;
 
   // refs

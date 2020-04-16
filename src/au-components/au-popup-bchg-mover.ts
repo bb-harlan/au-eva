@@ -5,7 +5,7 @@ import {Bchg} from 'app-data/models/bchg';
 @customElement('au-popup-bchg-mover')
 @inject(App)
 export class AuPopupBchgMover {
-  /* @injected item(s) */
+  /* @injected object(s) */
   app: App;
 
   /* data properties */

@@ -11,99 +11,104 @@
   <require from="au-converters/au-equation-side-converter"></require>
 
   <div class="aaPanel aaPanelBoxShadow"
-       css="${app.selectedModule == app.MODULE_ACCT ? '' : 'display: none;'}">
-    <div class="aaPanelHeader aaPanelHeaderModule">Account</div>
-    <div class="aaPanelBody">
-      <div class="aaForm">
-        <table border="0" style="border-collapse: collapse;">
-          <tr>
-            <td class="aaFormItemLabel">Equation side:</td>
-            <td class="aaFormItemData">${app.selectedAcct.parentFaeSide.id | auEquationSideConverter:true:true}</td>
-          </tr>
-          <tr>
-            <td class="aaFormItemLabel">Title:</td>
+       css="${app.selectedModule == app.MODULE_ACCT ? '' : 'display: none;'}"
+       element.ref="moduleRootElement"
+       id="observedElement">
+    <div class="aaPanel aaPanelBoxShadow"
+         css="${app.selectedModule == app.MODULE_ACCT ? '' : 'display: none;'}">
+      <div class="aaPanelHeader aaPanelHeaderModule">Account</div>
+      <div class="aaPanelBody">
+        <div class="aaForm">
+          <table border="0" style="border-collapse: collapse;">
+            <tr>
+              <td class="aaFormItemLabel">Equation side:</td>
+              <td class="aaFormItemData">${app.selectedAcct.parentFaeSide.id | auEquationSideConverter:true:true}</td>
+            </tr>
+            <tr>
+              <td class="aaFormItemLabel">Title:</td>
               <td class="aaFormItemData">
                 ${app.selectedAcct.title}
               </td>
-          </tr>
-        </table>
-      </div>
-      <div class="aaGridContainer">
-        <div class="aaGridTitleBar">Balance changes</div>
-        <div class="aaRow aaRowColumnHeaders aaFontLabel aaFontBold">
-          <div class="aaRowOps aaFontLabel aaHidden">
-            <div class="aaRadioBtn">
-              <au-icon-radio-unselected></au-icon-radio-unselected>
-            </div>
-          </div>
-          <div class="aaVerticalGridline" style="background-color: #fff"></div>
-          <div class="aaRowData">
-            <div class="aaCell aaCellTranDate">Date</div>
-            <div class="aaVerticalGridline" style="background-color: #fff"></div>
-            <div class="aaCell aaCellBchgDesc">Change description</div>
-            <div class="aaVerticalGridline" style="background-color: #fff"></div>
-            <div class="aaCell aaCellBchgAmt">Change amount</div>
-            <div class="aaVerticalGridline" style="background-color: #fff"></div>
-            <div class="aaCell aaCellBchgBal">New balance</div>
-            <div class="aaVerticalGridline" style="background-color: #fff"></div>
-          </div>
+            </tr>
+          </table>
         </div>
-        <div class="aaGridScrollableRows" id="acctModule-${app.selectedAcct.id}">
-          <template repeat.for="bchg of app.selectedAcct.bchgList">
-            <div class="aaRow aaRowBgColorToolbar"
-                 id="${bchg.id}"
-                 mouseenter.trigger="onRowEnter($event, bchg)"
-                 mouseleave.trigger="onRowLeave($event, bchg)"
-                 click.trigger="app.selectBchg(bchg)"
-                 dblclick.trigger="app.selectAcctBchgGoTran(bchg)">
-              <div class="aaRowOps aaBgColorToolbar aaFontSizeLabel">
-                <div class="aaRadioBtn">
-                  <template if.bind="app.selectedBchg.id == bchg.id">
-                    <au-icon-radio-selected></au-icon-radio-selected>
-                  </template>
-                  <template if.bind="app.selectedBchg.id != bchg.id">
-                    <au-icon-radio-unselected></au-icon-radio-unselected>
-                  </template>
-                </div>
-              </div>
-              <div class="aaVerticalGridline"></div>
-              <div class="aaRowData aaRowBgColorData">
-                <div class="aaCell aaFontSizeData aaCellTranDate">${bchg.sourceTran.date}</div>
-                <div class="aaVerticalGridline"></div>
-                <div class="aaCell aaFontSizeData aaCellBchgDesc">${bchg.desc}</div>
-                <div class="aaVerticalGridline"></div>
-                <div class="aaCell aaFontSizeData aaCellBchgAmt">${bchg.amt | auCurrencyConverter}</div>
-                <div class="aaVerticalGridline"></div>
-                <div class="aaCell aaFontSizeData aaCellBchgBal">${bchg.newBalance | auCurrencyConverter}</div>
-              </div>
-              <div class="aaVerticalGridline"></div>
-            </div>
-          </template>
-          <!--
-          The purpose of having the following invisible end-of-list row
-          is to provide an invisible horizontal spacer if acct.bchgList is empty
-          so as to display the column headings row properly..
-          -->
-          <div class="aaRow aaHidden">
-            <div class="aaRowOps aaBgColorToolbar aaFontSizeLabel">
+        <div class="aaGridContainer">
+          <div class="aaGridTitleBar">Balance changes</div>
+          <div class="aaRow aaRowColumnHeaders aaFontLabel aaFontBold">
+            <div class="aaRowOps aaFontLabel aaHidden">
               <div class="aaRadioBtn">
                 <au-icon-radio-unselected></au-icon-radio-unselected>
               </div>
             </div>
-            <div class="aaVerticalGridline"></div>
-            <div class="aaRowData aaRowBgColorData">
-              <div class="aaCell aaFontSizeData aaCellTranDate"></div>
-              <div class="aaVerticalGridline"></div>
-              <div class="aaCell aaFontSizeData aaCellBchgDesc"></div>
-              <div class="aaVerticalGridline"></div>
-              <div class="aaCell aaFontSizeData aaCellBchgAmt"></div>
-              <div class="aaVerticalGridline"></div>
-              <div class="aaCell aaFontSizeData aaCellBchgBal"></div>
+            <div class="aaVerticalGridline" style="background-color: #fff"></div>
+            <div class="aaRowData">
+              <div class="aaCell aaCellTranDate">Date</div>
+              <div class="aaVerticalGridline" style="background-color: #fff"></div>
+              <div class="aaCell aaCellBchgDesc">Change description</div>
+              <div class="aaVerticalGridline" style="background-color: #fff"></div>
+              <div class="aaCell aaCellBchgAmt">Change amount</div>
+              <div class="aaVerticalGridline" style="background-color: #fff"></div>
+              <div class="aaCell aaCellBchgBal">New balance</div>
+              <div class="aaVerticalGridline" style="background-color: #fff"></div>
             </div>
-            <div class="aaVerticalGridline"></div>
           </div>
+          <div class="aaGridScrollableRows" id="acctModule-${app.selectedAcct.id}">
+            <template repeat.for="bchg of app.selectedAcct.bchgList">
+              <div class="aaRow aaRowBgColorToolbar"
+                   id="${bchg.id}"
+                   mouseenter.trigger="onRowEnter($event, bchg)"
+                   mouseleave.trigger="onRowLeave($event, bchg)"
+                   click.trigger="app.selectBchg(bchg)"
+                   dblclick.trigger="app.selectAcctBchgGoTran(bchg)">
+                <div class="aaRowOps aaBgColorToolbar aaFontSizeLabel">
+                  <div class="aaRadioBtn">
+                    <template if.bind="app.selectedBchg.id == bchg.id">
+                      <au-icon-radio-selected></au-icon-radio-selected>
+                    </template>
+                    <template if.bind="app.selectedBchg.id != bchg.id">
+                      <au-icon-radio-unselected></au-icon-radio-unselected>
+                    </template>
+                  </div>
+                </div>
+                <div class="aaVerticalGridline"></div>
+                <div class="aaRowData aaRowBgColorData ${app.selectedBchg.id == bchg.id ? 'aaRowDataSelected' : ''}">
+                  <div class="aaCell aaFontSizeData aaCellTranDate">${bchg.sourceTran.date}</div>
+                  <div class="aaVerticalGridline"></div>
+                  <div class="aaCell aaFontSizeData aaCellBchgDesc">${bchg.desc}</div>
+                  <div class="aaVerticalGridline"></div>
+                  <div class="aaCell aaFontSizeData aaCellBchgAmt">${bchg.amt | auCurrencyConverter}</div>
+                  <div class="aaVerticalGridline"></div>
+                  <div class="aaCell aaFontSizeData aaCellBchgBal">${bchg.newBalance | auCurrencyConverter}</div>
+                </div>
+                <div class="aaVerticalGridline"></div>
+              </div>
+            </template>
+            <!--
+            The purpose of having the following invisible end-of-list row
+            is to provide an invisible horizontal spacer if acct.bchgList is empty
+            so as to display the column headings row properly..
+            -->
+            <div class="aaRow aaHidden">
+              <div class="aaRowOps aaBgColorToolbar aaFontSizeLabel">
+                <div class="aaRadioBtn">
+                  <au-icon-radio-unselected></au-icon-radio-unselected>
+                </div>
+              </div>
+              <div class="aaVerticalGridline"></div>
+              <div class="aaRowData aaRowBgColorData">
+                <div class="aaCell aaFontSizeData aaCellTranDate"></div>
+                <div class="aaVerticalGridline"></div>
+                <div class="aaCell aaFontSizeData aaCellBchgDesc"></div>
+                <div class="aaVerticalGridline"></div>
+                <div class="aaCell aaFontSizeData aaCellBchgAmt"></div>
+                <div class="aaVerticalGridline"></div>
+                <div class="aaCell aaFontSizeData aaCellBchgBal"></div>
+              </div>
+              <div class="aaVerticalGridline"></div>
+            </div>
+          </div>
+          <div class="aaGridFooterBar"></div>
         </div>
-        <div class="aaGridFooterBar"></div>
       </div>
     </div>
   </div>

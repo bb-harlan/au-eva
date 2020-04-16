@@ -437,6 +437,11 @@ h1 {
   /*background-color:#C8D9E9 !important;*/
   background-color: #DBE6F0 !important;
 }
+.aaRowDataSelected {
+  -webkit-box-shadow: 0 0 0 2px #58b inset;
+  -moz-box-shadow: 0 0 0 2px #58b inset;
+  box-shadow: 0 0 0 2px #58b inset;
+}
 .aaCellId {
   display: inline-flex;
   width: 3pc;
@@ -621,11 +626,14 @@ h1 {
 }
 .aaDragging {
   cursor: n-resize;
-  -webkit-box-shadow: 0px 0px 3px 1px #58b inset;
+ /* -webkit-box-shadow: 0px 0px 3px 1px #58b inset;
   -moz-box-shadow: 0px 0px 3px 1px #58b inset;
-  box-shadow: 0 0 3px 1px #58b inset;
+  box-shadow: 0 0 3px 1px #58b inset;*/
+  -webkit-box-shadow: 0px 0px 0px 2px #58b inset;
+  -moz-box-shadow: 0px 0px 0px 2px #58b inset;
+  box-shadow: 0 0 0px 2px #58b inset;
   /*background-color: #C8D9E9 !important;*/
-  background-color: #fff !important;
+  background-color: #EDF2F7 !important;
 }
 .aaPointerEventsNone {
   pointer-events: none;

@@ -43,17 +43,19 @@
               <span class="aaToolBarDivider">.</span>
             </div>
           </div>
-          <div class="aaRow aaRowColumnHeaders aaFontLabel aaFontBold">
+          <div class="aaRow aaRowColumnHeaders aaFontLabel">
             <div class="aaRowOps aaFontLabel aaHidden">
               <div class="aaRadioBtn">
                 <au-icon-radio-unselected></au-icon-radio-unselected>
               </div>
             </div>
             <div class="aaVerticalGridline" style="background-color: #fff; width: 3px;"></div>
-            <div class="aaRowData">
-              <au-grid-bchg-cells-heading fae-side.one-time="'asset'"></au-grid-bchg-cells-heading>
-              <div class="aaVerticalGridline" style="background-color: #fff; width: 3px;"></div>
-              <au-grid-bchg-cells-heading fae-side.one-time="'equity'"></au-grid-bchg-cells-heading>
+            <div style="display: inline-flex; flex-direction: column; align-items: flex-start; justify-content: flex-start; padding: 2px;">
+              <div class="aaRowData aaFontBold">
+                <au-grid-bchg-cells-heading fae-side.one-time="'asset'"></au-grid-bchg-cells-heading>
+                <div class="aaVerticalGridline" style="background-color: #fff; width: 3px;"></div>
+                <au-grid-bchg-cells-heading fae-side.one-time="'equity'"></au-grid-bchg-cells-heading>
+              </div>
             </div>
             <div class="aaVerticalGridline" style="background-color: #fff; width: 3px;"></div>
           </div>
@@ -77,9 +79,9 @@
                     </template>
                   </div>
                 </div>
-                <!--</template>-->
                 <div class="aaVerticalGridline" style="width: 3px;"></div>
-                <div style="display: inline-flex; flex-direction: column; align-items: flex-start; justify-content: flex-start;">
+                <div class="${app.selectedTran.id == tran.id ? 'aaRowDataSelected' : ''}"
+                     style="padding: 2px; display: inline-flex; flex-direction: column; align-items: flex-start; justify-content: flex-start; padding: 2px;">
                   <div class="aaRowBgColorData"
                        style="display: inline-flex; align-items: center; justify-content: center; border-bottom: 3px solid #ccc; padding: 0.4pc">
                     <div class="aaCell aaFontSizeData aaCellTranDate aaCellBorder">${tran.date}</div>

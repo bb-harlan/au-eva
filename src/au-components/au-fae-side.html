@@ -53,8 +53,7 @@
                 </div>
               </div>
               <div class="aaVerticalGridline"></div>
-              <div
-                class="aaRowData aaRowBgColorData">
+              <div class="aaRowData aaRowBgColorData ${app.selectedAcct.id == listItem.id ? 'aaRowDataSelected' : ''}">
                 <span class="aaCell aaCellAcctTitle">${listItem.title}</span>
                 <div class="aaVerticalGridline"></div>
                 <span class="aaCell aaCellBchgBal">${listItem.endingBalance | auCurrencyConverter}</span>

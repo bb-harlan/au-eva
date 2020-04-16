@@ -8,25 +8,23 @@ import {AuModuleFae} from 'au-components/au-module-fae';
 @inject(App, AuModuleFae)
 export class AuFaeSide {
 
-  /* @injected item(s) */
+  /* @injected object(s) */
   app: App;
   auModuleFae: AuModuleFae;
 
   @bindable faeSide: FaeSide;
 
-  /*=====================================================
-    *  references
-    *=====================================================
-    */
+  /* element reference(s) */
   popupTop: HTMLElement; // <div class="aaRowData aaRowBgColorNonData"  element.ref="popupTopLeft">
   popupLeft: HTMLElement; // <div class="aaRowData aaRowBgColorNonData"  element.ref="popupTopLeft">
-
   rowOpsMenuModal: HTMLElement;
   rowOpsMenuContent: HTMLElement;
   rowOpsBoundingClientRect;
 
+  /* other properties */
   Acct: typeof Acct = Acct;
   Annotation: typeof Annotation = Annotation;
+
   /*
    * In the following two mouesenter/mouseleave handlers, the end-of-list
    * row passes a null value as listItem to signal that the call is from the
@@ -42,22 +40,7 @@ export class AuFaeSide {
     this.app = app;
     this.auModuleFae = auModuleFae;
   }
-  /*
-    attached() {
-      console.log(`ATTACHED() - <au-fae-side> ${this.faeSide.id}`);
-      if (this.app.selectedAcct) {
-        this.app.gridScrollerLink.setAttribute("href", `#${this.app.selectedAcct.id}`);
-        this.app.gridScrollerLink.click();
-      }
-    }
-    detached() {
-      console.log(`DETACHED() - <au-fae-side> ${this.faeSide.id}`);
-      if (this.app.selectedAcct) {
-        this.app.gridScrollerLink.setAttribute("href", `#${this.app.selectedAcct.id}`);
-        this.app.gridScrollerLink.click();
-      }
-    }
-  */
+
   onRowEnter(event, listItem) {
     event.target.children[0].children[0].classList.toggle('aaRowOpsHover', true);
     event.target.children[2].classList.toggle('aaRowDataHover', true);

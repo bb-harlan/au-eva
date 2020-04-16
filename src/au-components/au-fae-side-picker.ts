@@ -12,10 +12,7 @@ export class AuFaeSidePicker {
 
   @bindable faeSide: FaeSide;
 
-  /*=====================================================
-    *  references
-    *=====================================================
-    */
+  /* element reference(s) */
   popupTopLeft: HTMLElement; // <div class="aaRowData aaRowBgColorNonData"  element.ref="popupTopLeft">
   rowOpsMenuModal: HTMLElement;
   rowOpsMenuContent: HTMLElement;

@@ -7,6 +7,16 @@ import {Bchg} from 'app-data/models/bchg';
 @inject(App)
 
 export class AuModuleTran {
+
+  /* @injected object(s) */
+  app: App;
+
+  /* element reference(s) */
+  moduleRootElement: Element;
+  popupTop: HTMLElement; // <div element.ref="popupTop" ...
+
+  /* other properties */
+  mutationObserver = new MutationObserver(this.mutationObserverCallback);
   get TRAN_OP_NEW() {
     return "new";
   }
@@ -18,14 +28,7 @@ export class AuModuleTran {
   }
   tranOp = "";
 
-  // @injected item(s)
-  app: App;
 
-  /*=====================================================
-   *  references
-   *=====================================================
-   */
-  popupTop: HTMLElement; // <div element.ref="popupTop" ...
 
   constructor(app) {
     this.app = app;
@@ -36,6 +39,22 @@ export class AuModuleTran {
       event.target.children[2].classList.toggle('aaRowDataHover', true);
     }
   }
+  observeRootElement() {
+    (this.mutationObserver as any).app = this.app; // cast as "any" to programmatically add property
+    this.mutationObserver.observe(this.moduleRootElement,
+                                  {childList: false,
+                                    attributes: true,
+                                    attributeOldValue: true,
+                                    subtree: false}
+    );
+  }
+  mutationObserverCallback(mutationList, mutationObserver) {
+    if (mutationObserver.app.selectedBchg) {
+      document.getElementById(mutationObserver.app.selectedBchg.id).scrollIntoView();
+    }
+    mutationObserver.disconnect();
+  }
+
   onRowLeave(event, bchg) {
     event.target.children[0].children[0].classList.toggle('aaRowOpsHover', false);
     if (bchg) {

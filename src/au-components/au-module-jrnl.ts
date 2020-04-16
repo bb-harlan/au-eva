@@ -4,11 +4,11 @@ import {App} from 'app';
 @customElement('au-module-jrnl')
 @inject(App)
 export class AuModuleJrnl {
-  //
-  // @injected item(s)
+
+  /* @injected object(s) */
   app: App;
 
-  // other properties
+  /* other properties */
   moduleRootElement: Element;
   mutationObserver = new MutationObserver(this.mutationObserverCallback);
 
