@@ -33,11 +33,11 @@ export class App {
 
   /* element.ref properties */
   gridScrollerLink: HTMLElement; //<a> tag used to scroll grid to row having specifid Id
-  viewmodelModuleFAE; // <au-module-fae view-model.ref="viewmodelModuleFAE"></au-module-fae>
-  viewmodelModuleAcct; // <au-module-acct view-model.ref="viewmodelModuleAcct"></au-module-fae>
-  viewmodelModuleBchg; // <au-module-bchg view-model.ref="viewmodelModuleBchg"></au-module-fae>
-  viewmodelModuleTran; // <au-module-tran view-model.ref="viewmodelModuleTran"></au-module-fae>
-  viewmodelModuleJrnl; // <au-module-jrnl view-model.ref="viewmodelModuleJrnl</au-module-fae>
+  viewmodelFAE; // <au-module-fae view-model.ref="viewmodelFAE"></au-module-fae>
+  viewmodelAcct; // <au-module-acct view-model.ref="viewmodelAcct"></au-module-fae>
+  viewmodelBchg; // <au-module-bchg view-model.ref="viewmodelBchg"></au-module-fae>
+  viewmodelTran; // <au-module-tran view-model.ref="viewmodelTran"></au-module-fae>
+  viewmodelJrnl; // <au-module-jrnl view-model.ref="viewmodelJrnl</au-module-fae>
 
   viewmodelPopupAcctMover; // <au-popup-acct-mover view-model.ref="viewmodelPopupAcctMover">
   viewmodelPopupAcctPicker; // <au-popup-acct-picker view-model.ref="viewmodelPopupAcctPicker">
@@ -76,7 +76,10 @@ export class App {
     1,
     1);
 
+
   bind() {
+    // this.mutationObserver.app = this; // add new property for use by callback function
+
     // this.data.generateEmptyData();
     this.data.generateTestData();
     // this.data.generateExample1Data();
@@ -210,16 +213,31 @@ export class App {
     console.log("clicked scroller")
   }
 
+  observeOptions = {childList: false,
+                     attributes: true,
+                     attributeOldValue: true,
+                     subtree: false};
+  mutationObserver = new MutationObserver(this.mutationObserverCallback);
+  mutationObserverCallback(mutationList, mutationObserver) {
+    document.getElementById(mutationObserver.app.selectedTran.id).scrollIntoView();
+
+    mutationObserver.disconnect();
+  }
+  observeMuatationOfModuleDiv(targetDiv, scrollIntoViewElement) {
+    this.mutationObserver.observe(targetDiv, this.observeOptions);
+  }
+
   goFaeModule(event) {
-    // this.selectedBchg = null;
-    // this.selectedTran = null;
     event.target.classList.toggle("aaNavModuleHover", false);
     this.selectedModule = null;
+    this.viewmodelFAE.observeRootElement();
     this.selectedModule = this.MODULE_FAE;
+/*
     if (this.selectedAcct) {
       this.gridScrollerLink.setAttribute("href", `#${this.selectedAcct.id}`);
       this.gridScrollerLink.click();
     }
+*/
   }
   goAcctModule(event) {
     if (this.selectedBchg && this.selectedBchg.targetAcct.id != this.selectedAcct.id) {
@@ -246,15 +264,14 @@ export class App {
   goJrnlModule(event) {
     event.target.classList.toggle("aaNavModuleHover", false);
     this.selectedModule = null;
+    this.viewmodelJrnl.observeRootElement();
     this.selectedModule = this.MODULE_JRNL;
+/*
     if (this.selectedTran) {
       console.log(this.selectedTran);
       document.getElementById(this.selectedTran.id).scrollIntoView();
-      /*
-            this.gridScrollerLink.setAttribute("href", `#${this.selectedTran.id}`);
-            this.gridScrollerLink.click();
-      */
     }
+*/
   }
 
   goPrevAcct(event) {

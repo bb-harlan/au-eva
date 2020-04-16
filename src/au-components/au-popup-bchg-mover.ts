@@ -28,7 +28,7 @@ export class AuPopupBchgMover {
     // make copy of bchgList for mover
     this.moverBchgList.push(...this.app.candidateTran.bchgList);
     // position moverDialogContent
-    let boundingClientRect = this.app.viewmodelModuleTran.popupTop.getBoundingClientRect();
+    let boundingClientRect = this.app.viewmodelTran.popupTop.getBoundingClientRect();
     this.moverDialogContent.style.marginTop = `${boundingClientRect.top}px`;
     // display dialog
     this.moverDialogModal.style.display = "flex";

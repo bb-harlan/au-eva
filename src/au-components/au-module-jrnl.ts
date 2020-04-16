@@ -5,32 +5,56 @@ import {App} from 'app';
 @inject(App)
 export class AuModuleJrnl {
   //
-  app = null;
-  rootDivOfJrnl: Element = null;
-  mutationObserver = null;
+  // @injected item(s)
+  app: App;
+
+  // other properties
+  moduleRootElement: Element;
+  mutationObserver = new MutationObserver(this.mutationObserverCallback);
 
   constructor(app) {
     this.app = app;
   }
+
+  observeRootElement() {
+    (this.mutationObserver as any).app = this.app; // cas as "any" to programmatically add property
+    this.mutationObserver.observe(this.moduleRootElement,
+                                  {childList: false,
+                                    attributes: true,
+                                    attributeOldValue: true,
+                                    subtree: false}
+    );
+  }
+  mutationObserverCallback(mutationList, mutationObserver) {
+    if (mutationObserver.app.selectedTran) {
+      document.getElementById(mutationObserver.app.selectedTran.id).scrollIntoView();
+    }
+    mutationObserver.disconnect();
+  }
+
+  /*
   attached() {
-    /*
+    /!*
      * NOTE: I don't know exactly WHY the use of MutationObserver below works to solve
      * the problem of scrolling to the grid row of the selectedTran, but it does.
-     */
+     *!/
 
     this.mutationObserver = new MutationObserver(this.mutationObserverCallback);
     this.mutationObserver.app = this.app; // add new property for use by callback function
-    this.mutationObserver.observe(this.rootDivOfJrnl, {childList: false, attributes: true, attributeOldValue: true,  subtree: false});
+    this.mutationObserver.observe(this.moduleRootElement,
+                                 {childList: false,
+                                         attributes: true,
+                                         attributeOldValue: true,
+                                         subtree: false}
+                                         );
   }
-  mutationObserverCallback(mutationList, observer) {
-    if (observer.app.selectedTran) {
-      document.getElementById(observer.app.selectedTran.id).scrollIntoView();
-/*   *** The following does not work***
-      observer.app.gridScrollerLink.setAttribute("href", `#${observer.app.selectedTrant.id}`);
-      observer.app.gridScrollerLink.click();
-*/
+  mutationObserverCallback(mutationList, mutationObserver) {
+    if (mutationObserver.app.selectedTran) {
+      document.getElementById(mutationObserver.app.selectedTran.id).scrollIntoView();
     }
+    mutationObserver.disconnect();
   }
+*/
   onRowEnter(event) {
     /*row ops*/
     event.target.children[0].children[0].classList.toggle('aaRowOpsHover', true);
@@ -50,20 +74,20 @@ export class AuModuleJrnl {
   tranNew(event) {
     this.app.invokingModule = this.app.MODULE_JRNL;
     this.app.selectedModule = this.app.MODULE_TRAN;
-    this.app.viewmodelModuleTran.tranNew();
+    this.app.viewmodelTran.tranNew();
   }
   tranEdit(event) {
     if (this.app.selectedTran) {
       this.app.invokingModule = this.app.MODULE_JRNL;
       this.app.selectedModule = this.app.MODULE_TRAN;
-      this.app.viewmodelModuleTran.tranEdit();
+      this.app.viewmodelTran.tranEdit();
     }
   }
   tranDelete(event) {
     if (this.app.selectedTran) {
       this.app.invokingModule = this.app.MODULE_JRNL;
       this.app.selectedModule = this.app.MODULE_TRAN;
-      this.app.viewmodelModuleTran.tranDelete();
+      this.app.viewmodelTran.tranDelete();
     }
   }
 

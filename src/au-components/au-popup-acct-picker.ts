@@ -21,7 +21,7 @@ export class AuPopupAcctPicker {
   open(currentBchg, pickerCallback): void {
     this.currentBchg = currentBchg;
     this.pickerCallback = pickerCallback;
-    let boundingClientRect = this.app.viewmodelModuleTran.popupTop.getBoundingClientRect();
+    let boundingClientRect = this.app.viewmodelTran.popupTop.getBoundingClientRect();
     this.pickerDialogContent.style.marginTop = `${boundingClientRect.top}px`;
     this.pickerDialogModal.style.display = "flex";
   }
