@@ -149,6 +149,7 @@ export class AuModuleTran {
     this.app.selectedTran.unregister();
     this.app.candidateTran.register();
     this.app.selectedTran = this.app.candidateTran;
+    this.app.selectedBchg = null;
     this.app.candidateTran = null;
     this.app.selectedAcct = null;
     this.app.data.jrnl.refresh();

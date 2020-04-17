@@ -100,6 +100,8 @@ export class Data {
         /*normalBalance*/  1);
       this.faeSideEquities.acctList.push(newAcct);
     }
+    this.faeSideAssets.reindexAcctList();
+    this.faeSideEquities.reindexAcctList();
     /*
      * Create some transactions**********************************************************
      */

@@ -61,11 +61,11 @@ export class AuFaeSide {
       this.rowOpsMenuModal.style.display = "none";
     }
   }
-  acctNew(event, currentListItem) {
+  acctNew(event, listItem) {
     let insertionIndex: number;
     let newAcct: Acct;
-    if (currentListItem) {
-      insertionIndex = currentListItem.intraSideIndex;
+    if (listItem) {
+      insertionIndex = listItem.intraSideIndex;
     }
     else {
       insertionIndex = this.faeSide.acctList.length;
@@ -79,11 +79,11 @@ export class AuFaeSide {
     this.faeSide.acctList.splice(insertionIndex, 0, newAcct);
     this.faeSide.reindexAcctList();
   }
-  annotationNew(event, currentListItem) {
+  annotationNew(event, listItem) {
     let insertionIndex: number;
     let newAnnotation: Annotation;
-    if (currentListItem) {
-      insertionIndex = currentListItem.intraSideIndex;
+    if (listItem) {
+      insertionIndex = listItem.intraSideIndex;
     }
     else {
       insertionIndex = this.faeSide.acctList.length;
@@ -96,12 +96,12 @@ export class AuFaeSide {
     this.faeSide.acctList.splice(insertionIndex, 0, newAnnotation);
     this.faeSide.reindexAcctList();
   }
-  listItemDelete(event, currentListItem) {
-    if (currentListItem instanceof Acct && currentListItem.bchgList.length != 0) {
+  listItemDelete(event, listItem) {
+    if (listItem instanceof Acct && listItem.bchgList.length != 0) {
       alert("cannot delete");
       return
     }
-    let removalIndex = currentListItem.intraSideIndex;
+    let removalIndex = listItem.intraSideIndex;
     this.faeSide.acctList.splice(removalIndex, 1);
     this.faeSide.reindexAcctList();
   }
