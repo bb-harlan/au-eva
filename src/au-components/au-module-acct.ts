@@ -35,11 +35,9 @@ export class AuModuleAcct {
     mutationObserver.disconnect();
   }
   onRowEnter(event, listItem) {
-    event.target.children[0].children[0].classList.toggle('aaRowOpsHover', true);
     event.target.children[2].classList.toggle('aaRowDataHover', true);
   }
   onRowLeave(event, listItem) {
-    event.target.children[0].children[0].classList.toggle('aaRowOpsHover', false);
     event.target.children[2].classList.toggle('aaRowDataHover', false);
   }
 }

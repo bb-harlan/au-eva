@@ -405,23 +405,13 @@ h1 {
 }
 .aaRowOps {
   display: inline-flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center; /* vertical axis */
   white-space: nowrap;
   overflow: hidden;
-  padding-top: 0.25pc;
+  /*padding-top: 0.25pc;*/
   align-self: stretch;
-}
-.aaRowOpsOpacity {
-  display: inline-flex;
-  align-items: flex-start;
-  position: relative;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  opacity: 0.3;
-}
-.aaRowOpsHover {
-  opacity: 1.0;
 }
 .aaRowData {
   display: inline-flex;
@@ -434,7 +424,6 @@ h1 {
   }
 .aaRowDataHover {
   cursor: default;
-  /*background-color:#C8D9E9 !important;*/
   background-color: #DBE6F0 !important;
 }
 .aaRowDataSelected {

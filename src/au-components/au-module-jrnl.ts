@@ -56,16 +56,12 @@ export class AuModuleJrnl {
   }
 */
   onRowEnter(event) {
-    /*row ops*/
-    event.target.children[0].children[0].classList.toggle('aaRowOpsHover', true);
     /*tran date*/
     event.target.children[2].children[0].classList.toggle('aaRowDataHover', true);
     /*tran bchg rows*/
     event.target.children[2].children[1].classList.toggle('aaRowDataHover', true);
   }
   onRowLeave(event) {
-    /*row ops*/
-    event.target.children[0].children[0].classList.toggle('aaRowOpsHover', false);
     /*tran date*/
     event.target.children[2].children[0].classList.toggle('aaRowDataHover', false);
     /*tran bchg rows*/

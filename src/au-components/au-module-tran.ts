@@ -28,24 +28,19 @@ export class AuModuleTran {
   }
   tranOp = "";
 
-
-
   constructor(app) {
     this.app = app;
   }
-  onRowEnter(event, bchg) {
-    event.target.children[0].children[0].classList.toggle('aaRowOpsHover', true);
-    if (bchg) {
-      event.target.children[2].classList.toggle('aaRowDataHover', true);
-    }
-  }
+
   observeRootElement() {
     (this.mutationObserver as any).app = this.app; // cast as "any" to programmatically add property
     this.mutationObserver.observe(this.moduleRootElement,
-                                  {childList: false,
+                                  {
+                                    childList: false,
                                     attributes: true,
                                     attributeOldValue: true,
-                                    subtree: false}
+                                    subtree: false
+                                  }
     );
   }
   mutationObserverCallback(mutationList, mutationObserver) {
@@ -54,9 +49,12 @@ export class AuModuleTran {
     }
     mutationObserver.disconnect();
   }
-
+  onRowEnter(event, bchg) {
+    if (bchg) {
+      event.target.children[2].classList.toggle('aaRowDataHover', true);
+    }
+  }
   onRowLeave(event, bchg) {
-    event.target.children[0].children[0].classList.toggle('aaRowOpsHover', false);
     if (bchg) {
       event.target.children[2].classList.toggle('aaRowDataHover', false);
     }
@@ -89,7 +87,7 @@ export class AuModuleTran {
     this.app.candidateTran = new Tran(
       /*id*/ `tran${this.app.data.nextTranId}`,
       /*parentJrnl*/ this.app.data.jrnl,
-      /*date*/ new Date().toISOString().slice(0,10),
+      /*date*/ new Date().toISOString().slice(0, 10),
       /*intraDateSorter*/ this.app.data.nextSorter);
     this.app.viewNavMode = false;
     this.tranOp = this.TRAN_OP_NEW;
@@ -111,7 +109,8 @@ export class AuModuleTran {
     this.app.data.faeSideEquities.refresh();
     this.app.candidateTran = null;
     this.tranOp = null;
-    this.app.viewNavMode = true;;
+    this.app.viewNavMode = true;
+    ;
     if (this.app.invokingModule) {
       this.app.selectedModule = this.app.invokingModule;
       this.app.invokingModule = null;
@@ -120,7 +119,8 @@ export class AuModuleTran {
   tranNewCancel(event) {
     this.app.candidateTran = null;
     this.tranOp = null;
-    this.app.viewNavMode = true;;
+    this.app.viewNavMode = true;
+    ;
     if (this.app.invokingModule) {
       this.app.selectedModule = this.app.invokingModule;
       this.app.invokingModule = null;
@@ -188,7 +188,8 @@ export class AuModuleTran {
       this.app.data.faeSideEquities.refresh();
       this.app.selectedTran = null;
       this.tranOp = null;
-      this.app.viewNavMode = true;;
+      this.app.viewNavMode = true;
+      ;
       this.app.goJrnlModule(event);
     }
     else {

@@ -20,6 +20,7 @@ export class AuFaeSide {
   rowOpsMenuModal: HTMLElement;
   rowOpsMenuContent: HTMLElement;
   rowOpsBoundingClientRect;
+  rowColumnHeaders: HTMLElement;
 
   /* other properties */
   Acct: typeof Acct = Acct;
@@ -42,20 +43,15 @@ export class AuFaeSide {
   }
 
   onRowEnter(event, listItem) {
-    event.target.children[0].children[0].classList.toggle('aaRowOpsHover', true);
     event.target.children[2].classList.toggle('aaRowDataHover', true);
   }
-
   onRowLeave(event, listItem) {
-    event.target.children[0].children[0].classList.toggle('aaRowOpsHover', false);
     event.target.children[2].classList.toggle('aaRowDataHover', false);
   }
-
   onRowOpsOpen(event, listItem) {
     this.rowOpsBoundingClientRect = (event.target as Element).parentElement.getBoundingClientRect();
     this.rowOpsMenuModal.style.display = "block";
   }
-
   onRowOpsCancel(event) {
     if (event.target == this.rowOpsMenuModal) {
       this.rowOpsMenuModal.style.display = "none";
@@ -97,10 +93,6 @@ export class AuFaeSide {
     this.faeSide.reindexAcctList();
   }
   listItemDelete(event, listItem) {
-    if (listItem instanceof Acct && listItem.bchgList.length != 0) {
-      alert("cannot delete");
-      return
-    }
     let removalIndex = listItem.intraSideIndex;
     this.faeSide.acctList.splice(removalIndex, 1);
     this.faeSide.reindexAcctList();

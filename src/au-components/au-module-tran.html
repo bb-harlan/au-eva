@@ -300,12 +300,12 @@
             </div>
             <div class="aaRow aaRowColumnHeaders aaFontLabel aaFontBold">
               <div class="aaRowOps aaFontLabel aaHidden">
-              <span class="aaBtn">
-                <au-icon-new></au-icon-new>
-              </span>
                 <span class="aaBtn">
-                <au-icon-delete></au-icon-delete>
-              </span>
+                  <au-icon-new></au-icon-new>
+                </span>
+                <span class="aaBtn">
+                  <au-icon-delete></au-icon-delete>
+                </span>
               </div>
               <div class="aaVerticalGridline" style="background-color: #fff;  width: 3px;"></div>
               <div class="aaRowData">
@@ -321,15 +321,16 @@
                      mouseenter.trigger="onRowEnter($event, bchg)"
                      mouseleave.trigger="onRowLeave($event, bchg)">
                   <div class="aaRowOps aaBgColorToolbar aaFontSizeLabel">
-                    <div class="aaRowOpsOpacity">
-                    <span class="aaBtn" title="Insert new row..."
+                    <span class="aaBtn"
+                          title="Insert new row..."
                           click.trigger="app.viewmodelPopupAcctPicker.open(bchg, pickAcctDone)">
                       <au-icon-new></au-icon-new>
                     </span>
-                      <span class="aaBtn" title="Delete row..." click.trigger="bchgDelete(bchg)">
+                    <span class="aaBtn"
+                          title="Delete row..."
+                          click.trigger="bchgDelete(bchg)">
                       <au-icon-delete></au-icon-delete>
                     </span>
-                    </div>
                   </div>
                   <div class="aaVerticalGridline" style="width: 3px;"></div>
                   <div class="aaRowData aaRowBgColorData">
@@ -357,15 +358,14 @@
                    mouseenter.trigger="onRowEnter($event, null)"
                    mouseleave.trigger="onRowLeave($event, null)">
                 <div class="aaRowOps aaBgColorToolbar aaFontSizeLabel">
-                  <div class="aaRowOpsOpacity">
-                    <span class="aaBtn" title="Insert new row..."
-                          click.trigger="app.viewmodelPopupAcctPicker.open(null, pickAcctDone)">
-                      <au-icon-new></au-icon-new>
-                    </span>
-                    <span class="aaBtn aaHidden">
+                  <span class="aaBtn"
+                        title="Insert new row..."
+                        click.trigger="app.viewmodelPopupAcctPicker.open(null, pickAcctDone)">
+                    <au-icon-new></au-icon-new>
+                  </span>
+                  <span class="aaBtn aaHidden">
                       <au-icon-delete></au-icon-delete>
                     </span>
-                  </div>
                 </div>
                 <div class="aaVerticalGridline" style="width: 3px;"></div>
                 <div class="aaRowData aaHidden">

@@ -77,11 +77,10 @@ export class App {
 
 
   bind() {
-    // this.mutationObserver.app = this; // add new property for use by callback function
 
     // this.data.generateEmptyData();
-    this.data.generateTestData();
-    // this.data.generateExample1Data();
+    // this.data.generateTestData();
+    this.data.generateExample1Data();
 
     /*
     * *************************

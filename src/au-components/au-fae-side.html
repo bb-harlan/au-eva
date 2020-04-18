@@ -36,8 +36,8 @@
       <div class="aaGridScrollableRows">
         <template repeat.for="listItem of faeSide.acctList">
           <template if.bind="listItem.isAcct()">
-            <div id="${listItem.id}"
-                 class="aaRow"
+            <div class="aaRow"
+                 id="${listItem.id}"
                  mouseenter.trigger="onRowEnter($event, listItem)"
                  mouseleave.trigger="onRowLeave($event, listItem)"
                  click.trigger="app.selectAcct(listItem)"
@@ -62,12 +62,12 @@
             </div>
           </template>
           <template if.bind="listItem.isAnnotation()">
-            <div id="${listItem.id}"
-                 class="aaRow"
+            <div class="aaRow"
+                 id="${listItem.id}"
                  mouseenter.trigger="onRowEnter($event, listItem)"
                  mouseleave.trigger="onRowLeave($event, listItem)">
               <div class="aaRowOps aaBgColorToolbar">
-                <button type="button" class="aaBtn aaHidden">
+                <button class="aaBtn aaHidden" type="button">
                   <au-icon-radio-unselected></au-icon-radio-unselected>
                 </button>
               </div>
@@ -89,8 +89,7 @@
               </div>
             </div>
             <div class="aaVerticalGridline"></div>
-            <div
-              class="aaRowData aaRowBgColorData">
+            <div class="aaRowData aaRowBgColorData">
               <span class="aaCell aaCellAcctTitle">x</span>
               <div class="aaVerticalGridline"></div>
               <span class="aaCell aaCellBchgBal">0</span>
@@ -103,8 +102,8 @@
     </template>
     <template if.bind="!app.viewNavMode">
       <div class="aaPanelToolBar" element.ref="popupTop">
-        <button type="button"
-                class="aaBtn"
+        <button class="aaBtn"
+                type="button"
                 click.trigger="app.viewmodelPopupAcctMover.open(popupTop, popupLeft, faeSide)">
           <au-icon-row-mover></au-icon-row-mover>
           &nbsp;Move rows
@@ -133,32 +132,32 @@
       </div>
       <div class="aaGridScrollableRows">
         <template repeat.for="listItem of faeSide.acctList">
-          <div id="${listItem.id}"
-               class="aaRow"
+          <div class="aaRow"
+               id="${listItem.id}"
                mouseenter.trigger="onRowEnter($event, listItem)"
                mouseleave.trigger="onRowLeave($event, listItem)"
                click.trigger="app.selectAcct(listItem)">
             <template if.bind="listItem.isAcct()">
               <div class="aaRowOps aaBgColorToolbar aaFontSizeLabel">
-                <div class="aaRowOpsOpacity">
                     <span class="aaBtn" title="Insert new account row..."
                           click.trigger="acctNew($event, listItem)">
                       <au-icon-new></au-icon-new>
                     </span>
-                  <span class="aaBtn" title="Insert new annotation row..."
-                        click.trigger="annotationNew($event, listItem)">
+                <span class="aaBtn" title="Insert new annotation row..."
+                      click.trigger="annotationNew($event, listItem)">
                       <au-icon-new></au-icon-new>
                     </span>
-                  <span class="aaBtn" title="Delete row..." click.trigger="listItemDelete($event, listItem)">
-                      <au-icon-delete></au-icon-delete>
-                    </span>
-                </div>
+                <span class="aaBtn ${listItem.bchgList.length > 0 ? 'aaHidden' : ''}"
+                      title="Delete row..."
+                      click.trigger="listItemDelete($event, listItem)">
+                  <au-icon-delete></au-icon-delete>
+                </span>
               </div>
               <div class="aaVerticalGridline"></div>
               <div
                 class="aaRowData aaRowBgColorData">
-                <input type="text"
-                       class="aaFormInputText aaCellAcctTitle aaCellInGrid"
+                <input class="aaFormInputText aaCellAcctTitle aaCellInGrid"
+                       type="text"
                        placeholder="<account title>"
                        value.bind="listItem.title">
                 <div class="aaVerticalGridline"></div>
@@ -168,19 +167,17 @@
             </template>
             <template if.bind="listItem.isAnnotation()">
               <div class="aaRowOps aaBgColorToolbar aaFontSizeLabel">
-                <div class="aaRowOpsOpacity">
-                    <span class="aaBtn" title="Insert new account row..."
-                          click.trigger="acctNew($event, listItem)">
+                <span class="aaBtn" title="Insert new account row..."
+                      click.trigger="acctNew($event, listItem)">
                       <au-icon-new></au-icon-new>
                     </span>
-                  <span class="aaBtn" title="Insert new annotation row..."
-                        click.trigger="annotationNew($event, listItem)">
+                <span class="aaBtn" title="Insert new annotation row..."
+                      click.trigger="annotationNew($event, listItem)">
                       <au-icon-new></au-icon-new>
                     </span>
-                  <span class="aaBtn" title="Delete row..." click.trigger="listItemDelete($event, listItem)">
+                <span class="aaBtn" title="Delete row..." click.trigger="listItemDelete($event, listItem)">
                       <au-icon-delete></au-icon-delete>
                     </span>
-                </div>
               </div>
               <div class="aaVerticalGridline"></div>
               <div class="aaRowData aaRowBgColorData">
@@ -203,19 +200,17 @@
              mouseenter.trigger="onRowEnter($event, null)"
              mouseleave.trigger="onRowLeave($event, null)">
           <div class="aaRowOps aaBgColorToolbar aaFontSizeLabel">
-            <div class="aaRowOpsOpacity">
-                    <span class="aaBtn" title="Insert new account row"
-                          click.trigger="acctNew($event, null)">
+              <span class="aaBtn" title="Insert new account row"
+                    click.trigger="acctNew($event, null)">
                       <au-icon-new></au-icon-new>
                     </span>
-              <span class="aaBtn" title="Insert new annotation row"
-                    click.trigger="annotationNew($event, null)">
+            <span class="aaBtn" title="Insert new annotation row"
+                  click.trigger="annotationNew($event, null)">
                       <au-icon-new></au-icon-new>
                     </span>
-              <span class="aaBtn aaHidden">
-                      <au-icon-delete></au-icon-delete>
-                    </span>
-            </div>
+            <span class="aaBtn aaHidden">
+              <au-icon-delete></au-icon-delete>
+            </span>
           </div>
           <div class="aaVerticalGridline"></div>
           <div class="aaRowData aaHidden">
@@ -250,7 +245,7 @@
     <div class="aaRow" style="border-bottom-color: transparent; background-color: transparent;">
       <div class="aaRowOps aaHidden">
         <template if.bind="app.viewNavMode">
-          <button type="button" class="aaBtn">
+          <button class="aaBtn" type="button">
             <au-icon-nav-right></au-icon-nav-right>
           </button>
         </template>
