@@ -11,7 +11,8 @@ export class AuModuleFae {
 
   /* other properties */
   moduleRootElement: Element;
-  mutationObserver = new MutationObserver(this.mutationObserverCallback);
+  moScrollIntoView = new MutationObserver(this.cbScrollIntoView);
+  moSetInputFocus = new MutationObserver(this.cbSetInputFocus);
 
   /* element reference(s) */
   viewmodelPopupAcctMover;
@@ -20,18 +21,37 @@ export class AuModuleFae {
     this.app = app;
   }
 
-  observeRootElement() {
-    (this.mutationObserver as any).app = this.app; // cast as "any" to programmatically add property
-    this.mutationObserver.observe(this.moduleRootElement,
+  observeForScrollIntoView() {
+    (this.moScrollIntoView as any).app = this.app; // cast as "any" to programmatically add property
+    this.moScrollIntoView.observe(this.moduleRootElement,
                                   {childList: false,
                                     attributes: true,
                                     attributeOldValue: true,
                                     subtree: false}
     );
   }
-  mutationObserverCallback(mutationList, mutationObserver) {
+  cbScrollIntoView(mutationList, mutationObserver) {
     if (mutationObserver.app.selectedAcct) {
-      document.getElementById(mutationObserver.app.selectedAcct.id).scrollIntoView();
+      let element = document.getElementById(mutationObserver.app.selectedAcct.id);
+      if (element) {
+        element.scrollIntoView();
+      }
+    }
+    mutationObserver.disconnect();
+  }
+  observeForSetInputFocus() {
+    (this.moSetInputFocus as any).app = this.app; // cast as "any" to programmatically add property
+    this.moSetInputFocus.observe(this.moduleRootElement,
+                                  {childList: true,
+                                    subtree: true}
+    );
+  }
+  cbSetInputFocus(mutationList, mutationObserver) {
+    if (mutationObserver.app.selectedAcct) {
+      let element = document.getElementById(mutationObserver.app.selectedAcct.id);
+      if (element) {
+        (element.children[2].children[0] as HTMLElement).focus();
+      }
     }
     mutationObserver.disconnect();
   }

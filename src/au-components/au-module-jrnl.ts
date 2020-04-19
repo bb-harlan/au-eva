@@ -10,51 +10,27 @@ export class AuModuleJrnl {
 
   /* other properties */
   moduleRootElement: Element;
-  mutationObserver = new MutationObserver(this.mutationObserverCallback);
+  moScrollIntoView = new MutationObserver(this.cbScrollIntoView);
 
   constructor(app) {
     this.app = app;
   }
 
-  observeRootElement() {
-    (this.mutationObserver as any).app = this.app; // cas as "any" to programmatically add property
-    this.mutationObserver.observe(this.moduleRootElement,
+  observeForScrollIntoView() {
+    (this.moScrollIntoView as any).app = this.app; // cast as "any" to programmatically add property
+    this.moScrollIntoView.observe(this.moduleRootElement,
                                   {childList: false,
                                     attributes: true,
                                     attributeOldValue: true,
                                     subtree: false}
     );
   }
-  mutationObserverCallback(mutationList, mutationObserver) {
+  cbScrollIntoView(mutationList, mutationObserver) {
     if (mutationObserver.app.selectedTran) {
       document.getElementById(mutationObserver.app.selectedTran.id).scrollIntoView();
     }
     mutationObserver.disconnect();
   }
-
-  /*
-  attached() {
-    /!*
-     * NOTE: I don't know exactly WHY the use of MutationObserver below works to solve
-     * the problem of scrolling to the grid row of the selectedTran, but it does.
-     *!/
-
-    this.mutationObserver = new MutationObserver(this.mutationObserverCallback);
-    this.mutationObserver.app = this.app; // add new property for use by callback function
-    this.mutationObserver.observe(this.moduleRootElement,
-                                 {childList: false,
-                                         attributes: true,
-                                         attributeOldValue: true,
-                                         subtree: false}
-                                         );
-  }
-  mutationObserverCallback(mutationList, mutationObserver) {
-    if (mutationObserver.app.selectedTran) {
-      document.getElementById(mutationObserver.app.selectedTran.id).scrollIntoView();
-    }
-    mutationObserver.disconnect();
-  }
-*/
   onRowEnter(event) {
     /*tran date*/
     event.target.children[2].children[0].classList.toggle('aaRowDataHover', true);

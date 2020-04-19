@@ -16,7 +16,7 @@ export class AuModuleTran {
   popupTop: HTMLElement; // <div element.ref="popupTop" ...
 
   /* other properties */
-  mutationObserver = new MutationObserver(this.mutationObserverCallback);
+  moScrollIntoView = new MutationObserver(this.cbScrollIntoView);
   get TRAN_OP_NEW() {
     return "new";
   }
@@ -32,9 +32,9 @@ export class AuModuleTran {
     this.app = app;
   }
 
-  observeRootElement() {
-    (this.mutationObserver as any).app = this.app; // cast as "any" to programmatically add property
-    this.mutationObserver.observe(this.moduleRootElement,
+  observeForScrollIntoView() {
+    (this.moScrollIntoView as any).app = this.app; // cast as "any" to programmatically add property
+    this.moScrollIntoView.observe(this.moduleRootElement,
                                   {
                                     childList: false,
                                     attributes: true,
@@ -43,7 +43,7 @@ export class AuModuleTran {
                                   }
     );
   }
-  mutationObserverCallback(mutationList, mutationObserver) {
+  cbScrollIntoView(mutationList, mutationObserver) {
     if (mutationObserver.app.selectedBchg) {
       document.getElementById(mutationObserver.app.selectedBchg.id).scrollIntoView();
     }

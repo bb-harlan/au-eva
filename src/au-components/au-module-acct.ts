@@ -11,7 +11,7 @@ export class AuModuleAcct {
 
   /* other properties */
   moduleRootElement: Element;
-  mutationObserver = new MutationObserver(this.mutationObserverCallback);
+  moScrollIntoView = new MutationObserver(this.cbScrollIntoView);
 
   Acct: typeof Acct = Acct;
   Annotation: typeof Annotation = Annotation;
@@ -19,16 +19,16 @@ export class AuModuleAcct {
   constructor(app) {
     this.app = app;
   }
-  observeRootElement() {
-    (this.mutationObserver as any).app = this.app; // cast as "any" to programmatically add property
-    this.mutationObserver.observe(this.moduleRootElement,
+  observeForScrollIntoView() {
+    (this.moScrollIntoView as any).app = this.app; // cast as "any" to programmatically add property
+    this.moScrollIntoView.observe(this.moduleRootElement,
                                   {childList: false,
                                     attributes: true,
                                     attributeOldValue: true,
                                     subtree: false}
     );
   }
-  mutationObserverCallback(mutationList, mutationObserver) {
+  cbScrollIntoView(mutationList, mutationObserver) {
     if (mutationObserver.app.selectedBchg) {
       document.getElementById(mutationObserver.app.selectedBchg.id).scrollIntoView();
     }

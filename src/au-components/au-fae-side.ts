@@ -72,8 +72,11 @@ export class AuFaeSide {
       /*intraSideIndex*/ 0,
       /*title*/ "",
       /*normalBalance*/ 1);
+    this.app.selectedAcct = newAcct;
     this.faeSide.acctList.splice(insertionIndex, 0, newAcct);
     this.faeSide.reindexAcctList();
+    this.app.selectedAcct = newAcct;
+    this.app.viewmodelFae.observeForSetInputFocus();
   }
   annotationNew(event, listItem) {
     let insertionIndex: number;
@@ -85,12 +88,14 @@ export class AuFaeSide {
       insertionIndex = this.faeSide.acctList.length;
     }
     newAnnotation = new Annotation(
-      /*id*/ `acct${this.app.data.nextAcctId}`,
+      /*id*/ `anno${this.app.data.nextAcctId}`,
       /*parentFaeSide*/ this.faeSide,
       /*intraSideIndex*/ 0,
       /*annoText*/ "");
+    this.app.selectedAcct = newAnnotation;
     this.faeSide.acctList.splice(insertionIndex, 0, newAnnotation);
     this.faeSide.reindexAcctList();
+    this.app.viewmodelFae.observeForSetInputFocus();
   }
   listItemDelete(event, listItem) {
     let removalIndex = listItem.intraSideIndex;

@@ -51,7 +51,7 @@ export class App {
   viewNavMode = true;
 
   selectedFaeSide: FaeSide = null;
-  selectedAcct: Acct = null;
+  selectedAcct: Acct | Annotation = null;
   filteredAcctList: Array<Acct | Annotation>;
   selectedBchg: Bchg = null;
   selectedTran: Tran = null;
@@ -79,14 +79,15 @@ export class App {
   bind() {
 
     // this.data.generateEmptyData();
-    // this.data.generateTestData();
-    this.data.generateExample1Data();
+    this.data.generateTestData();
+    // this.data.generateExample1Data();
 
     /*
     * *************************
     * *** Experimental code ***
     * *************************
     */
+/*
     console.log("***** stringifiedData *****");
     let stringifiedData = JSON.stringify(this.data, this.replacer);
     console.log(stringifiedData);
@@ -111,18 +112,18 @@ export class App {
       for (let listItem of parsedFaeSide.acctList) {
         if (listItem.id.substring(0, 4) == "anno") {
           revivedListItem = new Annotation(
-            /*annoId*/ listItem.id,
-            /*faeSide*/ revivedFaeSide,
-            /*intraSideIndex*/ listItem.intraSideIndex,
-            /*annoText*/ listItem.annoText);
+            /!*annoId*!/ listItem.id,
+            /!*faeSide*!/ revivedFaeSide,
+            /!*intraSideIndex*!/ listItem.intraSideIndex,
+            /!*annoText*!/ listItem.annoText);
         }
         else {
           revivedListItem = new Acct(
-            /*annoId*/ listItem.id,
-            /*faeSide*/ revivedFaeSide,
-            /*intraSideIndex*/ listItem.intraSideIndex,
-            /*annoText*/ listItem.title,
-            /*normalBalance*/ listItem.normalBalance);
+            /!*annoId*!/ listItem.id,
+            /!*faeSide*!/ revivedFaeSide,
+            /!*intraSideIndex*!/ listItem.intraSideIndex,
+            /!*annoText*!/ listItem.title,
+            /!*normalBalance*!/ listItem.normalBalance);
           revivedListItem.endingBalance = listItem.endingBalance;
         }
         revivedFaeSide.acctList.push(revivedListItem);
@@ -132,17 +133,17 @@ export class App {
     }
     for (let tran of parsedData.jrnl.tranList) {
       revivedTran = new Tran(
-        /*id*/ tran.id,
-        /*parentJrnl*/ revivedData.jrnl,
-        /*date*/ tran.date,
-        /*intraDateSorter*/ tran.intraDateSorter);
+        /!*id*!/ tran.id,
+        /!*parentJrnl*!/ revivedData.jrnl,
+        /!*date*!/ tran.date,
+        /!*intraDateSorter*!/ tran.intraDateSorter);
       for (let bchg of tran.bchgList) {
         revivedBchg = new Bchg(
-          /*id*/ bchg.id,
-          /*sourceTran*/ revivedTran,
-          /*targetAcct*/ allAccts.find(element => element.id == bchg.targetAcct),
-          /*desc*/ bchg.desc,
-          /*amt*/ bchg.amt);
+          /!*id*!/ bchg.id,
+          /!*sourceTran*!/ revivedTran,
+          /!*targetAcct*!/ allAccts.find(element => element.id == bchg.targetAcct),
+          /!*desc*!/ bchg.desc,
+          /!*amt*!/ bchg.amt);
         revivedTran.bchgList.push(revivedBchg);
       }
       revivedData.faeSideAssets.refresh();
@@ -156,7 +157,9 @@ export class App {
     // alert("Wait");
     this.data = revivedData;
     // *** IT WORKS!!!! ***
+*/
   }
+/*
   replacer(key, value) {
     if (key == "parentFaeSide" ||
       key == "sourceTran" ||
@@ -166,6 +169,7 @@ export class App {
     }
     return value;
   }
+*/
 
   selectAcct(acct): void {
     this.selectedAcct = acct;
@@ -210,7 +214,7 @@ export class App {
   goFaeModule(event) {
     event.target.classList.toggle("aaNavModuleHover", false);
     this.selectedModule = null;
-    this.viewmodelFae.observeRootElement();
+    this.viewmodelFae.observeForScrollIntoView();
     this.selectedModule = this.MODULE_FAE;
   }
   goAcctModule(event) {
@@ -220,7 +224,7 @@ export class App {
     event.target.classList.toggle("aaNavModuleBtnHover", false);
     this.filteredAcctList = this.selectedAcct.parentFaeSide.acctList.filter(listItem => listItem instanceof Acct);
     this.selectedModule = null;
-    this.viewmodelAcct.observeRootElement();
+    this.viewmodelAcct.observeForScrollIntoView();
     this.selectedModule = this.MODULE_ACCT;
   }
   goBchgModule(event) {
@@ -234,20 +238,14 @@ export class App {
     }
     event.target.classList.toggle("aaNavModuleBtnHover", false);
     this.selectedModule = null;
-    this.viewmodelTran.observeRootElement();
+    this.viewmodelTran.observeForScrollIntoView();
     this.selectedModule = this.MODULE_TRAN;
   }
   goJrnlModule(event) {
     event.target.classList.toggle("aaNavModuleHover", false);
     this.selectedModule = null;
-    this.viewmodelJrnl.observeRootElement();
+    this.viewmodelJrnl.observeForScrollIntoView();
     this.selectedModule = this.MODULE_JRNL;
-/*
-    if (this.selectedTran) {
-      console.log(this.selectedTran);
-      document.getElementById(this.selectedTran.id).scrollIntoView();
-    }
-*/
   }
 
   goPrevAcct(event) {
