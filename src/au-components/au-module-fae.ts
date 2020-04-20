@@ -1,6 +1,7 @@
 import {customElement, bindable, inject} from 'aurelia-framework';
 import {App} from 'app';
 import {Acct} from 'app-data/models/acct';
+import {FaeSide} from 'app-data/models/fae-side';
 
 @customElement('au-module-fae')
 @inject(App)
@@ -24,13 +25,16 @@ export class AuModuleFae {
   observeForScrollIntoView() {
     (this.moScrollIntoView as any).app = this.app; // cast as "any" to programmatically add property
     this.moScrollIntoView.observe(this.moduleRootElement,
-                                  {childList: false,
-                                    attributes: true,
+                                  {
+                                    childList: false,
+                                    attributeFilter: [ "display" ],
                                     attributeOldValue: true,
-                                    subtree: false}
+                                    subtree: false
+                                  }
     );
   }
   cbScrollIntoView(mutationList, mutationObserver) {
+    // console.log(mutationList);
     if (mutationObserver.app.selectedAcct) {
       let element = document.getElementById(mutationObserver.app.selectedAcct.id);
       if (element) {
@@ -47,8 +51,8 @@ export class AuModuleFae {
     );
   }
   cbSetInputFocus(mutationList, mutationObserver) {
-    if (mutationObserver.app.selectedAcct) {
-      let element = document.getElementById(mutationObserver.app.selectedAcct.id);
+    if (mutationObserver.app.candidateSelectedAcct) {
+      let element = document.getElementById(mutationObserver.app.candidateSelectedAcct.id);
       if (element) {
         (element.children[2].children[0] as HTMLElement).focus();
       }
@@ -59,21 +63,37 @@ export class AuModuleFae {
   faeSidesEdit(event) {
     this.app.candidateFaeSideAssets = this.app.data.faeSideAssets.clone();
     this.app.candidateFaeSideEquities = this.app.data.faeSideEquities.clone();
+    if (this.app.selectedAcct) {
+      let candidateFaeSide: FaeSide = null;
+      if (this.app.selectedAcct.parentFaeSide.id == "Assets") {
+        candidateFaeSide = this.app.candidateFaeSideAssets
+      }
+      else {
+        candidateFaeSide = this.app.candidateFaeSideEquities;
+      }
+      let filteredAcctList = candidateFaeSide.acctList.filter((listItem) => listItem instanceof Acct) as Array<Acct>;
+      this.app.candidateSelectedAcct = filteredAcctList.find(element => element.id == this.app.selectedAcct.id);
+    }
     this.app.viewNavMode = false;
   }
   faeSidesEditDone(event) {
     this.app.data.faeSideAssets = this.app.candidateFaeSideAssets;
     this.app.data.faeSideEquities = this.app.candidateFaeSideEquities;
+    this.app.selectedAcct = this.app.candidateSelectedAcct;
+
     this.app.candidateFaeSideAssets = null;
     this.app.candidateFaeSideEquities = null;
+    this.app.candidateSelectedAcct = null;
+
     this.app.data.faeSideAssets.refresh();
     this.app.data.faeSideEquities.refresh();
-    this.app.viewNavMode = true;;
+    this.app.viewNavMode = true;
   }
   faeSidesEditCancel(event) {
+    this.app.viewNavMode = true;;
     this.app.candidateFaeSideAssets = null;
     this.app.candidateFaeSideEquities = null;
-    this.app.viewNavMode = true;;
+    this.app.candidateSelectedAcct = null;
   }
 }
 

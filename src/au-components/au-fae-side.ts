@@ -48,6 +48,9 @@ export class AuFaeSide {
   onRowLeave(event, listItem) {
     event.target.children[2].classList.toggle('aaRowDataHover', false);
   }
+  onTitleFocus(event, listItem) {
+    this.app.candidateSelectedAcct = listItem;
+  }
   onRowOpsOpen(event, listItem) {
     this.rowOpsBoundingClientRect = (event.target as Element).parentElement.getBoundingClientRect();
     this.rowOpsMenuModal.style.display = "block";
@@ -72,10 +75,9 @@ export class AuFaeSide {
       /*intraSideIndex*/ 0,
       /*title*/ "",
       /*normalBalance*/ 1);
-    this.app.selectedAcct = newAcct;
     this.faeSide.acctList.splice(insertionIndex, 0, newAcct);
     this.faeSide.reindexAcctList();
-    this.app.selectedAcct = newAcct;
+    this.app.candidateSelectedAcct = newAcct;
     this.app.viewmodelFae.observeForSetInputFocus();
   }
   annotationNew(event, listItem) {
@@ -92,7 +94,6 @@ export class AuFaeSide {
       /*parentFaeSide*/ this.faeSide,
       /*intraSideIndex*/ 0,
       /*annoText*/ "");
-    this.app.selectedAcct = newAnnotation;
     this.faeSide.acctList.splice(insertionIndex, 0, newAnnotation);
     this.faeSide.reindexAcctList();
     this.app.viewmodelFae.observeForSetInputFocus();

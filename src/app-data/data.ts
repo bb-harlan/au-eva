@@ -51,15 +51,6 @@ export class Data {
   generateEmptyData() {
     console.log('\n********************************************\nGenerating test data...');
     this.entityName = "<programmatically generated empty data for testing>";
-/*
-    let newAnno: Annotation;
-    let newAcct: Acct;
-    let randomAcct: Acct;
-    let sourceTran: Tran;
-    let newBchg: Bchg;
-    let acctId: string;
-    let annoId: string;
-*/
   }
   generateTestData() {
     console.log('\n********************************************\nGenerating test data...');

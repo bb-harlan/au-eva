@@ -37,7 +37,7 @@ export class AuModuleTran {
     this.moScrollIntoView.observe(this.moduleRootElement,
                                   {
                                     childList: false,
-                                    attributes: true,
+                                    attributeFilter: [ "display" ],
                                     attributeOldValue: true,
                                     subtree: false
                                   }

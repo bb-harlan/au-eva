@@ -22,10 +22,12 @@ export class AuModuleAcct {
   observeForScrollIntoView() {
     (this.moScrollIntoView as any).app = this.app; // cast as "any" to programmatically add property
     this.moScrollIntoView.observe(this.moduleRootElement,
-                                  {childList: false,
-                                    attributes: true,
+                                  {
+                                    childList: false,
+                                    attributeFilter: [ "display" ],
                                     attributeOldValue: true,
-                                    subtree: false}
+                                    subtree: false
+                                  }
     );
   }
   cbScrollIntoView(mutationList, mutationObserver) {

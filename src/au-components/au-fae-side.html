@@ -132,11 +132,18 @@
       </div>
       <div class="aaGridScrollableRows">
         <template repeat.for="listItem of faeSide.acctList">
+          <!--
+          NOTE: This datagrid is NOT in navigating mode, so the following row element must NOT have
+
+                       click.trigger="app.selectAcct(listItem)"
+
+                as usual for in the navigating mode. While editing I use candidateSelectedAcct,
+                and if the user cancels editing, I need selectedAcct to have its saved value to restore from.
+          -->
           <div class="aaRow"
                id="${listItem.id}"
                mouseenter.trigger="onRowEnter($event, listItem)"
-               mouseleave.trigger="onRowLeave($event, listItem)"
-               click.trigger="app.selectAcct(listItem)">
+               mouseleave.trigger="onRowLeave($event, listItem)">
             <template if.bind="listItem.isAcct()">
               <div class="aaRowOps aaBgColorToolbar aaFontSizeLabel">
                     <span class="aaBtn" title="Insert new account row..."
@@ -158,6 +165,7 @@
                 <input class="aaFormInputText aaCellAcctTitle aaCellInGrid"
                        type="text"
                        placeholder="<account title>"
+                       focus.trigger="onTitleFocus($event, listItem)"
                        value.bind="listItem.title">
                 <div class="aaVerticalGridline"></div>
                 <span class="aaCell aaCellBchgBal">${listItem.endingBalance | auCurrencyConverter}</span>
@@ -180,13 +188,10 @@
               </div>
               <div class="aaVerticalGridline"></div>
               <div class="aaRowData aaRowBgColorData">
-                <input type="text"
-                       class="aaFormInputText aaCellAnnoTitle aaCellInGrid"
+                <input class="aaFormInputText aaCellAnnoTitle aaCellInGrid"
+                       type="text"
                        placeholder="<annotation text>"
                        value.bind="listItem.annoText">
-                <!--
-                                <span class="aaCell aaCellAnnoTitle">${listItem.annoText}</span>
-                -->
                 <div class="aaVerticalGridline"></div>
                 <span class="aaCell aaCellBchgBal"></span>
               </div>

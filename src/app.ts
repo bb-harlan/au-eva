@@ -50,19 +50,17 @@ export class App {
   invokingModule = null;
   viewNavMode = true;
 
-  selectedFaeSide: FaeSide = null;
-  selectedAcct: Acct | Annotation = null;
-  filteredAcctList: Array<Acct | Annotation>;
+  selectedAcct: Acct = null;
   selectedBchg: Bchg = null;
   selectedTran: Tran = null;
+  filteredAcctList: Array<Acct>;
+
+  candidateSelectedAcct: Acct = null;
+  candidateSelectedBchg: Bchg = null;
+  candidateSelectedTran: Tran = null;
   candidateTran: Tran = null;
   candidateFaeSideAssets: FaeSide = null;
   candidateFaeSideEquities: FaeSide = null;
-  /*
-  * About candidateTran
-  * -------------------
-  *
-  */
 
   /*=====================================================
    *  Reference to  accounting entity's data
@@ -176,7 +174,8 @@ export class App {
   }
   selectAcctAndGo(acct): void {
     this.selectedAcct = acct;
-    this.filteredAcctList = this.selectedAcct.parentFaeSide.acctList.filter(listItem => listItem instanceof Acct);
+    this.filteredAcctList =
+      this.selectedAcct.parentFaeSide.acctList.filter(listItem => listItem instanceof Acct) as Array<Acct>;
     this.goAcctModule(event);
   }
   selectBchg(bchg): void {
@@ -193,7 +192,8 @@ export class App {
   selectTranBchgGoAcct(bchg): void {
     this.selectedBchg = bchg;
     this.selectedAcct = bchg.targetAcct;
-    this.filteredAcctList = this.selectedAcct.parentFaeSide.acctList.filter(listItem => listItem instanceof Acct);
+    this.filteredAcctList =
+      this.selectedAcct.parentFaeSide.acctList.filter(listItem => listItem instanceof Acct) as Array<Acct>;
     this.selectedTran = bchg.sourceTran;
     this.selectedModule = this.MODULE_ACCT;
   }
@@ -222,7 +222,8 @@ export class App {
       this.selectedBchg = null;
     }
     event.target.classList.toggle("aaNavModuleBtnHover", false);
-    this.filteredAcctList = this.selectedAcct.parentFaeSide.acctList.filter(listItem => listItem instanceof Acct);
+    this.filteredAcctList =
+      this.selectedAcct.parentFaeSide.acctList.filter(listItem => listItem instanceof Acct) as Array<Acct>;
     this.selectedModule = null;
     this.viewmodelAcct.observeForScrollIntoView();
     this.selectedModule = this.MODULE_ACCT;
