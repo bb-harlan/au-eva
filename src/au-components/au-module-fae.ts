@@ -12,8 +12,8 @@ export class AuModuleFae {
 
   /* other properties */
   moduleRootElement: Element;
-  moScrollIntoView = new MutationObserver(this.cbScrollIntoView);
-  moSetInputFocus = new MutationObserver(this.cbSetInputFocus);
+  observerScrollIntoView = new MutationObserver(this.callbackScrollIntoView);
+  observerSetInputFocus = new MutationObserver(this.callbackSetInputFocus);
 
   /* element reference(s) */
   viewmodelPopupAcctMover;
@@ -23,41 +23,35 @@ export class AuModuleFae {
   }
 
   observeForScrollIntoView() {
-    (this.moScrollIntoView as any).app = this.app; // cast as "any" to programmatically add property
-    this.moScrollIntoView.observe(this.moduleRootElement,
-                                  {
-                                    childList: false,
-                                    attributeFilter: [ "display" ],
-                                    attributeOldValue: true,
-                                    subtree: false
-                                  }
+    (this.observerScrollIntoView as any).app = this.app; // cast as "any" to programmatically add property
+    this.observerScrollIntoView.observe(this.moduleRootElement,
+                                  { attributeFilter:[ 'style' ] }
     );
   }
-  cbScrollIntoView(mutationList, mutationObserver) {
-    // console.log(mutationList);
-    if (mutationObserver.app.selectedAcct) {
-      let element = document.getElementById(mutationObserver.app.selectedAcct.id);
+  callbackScrollIntoView(mutationList, observer) {
+    if (observer.app.selectedAcct) {
+      let element = document.getElementById(observer.app.selectedAcct.id);
       if (element) {
         element.scrollIntoView();
       }
     }
-    mutationObserver.disconnect();
+    observer.disconnect();
   }
   observeForSetInputFocus() {
-    (this.moSetInputFocus as any).app = this.app; // cast as "any" to programmatically add property
-    this.moSetInputFocus.observe(this.moduleRootElement,
-                                  {childList: true,
-                                    subtree: true}
-    );
+    (this.observerSetInputFocus as any).app = this.app; // cast as "any" to programmatically add property
+    this.observerSetInputFocus.observe(this.moduleRootElement,
+                                  {
+                                    childList: true,
+                                    subtree: true});
   }
-  cbSetInputFocus(mutationList, mutationObserver) {
-    if (mutationObserver.app.candidateSelectedAcct) {
-      let element = document.getElementById(mutationObserver.app.candidateSelectedAcct.id);
+  callbackSetInputFocus(mutationList, observer) {
+    if (observer.app.candidateSelectedAcct) {
+      let element = document.getElementById(`${observer.app.candidateSelectedAcct.id}-title`);
       if (element) {
-        (element.children[2].children[0] as HTMLElement).focus();
+        (element as HTMLElement).focus();
       }
     }
-    mutationObserver.disconnect();
+    observer.disconnect();
   }
 
   faeSidesEdit(event) {
@@ -87,10 +81,24 @@ export class AuModuleFae {
 
     this.app.data.faeSideAssets.refresh();
     this.app.data.faeSideEquities.refresh();
+    (this.observerScrollIntoView as any).app = this.app; // cast as "any" to programmatically add property
+    this.observerScrollIntoView.observe(this.moduleRootElement,
+                                        {
+                                          childList: true,
+                                          attributes: true,
+                                          subtree: true,
+                                          characterData: true});
     this.app.viewNavMode = true;
   }
   faeSidesEditCancel(event) {
-    this.app.viewNavMode = true;;
+    (this.observerScrollIntoView as any).app = this.app; // cast as "any" to programmatically add property
+    this.observerScrollIntoView.observe(this.moduleRootElement,
+                                        {
+                                          childList: true,
+                                          attributes: true,
+                                          subtree: true,
+                                          characterData: true});
+    this.app.viewNavMode = true;
     this.app.candidateFaeSideAssets = null;
     this.app.candidateFaeSideEquities = null;
     this.app.candidateSelectedAcct = null;

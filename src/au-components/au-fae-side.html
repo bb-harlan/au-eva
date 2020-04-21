@@ -139,6 +139,8 @@
 
                 as usual for in the navigating mode. While editing I use candidateSelectedAcct,
                 and if the user cancels editing, I need selectedAcct to have its saved value to restore from.
+                If the above click.trigger were included in the row element and user clicks on a row,
+                that would overwrite the saved value of selectedAcct.
           -->
           <div class="aaRow"
                id="${listItem.id}"
@@ -163,10 +165,11 @@
               <div class="aaVerticalGridline"></div>
               <div class="aaRowData aaRowBgColorData">
                 <input class="aaFormInputText aaCellAcctTitle aaCellInGrid"
+                       id="${listItem.id}-title"
                        type="text"
                        placeholder="<account title>"
                        focus.trigger="onTitleFocus($event, listItem)"
-                       value.bind="listItem.title">
+                       value.two-way="listItem.title">
                 <div class="aaVerticalGridline"></div>
                 <span class="aaCell aaCellBchgBal">${listItem.endingBalance | auCurrencyConverter}</span>
               </div>
@@ -189,9 +192,11 @@
               <div class="aaVerticalGridline"></div>
               <div class="aaRowData aaRowBgColorData">
                 <input class="aaFormInputText aaCellAnnoTitle aaCellInGrid"
+                       id="${listItem.id}-title"
                        type="text"
                        placeholder="<annotation text>"
-                       value.bind="listItem.annoText">
+                       focus.trigger="onTitleFocus($event, listItem)"
+                       value.two-way="listItem.annoText">
                 <div class="aaVerticalGridline"></div>
                 <span class="aaCell aaCellBchgBal"></span>
               </div>

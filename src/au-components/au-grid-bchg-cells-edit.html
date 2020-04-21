@@ -23,14 +23,19 @@
     <!-- 2nd row -->
     <div class="aaBchgCellsRow">
       <!-- change description -->
-      <input type="text"
-             class="aaCell aaCellBorder aaCellBchgDesc"
+      <input class="aaCell aaCellBorder aaCellBchgDesc"
+             id="${bchg.id}-desc"
+             type="text"
+             placeholder="<Balance change descrption>"
+             focus.trigger="onInputFocus($event, bchg)"
              value.two-way="bchg.desc">
       <!-- change amount -->
       <div class="aaCellWrapper"
            style="margin-left: 1pc;">
         <au-input-currency
           classes-string.one-time="'aaCell aaCellBorder aaCellBchgAmt'"
+          placeholder="<Amount>"
+          focus.trigger="onInputFocus($event, bchg)"
           max-length.to-view="13"
           currency-amt.to-view="bchg.amt"
           on-user-changed-currency-amt.call="userChangedCurrencyAmt(newCurrencyAmt)">

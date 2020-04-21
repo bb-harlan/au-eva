@@ -50,12 +50,12 @@ export class App {
   invokingModule = null;
   viewNavMode = true;
 
-  selectedAcct: Acct = null;
+  selectedAcct: Acct | Annotation = null;
   selectedBchg: Bchg = null;
   selectedTran: Tran = null;
   filteredAcctList: Array<Acct>;
 
-  candidateSelectedAcct: Acct = null;
+  candidateSelectedAcct: Acct | Annotation = null;
   candidateSelectedBchg: Bchg = null;
   candidateSelectedTran: Tran = null;
   candidateTran: Tran = null;

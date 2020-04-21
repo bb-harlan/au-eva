@@ -16,7 +16,7 @@ export class AuModuleTran {
   popupTop: HTMLElement; // <div element.ref="popupTop" ...
 
   /* other properties */
-  moScrollIntoView = new MutationObserver(this.cbScrollIntoView);
+  observerScrollIntoView = new MutationObserver(this.callbackScrollIntoView);
   get TRAN_OP_NEW() {
     return "new";
   }
@@ -33,8 +33,8 @@ export class AuModuleTran {
   }
 
   observeForScrollIntoView() {
-    (this.moScrollIntoView as any).app = this.app; // cast as "any" to programmatically add property
-    this.moScrollIntoView.observe(this.moduleRootElement,
+    (this.observerScrollIntoView as any).app = this.app; // cast as "any" to programmatically add property
+    this.observerScrollIntoView.observe(this.moduleRootElement,
                                   {
                                     childList: false,
                                     attributeFilter: [ "display" ],
@@ -43,11 +43,11 @@ export class AuModuleTran {
                                   }
     );
   }
-  cbScrollIntoView(mutationList, mutationObserver) {
-    if (mutationObserver.app.selectedBchg) {
-      document.getElementById(mutationObserver.app.selectedBchg.id).scrollIntoView();
+  callbackScrollIntoView(mutationList, callbackSetInputFocus) {
+    if (callbackSetInputFocus.app.selectedBchg) {
+      document.getElementById(callbackSetInputFocus.app.selectedBchg.id).scrollIntoView();
     }
-    mutationObserver.disconnect();
+    callbackSetInputFocus.disconnect();
   }
   onRowEnter(event, bchg) {
     if (bchg) {
@@ -128,6 +128,9 @@ export class AuModuleTran {
   }
   tranEdit(event) {
     this.app.candidateTran = this.app.selectedTran.clone();
+    if (this.app.selectedBchg) {
+      this.app.candidateSelectedBchg = this.app.candidateTran.bchgList.find(element => element.id == this.app.selectedBchg.id);
+    }
     this.tranOp = this.TRAN_OP_EDIT;
     this.app.viewNavMode = false;
   }
@@ -149,6 +152,10 @@ export class AuModuleTran {
     this.app.selectedTran.unregister();
     this.app.candidateTran.register();
     this.app.selectedTran = this.app.candidateTran;
+    if (this.app.candidateSelectedBchg) {
+      this.app.selectedBchg = this.app.candidateSelectedBchg;
+      this.app.selectedAcct = this.app.candidateSelectedBchg.targetAcct;
+    }
     this.app.selectedBchg = null;
     this.app.candidateTran = null;
     this.app.selectedAcct = null;

@@ -18,6 +18,9 @@ export class AuGridBchgCells {
     this.app = app;
     this.auModuleTran = auModuleTran;
   }
+  onInputFocus(event, bchg) {
+    this.app.candidateSelectedBchg = bchg;
+  }
   pickAcct() {
     this.app.viewmodelPopupAcctPicker.open(this.bchg, this.pickAcctDone)
   }

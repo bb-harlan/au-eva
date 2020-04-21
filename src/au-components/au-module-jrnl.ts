@@ -10,15 +10,15 @@ export class AuModuleJrnl {
 
   /* other properties */
   moduleRootElement: Element;
-  moScrollIntoView = new MutationObserver(this.cbScrollIntoView);
+  observerScrollIntoView = new MutationObserver(this.callbackScrollIntoView);
 
   constructor(app) {
     this.app = app;
   }
 
   observeForScrollIntoView() {
-    (this.moScrollIntoView as any).app = this.app; // cast as "any" to programmatically add property
-    this.moScrollIntoView.observe(this.moduleRootElement,
+    (this.observerScrollIntoView as any).app = this.app; // cast as "any" to programmatically add property
+    this.observerScrollIntoView.observe(this.moduleRootElement,
                                   {
                                     childList: false,
                                     attributeFilter: [ "display" ],
@@ -27,11 +27,11 @@ export class AuModuleJrnl {
                                   }
     );
   }
-  cbScrollIntoView(mutationList, mutationObserver) {
-    if (mutationObserver.app.selectedTran) {
-      document.getElementById(mutationObserver.app.selectedTran.id).scrollIntoView();
+  callbackScrollIntoView(mutationList, callbackSetInputFocus) {
+    if (callbackSetInputFocus.app.selectedTran) {
+      document.getElementById(callbackSetInputFocus.app.selectedTran.id).scrollIntoView();
     }
-    mutationObserver.disconnect();
+    callbackSetInputFocus.disconnect();
   }
   onRowEnter(event) {
     /*tran date*/
