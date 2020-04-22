@@ -12,6 +12,7 @@ export class AuPopupAcctPicker {
   pickerDialogModal: HTMLElement; // <div element.ref="pickerDialogModal" class="aaModal">
   pickerDialogContent: HTMLElement; // <div element.ref = "pickerDialogContent" ...
   // other stuff
+
   currentBchg: Bchg;
   pickerCallback: Function;
 
@@ -26,7 +27,7 @@ export class AuPopupAcctPicker {
     this.pickerDialogModal.style.display = "flex";
   }
   picked(pickedAcct: Acct): void {
-    this.pickerCallback(this.currentBchg, pickedAcct);
+    this.pickerCallback(this.app, this.currentBchg, pickedAcct);
     this.pickerDialogModal.style.display = "none";
     return;
   }

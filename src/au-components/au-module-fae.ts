@@ -10,13 +10,13 @@ export class AuModuleFae {
   /* @injected object(s) */
   app: App;
 
-  /* other properties */
+  /* element reference(s) */
   moduleRootElement: Element;
+  viewmodelPopupAcctMover;
+
+  /* other properties */
   observerScrollIntoView = new MutationObserver(this.callbackScrollIntoView);
   observerSetInputFocus = new MutationObserver(this.callbackSetInputFocus);
-
-  /* element reference(s) */
-  viewmodelPopupAcctMover;
 
   constructor(app, auModuleFae) {
     this.app = app;

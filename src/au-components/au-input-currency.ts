@@ -7,7 +7,8 @@ export class AuInputCurrency {
   @bindable isReadonly: boolean = false;
   @bindable isDisabled: boolean = false;
   @bindable currencyAmt: number = 0.00;
-  @bindable onUserChangedCurrencyAmt: Function; // callback function
+  @bindable callbackOnUserChangeeCurrencyAmt: Function;
+  @bindable callbackOnFocus: Function;
   @bindable maxLength: number;
 
   /* element.ref properties */
@@ -24,7 +25,9 @@ export class AuInputCurrency {
     this.inputCurrencyElement.value = this.wellformedFloatString(this.originalInputValue);
     this.inputCurrencyElement.setSelectionRange(0, 0);
     this.originalCurrencyAmt = parseFloat(this.inputCurrencyElement.value);
-    // this.originalInsertionPoint = this.inputCurrencyElement.selectionStart;
+    if (this.callbackOnFocus) {
+      this.callbackOnFocus();
+    }
   }
   onBlur(): void {
     let newCurrencyAmt = parseFloat(this.inputCurrencyElement.value);
@@ -34,7 +37,7 @@ export class AuInputCurrency {
     }
     else {
       // call the callback function passing the user-updated currency amount
-      this.onUserChangedCurrencyAmt({newCurrencyAmt: newCurrencyAmt});
+      this.callbackOnUserChangeeCurrencyAmt({newCurrencyAmt: newCurrencyAmt});
     }
   }
   onKeydown(keyboardEvent) {

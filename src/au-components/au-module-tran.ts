@@ -17,6 +17,7 @@ export class AuModuleTran {
 
   /* other properties */
   observerScrollIntoView = new MutationObserver(this.callbackScrollIntoView);
+  observerSetInputFocus = new MutationObserver(this.callbackSetInputFocus);
   get TRAN_OP_NEW() {
     return "new";
   }
@@ -35,19 +36,33 @@ export class AuModuleTran {
   observeForScrollIntoView() {
     (this.observerScrollIntoView as any).app = this.app; // cast as "any" to programmatically add property
     this.observerScrollIntoView.observe(this.moduleRootElement,
-                                  {
-                                    childList: false,
-                                    attributeFilter: [ "display" ],
-                                    attributeOldValue: true,
-                                    subtree: false
-                                  }
+                                        { attributeFilter:[ 'style' ] }
     );
   }
-  callbackScrollIntoView(mutationList, callbackSetInputFocus) {
-    if (callbackSetInputFocus.app.selectedBchg) {
-      document.getElementById(callbackSetInputFocus.app.selectedBchg.id).scrollIntoView();
+  callbackScrollIntoView(mutationList, observer) {
+    if (observer.app.selectedBchg) {
+      let element = document.getElementById(observer.app.selectedBchg.id);
+      if (element) {
+        element.scrollIntoView();
+      }
     }
-    callbackSetInputFocus.disconnect();
+    observer.disconnect();
+  }
+  observeForSetInputFocus() {
+    (this.observerSetInputFocus as any).app = this.app; // cast as "any" to programmatically add property
+    this.observerSetInputFocus.observe(this.moduleRootElement,
+                                       {
+                                         childList: true,
+                                         subtree: true});
+  }
+  callbackSetInputFocus(mutationList, observer) {
+    if (observer.app.candidateSelectedBchg) {
+      let element = document.getElementById(`${observer.app.candidateSelectedBchg.id}-desc`);
+      if (element) {
+        (element as HTMLElement).focus();
+      }
+    }
+    observer.disconnect();
   }
   onRowEnter(event, bchg) {
     if (bchg) {
@@ -59,7 +74,7 @@ export class AuModuleTran {
       event.target.children[2].classList.toggle('aaRowDataHover', false);
     }
   }
-  pickAcctDone(currentBchg, pickedAcct) {
+  pickAcctDone(app, currentBchg, pickedAcct) {
     let newBchgInsertionIndex: number;
     if (currentBchg) {
       newBchgInsertionIndex = currentBchg.intraTranIndex;
@@ -68,15 +83,16 @@ export class AuModuleTran {
       newBchgInsertionIndex = this.app.candidateTran.bchgList.length;
     }
     let newBchg = new Bchg(
-      /*id*/`bchg${this.app.data.nextBchgId}`,
-      /*sourceTran*/ this.app.candidateTran,
+      /*id*/`bchg${app.data.nextBchgId}`,
+      /*sourceTran*/ app.candidateTran,
       /*targetAcct*/ pickedAcct,
       /*desc*/"",
-      /*amt*/0.00
-    );
-    this.app.candidateTran.bchgList.splice(newBchgInsertionIndex, 0, newBchg);
+      /*amt*/0.00);
+    app.candidateSelectedBchg = newBchg;
+    app.candidateTran.bchgList.splice(newBchgInsertionIndex, 0, newBchg);
     // update each bchg.intraTranIndex and recalc side totals
-    this.app.candidateTran.refresh();
+    app.candidateTran.refresh();
+    app.viewmodelTran.observeForSetInputFocus();
   }
   bchgDelete(bchg) {
     let sourceTran = bchg.sourceTran;
@@ -110,7 +126,6 @@ export class AuModuleTran {
     this.app.candidateTran = null;
     this.tranOp = null;
     this.app.viewNavMode = true;
-    ;
     if (this.app.invokingModule) {
       this.app.selectedModule = this.app.invokingModule;
       this.app.invokingModule = null;
@@ -156,9 +171,8 @@ export class AuModuleTran {
       this.app.selectedBchg = this.app.candidateSelectedBchg;
       this.app.selectedAcct = this.app.candidateSelectedBchg.targetAcct;
     }
-    this.app.selectedBchg = null;
     this.app.candidateTran = null;
-    this.app.selectedAcct = null;
+    this.app.candidateSelectedAcct = null;
     this.app.data.jrnl.refresh();
     if (jrnlSortNeeded) {
       this.app.data.jrnl.sortTranList();
