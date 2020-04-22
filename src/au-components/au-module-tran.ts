@@ -74,31 +74,6 @@ export class AuModuleTran {
       event.target.children[2].classList.toggle('aaRowDataHover', false);
     }
   }
-  pickAcctDone(app, currentBchg, pickedAcct) {
-    let newBchgInsertionIndex: number;
-    if (currentBchg) {
-      newBchgInsertionIndex = currentBchg.intraTranIndex;
-    }
-    else {
-      newBchgInsertionIndex = this.app.candidateTran.bchgList.length;
-    }
-    let newBchg = new Bchg(
-      /*id*/`bchg${app.data.nextBchgId}`,
-      /*sourceTran*/ app.candidateTran,
-      /*targetAcct*/ pickedAcct,
-      /*desc*/"",
-      /*amt*/0.00);
-    app.candidateSelectedBchg = newBchg;
-    app.candidateTran.bchgList.splice(newBchgInsertionIndex, 0, newBchg);
-    // update each bchg.intraTranIndex and recalc side totals
-    app.candidateTran.refresh();
-    app.viewmodelTran.observeForSetInputFocus();
-  }
-  bchgDelete(bchg) {
-    let sourceTran = bchg.sourceTran;
-    sourceTran.bchgList.splice(bchg.intraTranIndex, 1);
-    sourceTran.refresh()
-  }
   tranNew(event) {
     this.app.candidateTran = new Tran(
       /*id*/ `tran${this.app.data.nextTranId}`,
@@ -246,47 +221,34 @@ export class AuModuleTran {
       this.app.invokingModule = null;
     }
   }
-  onMenuClick(event, bchg) {
-    alert(`bchg.id: ${bchg ? bchg.id : "End-of-list"} - "Row ops menu" not yet implemented.`);
-  }
-  acctPicked(message) {
-    console.log(message);
-  }
-  SetBchgAmtToBalanceTran(bchg: Bchg) {
-    let totalChangesAssets: number = 0.00;
-    let totalChangesEquities: number = 0.00;
-    // compute totalChangesAssets, totalChangesEquities for all other elements of bchgList
-    for (let otherBchg of bchg.sourceTran.bchgList) {
-      if (otherBchg.id == bchg.id) {
-        continue; // skip this otherBchg
-      }
-      switch (bchg.targetAcct.parentFaeSide.id) {
-        case 'Assets':
-          totalChangesAssets += bchg.amt;
-          break;
-        case 'Equities':
-          totalChangesEquities += bchg.amt;
-          break;
-        default:
-          throw new Error(`acct.parentFaeSide.id has invalid value: ${bchg.targetAcct.parentFaeSide.id}.`);
-      }
-    }
-    // compute bchg.amt for balancing the source tran
-    switch (bchg.targetAcct.parentFaeSide.id) {
-      case 'Assets':
-        bchg.amt = totalChangesEquities - totalChangesAssets;
-        totalChangesAssets += bchg.amt;
-        break;
-      case 'Equities':
-        bchg.amt = totalChangesAssets - totalChangesEquities;
-        totalChangesEquities += bchg.amt;
-        break;
-      default:
-        throw new Error(`acct.parentFaeSide.id has invalid value: ${bchg.targetAcct.parentFaeSide.id}.`);
-    }
-    bchg.sourceTran.totalChangesAssets = totalChangesAssets;
-    bchg.sourceTran.totalChangesEquities = totalChangesEquities;
-  }
 
+  bchgNew(bchg) {
+    this.app.viewmodelPopupAcctPicker.open(bchg, this.callbackBchgNew);
+  }
+  callbackBchgNew(app, bchg, pickedAcct) {
+    let newBchgInsertionIndex: number;
+    if (bchg) {
+      newBchgInsertionIndex = bchg.intraTranIndex;
+    }
+    else {
+      newBchgInsertionIndex = this.app.candidateTran.bchgList.length;
+    }
+    let newBchg = new Bchg(
+      /*id*/`bchg${app.data.nextBchgId}`,
+      /*sourceTran*/ app.candidateTran,
+      /*targetAcct*/ pickedAcct,
+      /*desc*/"",
+      /*amt*/0.00);
+    app.candidateSelectedBchg = newBchg;
+    app.candidateTran.bchgList.splice(newBchgInsertionIndex, 0, newBchg);
+    // update each bchg.intraTranIndex and recalc side totals
+    app.candidateTran.refresh();
+    app.viewmodelTran.observeForSetInputFocus();
+  }
+  bchgDelete(bchg) {
+    let sourceTran = bchg.sourceTran;
+    sourceTran.bchgList.splice(bchg.intraTranIndex, 1);
+    sourceTran.refresh()
+  }
 }
 

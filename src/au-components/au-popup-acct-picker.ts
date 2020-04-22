@@ -13,21 +13,21 @@ export class AuPopupAcctPicker {
   pickerDialogContent: HTMLElement; // <div element.ref = "pickerDialogContent" ...
   // other stuff
 
-  currentBchg: Bchg;
-  pickerCallback: Function;
+  bchg: Bchg;
+  callbackPicked: Function;
 
   constructor(app) {
     this.app = app;
   }
-  open(currentBchg, pickerCallback): void {
-    this.currentBchg = currentBchg;
-    this.pickerCallback = pickerCallback;
+  open(bchg, callbackPicked): void {
+    this.bchg = bchg;
+    this.callbackPicked = callbackPicked;
     let boundingClientRect = this.app.viewmodelTran.popupTop.getBoundingClientRect();
     this.pickerDialogContent.style.marginTop = `${boundingClientRect.top}px`;
     this.pickerDialogModal.style.display = "flex";
   }
   picked(pickedAcct: Acct): void {
-    this.pickerCallback(this.app, this.currentBchg, pickedAcct);
+    this.callbackPicked(this.app, this.bchg, pickedAcct);
     this.pickerDialogModal.style.display = "none";
     return;
   }

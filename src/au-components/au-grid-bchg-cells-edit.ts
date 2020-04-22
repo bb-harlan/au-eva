@@ -22,14 +22,13 @@ export class AuGridBchgCells {
     this.app.candidateSelectedBchg = bchg;
   }
   pickAcct() {
-    this.app.viewmodelPopupAcctPicker.open(this.bchg, this.pickAcctDone)
+    this.app.viewmodelPopupAcctPicker.open(this.bchg, this.callbackPickAcct)
   }
-  pickAcctDone(savedBchg: Bchg, pickedAcct: Acct) {
-    savedBchg.targetAcct = pickedAcct;
-    savedBchg.sourceTran.refresh();
+  callbackPickAcct(app: App, bchg: Bchg, pickedAcct: Acct) {
+    bchg.targetAcct = pickedAcct;
+    bchg.sourceTran.refresh();
   }
-  userChangedCurrencyAmt(newCurrencyAmt: number) {
-    console.log(`(In inputCurrencyCompleted) newCurrencyAmt: ${newCurrencyAmt};`);
+  callbackUserChangedCurrencyAmt(newCurrencyAmt) {
     this.bchg.amt = newCurrencyAmt;
     this.bchg.sourceTran.refresh();
   }
