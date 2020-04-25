@@ -76,9 +76,12 @@
               </div>
               <div class="aaVerticalGridline" style="background-color: #fff; width: 3px;"></div>
             </div>
-            <div class="aaGridScrollableRows" id="tranModule-${app.selectedTran.id}" style="height: 25pc;">
+            <div class="aaGridScrollableRows"
+                 style="height: 25pc;">
               <template repeat.for="bchg of app.selectedTran.bchgList">
-                <div class="aaRow" style="border-bottom-width: 3px;"
+                <div class="aaRow"
+                     style="border-bottom-width: 3px;"
+                     id="tran-${bchg.id}"
                      mouseenter.trigger="onRowEnter($event, bchg)"
                      mouseleave.trigger="onRowLeave($event, bchg)"
                      click.trigger="app.selectBchg(bchg)"
@@ -116,7 +119,8 @@
               is to provide an invisible horizontal spacer if tran.bchgList is empty
               so as to display the column headings row properly..
               -->
-              <div class="aaRow aaHidden" style="border-bottom-width: 3px;">
+              <div class="aaRow aaHidden"
+                   style="border-bottom-width: 3px;">
                 <template if.bind="app.viewNavMode">
                   <div class="aaRowOps aaBgColorToolbar aaFontSizeLabel">
                     <div class="aaRadioBtn">
@@ -193,11 +197,21 @@
               <div class="aaVerticalGridline" style="background-color: #fff; width: 3px;"></div>
             </div>
 
-            <div class="aaGridScrollableRows" id="tranModule-${app.selectedTran.id}" style="height: 25pc;">
+            <div class="aaGridScrollableRows"
+                 style="height: 25pc;">
               <template repeat.for="bchg of app.selectedTran.bchgList">
-                <div class="aaRow" style="border-bottom-width: 3px;"
+                <div class="aaRow"
+                     style="border-bottom-width: 3px;"
                      mouseenter.trigger="onRowEnter($event, bchg)"
                      mouseleave.trigger="onRowLeave($event, bchg)">
+                  <div class="aaRowOps aaBgColorToolbar aaFontSizeLabel"
+                       style="display: none;">
+                    <div class="aaRadioBtn">
+                      <au-icon-radio-selected></au-icon-radio-selected>
+                    </div>
+                  </div>
+                  <div class="aaVerticalGridline"
+                       style="width: display: none;"></div>
                   <div class="aaRowData aaRowBgColorData">
                     <template if.bind="bchg.targetAcct.parentFaeSide.id == 'Equities'">
                       <!-- blank space in change-to-asset column -->
@@ -315,9 +329,11 @@
               </div>
               <div class="aaVerticalGridline" style="background-color: #fff; width: 3px;"></div>
             </div>
-            <div class="aaGridScrollableRows" id="app.candidateTran-${app.selectedTran.id}" style="height: 25pc;">
+            <div class="aaGridScrollableRows"
+                 style="height: 25pc;">
               <template repeat.for="bchg of app.candidateTran.bchgList">
-                <div class="aaRow" style="border-bottom-width: 3px;"
+                <div class="aaRow"
+                     style="border-bottom-width: 3px;"
                      mouseenter.trigger="onRowEnter($event, bchg)"
                      mouseleave.trigger="onRowLeave($event, bchg)">
                   <div class="aaRowOps aaBgColorToolbar aaFontSizeLabel">

@@ -9,8 +9,10 @@ export class AuModuleAcct {
   /* @injected object(s) */
   app: App;
 
-  /* other properties */
+  /* element reference(s) */
   moduleRootElement: Element;
+
+  /* other properties */
   observerScrollIntoView = new MutationObserver(this.callbackScrollIntoView);
 
   Acct: typeof Acct = Acct;
@@ -24,17 +26,19 @@ export class AuModuleAcct {
     this.observerScrollIntoView.observe(this.moduleRootElement,
                                   {
                                     childList: false,
-                                    attributeFilter: [ "display" ],
-                                    attributeOldValue: true,
+                                    attributeFilter: [ "style" ],
                                     subtree: false
                                   }
     );
   }
-  callbackScrollIntoView(mutationList, callbackSetInputFocus) {
-    if (callbackSetInputFocus.app.selectedBchg) {
-      document.getElementById(callbackSetInputFocus.app.selectedBchg.id).scrollIntoView();
+  callbackScrollIntoView(mutationList, observer) {
+    if (observer.app.selectedAcct) {
+      let element = document.getElementById(`acct-${observer.app.selectedBchg.id}`);
+      if (element) {
+        element.scrollIntoView({behavior: "smooth", block: "center"});
+      }
     }
-    callbackSetInputFocus.disconnect();
+    observer.disconnect();
   }
   onRowEnter(event, listItem) {
     event.target.children[2].classList.toggle('aaRowDataHover', true);

@@ -33,10 +33,10 @@ export class App {
 
   /* element.ref properties */
   viewmodelFae; // <au-module-fae view-model.ref="viewmodelFae"></au-module-fae>
-  viewmodelAcct; // <au-module-acct view-model.ref="viewmodelAcct"></au-module-fae>
-  viewmodelBchg; // <au-module-bchg view-model.ref="viewmodelBchg"></au-module-fae>
-  viewmodelTran; // <au-module-tran view-model.ref="viewmodelTran"></au-module-fae>
-  viewmodelJrnl; // <au-module-jrnl view-model.ref="viewmodelJrnl</au-module-fae>
+  viewmodelAcct; // <au-module-acct view-model.ref="viewmodelAcct"></au-module-acct>
+  viewmodelBchg; // <au-module-bchg view-model.ref="viewmodelBchg"></au-module-bchg>
+  viewmodelTran; // <au-module-tran view-model.ref="viewmodelTran"></au-module-tran>
+  viewmodelJrnl; // <au-module-jrnl view-model.ref="viewmodelJrnl</au-module-jrnl>
 
   viewmodelPopupAcctMover; // <au-popup-acct-mover view-model.ref="viewmodelPopupAcctMover">
   viewmodelPopupAcctPicker; // <au-popup-acct-picker view-model.ref="viewmodelPopupAcctPicker">
@@ -172,7 +172,7 @@ export class App {
   selectAcct(acct): void {
     this.selectedAcct = acct;
   }
-  selectAcctAndGo(acct): void {
+  selectAcctGoAcct(acct): void {
     this.selectedAcct = acct;
     this.filteredAcctList =
       this.selectedAcct.parentFaeSide.acctList.filter(listItem => listItem instanceof Acct) as Array<Acct>;
@@ -187,22 +187,22 @@ export class App {
     this.selectedBchg = bchg;
     this.selectedAcct = bchg.targetAcct;
     this.selectedTran = bchg.sourceTran;
-    this.selectedModule = this.MODULE_TRAN;
+    this.goTranModule(event);
   }
   selectTranBchgGoAcct(bchg): void {
     this.selectedBchg = bchg;
     this.selectedAcct = bchg.targetAcct;
+    this.selectedTran = bchg.sourceTran;
     this.filteredAcctList =
       this.selectedAcct.parentFaeSide.acctList.filter(listItem => listItem instanceof Acct) as Array<Acct>;
-    this.selectedTran = bchg.sourceTran;
-    this.selectedModule = this.MODULE_ACCT;
+    this.goAcctModule(event);
   }
   selectTran(tran): void {
     this.selectedTran = tran;
   }
-  selectTranAndGo(tran): void {
+  selectTranGoTran(tran): void {
     this.selectedTran = tran;
-    this.selectedModule = this.MODULE_TRAN;
+    this.goTranModule(event);
   }
   addHovering(event) {
     event.target.classList.toggle("aaNavMapBtnHover", true);

@@ -18,6 +18,7 @@ export class AuModuleTran {
   /* other properties */
   observerScrollIntoView = new MutationObserver(this.callbackScrollIntoView);
   observerSetInputFocus = new MutationObserver(this.callbackSetInputFocus);
+
   get TRAN_OP_NEW() {
     return "new";
   }
@@ -36,14 +37,18 @@ export class AuModuleTran {
   observeForScrollIntoView() {
     (this.observerScrollIntoView as any).app = this.app; // cast as "any" to programmatically add property
     this.observerScrollIntoView.observe(this.moduleRootElement,
-                                        { attributeFilter:[ 'style' ] }
+                                        {
+                                          childList: true,
+                                          attributeFilter: ["style"],
+                                          subtree: true
+                                        }
     );
   }
   callbackScrollIntoView(mutationList, observer) {
     if (observer.app.selectedBchg) {
-      let element = document.getElementById(observer.app.selectedBchg.id);
+      let element = document.getElementById(`tran-${observer.app.selectedBchg.id}`);
       if (element) {
-        element.scrollIntoView();
+        element.scrollIntoView({behavior: "smooth", block: "center"});
       }
     }
     observer.disconnect();
@@ -52,8 +57,10 @@ export class AuModuleTran {
     (this.observerSetInputFocus as any).app = this.app; // cast as "any" to programmatically add property
     this.observerSetInputFocus.observe(this.moduleRootElement,
                                        {
+                                         attributeFilter: ['style'],
                                          childList: true,
-                                         subtree: true});
+                                         subtree: true
+                                       });
   }
   callbackSetInputFocus(mutationList, observer) {
     if (observer.app.candidateSelectedBchg) {
@@ -95,6 +102,11 @@ export class AuModuleTran {
     this.app.candidateTran.intraDateSorter = this.app.data.nextSorter;
     this.app.candidateTran.register();
     this.app.selectedTran = this.app.candidateTran;
+    if (this.app.candidateSelectedBchg) {
+      this.app.selectedBchg = this.app.candidateSelectedBchg;
+      this.app.selectedAcct = this.app.selectedBchg.targetAcct;
+      this.app.selectedTran = this.app.selectedBchg.sourceTran;
+    }
     this.app.data.jrnl.refresh();
     this.app.data.faeSideAssets.refresh();
     this.app.data.faeSideEquities.refresh();
@@ -144,7 +156,8 @@ export class AuModuleTran {
     this.app.selectedTran = this.app.candidateTran;
     if (this.app.candidateSelectedBchg) {
       this.app.selectedBchg = this.app.candidateSelectedBchg;
-      this.app.selectedAcct = this.app.candidateSelectedBchg.targetAcct;
+      this.app.selectedAcct = this.app.selectedBchg.targetAcct;
+      this.app.selectedTran = this.app.selectedBchg.sourceTran;
     }
     this.app.candidateTran = null;
     this.app.candidateSelectedAcct = null;

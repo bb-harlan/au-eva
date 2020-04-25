@@ -55,7 +55,7 @@
           <div class="aaGridScrollableRows" id="acctModule-${app.selectedAcct.id}">
             <template repeat.for="bchg of app.selectedAcct.bchgList">
               <div class="aaRow aaRowBgColorToolbar"
-                   id="${bchg.id}"
+                   id="acct-${bchg.id}"
                    mouseenter.trigger="onRowEnter($event, bchg)"
                    mouseleave.trigger="onRowLeave($event, bchg)"
                    click.trigger="app.selectBchg(bchg)"

@@ -8,8 +8,10 @@ export class AuModuleJrnl {
   /* @injected object(s) */
   app: App;
 
-  /* other properties */
+  /* element reference(s) */
   moduleRootElement: Element;
+
+  /* other properties */
   observerScrollIntoView = new MutationObserver(this.callbackScrollIntoView);
 
   constructor(app) {
@@ -21,17 +23,20 @@ export class AuModuleJrnl {
     this.observerScrollIntoView.observe(this.moduleRootElement,
                                   {
                                     childList: false,
-                                    attributeFilter: [ "display" ],
+                                    attributeFilter: [ "style" ],
                                     attributeOldValue: true,
                                     subtree: false
                                   }
     );
   }
-  callbackScrollIntoView(mutationList, callbackSetInputFocus) {
-    if (callbackSetInputFocus.app.selectedTran) {
-      document.getElementById(callbackSetInputFocus.app.selectedTran.id).scrollIntoView();
+  callbackScrollIntoView(mutationList, observer) {
+    if (observer.app.selectedTran) {
+      let element = document.getElementById(observer.app.selectedTran.id);
+      if (element) {
+        element.scrollIntoView({behavior: "smooth", block: "center"});
+      }
     }
-    callbackSetInputFocus.disconnect();
+    observer.disconnect();
   }
   onRowEnter(event) {
     /*tran date*/

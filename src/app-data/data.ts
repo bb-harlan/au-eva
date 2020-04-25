@@ -100,6 +100,7 @@ export class Data {
     let filteredEquityAcctList = this.faeSideEquities.acctList.filter((listItem) => listItem instanceof Acct);
     let acctList = filteredAssetAcctList.concat(filteredEquityAcctList);
     for (let i = 1; i <= 50; ++i) {
+      let newBchgId;
       sourceTran = new Tran(
         /*id*/ `tran${this.nextTranId}`,
         /*parentJrnl*/ this.jrnl,
@@ -107,21 +108,23 @@ export class Data {
         /*intraDateSorter*/ this.nextSorter);
 
       randomAcct = acctList[(Math.random() * (acctList.length - 1)).toFixed(0)];
+      newBchgId = `bchg${this.nextBchgId}`;
       newBchg = new Bchg(
-        /*id*/ `bchg${this.nextBchgId}`,
+        /*id*/ newBchgId,
         /*sourceTran*/ sourceTran,
         /*targetAcct*/ randomAcct,
-        /*desc*/ `<change desc: bchg #B${this.nextBchgId}; tran #${sourceTran.id}; acct #${randomAcct.id}; >`,
+        /*desc*/ `<change desc: ${newBchgId}; ${sourceTran.id}; ${randomAcct.id}; >`,
         /*amt*/ 0.00);
       sourceTran.bchgList.push(newBchg);
       randomAcct.bchgList.push(newBchg);
 
       randomAcct = acctList[(Math.random() * (acctList.length - 1)).toFixed(0)];
+      newBchgId = `bchg${this.nextBchgId}`;
       newBchg = new Bchg(
-        /*id*/ `bchg${this.nextBchgId}`,
+        /*id*/ newBchgId,
         /*sourceTran*/ sourceTran,
         /*targetAcct*/ randomAcct,
-        /*desc*/ `<change desc: bchg #B${this.nextBchgId}; tran #${sourceTran.id}; acct #${randomAcct.id}; >`,
+        /*desc*/ `<change desc: ${newBchgId}; ${sourceTran.id}; ${randomAcct.id}; >`,
         /*amt*/ Math.round(Math.random() * 1000000) / 100);
       sourceTran.bchgList.push(newBchg);
       randomAcct.bchgList.push(newBchg);

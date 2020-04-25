@@ -5,6 +5,7 @@ import {FaeSide} from 'app-data/models/fae-side';
 
 @customElement('au-module-fae')
 @inject(App)
+
 export class AuModuleFae {
 
   /* @injected object(s) */
@@ -32,7 +33,7 @@ export class AuModuleFae {
     if (observer.app.selectedAcct) {
       let element = document.getElementById(observer.app.selectedAcct.id);
       if (element) {
-        element.scrollIntoView();
+        element.scrollIntoView({behavior: "smooth", block: "center"});
       }
     }
     observer.disconnect();

@@ -41,7 +41,7 @@
                  mouseenter.trigger="onRowEnter($event, listItem)"
                  mouseleave.trigger="onRowLeave($event, listItem)"
                  click.trigger="app.selectAcct(listItem)"
-                 dblclick.trigger="app.selectAcctAndGo(listItem)">
+                 dblclick.trigger="app.selectAcctGoAcct(listItem)">
               <div class="aaRowOps aaBgColorToolbar">
                 <div class="aaRadioBtn">
                   <template if.bind="app.selectedAcct.id == listItem.id">

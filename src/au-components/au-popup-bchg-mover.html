@@ -32,7 +32,8 @@
            mousemove.trigger="onListMouseMove($event)"
            mouseleave.trigger="onListMouseLeave($event)">
         <template repeat.for="bchg of moverBchgList">
-          <div class="aaRow" style="border-bottom-width: 3px;"
+          <div class="aaRow"
+               style="border-bottom-width: 3px;"
                mover-bchg.one-time="bchg"
                mouseenter.trigger="onRowMouseEnter($event, bchg)"
                mouseleave.trigger="onRowMouseLeave($event, bchg)"
