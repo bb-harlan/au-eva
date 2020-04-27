@@ -75,9 +75,8 @@ export class App {
 
 
   bind() {
-
-    // this.data.generateEmptyData();
-    this.data.generateTestData();
+    this.data.generateEmptyData();
+    // this.data.generateTestData();
     // this.data.generateExample1Data();
 
     /*
