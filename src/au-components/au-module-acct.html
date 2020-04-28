@@ -27,7 +27,7 @@
             <tr>
               <td class="aaFormItemLabel">Title:</td>
               <td class="aaFormItemData">
-                ${app.selectedAcct.title}
+                ${app.selectedAcct.title.length == 0 ? '[missing account title]' : app.selectedAcct.title}
               </td>
             </tr>
           </table>

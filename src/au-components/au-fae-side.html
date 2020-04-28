@@ -54,7 +54,7 @@
               </div>
               <div class="aaVerticalGridline"></div>
               <div class="aaRowData aaRowBgColorData ${app.selectedAcct.id == listItem.id ? 'aaRowDataSelected' : ''}">
-                <span class="aaCell aaCellAcctTitle">${listItem.title}</span>
+                <span class="aaCell aaCellAcctTitle">${listItem.title.length == 0 ? '[missing account title]' : listItem.title}</span>
                 <div class="aaVerticalGridline"></div>
                 <span class="aaCell aaCellBchgBal">${listItem.endingBalance | auCurrencyConverter}</span>
               </div>
@@ -223,7 +223,7 @@
           </div>
           <div class="aaVerticalGridline"></div>
           <div class="aaRowData aaHidden">
-            <span class="aaCell aaCellAcctTitle">x</span>
+            <span class="aaCell aaCellAcctTitle aaCellInGrid">x</span>
             <div class="aaVerticalGridline"></div>
             <span class="aaCell aaCellBchgBal">0</span>
           </div>
@@ -238,7 +238,7 @@
             </div>
             <div class="aaVerticalGridline"></div>
             <div class="aaRowData aaRowBgColorData">
-              <span class="aaCell aaCellAcctTitle">x</span>
+              <span class="aaCell aaCellAcctTitle aaCellInGrid">x</span>
               <div class="aaVerticalGridline"></div>
               <span class="aaCell aaCellBchgBal">0</span>
             </div>

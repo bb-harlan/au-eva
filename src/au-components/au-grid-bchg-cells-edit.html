@@ -9,7 +9,7 @@
       <!-- target account -->
       <div class="aaCellWrapper">
         <div class="aaCell aaCellBorder aaCellAcctTitle">
-          ${bchg.targetAcct.title}
+          ${bchg.targetAcct.title.length == 0 ? '[missing account title]' : bchg.targetAcct.title}
         </div>
         <div class="aaCellHelper aaFontSizeLabel">
           <button type="button"

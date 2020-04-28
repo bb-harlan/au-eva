@@ -51,13 +51,13 @@ export class AuModuleJrnl {
     event.target.children[2].children[1].classList.toggle('aaRowDataHover', false);
   }
   tranNew(event) {
-    this.app.invokingModule = this.app.MODULE_JRNL;
+    // this.app.invokingModule = this.app.MODULE_JRNL;
     this.app.selectedModule = this.app.MODULE_TRAN;
     this.app.viewmodelTran.tranNew();
   }
   tranEdit(event) {
     if (this.app.selectedTran) {
-      this.app.invokingModule = this.app.MODULE_JRNL;
+      // this.app.invokingModule = this.app.MODULE_JRNL;
       this.app.selectedModule = this.app.MODULE_TRAN;
       this.app.viewmodelTran.tranEdit();
     }
