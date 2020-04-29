@@ -105,12 +105,11 @@ export class AuModuleTran {
     if (this.app.candidateSelectedBchg) {
       this.app.selectedBchg = this.app.candidateSelectedBchg;
       this.app.selectedAcct = this.app.selectedBchg.targetAcct;
-      this.app.selectedTran = this.app.selectedBchg.sourceTran;
     }
+    this.app.candidateTran = null;
     this.app.data.jrnl.refresh();
     this.app.data.faeSideAssets.refresh();
     this.app.data.faeSideEquities.refresh();
-    this.app.candidateTran = null;
     this.tranOp = null;
     this.app.viewNavMode = true;
     if (this.app.invokingModule) {
@@ -122,7 +121,6 @@ export class AuModuleTran {
     this.app.candidateTran = null;
     this.tranOp = null;
     this.app.viewNavMode = true;
-    ;
     if (this.app.invokingModule) {
       this.app.selectedModule = this.app.invokingModule;
       this.app.invokingModule = null;
@@ -157,7 +155,6 @@ export class AuModuleTran {
     if (this.app.candidateSelectedBchg) {
       this.app.selectedBchg = this.app.candidateSelectedBchg;
       this.app.selectedAcct = this.app.selectedBchg.targetAcct;
-      this.app.selectedTran = this.app.selectedBchg.sourceTran;
     }
     this.app.candidateTran = null;
     this.app.candidateSelectedAcct = null;
