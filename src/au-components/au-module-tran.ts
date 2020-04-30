@@ -148,8 +148,10 @@ export class AuModuleTran {
       this.app.candidateTran.intraDateSorter = this.app.data.nextSorter;
       jrnlSortNeeded = true;
     }
-    this.app.candidateTran.refresh();
     this.app.selectedTran.unregister();
+    this.app.selectedTran = null; // destroys only remaining reference to original tran
+    this.app.selectedBchg = null; // destroys only remaining reference to an original bchg
+    this.app.candidateTran.refresh();
     this.app.candidateTran.register();
     this.app.selectedTran = this.app.candidateTran;
     if (this.app.candidateSelectedBchg) {
