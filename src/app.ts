@@ -32,6 +32,12 @@ export class App {
   }
 
   /* element.ref properties */
+  navBtnFae;
+  navBtnAcct;
+  navBtnBchg;
+  navBtnTran;
+  navBtnJrnl;
+  navBtnReturn = null;
   viewmodelFae; // <au-module-fae view-model.ref="viewmodelFae"></au-module-fae>
   viewmodelAcct; // <au-module-acct view-model.ref="viewmodelAcct"></au-module-acct>
   viewmodelBchg; // <au-module-bchg view-model.ref="viewmodelBchg"></au-module-bchg>
@@ -47,7 +53,6 @@ export class App {
    *=====================================================
    */
   selectedModule = this.MODULE_FAE;
-  invokingModule = null;
   viewNavMode = true;
 
   selectedAcct: Acct | Annotation = null;
