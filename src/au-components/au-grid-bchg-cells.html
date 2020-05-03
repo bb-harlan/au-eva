@@ -9,7 +9,8 @@
            **************
       -->
       <div class="aaCellWrapper">
-        <div class="aaCell aaCellBorder aaCellAcctTitle">
+        <div class="aaCell aaCellBorder aaCellAcctTitle"
+             xx-innerHTML.one-way="bchg.targetAcct.title">
           ${bchg.targetAcct.title.length == 0 ? '[missing account title]' : bchg.targetAcct.title}
         </div>
         <div class="aaCellHelper aaFontSizeLabel aaHidden">

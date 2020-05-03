@@ -64,15 +64,16 @@ export class AuModuleTran {
                                        });
   }
   callbackSetInputFocus(mutationList, observer) {
-    if (observer.app.candidateSelectedBchg) {
-      let element = document.getElementById(`${observer.app.candidateSelectedBchg.id}-desc`);
-      if (element) {
-        (element as HTMLElement).focus();
-      }
+    let elementToFocus;
+    elementToFocus = document.getElementById('tranInputDate');
+    if (elementToFocus) {
+      (elementToFocus as HTMLElement).focus();
     }
-    else {
-      let element = document.getElementById(`tranInputDate`);
-      element.focus();
+    if (observer.app.candidateSelectedBchg) {
+      elementToFocus = document.getElementById(`${observer.app.candidateSelectedBchg.id}-desc`);
+      if (elementToFocus) {
+        (elementToFocus as HTMLElement).focus();
+      }
     }
     observer.disconnect();
   }
@@ -87,10 +88,7 @@ export class AuModuleTran {
     }
   }
   tranNew(event) {
-    let activeElement = document.activeElement as HTMLElement;
-    if (activeElement) {
-      activeElement.blur();
-    }
+    this.app.candidateSelectedBchg = null;
     this.app.candidateTran = new Tran(
       /*id*/ `tran${this.app.data.nextTranId}`,
       /*parentJrnl*/ this.app.data.jrnl,
@@ -98,14 +96,7 @@ export class AuModuleTran {
       /*intraDateSorter*/ this.app.data.nextSorter);
     this.app.viewNavMode = false;
     this.tranOp = this.TRAN_OP_NEW;
-    let tranInputDate = document.getElementById('tranInputDate');
-    if (tranInputDate) {
-      tranInputDate.focus();
-    }
-/*
-    let tranInputDate = document.getElementById('tranInputDate');
-    tranInputDate.focus();
-*/
+    this.app.viewmodelTran.observeForSetInputFocus();
   }
   tranNewDone(event) {
     if (this.app.candidateTran.totalChangesAssets != this.app.candidateTran.totalChangesEquities) {
@@ -124,6 +115,7 @@ export class AuModuleTran {
       this.app.selectedAcct = this.app.selectedBchg.targetAcct;
     }
     this.app.candidateTran = null;
+    this.app.candidateSelectedBchg = null;
     this.app.data.jrnl.refresh();
     this.app.data.faeSideAssets.refresh();
     this.app.data.faeSideEquities.refresh();
@@ -136,6 +128,7 @@ export class AuModuleTran {
   }
   tranNewCancel(event) {
     this.app.candidateTran = null;
+    this.app.candidateSelectedBchg = null;
     this.tranOp = null;
     this.app.viewNavMode = true;
     if (this.app.navBtnReturn) {
@@ -154,6 +147,7 @@ export class AuModuleTran {
     }
     this.tranOp = this.TRAN_OP_EDIT;
     this.app.viewNavMode = false;
+    this.app.viewmodelTran.observeForSetInputFocus();
   }
   tranEditDone(event) {
     let jrnlSortNeeded = false;
@@ -178,6 +172,7 @@ export class AuModuleTran {
     if (this.app.candidateSelectedBchg) {
       this.app.selectedBchg = this.app.candidateSelectedBchg;
       this.app.selectedAcct = this.app.selectedBchg.targetAcct;
+      this.app.candidateSelectedBchg = null;
     }
     this.app.candidateTran = null;
     this.app.candidateSelectedAcct = null;
@@ -197,6 +192,7 @@ export class AuModuleTran {
   }
   tranEditCancel(event) {
     this.app.candidateTran = null;
+    this.app.candidateSelectedBchg = null;
     this.tranOp = null;
     this.app.viewNavMode = true;
     if (this.app.navBtnReturn) {

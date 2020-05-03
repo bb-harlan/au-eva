@@ -25,6 +25,8 @@ export class AuGridBchgCells {
     this.app.viewmodelPopupAcctPicker.open(this.bchg, this.callbackPickAcct)
   }
   callbackPickAcct(app: App, bchg: Bchg, pickedAcct: Acct) {
+    bchg.targetAcct = null;
+    alert();
     bchg.targetAcct = pickedAcct;
     bchg.sourceTran.refresh();
   }

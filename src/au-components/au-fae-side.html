@@ -148,14 +148,16 @@
                mouseleave.trigger="onRowLeave($event, listItem)">
             <template if.bind="listItem.isAcct()">
               <div class="aaRowOps aaBgColorToolbar aaFontSizeLabel">
-                    <span class="aaBtn" title="Insert new account row..."
-                          click.trigger="acctNew($event, listItem)">
-                      <au-icon-new></au-icon-new>
-                    </span>
-                <span class="aaBtn" title="Insert new annotation row..."
+                <span class="aaBtn"
+                      title="Insert new account row..."
+                      click.trigger="acctNew($event, listItem)">
+                  <au-icon-new></au-icon-new>
+                </span>
+                <span class="aaBtn"
+                      title="Insert new annotation row..."
                       click.trigger="annotationNew($event, listItem)">
-                      <au-icon-new></au-icon-new>
-                    </span>
+                  <au-icon-new></au-icon-new>
+                </span>
                 <span class="aaBtn ${listItem.bchgList.length > 0 ? 'aaHidden' : ''}"
                       title="Delete row..."
                       click.trigger="listItemDelete($event, listItem)">
@@ -177,17 +179,21 @@
             </template>
             <template if.bind="listItem.isAnnotation()">
               <div class="aaRowOps aaBgColorToolbar aaFontSizeLabel">
-                <span class="aaBtn" title="Insert new account row..."
+                <span class="aaBtn"
+                      title="Insert new account row..."
                       click.trigger="acctNew($event, listItem)">
-                      <au-icon-new></au-icon-new>
-                    </span>
-                <span class="aaBtn" title="Insert new annotation row..."
+                  <au-icon-new></au-icon-new>
+                </span>
+                <span class="aaBtn"
+                      title="Insert new annotation row..."
                       click.trigger="annotationNew($event, listItem)">
-                      <au-icon-new></au-icon-new>
-                    </span>
-                <span class="aaBtn" title="Delete row..." click.trigger="listItemDelete($event, listItem)">
-                      <au-icon-delete></au-icon-delete>
-                    </span>
+                  <au-icon-new></au-icon-new>
+                </span>
+                <span class="aaBtn"
+                      title="Delete row..."
+                      click.trigger="listItemDelete($event, listItem)">
+                  <au-icon-delete></au-icon-delete>
+                </span>
               </div>
               <div class="aaVerticalGridline"></div>
               <div class="aaRowData aaRowBgColorData">
@@ -209,14 +215,16 @@
              mouseenter.trigger="onRowEnter($event, null)"
              mouseleave.trigger="onRowLeave($event, null)">
           <div class="aaRowOps aaBgColorToolbar aaFontSizeLabel">
-              <span class="aaBtn" title="Insert new account row"
+              <span class="aaBtn"
+                    title="Insert new account row"
                     click.trigger="acctNew($event, null)">
-                      <au-icon-new></au-icon-new>
-                    </span>
-            <span class="aaBtn" title="Insert new annotation row"
+                <au-icon-new></au-icon-new>
+              </span>
+            <span class="aaBtn"
+                  title="Insert new annotation row"
                   click.trigger="annotationNew($event, null)">
-                      <au-icon-new></au-icon-new>
-                    </span>
+              <au-icon-new></au-icon-new>
+            </span>
             <span class="aaBtn aaHidden">
               <au-icon-delete></au-icon-delete>
             </span>
@@ -254,20 +262,24 @@
     <div class="aaRow" style="border-bottom-color: transparent; background-color: transparent;">
       <div class="aaRowOps aaHidden">
         <template if.bind="app.viewNavMode">
-          <button class="aaBtn" type="button">
-            <au-icon-nav-right></au-icon-nav-right>
+          <button class="aaBtn"
+                  type="button">
+            <au-icon-radio-unselected></au-icon-radio-unselected>
           </button>
         </template>
         <template if.bind="!app.viewNavMode">
-          <span class="aaBtn">
-                      <au-icon-new></au-icon-new>
-                    </span>
-          <span class="aaBtn">
-                      <au-icon-new></au-icon-new>
-                    </span>
-          <span class="aaBtn">
-                      <au-icon-delete></au-icon-delete>
-                    </span>
+          <span class="aaBtn"
+                type="button">
+            <au-icon-new></au-icon-new>
+          </span>
+          <span class="aaBtn"
+                type="button">
+            <au-icon-new></au-icon-new>
+          </span>
+          <span class="aaBtn"
+                type="button">
+            <au-icon-delete></au-icon-delete>
+          </span>
         </template>
       </div>
       <div class="aaVerticalGridline aaHidden"></div>

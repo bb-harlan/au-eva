@@ -355,7 +355,8 @@ h1 {
   align-items: flex-start;
   margin: 0;
   padding: 0;
-  height: 25pc;
+  /*height: 25pc;*/
+  height: 22pc;
   overflow-x: hidden;
   overflow-y: scroll;
   white-space: nowrap;

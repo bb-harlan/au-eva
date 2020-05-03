@@ -1,6 +1,7 @@
 import {customElement, bindable, inject} from 'aurelia-framework';
 import {App} from 'app';
 import {Acct} from 'app-data/models/acct';
+import {Annotation} from 'app-data/models/acct';
 import {FaeSide} from 'app-data/models/fae-side';
 
 @customElement('au-module-fae')
@@ -13,6 +14,8 @@ export class AuModuleFae {
 
   /* element reference(s) */
   moduleRootElement: Element;
+  viewmodelFaeSideAssets;
+  viewmodelFaeSideEquities;
   viewmodelPopupAcctMover;
 
   /* other properties */
@@ -26,7 +29,7 @@ export class AuModuleFae {
   observeForScrollIntoView() {
     (this.observerScrollIntoView as any).app = this.app; // cast as "any" to programmatically add property
     this.observerScrollIntoView.observe(this.moduleRootElement,
-                                  { attributeFilter:[ 'style' ] }
+                                        {attributeFilter: ['style']}
     );
   }
   callbackScrollIntoView(mutationList, observer) {
@@ -41,9 +44,10 @@ export class AuModuleFae {
   observeForSetInputFocus() {
     (this.observerSetInputFocus as any).app = this.app; // cast as "any" to programmatically add property
     this.observerSetInputFocus.observe(this.moduleRootElement,
-                                  {
-                                    childList: true,
-                                    subtree: true});
+                                       {
+                                         childList: true,
+                                         subtree: true
+                                       });
   }
   callbackSetInputFocus(mutationList, observer) {
     if (observer.app.candidateSelectedAcct) {
@@ -72,8 +76,83 @@ export class AuModuleFae {
     this.app.viewNavMode = false;
   }
   faeSidesEditDone(event) {
-    this.app.data.faeSideAssets = this.app.candidateFaeSideAssets;
-    this.app.data.faeSideEquities = this.app.candidateFaeSideEquities;
+    let matchingListItem;
+    let newAcct;
+    let newAnnotation;
+    let removalIndex;
+
+    /*** process Assets list ***/
+    /* remove any deleted listItems */
+    for (let listItem of this.app.data.faeSideAssets.acctList) {
+      matchingListItem = this.app.candidateFaeSideAssets.acctList.find(element => element.id == listItem.id);
+      if (!matchingListItem) {
+        removalIndex = this.app.data.faeSideAssets.acctList.findIndex(element => element.id == listItem.id);
+        this.app.data.faeSideAssets.acctList.splice(removalIndex, 1);
+      }
+    }
+    /* update acctlist with any new or changed listItems */
+    for (let listItem of this.app.candidateFaeSideAssets.acctList) {
+      if (listItem instanceof Annotation) {
+        matchingListItem = this.app.data.faeSideAssets.acctList.find(element => element.id == listItem.id);
+        if (matchingListItem) {
+          matchingListItem.intraSideIndex = listItem.intraSideIndex;
+          matchingListItem.annoText = listItem.annoText;
+        }
+        else {
+          this.app.data.faeSideAssets.acctList.push(listItem);
+        }
+      }
+      else if (listItem instanceof Acct) {
+        matchingListItem = this.app.data.faeSideAssets.acctList.find(element => element.id == listItem.id);
+        if (matchingListItem) {
+          matchingListItem.intraSideIndex = listItem.intraSideIndex;
+          matchingListItem.title = listItem.title;
+        }
+        else {
+          this.app.data.faeSideAssets.acctList.push(listItem);
+        }
+      }
+      else {
+        /* error */
+      }
+    }
+
+    /*** process Equities list ***/
+    /* remove any deleted listItems */
+    for (let listItem of this.app.data.faeSideEquities.acctList) {
+      matchingListItem = this.app.candidateFaeSideEquities.acctList.find(element => element.id == listItem.id);
+      if (!matchingListItem) {
+        removalIndex = this.app.data.faeSideEquities.acctList.findIndex(element => element.id == listItem.id);
+        this.app.data.faeSideEquities.acctList.splice(removalIndex, 1);
+      }
+    }
+    /* update acctlist with any new or changed listItems */
+    for (let listItem of this.app.candidateFaeSideEquities.acctList) {
+      if (listItem instanceof Annotation) {
+        matchingListItem = this.app.data.faeSideEquities.acctList.find(element => element.id == listItem.id);
+        if (matchingListItem) {
+          matchingListItem.intraSideIndex = listItem.intraSideIndex;
+          matchingListItem.annoText = listItem.annoText;
+        }
+        else {
+          this.app.data.faeSideEquities.acctList.push(listItem);
+        }
+      }
+      else if (listItem instanceof Acct) {
+        matchingListItem = this.app.data.faeSideEquities.acctList.find(element => element.id == listItem.id);
+        if (matchingListItem) {
+          matchingListItem.intraSideIndex = listItem.intraSideIndex;
+          matchingListItem.title = listItem.title;
+        }
+        else {
+          this.app.data.faeSideEquities.acctList.push(listItem);
+        }
+      }
+      else {
+        /* error */
+      }
+    }
+
     this.app.selectedAcct = this.app.candidateSelectedAcct;
 
     this.app.candidateFaeSideAssets = null;
@@ -88,7 +167,8 @@ export class AuModuleFae {
                                           childList: true,
                                           attributes: true,
                                           subtree: true,
-                                          characterData: true});
+                                          characterData: true
+                                        });
     this.app.viewNavMode = true;
   }
   faeSidesEditCancel(event) {
@@ -98,7 +178,8 @@ export class AuModuleFae {
                                           childList: true,
                                           attributes: true,
                                           subtree: true,
-                                          characterData: true});
+                                          characterData: true
+                                        });
     this.app.viewNavMode = true;
     this.app.candidateFaeSideAssets = null;
     this.app.candidateFaeSideEquities = null;
