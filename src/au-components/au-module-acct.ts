@@ -32,7 +32,7 @@ export class AuModuleAcct {
     );
   }
   callbackScrollIntoView(mutationList, observer) {
-    if (observer.app.selectedAcct) {
+    if (observer.app.selectedBchg) {
       let element = document.getElementById(`acct-${observer.app.selectedBchg.id}`);
       if (element) {
         element.scrollIntoView({behavior: "smooth", block: "center"});

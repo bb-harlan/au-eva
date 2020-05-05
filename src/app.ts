@@ -156,7 +156,6 @@ export class App {
     revivedData.jrnl.refresh();
     console.log(revivedData);
     this.data = null;
-    // alert("Wait");
     this.data = revivedData;
     // *** IT WORKS!!!! ***
 */
