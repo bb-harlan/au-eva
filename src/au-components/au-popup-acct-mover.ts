@@ -57,8 +57,8 @@ export class AuPopupAcctMover {
       mover-acct-list-item.bind="moverAcctListItem"
 
     creates a property named moverAcctListItem on each row, a div of type HTMLElement.
-    The value of that property is set to the iterator moverAcctListItem, therby providing
-    another reference to the listIems in the array moverAcctList.
+    The value of that property is set to the iterator moverAcctListItem, thereby providing
+    another reference to the listItems in the array moverAcctList.
 
     The following for loop uses that moverAcctListItem property
     to reference the original acct|annotation object and update its intraTranIndex property
@@ -70,6 +70,7 @@ export class AuPopupAcctMover {
       listItem.intraSideIndex = i;
     }
     this.faeSide.sortAcctList();
+    this.faeSide.reindexAcctList();
     this.moverDialogModal.style.display = "none";
   }
   cancel() {

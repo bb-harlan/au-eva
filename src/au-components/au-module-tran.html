@@ -9,8 +9,6 @@
   <require from="au-views/au-icon-delete.html"></require>
   <require from="au-views/au-icon-row-mover.html"></require>
   <require from="au-views/au-icon-ellipsis.html"></require>
-  <require from="au-views/au-icon-radio-unselected.html"></require>
-  <require from="au-views/au-icon-radio-selected.html"></require>
   <require from="au-views/au-text-ellipsis.html"></require>
   <require from="au-views/au-grid-bchg-cells-spacer.html"></require>
   <require from="au-converters/au-currency-converter"></require>
@@ -61,10 +59,7 @@
         <div class="aaGridContainer">
           <div class="aaGridTitleBar">Account balance changes</div>
           <div class="aaRow aaRowColumnHeaders aaFontLabel aaFontBold">
-            <div class="aaRowOps aaFontLabel aaHidden">
-              <div class="aaRadioBtn">
-                <au-icon-radio-unselected></au-icon-radio-unselected>
-              </div>
+            <div class="aaRowOps aaRowOpsEmpty aaHidden">
             </div>
             <div class="aaVerticalGridline" style="background-color: #fff; width: 3px;"></div>
             <div class="aaRowData">
@@ -83,15 +78,7 @@
                    mouseleave.trigger="onRowLeave($event, bchg)"
                    click.trigger="app.selectBchg(bchg)"
                    dblclick.trigger="app.selectTranBchgGoAcct(bchg)">
-                <div class="aaRowOps aaBgColorToolbar aaFontSizeLabel">
-                  <div class="aaRadioBtn">
-                    <template if.bind="app.selectedBchg.id == bchg.id">
-                      <au-icon-radio-selected></au-icon-radio-selected>
-                    </template>
-                    <template if.bind="app.selectedBchg.id != bchg.id">
-                      <au-icon-radio-unselected></au-icon-radio-unselected>
-                    </template>
-                  </div>
+                <div class="aaRowOps aaRowOpsEmpty aaBgColorToolbar ${app.selectedBchg.id == bchg.id ? 'aaRowOpsSelected' : ''}">
                 </div>
                 <div class="aaVerticalGridline" style="width: 3px;"></div>
                 <div class="aaRowData aaRowBgColorData  ${app.selectedBchg.id == bchg.id ? 'aaRowDataSelected' : ''}">
@@ -119,10 +106,7 @@
             <div class="aaRow aaHidden"
                  style="border-bottom-width: 3px;">
               <template if.bind="app.viewNavMode">
-                <div class="aaRowOps aaBgColorToolbar aaFontSizeLabel">
-                  <div class="aaRadioBtn">
-                    <au-icon-radio-unselected></au-icon-radio-unselected>
-                  </div>
+                <div class="aaRowOps aaRowOpsEmpty aaBgColorToolbar">
                 </div>
                 <div class="aaVerticalGridline" style="width: 3px;"></div>
               </template>
@@ -140,10 +124,7 @@
         <div class="aaGridContainer"
              style="border-color: transparent; background-color: transparent;">
           <div class="aaRow aaFontLabel" style="border-color: transparent; background-color: transparent;">
-            <div class="aaRowOps aaFontLabel aaHidden">
-              <div class="aaRadioBtn">
-                <au-icon-radio-unselected></au-icon-radio-unselected>
-              </div>
+            <div class="aaRowOps aaRowOpsEmpty aaHidden">
             </div>
             <div class="aaVerticalGridline aaHidden" style="width: 3px;"></div>
             <div class="aaRowData">
@@ -200,11 +181,8 @@
                    style="border-bottom-width: 3px;"
                    mouseenter.trigger="onRowEnter($event, bchg)"
                    mouseleave.trigger="onRowLeave($event, bchg)">
-                <div class="aaRowOps aaBgColorToolbar aaFontSizeLabel"
+                <div class="aaRowOps aaRowOpsEmpty aaBgColorToolbar"
                      style="display: none;">
-                  <div class="aaRadioBtn">
-                    <au-icon-radio-selected></au-icon-radio-selected>
-                  </div>
                 </div>
                 <div class="aaVerticalGridline"
                      style="width: display: none;"></div>
@@ -331,7 +309,7 @@
                    style="border-bottom-width: 3px;"
                    mouseenter.trigger="onRowEnter($event, bchg)"
                    mouseleave.trigger="onRowLeave($event, bchg)">
-                <div class="aaRowOps aaBgColorToolbar aaFontSizeLabel">
+                <div class="aaRowOps aaBgColorToolbar aaFontLabel">
                     <span class="aaBtn"
                           title="Insert new row..."
                           click.trigger="bchgNew(bchg)">
@@ -368,7 +346,7 @@
             <div class="aaRow" style="border-bottom-width: 3px;"
                  mouseenter.trigger="onRowEnter($event, null)"
                  mouseleave.trigger="onRowLeave($event, null)">
-              <div class="aaRowOps aaBgColorToolbar aaFontSizeLabel">
+              <div class="aaRowOps aaBgColorToolbar aaFontLabel">
                   <span class="aaBtn"
                         title="Insert new row..."
                         click.trigger="bchgNew(null)">

@@ -18,8 +18,8 @@ export class FaeSide {
   }
 
   refresh(): void {
-    this.reindexAcctList();
     this.sortAcctList();
+    this.reindexAcctList();
     this.listTotal = 0.00;
     for (let acct of this.acctList) {
       if (acct instanceof Acct) {

@@ -4,8 +4,6 @@
   <require from="au-views/au-icon-row-mover.html"></require>
   <require from="au-views/au-icon-new.html"></require>
   <require from="au-views/au-icon-delete.html"></require>
-  <require from="au-views/au-icon-radio-unselected.html"></require>
-  <require from="au-views/au-icon-radio-selected.html"></require>
   <require from="au-views/au-text-ellipsis.html"></require>
   <require from="au-converters/au-currency-converter"></require>
   <require from="au-converters/au-equation-side-converter"></require>
@@ -20,10 +18,7 @@
     </div>
     <template if.bind="app.viewNavMode">
       <div class="aaRow aaRowColumnHeaders aaFontLabel aaFontBold">
-        <div class="aaRowOps aaHidden">
-          <div class="aaRadioBtn">
-            <au-icon-radio-unselected></au-icon-radio-unselected>
-          </div>
+        <div class="aaRowOps aaRowOpsEmpty aaHidden">
         </div>
         <div class="aaVerticalGridline" style="background-color: #fff;" element.ref="popupLeft"></div>
         <div class="aaRowData">
@@ -42,15 +37,7 @@
                  mouseleave.trigger="onRowLeave($event, listItem)"
                  click.trigger="app.selectAcct(listItem)"
                  dblclick.trigger="app.selectAcctGoAcct(listItem)">
-              <div class="aaRowOps aaBgColorToolbar">
-                <div class="aaRadioBtn">
-                  <template if.bind="app.selectedAcct.id == listItem.id">
-                    <au-icon-radio-selected></au-icon-radio-selected>
-                  </template>
-                  <template if.bind="app.selectedAcct.id != listItem.id">
-                    <au-icon-radio-unselected></au-icon-radio-unselected>
-                  </template>
-                </div>
+              <div class="aaRowOps aaRowOpsEmpty aaBgColorToolbar ${app.selectedAcct.id == listItem.id ? 'aaRowOpsSelected' : ''}">
               </div>
               <div class="aaVerticalGridline"></div>
               <div class="aaRowData aaRowBgColorData ${app.selectedAcct.id == listItem.id ? 'aaRowDataSelected' : ''}">
@@ -66,10 +53,7 @@
                  id="${listItem.id}"
                  mouseenter.trigger="onRowEnter($event, listItem)"
                  mouseleave.trigger="onRowLeave($event, listItem)">
-              <div class="aaRowOps aaBgColorToolbar">
-                <button class="aaBtn aaHidden" type="button">
-                  <au-icon-radio-unselected></au-icon-radio-unselected>
-                </button>
+              <div class="aaRowOps aaRowOpsEmpty aaBgColorToolbar ${app.selectedBchg.id == listItem.id ? 'aaRowOpsSelected' : ''}">
               </div>
               <div class="aaVerticalGridline"></div>
               <div class="aaRowData aaRowBgColorData">
@@ -83,10 +67,7 @@
         </template>
         <template if.bind="faeSide.acctList.length == 0">
           <div class="aaRow aaHidden">
-            <div class="aaRowOps aaBgColorToolbar">
-              <div class="aaRadioBtn">
-                <au-icon-radio-selected></au-icon-radio-selected>
-              </div>
+            <div class="aaRowOps aaRowOpsEmpty aaBgColorToolbar">
             </div>
             <div class="aaVerticalGridline"></div>
             <div class="aaRowData aaRowBgColorData">
@@ -147,7 +128,7 @@
                mouseenter.trigger="onRowEnter($event, listItem)"
                mouseleave.trigger="onRowLeave($event, listItem)">
             <template if.bind="listItem.isAcct()">
-              <div class="aaRowOps aaBgColorToolbar aaFontSizeLabel">
+              <div class="aaRowOps aaBgColorToolbar aaFontLabel">
                 <span class="aaBtn"
                       title="Insert new account row..."
                       click.trigger="acctNew($event, listItem)">
@@ -178,7 +159,7 @@
               <div class="aaVerticalGridline"></div>
             </template>
             <template if.bind="listItem.isAnnotation()">
-              <div class="aaRowOps aaBgColorToolbar aaFontSizeLabel">
+              <div class="aaRowOps aaBgColorToolbar aaFontLabel">
                 <span class="aaBtn"
                       title="Insert new account row..."
                       click.trigger="acctNew($event, listItem)">
@@ -214,7 +195,7 @@
         <div class="aaRow"
              mouseenter.trigger="onRowEnter($event, null)"
              mouseleave.trigger="onRowLeave($event, null)">
-          <div class="aaRowOps aaBgColorToolbar aaFontSizeLabel">
+          <div class="aaRowOps aaBgColorToolbar aaFontLabel">
               <span class="aaBtn"
                     title="Insert new account row"
                     click.trigger="acctNew($event, null)">
@@ -239,10 +220,7 @@
         </div>
         <template if.bind="faeSide.acctList.length == 0">
           <div class="aaRow aaHidden">
-            <div class="aaRowOps aaBgColorToolbar">
-              <div class="aaRadioBtn">
-                <au-icon-radio-selected></au-icon-radio-selected>
-              </div>
+            <div class="aaRowOps aaRowOpsEmpty">
             </div>
             <div class="aaVerticalGridline"></div>
             <div class="aaRowData aaRowBgColorData">
@@ -260,14 +238,12 @@
   <!--<div class="aaGridTotals">-->
   <div class="aaGridContainer" style="border-color: transparent; background-color: transparent;">
     <div class="aaRow" style="border-bottom-color: transparent; background-color: transparent;">
-      <div class="aaRowOps aaHidden">
-        <template if.bind="app.viewNavMode">
-          <button class="aaBtn"
-                  type="button">
-            <au-icon-radio-unselected></au-icon-radio-unselected>
-          </button>
-        </template>
-        <template if.bind="!app.viewNavMode">
+      <template if.bind="app.viewNavMode">
+        <div class="aaRowOps aaRowOpsEmpty aaHidden">
+        </div>
+      </template>
+      <template if.bind="!app.viewNavMode">
+        <div class="aaRowOps aaHidden aaFontLabel">
           <span class="aaBtn"
                 type="button">
             <au-icon-new></au-icon-new>
@@ -280,8 +256,8 @@
                 type="button">
             <au-icon-delete></au-icon-delete>
           </span>
-        </template>
-      </div>
+        </div>
+      </template>
       <div class="aaVerticalGridline aaHidden"></div>
       <div class="aaRowData">
         <span class="aaCell aaCellAcctTitle" style="text-align: right;"><span

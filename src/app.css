@@ -4,11 +4,11 @@ body {
   /*background-color: #c0c0c0; */
   /*background-color: #d0d0d0;*/
   /*background-color: #808080;*/
+  color: #000;
   background-color: #fff;
   font-family: Cambria, serif, Serif;
-  /*font-weight: bold;*/
+  font-weight: bold;
   font-size: medium;
-  color: #000;
 }
 
 h1, h2, h3 {
@@ -29,27 +29,18 @@ h1 {
   font-family: sans-serif, SansSerif;
   font-weight: normal;
   font-size: small;
+  background-color: transparent;
 }
 .aaFontBold {
   font-weight: bold;
 }
-.aaFontSizeLabel {
-  font-size: small;
-  background-color: transparent;
-}
-
 .aaFontData {
   color: #000;
   font-family: Cambria, serif, Serif;
-  font-weight: normal;
   font-size: medium;
+  /*font-weight: normal;*/
+  font-weight: bold;
 }
-
-.aaFontSizeData {
-  font-size: medium;
-  font-weight: normal;
-}
-
 .aaIconBlack {
   color: #000;
 }
@@ -241,7 +232,7 @@ h1 {
   outline-width: 0;
   font-family: sans-serif, SansSerif;
   font-weight: normal;
-  font-size: small;
+  font-size: medium;
 }
 .aaBtn:disabled {
   border-style: none;
@@ -256,28 +247,6 @@ h1 {
   color: #000;
   background-color: #B6CBE2;
   border-color: #000;
-}
-.aaRadioBtn {
-  display: inline-flex;
-  color: #333;
-  padding: 2px 0.25pc;
-  margin: 0 0.25pc;
-  text-align: center;
-  white-space: nowrap;
-  vertical-align: top;
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
-  background-image: none;
-  border: 1px solid transparent;
-  border-radius: 0.25pc;
-  background-clip: border-box;
-  background-color: transparent;
-  outline-width: 0;
-  font-family: sans-serif, SansSerif;
-  font-weight: normal;
-  font-size: small;
 }
 .aaDummyBtn {
   display: inline-flex;
@@ -413,6 +382,12 @@ h1 {
   overflow: hidden;
   /*padding-top: 0.25pc;*/
   align-self: stretch;
+}
+.aaRowOpsSelected {
+  background-color: #58B;
+}
+.aaRowOpsEmpty {
+  width: 1.5pc;
 }
 .aaRowData {
   display: inline-flex;

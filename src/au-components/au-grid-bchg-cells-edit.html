@@ -12,7 +12,7 @@
           <!--${bchg.targetAcct.title.length == 0 ? '[missing account title]' : bchg.targetAcct.title}-->
           ${bchg.targetAcct.title}
         </div>
-        <div class="aaCellHelper aaFontSizeLabel">
+        <div class="aaCellHelper aaFontLabel">
           <button type="button"
                   class="aaBtn aaHelperBtn"
                   click.trigger="pickAcct()">
@@ -42,7 +42,7 @@
         </au-input-currency>
       </div>
       <div
-        class="aaCellHelper aaFontSizeLabel ${bchg.sourceTran.totalChangesAssets == bchg.sourceTran.totalChangesEquities ? 'aaHidden' : ''}">
+        class="aaCellHelper aaFontLabel ${bchg.sourceTran.totalChangesAssets == bchg.sourceTran.totalChangesEquities ? 'aaHidden' : ''}">
         <button type="button"
                 class="aaBtn aaHelperBtn"
                 click.trigger="bchg.setAmtToBalanceTran()">

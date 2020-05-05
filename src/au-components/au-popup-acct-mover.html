@@ -37,14 +37,14 @@
                mouseup.trigger="onRowMouseUp($event)">
             <div class="aaRowData aaRowBgColorData">
               <template if.bind="listItem.isAcct()">
-                <span class="aaCell aaFontSizeData aaCellAcctTitle">${listItem.title}</span>
+                <span class="aaCell aaFontData aaCellAcctTitle">${listItem.title}</span>
                 <div class="aaVerticalGridline"></div>
-                <span class="aaCell aaFontSizeData aaCellBchgBal">${listItem.endingBalance | auCurrencyConverter}</span>
+                <span class="aaCell aaFontData aaCellBchgBal">${listItem.endingBalance | auCurrencyConverter}</span>
               </template>
               <template if.bind="listItem.isAnnotation()">
-                <span class="aaCell aaFontSizeData aaCellAnnoTitle">${listItem.annoText}</span>
+                <span class="aaCell aaFontData aaCellAnnoTitle">${listItem.annoText}</span>
                 <div class="aaVerticalGridline"></div>
-                <span class="aaCell aaFontSizeData aaCellBchgBal"></span>
+                <span class="aaCell aaFontData aaCellBchgBal"></span>
               </template>
               <div class="aaVerticalGridline"></div>
             </div>
@@ -53,9 +53,9 @@
         <template if.bind="moverAcctList.length == 0">
           <div class="aaRow aaHidden">
             <div class="aaRowData aaRowBgColorData">
-              <span class="aaCell aaFontSizeData aaCellAcctTitle">x</span>
+              <span class="aaCell aaFontData aaCellAcctTitle">x</span>
               <div class="aaVerticalGridline"></div>
-              <span class="aaCell aaFontSizeData aaCellBchgBal">0</span>
+              <span class="aaCell aaFontData aaCellBchgBal">0</span>
               <div class="aaVerticalGridline"></div>
             </div>
           </div>

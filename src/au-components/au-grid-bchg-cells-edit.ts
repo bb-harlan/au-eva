@@ -26,7 +26,6 @@ export class AuGridBchgCells {
   }
   callbackPickAcct(app: App, bchg: Bchg, pickedAcct: Acct) {
     bchg.targetAcct = null;
-    alert();
     bchg.targetAcct = pickedAcct;
     bchg.sourceTran.refresh();
   }
