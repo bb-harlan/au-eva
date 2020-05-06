@@ -6,13 +6,13 @@ body {
   /*background-color: #808080;*/
   color: #000;
   background-color: #fff;
-  font-family: Cambria, serif, Serif;
+  font-family: "Times New Roman", Cambria, serif, Serif;
   font-weight: bold;
   font-size: medium;
 }
 
 h1, h2, h3 {
-  font-family: sans-serif, SansSerif;
+  font-family: Arial, Helvetica, sans-serif, SansSerif;
   font-weight: normal;
 }
 
@@ -21,12 +21,12 @@ h1 {
 }
 
 .aaSansSerif {
-  font-family: sans-serif, SansSerif;
+  font-family: Arial, Helvetica, sans-serif, SansSerif;
   font-weight: normal;
 }
 
 .aaFontLabel {
-  font-family: sans-serif, SansSerif;
+  font-family: Arial, Helvetica, sans-serif, SansSerif;
   font-weight: normal;
   font-size: small;
   background-color: transparent;
@@ -36,7 +36,7 @@ h1 {
 }
 .aaFontData {
   color: #000;
-  font-family: Cambria, serif, Serif;
+  font-family: "Times New Roman", Cambria, serif, Serif;
   font-size: medium;
   /*font-weight: normal;*/
   font-weight: bold;
@@ -135,7 +135,7 @@ h1 {
   color: #fff;
   text-shadow:3px 3px 0 #000;
   background-color: #58b;
-  font-family: sans-serif, SansSerif;
+  font-family: Arial, Helvetica, sans-serif, SansSerif;
   font-weight: bold;
   letter-spacing: 2px;
 }
@@ -167,7 +167,7 @@ h1 {
   padding: 0.30pc 0 0.20pc 0;
   text-align: right;
   /*vertical-align: middle;*/
-  font-family: sans-serif, SansSerif;
+  font-family: Arial, Helvetica, sans-serif, SansSerif;
   font-weight: normal;
   font-size: small;
 }
@@ -230,7 +230,7 @@ h1 {
   background-clip: border-box;
   background-color: transparent;
   outline-width: 0;
-  font-family: sans-serif, SansSerif;
+  font-family: Arial, Helvetica, sans-serif, SansSerif;
   font-weight: normal;
   font-size: medium;
 }
@@ -266,7 +266,7 @@ h1 {
   background-clip: border-box;
   background-color: transparent;
   outline-width: 0;
-  font-family: sans-serif, SansSerif;
+  font-family: Arial, Helvetica, sans-serif, SansSerif;
   font-weight: normal;
   font-size: small;
 }
@@ -287,7 +287,7 @@ h1 {
   border-left: 1px solid #999;
   border-right: 1px solid #bbb;
   background-color: transparent;
-  font-family: sans-serif, SansSerif;
+  font-family: Arial, Helvetica, sans-serif, SansSerif;
   font-weight: normal;
   font-size: small;
 }
@@ -306,7 +306,7 @@ h1 {
   /*text-shadow: 1px 1px 0 #f0f0f0;*/
   background-color: #b6cbe2;
   border-bottom: 1px solid #999;
-  font-family: sans-serif, SansSerif;
+  font-family: Arial, Helvetica, sans-serif, SansSerif;
   font-size: medium;
   font-weight: bold;
   letter-spacing: 1px;
@@ -324,12 +324,22 @@ h1 {
   align-items: flex-start;
   margin: 0;
   padding: 0;
-  /*height: 25pc;*/
-  height: 22pc;
   overflow-x: hidden;
   overflow-y: scroll;
   white-space: nowrap;
   background-color: #ccc;
+}
+.aaGridHeightInFaeSide {
+  height: 14pc;
+}
+.aaGridHeightInAcct {
+  height: 14pc;
+}
+.aaGridHeightInTran {
+  height: 14pc;
+}
+.aaGridHeightInJrnl {
+  height: 18pc;
 }
 .aaGridFooterTotals {
   padding-top: 0.5pc;
@@ -473,7 +483,7 @@ h1 {
 .aaCellAnnoTitle {
   width: 25pc;
   text-align: left;
-  font-family: sans-serif, SansSerif;
+  font-family: Arial, Helvetica, sans-serif, SansSerif;
   text-decoration: underline;
 }
 .aaCellTranDate {

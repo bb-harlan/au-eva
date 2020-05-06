@@ -8,7 +8,7 @@
     <div class="aaGridTitleBar" style="font-size: larger;">${faeSide.id | auEquationSideConverter:true: false}
       accounts
     </div>
-    <div class="aaGridScrollableRows">
+    <div class="aaGridScrollableRows aaGridHeightInFaeSide">
       <template repeat.for="listItem of faeSide.acctList">
         <div id="${listItem.id}"
              class="aaRow">

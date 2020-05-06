@@ -28,7 +28,7 @@
           <div class="aaVerticalGridline" style="background-color: #fff;"></div>
         </div>
       </div>
-      <div class="aaGridScrollableRows">
+      <div class="aaGridScrollableRows aaGridHeightInFaeSide">
         <template repeat.for="listItem of faeSide.acctList">
           <template if.bind="listItem.isAcct()">
             <div class="aaRow"
@@ -57,7 +57,9 @@
               </div>
               <div class="aaVerticalGridline"></div>
               <div class="aaRowData aaRowBgColorData">
-                <span class="aaCell aaCellAnnoTitle">${listItem.annoText}</span>
+                <span class="aaCell aaCellAnnoTitle ${listItem.annoText.length == 0 ? 'aaHidden' : ''}">
+                  ${listItem.annoText.length == 0 ? 'x' : listItem.annoText}
+                </span>
                 <div class="aaVerticalGridline"></div>
                 <span class="aaCell aaCellBchgBal"></span>
               </div>
@@ -111,7 +113,7 @@
           <div class="aaVerticalGridline" style="background-color: #fff;"></div>
         </div>
       </div>
-      <div class="aaGridScrollableRows">
+      <div class="aaGridScrollableRows aaGridHeightInFaeSide">
         <template repeat.for="listItem of faeSide.acctList">
           <!--
           NOTE: This datagrid is NOT in navigating mode, so the following row element must NOT have
@@ -288,7 +290,7 @@
                   <span class="fa fa-bars fa-fw" aria-hidden="true"></span>
                 </a>
         -->
-        <ul class="dropdown-menu aaSansSerif" style="display: block;">
+        <ul class="dropdown-menu aaSansSerif" style="display: block; font-family: ">
           <li><a><i class="fa fa-plus-circle fa-fw aaIconGreen"></i> Insert new account row</a></li>
           <li><a><i class="fa fa-plus-circle fa-fw aaIconGreen"></i> Insert new annotation row</a></li>
           <li class="divider"></li>
