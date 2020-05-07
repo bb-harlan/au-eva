@@ -330,16 +330,16 @@ h1 {
   background-color: #ccc;
 }
 .aaGridHeightInFaeSide {
-  height: 14pc;
+  height: 20pc;
 }
 .aaGridHeightInAcct {
-  height: 14pc;
+  height: 22pc;
 }
 .aaGridHeightInTran {
-  height: 14pc;
+  height: 18pc;
 }
 .aaGridHeightInJrnl {
-  height: 18pc;
+  height: 22pc;
 }
 .aaGridFooterTotals {
   padding-top: 0.5pc;
