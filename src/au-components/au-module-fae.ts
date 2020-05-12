@@ -92,7 +92,7 @@ export class AuModuleFae {
     if (missingTitleCnt > 0) {
       this.app.viewmodelPopupAlert.open("Save changes",
                                         this.panelToolBar.getBoundingClientRect().bottom,
-                                        `${missingTitleCnt} account(s) missing title.`);
+                                        `Account title is missing for ${missingTitleCnt} account(s).`);
       return;
     }
 
