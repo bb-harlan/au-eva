@@ -71,28 +71,30 @@ export class AuPopupBchgMover {
   }
   onRowMouseDown(event) {
     let targetRow: Element = event.currentTarget as Element;
-    targetRow.children[1].classList.toggle('aaRowDataHover', false);
-    targetRow.children[1].classList.toggle('aaDragging', true);
+    targetRow.children[0].classList.toggle('aaRowOpsSelected', true);
+    targetRow.children[2].classList.toggle('aaDragging', true);
+    targetRow.children[2].classList.toggle('aaRowDataHover', false);
     this.mouseIsDown = true;
     this.selectedMoverRow = event.currentTarget;
   }
   onRowMouseUp(event) {
     let targetRow = event.currentTarget as Element;
-    targetRow.children[1].classList.toggle('aaDragging', false);
-    targetRow.children[1].classList.toggle('aaRowDataHover', true);
+    targetRow.children[0].classList.toggle('aaRowOpsSelected', false);
+    targetRow.children[2].classList.toggle('aaDragging', false);
+    targetRow.children[2].classList.toggle('aaRowDataHover', true);
     this.mouseIsDown = false;
     this.selectedMoverRow = null;
   }
   onRowMouseLeave(event, bchg) {
     if (!this.mouseIsDown) {
       let targetRow = event.currentTarget as Element;
-      targetRow.children[1].classList.toggle('aaRowDataHover', false);
+      targetRow.children[2].classList.toggle('aaRowDataHover', false);
     }
   }
   onRowMouseEnter(event, bchg) {
     if (!this.mouseIsDown) {
       let targetRow = event.currentTarget as Element;
-      targetRow.children[1].classList.toggle('aaRowDataHover', true);
+      targetRow.children[2].classList.toggle('aaRowDataHover', true);
     }
   }
   onListMouseMove(event) {
@@ -121,7 +123,4 @@ export class AuPopupBchgMover {
       return;
     }
   }
-  elementY(element) {
-    return element.getBoundingClientRect().top;
-  };
 }

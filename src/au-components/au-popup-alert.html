@@ -1,0 +1,79 @@
+<template>
+  <style>
+    .aaAlert {
+      background-color: #f0f0f0;
+      display: inline-flex;
+      flex-direction: column;
+      align-items: stretch;
+      justify-content: flex-start;
+      padding: 10px;
+    }
+
+    .aaAlertTitleBar {
+      display: block;
+      margin: 0 0 15px 0;
+    }
+
+    .aaAlertBody {
+      display: inline-flex;
+      flex-direction: row;
+      background-color: #fff;
+      border: 1px solid #58B;
+      padding: 5px;
+    }
+
+    /* The Close Button */
+    .aaClose {
+      color: #000;
+      float: right;
+      font-weight: bold;
+      padding: 0 6px;
+      border: 1px solid transparent;
+      border-radius: 0.25pc;
+    }
+
+    .aaClose:hover,
+    .aaClose:focus {
+      color: #333;
+      text-decoration: none;
+      cursor: pointer;
+      border-color: #333;
+    }
+  </style>
+  <div class="aaModal"
+       style="display: none;
+              flex-direction: row;
+              align-items: flex-start;
+              justify-content: center;"
+       element.ref="alertDialogModal">
+    <div class="aaModalContent aaAlert aaPanelBoxShadow aaPanel aaSansSerif"
+         css="margin-top: ${marginTop}px;"
+         element.ref="alertDialogContent">
+      <div class="aaAlertTitleBar">
+        <span class="aaClose"
+              click.trigger="close()">
+            &times;
+        </span>
+        <div style="display: flex; color: #000;">
+          ${alertTitle}
+        </div>
+      </div>
+      <div class="aaAlertBody">
+        <div style="color:red;
+                    margin: 5px;
+                    font-size: large;">
+          <i class="fas fa-ban"></i>
+          <!--<i class="fas fa-exclamation"></i>-->
+          <!--<i class="fas fa-circle"></i>-->
+          <!--<i class="far fa-exclamation-circle"></i>-->
+          <!--<i class="fas fa-exclamation-triangle"></i>-->
+          <!--<i class="fas fa-exclamation-circle"></i>-->
+        </div>
+        <div class="aaFontData"
+             style="margin: 5px;">
+          ${alertMsg}
+        </div>
+      </div>
+    </div>
+  </div>
+</template>

@@ -17,6 +17,7 @@ export class AuModuleFae {
   viewmodelFaeSideAssets;
   viewmodelFaeSideEquities;
   viewmodelPopupAcctMover;
+  panelToolBar: Element;
 
   /* other properties */
   observerScrollIntoView = new MutationObserver(this.callbackScrollIntoView);
@@ -80,6 +81,21 @@ export class AuModuleFae {
     let newAcct;
     let newAnnotation;
     let removalIndex;
+    let allSideListItems;
+    let missingTitleCnt = 0;
+    allSideListItems = this.app.candidateFaeSideAssets.acctList.concat(this.app.candidateFaeSideEquities.acctList);
+    for (let listItem of allSideListItems) {
+      if (listItem instanceof Acct && listItem.title.length == 0) {
+        missingTitleCnt++;
+      }
+    }
+    if (missingTitleCnt > 0) {
+      this.app.viewmodelPopupAlert.open("Save changes",
+                                        this.panelToolBar.getBoundingClientRect().bottom,
+                                        `${missingTitleCnt} account(s) missing title.`);
+      return;
+    }
+
 
     /*** process Assets list ***/
     /* remove any deleted listItems */

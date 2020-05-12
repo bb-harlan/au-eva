@@ -10,7 +10,7 @@
        id="observedElement">
     <div class="aaPanelHeader aaPanelHeaderModule">The fundamental accounting equation</div>
     <template if.bind="app.viewNavMode">
-      <div class="aaPanelToolBar" element.ref="popupTop">
+      <div class="aaPanelToolBar">
         <span class="aaToolBarDivider">.</span>
         <button type="button"
                 class="aaBtn"
@@ -40,7 +40,7 @@
       </div>
     </template>
     <template if.bind="!app.viewNavMode">
-      <div class="aaPanelToolBar" element.ref="popupTop">
+      <div class="aaPanelToolBar"  element.ref="panelToolBar">
         <span class="aaToolBarDivider">.</span>
         <span class="aaFontLabel aaFontBold">Editing account lists:</span>
         <span class="aaToolBarDivider aaHidden">.</span>

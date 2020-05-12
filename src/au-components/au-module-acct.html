@@ -1,9 +1,6 @@
 <template>
-  <require from="au-views/au-icon-nav-left.html"></require>
   <require from="au-views/au-icon-nav-up.html"></require>
   <require from="au-views/au-icon-nav-down.html"></require>
-  <require from="au-views/au-icon-nav-right.html"></require>
-  <require from="au-views/au-icon-nav-right-right.html"></require>
   <require from="au-views/au-icon-edit.html"></require>
   <require from="au-converters/au-currency-converter"></require>
   <require from="au-converters/au-equation-side-converter"></require>
@@ -23,7 +20,7 @@
           <tr>
             <td class="aaFormItemLabel">Title:</td>
             <td class="aaFormItemData">
-              ${app.selectedAcct.title.length == 0 ? '[missing account title]' : app.selectedAcct.title}
+              ${app.selectedAcct.title}
             </td>
           </tr>
         </table>

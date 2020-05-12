@@ -15,6 +15,7 @@ export class AuModuleTran {
   moduleRootElement: Element;
   tranInputDate: HTMLElement = document.getElementById('tranInputDate');
   popupTop: HTMLElement; // <div element.ref="popupTop" ...
+  panelToolBar: HTMLElement;
 
   /* other properties */
   observerScrollIntoView = new MutationObserver(this.callbackScrollIntoView);
@@ -98,13 +99,23 @@ export class AuModuleTran {
     this.tranOp = this.TRAN_OP_NEW;
     this.app.viewmodelTran.observeForSetInputFocus();
   }
-  tranNewDone(event) {
+  tranValid(): boolean {
     if (this.app.candidateTran.totalChangesAssets != this.app.candidateTran.totalChangesEquities) {
-      alert("Transaction is out of balance.")
-      return;
+      this.app.viewmodelPopupAlert.open("Save changes",
+                                        this.panelToolBar.getBoundingClientRect().bottom,
+                                        "Transaction is out of balance.");
+      return false;
     }
     if (this.app.candidateTran.date == "") {
-      alert("Transaction date is missing or invalid.")
+      this.app.viewmodelPopupAlert.open("Save changes",
+                                        this.panelToolBar.getBoundingClientRect().bottom,
+                                        "Transaction date is missing or invalid.");
+      return false;
+    }
+    return true;
+  }
+  tranNewDone(event) {
+    if (!this.tranValid()) {
       return;
     }
     this.app.candidateTran.intraDateSorter = this.app.data.nextSorter;
@@ -122,7 +133,7 @@ export class AuModuleTran {
     this.tranOp = null;
     this.app.viewNavMode = true;
     if (this.app.navBtnReturn) {
-       this.app.navBtnReturn.click();
+      this.app.navBtnReturn.click();
       this.app.navBtnReturn = null;
     }
   }
@@ -132,7 +143,7 @@ export class AuModuleTran {
     this.tranOp = null;
     this.app.viewNavMode = true;
     if (this.app.navBtnReturn) {
-       this.app.navBtnReturn.click();
+      this.app.navBtnReturn.click();
       this.app.navBtnReturn = null;
     }
   }
@@ -150,15 +161,10 @@ export class AuModuleTran {
     this.app.viewmodelTran.observeForSetInputFocus();
   }
   tranEditDone(event) {
+    if (!this.tranValid()) {
+      return;
+    }
     let jrnlSortNeeded = false;
-    if (this.app.candidateTran.totalChangesAssets != this.app.candidateTran.totalChangesEquities) {
-      alert("Transaction is out of balance.")
-      return;
-    }
-    if (this.app.candidateTran.date == "") {
-      alert("Transaction date is missing or invalid.")
-      return;
-    }
     if (this.app.candidateTran.date != this.app.selectedTran.date) {
       this.app.candidateTran.intraDateSorter = this.app.data.nextSorter;
       jrnlSortNeeded = true;
@@ -185,7 +191,7 @@ export class AuModuleTran {
     this.tranOp = null;
     this.app.viewNavMode = true;
     if (this.app.navBtnReturn) {
-       this.app.navBtnReturn.click();
+      this.app.navBtnReturn.click();
       this.app.navBtnReturn = null;
     }
 
@@ -196,7 +202,7 @@ export class AuModuleTran {
     this.tranOp = null;
     this.app.viewNavMode = true;
     if (this.app.navBtnReturn) {
-       this.app.navBtnReturn.click();
+      this.app.navBtnReturn.click();
       this.app.navBtnReturn = null;
     }
   }
@@ -243,7 +249,7 @@ export class AuModuleTran {
   tranDeleteCancel(event) {
     this.app.viewNavMode = true;
     if (this.app.navBtnReturn) {
-       this.app.navBtnReturn.click();
+      this.app.navBtnReturn.click();
       this.app.navBtnReturn = null;
     }
   }

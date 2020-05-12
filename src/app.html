@@ -5,6 +5,7 @@
   <require from="au-components/au-module-bchg"></require>
   <require from="au-components/au-module-tran"></require>
   <require from="au-components/au-module-jrnl"></require>
+  <require from="au-components/au-popup-alert"></require>
   <require from="au-components/au-popup-acct-mover"></require>
   <require from="au-components/au-popup-acct-picker"></require>
   <require from="au-components/au-popup-bchg-mover"></require>
@@ -12,7 +13,6 @@
   <require from="au-views/au-icon-nav-down.html"></require>
   <require from="au-views/au-icon-map-marker.html"></require>
   <require from="au-views/au-icon-map-marker-candidate.html"></require>
-  <require from="au-views/au-icon-map-marker-not-yet.html"></require>
   <style>
     .aaNavigator {
       display: inline-flex;
@@ -23,7 +23,7 @@
       background-color: #f0f0f0;
       border: 1px solid black;
       padding: 5px;
-      font-family: sans-serif;
+      font-family: Arial, Helvetica, sans-serif, SansSerif;
       font-size: medium;
       font-weight: normal;
       -webkit-box-shadow: 4px 8px 5px 0px rgba(0, 0, 0, 0.2);
@@ -238,6 +238,7 @@
       <au-module-jrnl view-model.ref="viewmodelJrnl"></au-module-jrnl>
     </div>
   </div>
+  <au-popup-alert view-model.ref="viewmodelPopupAlert"></au-popup-alert>
   <au-popup-acct-mover view-model.ref="viewmodelPopupAcctMover"></au-popup-acct-mover>
   <au-popup-acct-picker view-model.ref="viewmodelPopupAcctPicker"></au-popup-acct-picker>
   <au-popup-bchg-mover view-model.ref="viewmodelPopupBchgMover"></au-popup-bchg-mover>

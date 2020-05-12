@@ -8,9 +8,9 @@
     <div class="aaBchgCellsRow aaBchgCellsRowSeparation">
       <!-- target account -->
       <div class="aaCellWrapper">
-        <div class="aaCell aaCellBorder aaCellAcctTitle">
-          <!--${bchg.targetAcct.title.length == 0 ? '[missing account title]' : bchg.targetAcct.title}-->
+        <div class="aaCell aaCellBorder aaCellAcctTitle ${bchg.targetAcct.title.length == 0 ? 'aaMissingAcctTitle' : ''}">
           ${bchg.targetAcct.title}
+          <!--${bchg.targetAcct.title}-->
         </div>
         <div class="aaCellHelper aaFontLabel">
           <button type="button"
@@ -27,7 +27,7 @@
       <input class="aaCell aaCellBorder aaCellBchgDesc"
              id="${bchg.id}-desc"
              type="text"
-             placeholder="[balance change descrption]"
+             placeholder="Balance change descrption"
              focus.trigger="onInputFocus($event, bchg)"
              value.two-way="bchg.desc">
       <!-- change amount -->

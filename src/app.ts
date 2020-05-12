@@ -44,6 +44,7 @@ export class App {
   viewmodelTran; // <au-module-tran view-model.ref="viewmodelTran"></au-module-tran>
   viewmodelJrnl; // <au-module-jrnl view-model.ref="viewmodelJrnl</au-module-jrnl>
 
+  viewmodelPopupAlert; // <au-popup-acct-mover view-model.ref="viewmodelPopupAcctMover">
   viewmodelPopupAcctMover; // <au-popup-acct-mover view-model.ref="viewmodelPopupAcctMover">
   viewmodelPopupAcctPicker; // <au-popup-acct-picker view-model.ref="viewmodelPopupAcctPicker">
   viewmodelPopupBchgMover; // <au-popup-bchg-mover view-model.ref="viewmodelPopupBchgMover">

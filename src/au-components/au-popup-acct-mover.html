@@ -17,6 +17,9 @@
         </div>
       </div>
       <div class="aaRow aaRowColumnHeaders aaFontLabel aaFontBold">
+        <div class="aaRowOps aaRowOpsEmpty aaHidden">
+        </div>
+        <div class="aaVerticalGridline" style="background-color: #fff;"></div>
         <div class="aaRowData">
           <div class="aaCell aaCellAcctTitle">Title</div>
           <div class="aaVerticalGridline" style="background-color: #fff;"></div>
@@ -35,6 +38,9 @@
                mouseleave.trigger="onRowMouseLeave($event, listItem)"
                mousedown.trigger="onRowMouseDown($event)"
                mouseup.trigger="onRowMouseUp($event)">
+            <div class="aaRowOps aaRowOpsEmpty aaBgColorToolbar">
+            </div>
+            <div class="aaVerticalGridline"></div>
             <div class="aaRowData aaRowBgColorData">
               <template if.bind="listItem.isAcct()">
                 <span class="aaCell aaFontData aaCellAcctTitle">${listItem.title}</span>

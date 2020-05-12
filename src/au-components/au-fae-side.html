@@ -1,5 +1,4 @@
 <template>
-  <require from="au-views/au-icon-nav-right.html"></require>
   <require from="au-views/au-icon-edit.html"></require>
   <require from="au-views/au-icon-row-mover.html"></require>
   <require from="au-views/au-icon-new.html"></require>
@@ -41,7 +40,7 @@
               </div>
               <div class="aaVerticalGridline"></div>
               <div class="aaRowData aaRowBgColorData ${app.selectedAcct.id == listItem.id ? 'aaRowDataSelected' : ''}">
-                <span class="aaCell aaCellAcctTitle">${listItem.title.length == 0 ? '[missing account title]' : listItem.title}</span>
+                <span class="aaCell aaCellAcctTitle">${listItem.title}</span>
                 <div class="aaVerticalGridline"></div>
                 <span class="aaCell aaCellBchgBal">${listItem.endingBalance | auCurrencyConverter}</span>
               </div>
@@ -152,7 +151,7 @@
                 <input class="aaFormInputText aaCellAcctTitle aaCellInGrid"
                        id="${listItem.id}-title"
                        type="text"
-                       placeholder="[account title]"
+                       placeholder="Account title"
                        focus.trigger="onTitleFocus($event, listItem)"
                        value.two-way="listItem.title">
                 <div class="aaVerticalGridline"></div>
@@ -183,7 +182,7 @@
                 <input class="aaFormInputText aaCellAnnoTitle aaCellInGrid"
                        id="${listItem.id}-title"
                        type="text"
-                       placeholder="[annotation text]"
+                       placeholder="Annotation text"
                        focus.trigger="onTitleFocus($event, listItem)"
                        value.two-way="listItem.annoText">
                 <div class="aaVerticalGridline"></div>

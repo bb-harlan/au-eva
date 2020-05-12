@@ -480,6 +480,10 @@ h1 {
   width: 25pc;
   text-align: left;
 }
+.aaMissingAcctTitle {
+  color: red;
+  font-weight: normal;
+}
 .aaCellAnnoTitle {
   width: 25pc;
   text-align: left;
@@ -493,6 +497,11 @@ h1 {
 .aaCellBchgDesc {
   width: 25pc;
   text-align: left;
+}
+input::placeholder {
+  color: #58b;
+  /*font-weight: normal;*/
+  font-style: italic;
 }
 .aaCellBchgAmt {
   text-align: right;

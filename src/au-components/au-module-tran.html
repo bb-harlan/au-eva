@@ -1,9 +1,6 @@
 <template>
-  <require from="au-views/au-icon-nav-right.html"></require>
   <require from="au-views/au-icon-nav-up.html"></require>
   <require from="au-views/au-icon-nav-down.html"></require>
-  <require from="au-views/au-icon-nav-left.html"></require>
-  <require from="au-views/au-icon-nav-left-left.html"></require>
   <require from="au-views/au-icon-new.html"></require>
   <require from="au-views/au-icon-edit.html"></require>
   <require from="au-views/au-icon-delete.html"></require>
@@ -243,7 +240,8 @@
       </div>
     </template>
     <template if.bind="!app.viewNavMode && (tranOp == TRAN_OP_NEW || tranOp == TRAN_OP_EDIT)" )>
-      <div class="aaPanelToolBar">
+      <div class="aaPanelToolBar"
+           element.ref="panelToolBar">
         <span class="aaToolBarDivider">.</span>
         <template if.bind="tranOp == TRAN_OP_EDIT">
           <span class="aaFontLabel aaFontBold">Editing transaction:</span>
@@ -373,10 +371,10 @@
           <div class="aaRow aaFontLabel" style="border-color: transparent; background-color: transparent;">
             <div class="aaRowOps aaFontLabel aaHidden">
               <button type="button" class="aaBtn">
-                <au-icon-nav-left></au-icon-nav-left>
+                <au-icon-new></au-icon-new>
               </button>
               <button type="button" class="aaBtn">
-                <au-icon-nav-left-left></au-icon-nav-left-left>
+                <au-icon-delete></au-icon-delete>
               </button>
             </div>
             <div class="aaVerticalGridline aaHidden" style="width: 3px;"></div>
