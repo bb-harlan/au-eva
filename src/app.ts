@@ -84,9 +84,12 @@ export class App {
     // this.data.generateEmptyData();
     // this.data.generateTestData();
     this.data.generateExample1Data();
+
     /*** Test strigifying and reviving data ***/
+    /*
     this.data.stringifyData();
     this.data.reviveData();
+    */
   }
 
   selectAcct(acct): void {
