@@ -27,6 +27,8 @@ export class Data {
     return this._nextBchgId++;
   }
 
+  stringifiedData: string = "";
+
   /*==========================================================
    *  entitiy's accounting data
    */
@@ -46,7 +48,6 @@ export class Data {
     this._nextTranId = _nextTranId;
     this._nextBchgId = _nextBchgId;
   }
-
 
   generateEmptyData() {
     console.log('\n********************************************\nGenerating test data...');
@@ -252,7 +253,6 @@ export class Data {
     targetAcct.bchgList.push(newBchg);
     newBchg.setAmtToBalanceTran();
 
-
     this.jrnl.tranList.push(sourceTran);
     /* end of transaction */
     this.faeSideAssets.refresh();
@@ -261,14 +261,92 @@ export class Data {
     console.log(this);
     console.log('\nGeneration of example data completed!\n********************************************');
   }
+  stringifyData() {
+    console.log("***** stringifiedData *****");
+    this.stringifiedData = JSON.stringify(this, this.replacer);
+    console.log(this.stringifiedData);
+
+  }
   replacer(key, value) {
     if (key == "parentFaeSide" ||
-        key == "sourceTran" ||
-        key == "targetAcct" ||
-        key == "parentJrnl") {
+      key == "sourceTran" ||
+      key == "targetAcct" ||
+      key == "parentJrnl") {
       return value.id;
     }
     return value;
+  }
+  reviveData() {
+    console.log("***** parsedData *****");
+    let parsedData = JSON.parse(this.stringifiedData);
+    console.log(parsedData);
+    let revivedData = new Data(
+      parsedData.entityName,
+      parsedData._nextSorter,
+      parsedData._nextAcctId,
+      parsedData._nextTranId,
+      parsedData._nextBchgId);
+    console.log("***** revivedData *****");
+    let revivedFaeSide;
+    let revivedListItem;
+    let revivedTran;
+    let revivedBchg;
+    let allAccts;
+    for (let parsedFaeSide of [parsedData.faeSideAssets, parsedData.faeSideEquities]) {
+      revivedFaeSide = (parsedFaeSide.id == 'Assets' ? revivedData.faeSideAssets : revivedData.faeSideEquities);
+      for (let listItem of parsedFaeSide.acctList) {
+        if (listItem.id.substring(0, 4) == "anno") {
+          revivedListItem = new Annotation(
+            /*annoId*/ listItem.id,
+            /*faeSide*/ revivedFaeSide,
+            /*intraSideIndex*/ listItem.intraSideIndex,
+            /*annoText*/ listItem.annoText);
+        }
+        else {
+          revivedListItem = new Acct(
+            /*annoId*/ listItem.id,
+            /*faeSide*/ revivedFaeSide,
+            /*intraSideIndex*/ listItem.intraSideIndex,
+            /*annoText*/ listItem.title,
+            /*normalBalance*/ listItem.normalBalance);
+          revivedListItem.endingBalance = listItem.endingBalance;
+        }
+        revivedFaeSide.acctList.push(revivedListItem);
+      }
+      allAccts = revivedData.faeSideAssets.acctList.concat(revivedData.faeSideEquities.acctList);
+      revivedFaeSide.refresh();
+    }
+    for (let tran of parsedData.jrnl.tranList) {
+      revivedTran = new Tran(
+        /*id*/ tran.id,
+        /*parentJrnl*/ revivedData.jrnl,
+        /*date*/ tran.date,
+        /*intraDateSorter*/ tran.intraDateSorter);
+      for (let bchg of tran.bchgList) {
+        revivedBchg = new Bchg(
+          /*id*/ bchg.id,
+          /*sourceTran*/ revivedTran,
+          /*targetAcct*/ allAccts.find(element => element.id == bchg.targetAcct),
+          /*desc*/ bchg.desc,
+          /*amt*/ bchg.amt);
+        revivedTran.bchgList.push(revivedBchg);
+      }
+      revivedData.faeSideAssets.refresh();
+      revivedData.faeSideEquities.refresh();
+      revivedData.jrnl.refresh();
+      revivedTran.register();
+    }
+    revivedData.jrnl.refresh();
+    console.log(revivedData);
+    this._nextSorter = revivedData._nextSorter;
+    this._nextAcctId = revivedData._nextAcctId;
+    this._nextTranId = revivedData._nextTranId;
+    this._nextBchgId = revivedData._nextBchgId;
+    this.entityName = revivedData.entityName;
+    this.faeSideAssets = revivedData.faeSideAssets;
+    this.faeSideEquities = revivedData.faeSideEquities;
+    this.jrnl = revivedData.jrnl;
+    // *** IT WORKS!!!! ***
   }
 }
 

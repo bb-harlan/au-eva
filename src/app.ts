@@ -84,94 +84,10 @@ export class App {
     // this.data.generateEmptyData();
     // this.data.generateTestData();
     this.data.generateExample1Data();
-
-    /*
-    * *************************
-    * *** Experimental code ***
-    * *************************
-    */
-/*
-    console.log("***** stringifiedData *****");
-    let stringifiedData = JSON.stringify(this.data, this.replacer);
-    console.log(stringifiedData);
-
-    console.log("***** parsedData *****");
-    let parsedData = JSON.parse(stringifiedData);
-    console.log(parsedData);
-    let revivedData = new Data(
-      parsedData.entityName,
-      parsedData._nextSorter,
-      parsedData._nextAcctId,
-      parsedData._nextTranId,
-      parsedData._nextBchgId);
-    console.log("***** revivedData *****");
-    let revivedFaeSide;
-    let revivedListItem;
-    let revivedTran;
-    let revivedBchg;
-    let allAccts;
-    for (let parsedFaeSide of [parsedData.faeSideAssets, parsedData.faeSideEquities]) {
-      revivedFaeSide = (parsedFaeSide.id == 'Assets' ? revivedData.faeSideAssets : revivedData.faeSideEquities);
-      for (let listItem of parsedFaeSide.acctList) {
-        if (listItem.id.substring(0, 4) == "anno") {
-          revivedListItem = new Annotation(
-            /!*annoId*!/ listItem.id,
-            /!*faeSide*!/ revivedFaeSide,
-            /!*intraSideIndex*!/ listItem.intraSideIndex,
-            /!*annoText*!/ listItem.annoText);
-        }
-        else {
-          revivedListItem = new Acct(
-            /!*annoId*!/ listItem.id,
-            /!*faeSide*!/ revivedFaeSide,
-            /!*intraSideIndex*!/ listItem.intraSideIndex,
-            /!*annoText*!/ listItem.title,
-            /!*normalBalance*!/ listItem.normalBalance);
-          revivedListItem.endingBalance = listItem.endingBalance;
-        }
-        revivedFaeSide.acctList.push(revivedListItem);
-      }
-      allAccts = revivedData.faeSideAssets.acctList.concat(revivedData.faeSideEquities.acctList);
-      revivedFaeSide.refresh();
-    }
-    for (let tran of parsedData.jrnl.tranList) {
-      revivedTran = new Tran(
-        /!*id*!/ tran.id,
-        /!*parentJrnl*!/ revivedData.jrnl,
-        /!*date*!/ tran.date,
-        /!*intraDateSorter*!/ tran.intraDateSorter);
-      for (let bchg of tran.bchgList) {
-        revivedBchg = new Bchg(
-          /!*id*!/ bchg.id,
-          /!*sourceTran*!/ revivedTran,
-          /!*targetAcct*!/ allAccts.find(element => element.id == bchg.targetAcct),
-          /!*desc*!/ bchg.desc,
-          /!*amt*!/ bchg.amt);
-        revivedTran.bchgList.push(revivedBchg);
-      }
-      revivedData.faeSideAssets.refresh();
-      revivedData.faeSideEquities.refresh();
-      revivedData.jrnl.refresh();
-      revivedTran.register();
-    }
-    revivedData.jrnl.refresh();
-    console.log(revivedData);
-    this.data = null;
-    this.data = revivedData;
-    // *** IT WORKS!!!! ***
-*/
+    /*** Test strigifying and reviving data ***/
+    this.data.stringifyData();
+    this.data.reviveData();
   }
-/*
-  replacer(key, value) {
-    if (key == "parentFaeSide" ||
-      key == "sourceTran" ||
-      key == "targetAcct" ||
-      key == "parentJrnl") {
-      return value.id;
-    }
-    return value;
-  }
-*/
 
   selectAcct(acct): void {
     this.selectedAcct = acct;
@@ -269,6 +185,13 @@ export class App {
     let selectedTranIndex = this.data.jrnl.tranList.findIndex(element => element.id == this.selectedTran.id);
     this.selectedTran = this.data.jrnl.tranList[selectedTranIndex + 1];
   }
+
+/*
+  logBodyBoundingClientRect() {
+    let bodyElement = document.getElementsByTagName("BODY")[0];
+    console.log(bodyElement.getBoundingClientRect());
+  }
+*/
 }
 
 
