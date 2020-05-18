@@ -9,37 +9,43 @@
        css="${app.selectedModule == app.MODULE_JRNL ? '' : 'display: none;'}"
        element.ref="moduleRootElement"
        id="observedElement">
-    <div class="aaPanelHeader aaPanelHeaderModule">Journal</div>
+    <div class="aaPanelHeader aaPanelHeaderModule">Transaction journal</div>
+    <div class="aaPanelToolBar">
+      <div class="aaInlineFlex" style="justify-content: center;">
+        <span class="aaToolBarDivider">.</span>
+        <button type="button"
+                class="aaBtn"
+                click.trigger="tranNew($event)">
+          <au-icon-new></au-icon-new>
+          &nbsp;New transaction
+        </button>
+        <button type="button"
+                class="aaBtn"
+                click.trigger="tranEdit($event)"
+                disabled.bind="!app.selectedTran">
+          <au-icon-edit></au-icon-edit>
+          &nbsp;Edit selected transaction
+        </button>
+        <button type="button"
+                class="aaBtn"
+                click.trigger="tranDelete($event)"
+                disabled.bind="!app.selectedTran">
+          <au-icon-delete></au-icon-delete>
+          &nbsp;Delete selected transaction
+          <au-text-ellipsis></au-text-ellipsis>
+        </button>
+        <span class="aaToolBarDivider">.</span>
+      </div>
+    </div>
     <div class="aaPanelBody">
-      <div class="aaGridContainer">
-        <div class="aaGridTitleBar">Transactions</div>
-        <div class="aaPanelToolBar">
-          <div class="aaInlineFlex" style="justify-content: center;">
-            <span class="aaToolBarDivider">.</span>
-            <button type="button"
-                    class="aaBtn"
-                    click.trigger="tranNew($event)">
-              <au-icon-new></au-icon-new>
-              &nbsp;New transaction
-            </button>
-            <button type="button"
-                    class="aaBtn"
-                    click.trigger="tranEdit($event)"
-                    disabled.bind="!app.selectedTran">
-              <au-icon-edit></au-icon-edit>
-              &nbsp;Edit selected transaction
-            </button>
-            <button type="button"
-                    class="aaBtn"
-                    click.trigger="tranDelete($event)"
-                    disabled.bind="!app.selectedTran">
-              <au-icon-delete></au-icon-delete>
-              &nbsp;Delete selected transaction
-              <au-text-ellipsis></au-text-ellipsis>
-            </button>
-            <span class="aaToolBarDivider">.</span>
-          </div>
-        </div>
+      <div class="aaGridContainer" style="margin-top: 0;">
+<!--
+        <div class="aaGridTitleBar"></div>
+-->
+<!--
+        <div class="aaGridFooterBar"></div>
+-->
+
         <div class="aaRow aaRowColumnHeaders aaFontLabel">
           <div class="aaRowOps aaRowOpsEmpty aaHidden">
           </div>
