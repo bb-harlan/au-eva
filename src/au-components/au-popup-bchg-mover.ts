@@ -57,17 +57,19 @@ export class AuPopupBchgMover {
     to reference the original bchg object and update its intraTranIndex property
     to reflect its possibly new position in the list as a result of moving.
     */
-    for (let i = 0; i <= this.moverGridRows.childElementCount - 1; i++) {
-      let moverBchg = (<any>this.moverGridRows.children[i]).moverBchg as Bchg;
-      moverBchg.intraTranIndex = i;
+    if (this.moverBchgList.length >= 2) {
+      for (let i = 0; i < this.moverGridRows.childElementCount; i++) {
+        let moverBchg = (<any>this.moverGridRows.children[i]).moverBchg as Bchg;
+        moverBchg.intraTranIndex = i;
+      }
+      this.app.candidateTran.sortBchgList();
     }
     this.moverBchgList.splice(0, this.moverBchgList.length); //done with it, delete all members
-    this.app.candidateTran.sortBchgList();
-    this.moverDialogModal.style.display = "none";
+    this.moverDialogModal.style.display = "none"; // terminate the modal popup
   }
   cancel(event) {
-    this.moverBchgList.splice(0, this.moverBchgList.length); //donewith it, delete all members
-    this.moverDialogModal.style.display = "none";
+    this.moverBchgList.splice(0, this.moverBchgList.length); //done with it, delete all members
+    this.moverDialogModal.style.display = "none"; // terminate the modal popup
   }
   onRowMouseDown(event) {
     let targetRow: Element = event.currentTarget as Element;
