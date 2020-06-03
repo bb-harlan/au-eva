@@ -15,6 +15,7 @@
         <div class="aaCellHelper aaFontLabel">
           <button type="button"
                   class="aaBtn aaHelperBtn"
+                  title="Pick target account"
                   click.trigger="pickAcct()">
             <au-icon-ellipsis></au-icon-ellipsis>
           </button>
@@ -45,6 +46,7 @@
         class="aaCellHelper aaFontLabel ${bchg.sourceTran.totalChangesAssets == bchg.sourceTran.totalChangesEquities ? 'aaHidden' : ''}">
         <button type="button"
                 class="aaBtn aaHelperBtn"
+                title="Set amount to balance transaction"
                 click.trigger="bchg.setAmtToBalanceTran()">
           <au-icon-balance-scale></au-icon-balance-scale>
         </button>

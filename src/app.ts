@@ -81,9 +81,9 @@ export class App {
 
 
   bind() {
-    // this.data.generateEmptyData();
+    this.data.generateEmptyData();
     // this.data.generateTestData();
-    this.data.generateExample1Data();
+    // this.data.generateExample1Data();
 
     /*** Test strigifying and reviving data ***/
     /*
@@ -128,10 +128,10 @@ export class App {
     this.goTranModule(event);
   }
   addHovering(event) {
-    event.target.classList.toggle("aaNavMapBtnHover", true);
+    // event.target.classList.toggle("aaNavMapBtnHover", true);
   }
   removeHovering(event) {
-    event.target.classList.toggle("aaNavMapBtnHover", false);
+    // event.target.classList.toggle("aaNavMapBtnHover", false);
   }
 
   goFaeModule(event) {

@@ -64,19 +64,20 @@ export class AuPopupAcctMover {
     to reference the original acct|annotation object and update its intraTranIndex property
     to reflect its possibly new position in the list as a result of moving.
     */
-    this.moverAcctList.splice(0, this.moverAcctList.length); //done with it, delete all members
-    for (let i = 0; i <= this.moverGridRows.childElementCount - 1; i++) {
-      let listItem = (<any>this.moverGridRows.children[i]).listItem as Acct | Annotation;
-      listItem.intraSideIndex = i;
+    if (this.moverAcctList.length >= 2) {
+      for (let i = 0; i < this.moverGridRows.childElementCount; i++) {
+        let listItem = (<any>this.moverGridRows.children[i]).listItem as Acct | Annotation;
+        listItem.intraSideIndex = i;
+      }
+      this.faeSide.sortAcctList();
+      this.faeSide.reindexAcctList();
     }
-    this.faeSide.sortAcctList();
-    this.faeSide.reindexAcctList();
-    this.moverDialogModal.style.display = "none";
+    this.moverAcctList.splice(0, this.moverAcctList.length); //done with it, delete all members
+    this.moverDialogModal.style.display = "none"; // terminate the modal popup
   }
   cancel() {
     this.moverAcctList.splice(0, this.moverAcctList.length); //done with it, delete all members
-    // terminate the modal popup
-    this.moverDialogModal.style.display = "none";
+    this.moverDialogModal.style.display = "none"; // terminate the modal popup
   }
   onRowMouseDown(event) {
     let targetRow: Element = event.currentTarget as Element;
