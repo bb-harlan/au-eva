@@ -5,8 +5,37 @@ import {FaeSide} from 'app-data/models/fae-side';
 import {Tran} from 'app-data/models/tran';
 import {Bchg} from 'app-data/models/bchg';
 import {Jrnl} from 'app-data/models/jrnl';
+import * as firebase from "firebase/app";
+import "firebase/firestore";
 
 export class App {
+
+  firebaseConfig = {
+    apiKey: "AIzaSyBIkCf6Tz-qQbDYSnE6QlYWb195nSqp-CY",
+    authDomain: "au-eva.firebaseapp.com",
+    databaseURL: "https://au-eva.firebaseio.com",
+    projectId: "au-eva",
+    storageBucket: "au-eva.appspot.com",
+    messagingSenderId: "699165213300",
+    appId: "1:699165213300:web:29a56650cef6fe6fc4c721",
+    measurementId: "G-WVEFCE4R4S"
+  };
+  db;
+
+  constructor() {
+
+    if (!firebase.apps.length) {
+      firebase.initializeApp(this.firebaseConfig);
+    }
+    this.db=firebase.firestore();
+    this.db.collection("example")
+      .get()
+      .then(querySnapshot => {
+        let docs = querySnapshot.docs.map(doc => doc.data());
+        console.log(docs);
+      })
+    console.log(firebase);
+  }
 
   get MODULE_FAE() {
     return "fae";
@@ -81,9 +110,9 @@ export class App {
 
 
   bind() {
-    this.data.generateEmptyData();
+    // this.data.generateEmptyData();
     // this.data.generateTestData();
-    // this.data.generateExample1Data();
+    this.data.generateExample1Data();
 
     /*** Test strigifying and reviving data ***/
     /*
@@ -91,6 +120,7 @@ export class App {
     this.data.reviveData();
     */
   }
+
 
   selectAcct(acct): void {
     this.selectedAcct = acct;
