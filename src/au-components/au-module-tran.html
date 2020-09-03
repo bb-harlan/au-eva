@@ -55,16 +55,16 @@
         </div>
         <div class="aaGridContainer">
           <div class="aaGridTitleBar">Account balance changes</div>
-          <div class="aaRow aaRowColumnHeaders aaFontLabel aaFontBold">
+          <div class="aaRow aaRowColumnHeaders aaFontLabel aaFontBold" style="border-bottom-width: 3px;">
             <div class="aaRowOps aaRowOpsEmpty aaHidden">
             </div>
-            <div class="aaVerticalGridline" style="background-color: #fff; width: 3px;"></div>
+            <div class="aaVerticalGridline aaVerticalGridlineInHdg aaVerticalGridlineWide"></div>
             <div class="aaRowData">
               <au-grid-bchg-cells-heading fae-side.one-time="'asset'"></au-grid-bchg-cells-heading>
-              <div class="aaVerticalGridline" style="background-color: #fff; width: 3px;"></div>
+              <div class="aaVerticalGridline aaVerticalGridlineInHdg aaVerticalGridlineWide"></div>
               <au-grid-bchg-cells-heading fae-side.one-time="'equity'"></au-grid-bchg-cells-heading>
             </div>
-            <div class="aaVerticalGridline" style="background-color: #fff; width: 3px;"></div>
+            <div class="aaVerticalGridline aaVerticalGridlineInHdg aaVerticalGridlineWide"></div>
           </div>
           <div class="aaGridScrollableRows aaGridHeightInTran">
             <template repeat.for="bchg of app.selectedTran.bchgList">
@@ -77,22 +77,22 @@
                    dblclick.trigger="app.selectTranBchgGoAcct(bchg)">
                 <div class="aaRowOps aaRowOpsEmpty aaBgColorToolbar ${app.selectedBchg.id == bchg.id ? 'aaRowOpsSelected' : ''}">
                 </div>
-                <div class="aaVerticalGridline" style="width: 3px;"></div>
+                <div class="aaVerticalGridline aaVerticalGridlineWide"></div>
                 <div class="aaRowData aaRowBgColorData  ${app.selectedBchg.id == bchg.id ? 'aaRowDataSelected' : ''}">
                   <template if.bind="bchg.targetAcct.parentFaeSide.id == 'Equities'">
                     <!-- blank space in change-to-asset column -->
                     <au-grid-bchg-cells-spacer></au-grid-bchg-cells-spacer>
-                    <div class="aaVerticalGridline" style="width: 3px;"></div>
+                    <div class="aaVerticalGridline aaVerticalGridlineWide"></div>
                   </template>
                   <!-- column with read-only data cells -->
                   <au-grid-bchg-cells bchg.one-way="bchg"></au-grid-bchg-cells>
                   <template if.bind="bchg.targetAcct.parentFaeSide.id == 'Assets'">
                     <!-- blank space in change-to-equity column -->
-                    <div class="aaVerticalGridline" style="width: 3px;"></div>
+                    <div class="aaVerticalGridline aaVerticalGridlineWide"></div>
                     <au-grid-bchg-cells-spacer></au-grid-bchg-cells-spacer>
                   </template>
                 </div>
-                <div class="aaVerticalGridline" style="width: 3px;"></div>
+                <div class="aaVerticalGridline aaVerticalGridlineWide"></div>
               </div>
             </template>
             <!--
@@ -105,14 +105,14 @@
               <template if.bind="app.viewNavMode">
                 <div class="aaRowOps aaRowOpsEmpty aaBgColorToolbar">
                 </div>
-                <div class="aaVerticalGridline" style="width: 3px;"></div>
+                <div class="aaVerticalGridline aaVerticalGridlineWide"></div>
               </template>
               <div class="aaRowData aaHidden">
                 <au-grid-bchg-cells-spacer></au-grid-bchg-cells-spacer>
-                <div class="aaVerticalGridline" style="width: 3px;"></div>
+                <div class="aaVerticalGridline aaVerticalGridlineWide"></div>
                 <au-grid-bchg-cells-spacer></au-grid-bchg-cells-spacer>
               </div>
-              <div class="aaVerticalGridline" style="width: 3px;"></div>
+              <div class="aaVerticalGridline aaVerticalGridlineWide"></div>
             </div>
           </div>
           <div class="aaGridFooterBar"></div>
@@ -123,7 +123,7 @@
           <div class="aaRow aaFontLabel" style="border-color: transparent; background-color: transparent;">
             <div class="aaRowOps aaRowOpsEmpty aaHidden">
             </div>
-            <div class="aaVerticalGridline aaHidden" style="width: 3px;"></div>
+            <div class="aaVerticalGridline aaVerticalGridlineWide aaHidden"></div>
             <div class="aaRowData">
               <au-grid-bchg-cells-total
                 fae-side.one-way="'assets'"
@@ -131,14 +131,14 @@
                 other-side-total-changes.one-way="app.selectedTran.totalChangesEquities">
               </au-grid-bchg-cells-total>
 
-              <div class="aaVerticalGridline aaHidden" style="width: 3px;"></div>
+              <div class="aaVerticalGridline aaVerticalGridlineWide aaHidden"></div>
               <au-grid-bchg-cells-total
                 fae-side.one-way="'equities'"
                 side-total-changes.one-way="app.selectedTran.totalChangesEquities"
                 other-side-total-changes.one-way="app.selectedTran.totalChangesAssets">
               </au-grid-bchg-cells-total>
             </div>
-            <div class="aaVerticalGridline aaHidden" style="width: 3px;"></div>
+            <div class="aaVerticalGridline aaVerticalGridlineWide aaHidden"></div>
           </div>
         </div>
       </div>
@@ -163,13 +163,13 @@
         </div>
         <div class="aaGridContainer">
           <div class="aaGridTitleBar">Account balance changes</div>
-          <div class="aaRow aaRowColumnHeaders aaFontLabel aaFontBold">
+          <div class="aaRow aaRowColumnHeaders aaFontLabel aaFontBold" style="border-bottom-width: 3px;">
             <div class="aaRowData">
               <au-grid-bchg-cells-heading fae-side.one-time="'asset'"></au-grid-bchg-cells-heading>
-              <div class="aaVerticalGridline" style="background-color: #fff; width: 3px;"></div>
+              <div class="aaVerticalGridline aaVerticalGridlineInHdg aaVerticalGridlineWide"></div>
               <au-grid-bchg-cells-heading fae-side.one-time="'equity'"></au-grid-bchg-cells-heading>
             </div>
-            <div class="aaVerticalGridline" style="background-color: #fff; width: 3px;"></div>
+            <div class="aaVerticalGridline aaVerticalGridlineInHdg aaVerticalGridlineWide"></div>
           </div>
 
           <div class="aaGridScrollableRows aaGridHeightInTran">
@@ -187,17 +187,17 @@
                   <template if.bind="bchg.targetAcct.parentFaeSide.id == 'Equities'">
                     <!-- blank space in change-to-asset column -->
                     <au-grid-bchg-cells-spacer></au-grid-bchg-cells-spacer>
-                    <div class="aaVerticalGridline" style="width: 3px;"></div>
+                    <div class="aaVerticalGridline aaVerticalGridlineWide"></div>
                   </template>
                   <!-- column with read-only data cells -->
                   <au-grid-bchg-cells bchg.one-way="bchg"></au-grid-bchg-cells>
                   <template if.bind="bchg.targetAcct.parentFaeSide.id == 'Assets'">
                     <!-- blank space in change-to-equity column -->
-                    <div class="aaVerticalGridline" style="width: 3px;"></div>
+                    <div class="aaVerticalGridline aaVerticalGridlineWide"></div>
                     <au-grid-bchg-cells-spacer></au-grid-bchg-cells-spacer>
                   </template>
                 </div>
-                <div class="aaVerticalGridline" style="width: 3px;"></div>
+                <div class="aaVerticalGridline aaVerticalGridlineWide"></div>
               </div>
             </template>
             <!--
@@ -208,10 +208,10 @@
             <div class="aaRow aaHidden" style="border-bottom-width: 3px;">
               <div class="aaRowData aaHidden">
                 <au-grid-bchg-cells-spacer></au-grid-bchg-cells-spacer>
-                <div class="aaVerticalGridline" style="width: 3px;"></div>
+                <div class="aaVerticalGridline aaVerticalGridlineWide"></div>
                 <au-grid-bchg-cells-spacer></au-grid-bchg-cells-spacer>
               </div>
-              <div class="aaVerticalGridline" style="width: 3px;"></div>
+              <div class="aaVerticalGridline aaVerticalGridlineWide"></div>
             </div>
           </div>
           <div class="aaGridFooterBar"></div>
@@ -227,14 +227,14 @@
                 other-side-total-changes.one-way="app.selectedTran.totalChangesEquities">
               </au-grid-bchg-cells-total>
 
-              <div class="aaVerticalGridline aaHidden" style="width: 3px;"></div>
+              <div class="aaVerticalGridline aaVerticalGridlineWide aaHidden"></div>
               <au-grid-bchg-cells-total
                 fae-side.one-way="'equities'"
                 side-total-changes.one-way="app.selectedTran.totalChangesEquities"
                 other-side-total-changes.one-way="app.selectedTran.totalChangesAssets">
               </au-grid-bchg-cells-total>
             </div>
-            <div class="aaVerticalGridline aaHidden" style="width: 3px;"></div>
+            <div class="aaVerticalGridline aaVerticalGridlineWide aaHidden"></div>
           </div>
         </div>
       </div>
@@ -284,7 +284,7 @@
               <au-text-ellipsis></au-text-ellipsis>
             </button>
           </div>
-          <div class="aaRow aaRowColumnHeaders aaFontLabel aaFontBold">
+          <div class="aaRow aaRowColumnHeaders aaFontLabel aaFontBold" style="border-bottom-width: 3px;">
             <div class="aaRowOps aaFontLabel aaHidden">
                 <span class="aaBtn">
                   <au-icon-new></au-icon-new>
@@ -293,13 +293,13 @@
                   <au-icon-delete></au-icon-delete>
                 </span>
             </div>
-            <div class="aaVerticalGridline" style="background-color: #fff;  width: 3px;"></div>
+            <div class="aaVerticalGridline aaVerticalGridlineInHdg aaVerticalGridlineWide"></div>
             <div class="aaRowData">
               <au-grid-bchg-cells-heading fae-side.one-time="'asset'"></au-grid-bchg-cells-heading>
-              <div class="aaVerticalGridline" style="background-color: #fff;  width: 3px;"></div>
+              <div class="aaVerticalGridline aaVerticalGridlineInHdg aaVerticalGridlineWide"></div>
               <au-grid-bchg-cells-heading fae-side.one-time="'equity'"></au-grid-bchg-cells-heading>
             </div>
-            <div class="aaVerticalGridline" style="background-color: #fff; width: 3px;"></div>
+            <div class="aaVerticalGridline aaVerticalGridlineInHdg aaVerticalGridlineWide"></div>
           </div>
           <div class="aaGridScrollableRows aaGridHeightInTran">
             <template repeat.for="bchg of app.candidateTran.bchgList">
@@ -319,13 +319,13 @@
                       <au-icon-delete></au-icon-delete>
                     </span>
                 </div>
-                <div class="aaVerticalGridline" style="width: 3px;"></div>
+                <div class="aaVerticalGridline aaVerticalGridlineWide"></div>
                 <div class="aaRowData aaRowBgColorData">
                   <!-- spacer if equities side -->
                   <template if.bind="bchg.targetAcct.parentFaeSide.id == 'Equities'">
                     <!-- blank space in change-to-asset column -->
                     <au-grid-bchg-cells-spacer></au-grid-bchg-cells-spacer>
-                    <div class="aaVerticalGridline" style="width: 3px;"></div>
+                    <div class="aaVerticalGridline aaVerticalGridlineWide"></div>
                   </template>
                   <!-- column for editable data cells -->
                   <au-grid-bchg-cells-edit bchg.one-way="bchg"
@@ -333,11 +333,11 @@
                   </au-grid-bchg-cells-edit>
                   <template if.bind="bchg.targetAcct.parentFaeSide.id == 'Assets'">
                     <!-- blank space in change-to-equity column -->
-                    <div class="aaVerticalGridline" style="width: 3px;"></div>
+                    <div class="aaVerticalGridline aaVerticalGridlineWide"></div>
                     <au-grid-bchg-cells-spacer></au-grid-bchg-cells-spacer>
                   </template>
                 </div>
-                <div class="aaVerticalGridline" style="width: 3px;"></div>
+                <div class="aaVerticalGridline aaVerticalGridlineWide"></div>
               </div>
             </template>
             <!-- End of list row -->
@@ -354,13 +354,13 @@
                       <au-icon-delete></au-icon-delete>
                     </span>
               </div>
-              <div class="aaVerticalGridline" style="width: 3px;"></div>
+              <div class="aaVerticalGridline aaVerticalGridlineWide"></div>
               <div class="aaRowData aaHidden">
                 <au-grid-bchg-cells-spacer></au-grid-bchg-cells-spacer>
-                <div class="aaVerticalGridline" style="width: 3px;"></div>
+                <div class="aaVerticalGridline aaVerticalGridlineWide"></div>
                 <au-grid-bchg-cells-spacer></au-grid-bchg-cells-spacer>
               </div>
-              <div class="aaVerticalGridline" style="width: 3px;"></div>
+              <div class="aaVerticalGridline aaVerticalGridlineWide"></div>
             </div>
           </div>
           <div class="aaGridFooterBar"></div>
@@ -377,21 +377,21 @@
                 <au-icon-delete></au-icon-delete>
               </button>
             </div>
-            <div class="aaVerticalGridline aaHidden" style="width: 3px;"></div>
+            <div class="aaVerticalGridline aaVerticalGridlineWide aaHidden"></div>
             <div class="aaRowData">
               <au-grid-bchg-cells-total
                 fae-side.one-way="'assets'"
                 side-total-changes.one-way="app.candidateTran.totalChangesAssets"
                 other-side-total-changes.one-way="app.candidateTran.totalChangesEquities">
               </au-grid-bchg-cells-total>
-              <div class="aaVerticalGridline aaHidden" style="width: 3px;"></div>
+              <div class="aaVerticalGridline aaVerticalGridlineWide aaHidden"></div>
               <au-grid-bchg-cells-total
                 fae-side.one-way="'equities'"
                 side-total-changes.one-way="app.candidateTran.totalChangesEquities"
                 other-side-total-changes.one-way="app.candidateTran.totalChangesAssets">
               </au-grid-bchg-cells-total>
             </div>
-            <div class="aaVerticalGridline aaHidden" style="width: 3px;"></div>
+            <div class="aaVerticalGridline aaVerticalGridlineWide aaHidden"></div>
           </div>
         </div>
       </div>

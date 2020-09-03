@@ -8,69 +8,71 @@
        element.ref="moverDialogModal">
     <div class="aaModalContent aaInlineBlock aaPanelBoxShadow"
          element.ref="moverDialogContent">
-      <div class="aaGridTitleBar" style="font-size: larger;">Move rows<br><span class="aaFontLabel">&mdash; Drag & drop row(s) to desired list position(s). &mdash;</span>
-      </div>
-      <div class="aaPanelToolBar">
-        <div style="text-align: center;">
-          <button type="button" class="aaBtnFinish" click.trigger="done()">Done</button>
-          <button type="button" class="aaBtn" style="margin-left: 4pc;" click.trigger="cancel()">Cancel</button>
+      <div class="aaGridContainer" style="margin-top: 0;">
+        <div class="aaGridTitleBar" style="font-size: larger;">Move rows<br><span class="aaFontLabel">&mdash; Drag & drop row(s) to desired list position(s). &mdash;</span>
         </div>
-      </div>
-      <div class="aaRow aaRowColumnHeaders aaFontLabel aaFontBold">
-        <div class="aaRowOps aaRowOpsEmpty aaHidden">
-        </div>
-        <div class="aaVerticalGridline" style="background-color: #fff;"></div>
-        <div class="aaRowData">
-          <div class="aaCell aaCellAcctTitle">Title</div>
-          <div class="aaVerticalGridline" style="background-color: #fff;"></div>
-          <div class="aaCell aaCellBchgBal">Balance</div>
-          <div class="aaVerticalGridline" style="background-color: #fff;"></div>
-        </div>
-      </div>
-      <div class="aaGridScrollableRows aaGridHeightInFaeSide"
-           element.ref="moverGridRows"
-           mousemove.trigger="onListMouseMove($event)"
-           mouseleave.trigger="onListMouseLeave($event)">
-        <template repeat.for="listItem of moverAcctList">
-          <div class="aaRow"
-               list-item.to-view="listItem"
-               mouseenter.trigger="onRowMouseEnter($event, listItem)"
-               mouseleave.trigger="onRowMouseLeave($event, listItem)"
-               mousedown.trigger="onRowMouseDown($event)"
-               mouseup.trigger="onRowMouseUp($event)">
-            <div class="aaRowOps aaRowOpsEmpty aaBgColorToolbar">
-            </div>
-            <div class="aaVerticalGridline"></div>
-            <div class="aaRowData aaRowBgColorData">
-              <template if.bind="listItem.isAcct()">
-                <span class="aaCell aaFontData aaCellAcctTitle">${listItem.title}</span>
-                <div class="aaVerticalGridline"></div>
-                <span class="aaCell aaFontData aaCellBchgBal">${listItem.endingBalance | auCurrencyConverter}</span>
-              </template>
-              <template if.bind="listItem.isAnnotation()">
-                <span class="aaCell aaFontData aaCellAnnoTitle">${listItem.annoText}</span>
-                <div class="aaVerticalGridline"></div>
-                <span class="aaCell aaFontData aaCellBchgBal"></span>
-              </template>
-              <div class="aaVerticalGridline"></div>
-            </div>
+        <div class="aaPanelToolBar">
+          <div style="text-align: center;">
+            <button type="button" class="aaBtnFinish" click.trigger="done()">Done</button>
+            <button type="button" class="aaBtn" style="margin-left: 4pc;" click.trigger="cancel()">Cancel</button>
           </div>
-        </template>
-        <template if.bind="moverAcctList.length == 0">
-          <div class="aaRow aaHidden">
-            <div class="aaRowOps aaRowOpsEmpty aaBgColorToolbar">
-            </div>
-            <div class="aaVerticalGridline"></div>
-            <div class="aaRowData aaRowBgColorData">
-              <span class="aaCell aaFontData aaCellAcctTitle">x</span>
-              <div class="aaVerticalGridline"></div>
-              <span class="aaCell aaFontData aaCellBchgBal">0</span>
-              <div class="aaVerticalGridline"></div>
-            </div>
+        </div>
+        <div class="aaRow aaRowColumnHeaders aaFontLabel aaFontBold">
+          <div class="aaRowOps aaRowOpsEmpty aaHidden">
           </div>
-        </template>
+          <div class="aaVerticalGridline aaVerticalGridlineInHdg"></div>
+          <div class="aaRowData">
+            <div class="aaCell aaCellAcctTitle">Title</div>
+            <div class="aaVerticalGridline aaVerticalGridlineInHdg"></div>
+            <div class="aaCell aaCellBchgBal">Balance</div>
+            <div class="aaVerticalGridline aaVerticalGridlineInHdg"></div>
+          </div>
+        </div>
+        <div class="aaGridScrollableRows aaGridHeightInFaeSide"
+             element.ref="moverGridRows"
+             mousemove.trigger="onListMouseMove($event)"
+             mouseleave.trigger="onListMouseLeave($event)">
+          <template repeat.for="listItem of moverAcctList">
+            <div class="aaRow"
+                 list-item.to-view="listItem"
+                 mouseenter.trigger="onRowMouseEnter($event, listItem)"
+                 mouseleave.trigger="onRowMouseLeave($event, listItem)"
+                 mousedown.trigger="onRowMouseDown($event)"
+                 mouseup.trigger="onRowMouseUp($event)">
+              <div class="aaRowOps aaRowOpsEmpty aaBgColorToolbar">
+              </div>
+              <div class="aaVerticalGridline"></div>
+              <div class="aaRowData aaRowBgColorData">
+                <template if.bind="listItem.isAcct()">
+                  <span class="aaCell aaFontData aaCellAcctTitle">${listItem.title}</span>
+                  <div class="aaVerticalGridline"></div>
+                  <span class="aaCell aaFontData aaCellBchgBal">${listItem.endingBalance | auCurrencyConverter}</span>
+                </template>
+                <template if.bind="listItem.isAnnotation()">
+                  <span class="aaCell aaFontData aaCellAnnoTitle">${listItem.annoText}</span>
+                  <div class="aaVerticalGridline"></div>
+                  <span class="aaCell aaFontData aaCellBchgBal"></span>
+                </template>
+                <div class="aaVerticalGridline"></div>
+              </div>
+            </div>
+          </template>
+          <template if.bind="moverAcctList.length == 0">
+            <div class="aaRow aaHidden">
+              <div class="aaRowOps aaRowOpsEmpty aaBgColorToolbar">
+              </div>
+              <div class="aaVerticalGridline"></div>
+              <div class="aaRowData aaRowBgColorData">
+                <span class="aaCell aaFontData aaCellAcctTitle">x</span>
+                <div class="aaVerticalGridline"></div>
+                <span class="aaCell aaFontData aaCellBchgBal">0</span>
+                <div class="aaVerticalGridline"></div>
+              </div>
+            </div>
+          </template>
+        </div>
+        <div class="aaGridFooterBar"></div>
       </div>
-      <div class="aaGridFooterBar"></div>
     </div>
   </div>
 </template>

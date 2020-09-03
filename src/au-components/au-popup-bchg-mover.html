@@ -10,73 +10,75 @@
        element.ref="moverDialogModal">
     <div class="aaModalContent aaInlineBlock aaPanelBoxShadow"
          element.ref="moverDialogContent">
-      <div class="aaGridTitleBar" style="font-size: larger;">Move rows<br><span class="aaFontLabel">&mdash; Drag & drop row(s) to desired list position(s). &mdash;</span>
-      </div>
-      <div class="aaPanelToolBar">
-        <div style="text-align: center;">
-          <span click.trigger="done($event)" class="aaBtnFinish">Done</span>
-          <span click.trigger="cancel($event)" class="aaBtn" style="margin-left: 4pc;">Cancel</span>
+      <div class="aaGridContainer" style="margintop: 0;">
+        <div class="aaGridTitleBar" style="font-size: larger;">Move rows<br><span class="aaFontLabel">&mdash; Drag & drop row(s) to desired list position(s). &mdash;</span>
         </div>
-      </div>
-      <div class="aaRow aaRowColumnHeaders aaFontLabel aaFontBold">
-        <div class="aaRowOps aaRowOpsEmpty aaHidden">
-        </div>
-        <div class="aaVerticalGridline" style="background-color: #fff; width: 3px;"></div>
-        <div class="aaRowData">
-          <au-grid-bchg-cells-heading fae-side.one-time="'asset'"></au-grid-bchg-cells-heading>
-          <div class="aaVerticalGridline" style="background-color: #fff; width: 3px;"></div>
-          <au-grid-bchg-cells-heading fae-side.one-time="'equity'"></au-grid-bchg-cells-heading>
-        </div>
-        <div class="aaVerticalGridline" style="background-color: #fff; width: 3px;"></div>
-      </div>
-      <div class="aaGridScrollableRows aaGridHeightInFaeSide"
-           element.ref="moverGridRows"
-           mousemove.trigger="onListMouseMove($event)"
-           mouseleave.trigger="onListMouseLeave($event)">
-        <template repeat.for="bchg of moverBchgList">
-          <div class="aaRow"
-               style="border-bottom-width: 3px;"
-               mover-bchg.one-time="bchg"
-               mouseenter.trigger="onRowMouseEnter($event, bchg)"
-               mouseleave.trigger="onRowMouseLeave($event, bchg)"
-               mousedown.trigger="onRowMouseDown($event)"
-               mouseup.trigger="onRowMouseUp($event)">
-            <div class="aaRowOps aaRowOpsEmpty aaBgColorToolbar">
-            </div>
-            <div class="aaVerticalGridline" style="width: 3px;"></div>
-            <div class="aaRowData aaRowBgColorData">
-              <!-- spacer if equities side -->
-              <template if.bind="bchg.targetAcct.parentFaeSide.id == 'Equities'">
-                <!-- put blank space in change-to-asset column -->
-                <au-grid-bchg-cells-spacer></au-grid-bchg-cells-spacer>
-                <div class="aaVerticalGridline" style="width: 3px;"></div>
-              </template>
-              <!-- simulate data cells with spacer -->
-              <au-grid-bchg-cells bchg.one-way="bchg"></au-grid-bchg-cells>
-              <template if.bind="bchg.targetAcct.parentFaeSide.id == 'Assets'">
-                <!-- put blank space in change-to-equity column -->
-                <div class="aaVerticalGridline" style="width: 3px;"></div>
-                <au-grid-bchg-cells-spacer></au-grid-bchg-cells-spacer>
-              </template>
-            </div>
-            <div class="aaVerticalGridline" style="width: 3px;"></div>
+        <div class="aaPanelToolBar">
+          <div style="text-align: center;">
+            <span click.trigger="done($event)" class="aaBtnFinish">Done</span>
+            <span click.trigger="cancel($event)" class="aaBtn" style="margin-left: 4pc;">Cancel</span>
           </div>
-        </template>
-        <template if.bind="moverBchgList.length == 0">
-          <div class="aaRow aaHidden" style="border-bottom-width: 3px;">
-            <div class="aaRowOps aaRowOpsEmpty aaBgColorToolbar">
+        </div>
+        <div class="aaRow aaRowColumnHeaders aaFontLabel aaFontBold" style="border-bottom-width: 3px;">
+          <div class="aaRowOps aaRowOpsEmpty aaHidden">
+          </div>
+          <div class="aaVerticalGridline aaVerticalGridlineInHdg aaVerticalGridlineWide"></div>
+          <div class="aaRowData">
+            <au-grid-bchg-cells-heading fae-side.one-time="'asset'"></au-grid-bchg-cells-heading>
+            <div class="aaVerticalGridline aaVerticalGridlineInHdg aaVerticalGridlineWide"></div>
+            <au-grid-bchg-cells-heading fae-side.one-time="'equity'"></au-grid-bchg-cells-heading>
+          </div>
+          <div class="aaVerticalGridline aaVerticalGridlineInHdg aaVerticalGridlineWide"></div>
+        </div>
+        <div class="aaGridScrollableRows aaGridHeightInFaeSide"
+             element.ref="moverGridRows"
+             mousemove.trigger="onListMouseMove($event)"
+             mouseleave.trigger="onListMouseLeave($event)">
+          <template repeat.for="bchg of moverBchgList">
+            <div class="aaRow"
+                 style="border-bottom-width: 3px;"
+                 mover-bchg.one-time="bchg"
+                 mouseenter.trigger="onRowMouseEnter($event, bchg)"
+                 mouseleave.trigger="onRowMouseLeave($event, bchg)"
+                 mousedown.trigger="onRowMouseDown($event)"
+                 mouseup.trigger="onRowMouseUp($event)">
+              <div class="aaRowOps aaRowOpsEmpty aaBgColorToolbar">
+              </div>
+              <div class="aaVerticalGridline" style="width: 3px;"></div>
+              <div class="aaRowData aaRowBgColorData">
+                <!-- spacer if equities side -->
+                <template if.bind="bchg.targetAcct.parentFaeSide.id == 'Equities'">
+                  <!-- put blank space in change-to-asset column -->
+                  <au-grid-bchg-cells-spacer></au-grid-bchg-cells-spacer>
+                  <div class="aaVerticalGridline" style="width: 3px;"></div>
+                </template>
+                <!-- simulate data cells with spacer -->
+                <au-grid-bchg-cells bchg.one-way="bchg"></au-grid-bchg-cells>
+                <template if.bind="bchg.targetAcct.parentFaeSide.id == 'Assets'">
+                  <!-- put blank space in change-to-equity column -->
+                  <div class="aaVerticalGridline" style="width: 3px;"></div>
+                  <au-grid-bchg-cells-spacer></au-grid-bchg-cells-spacer>
+                </template>
+              </div>
+              <div class="aaVerticalGridline" style="width: 3px;"></div>
             </div>
-            <div class="aaVerticalGridline" style="width: 3px;"></div>
-            <div class="aaRowData aaRowBgColorData">
+          </template>
+          <template if.bind="moverBchgList.length == 0">
+            <div class="aaRow aaHidden" style="border-bottom-width: 3px;">
+              <div class="aaRowOps aaRowOpsEmpty aaBgColorToolbar">
+              </div>
+              <div class="aaVerticalGridline" style="width: 3px;"></div>
+              <div class="aaRowData aaRowBgColorData">
                 <au-grid-bchg-cells-spacer></au-grid-bchg-cells-spacer>
                 <div class="aaVerticalGridline" style="width: 3px;"></div>
                 <au-grid-bchg-cells-spacer></au-grid-bchg-cells-spacer>
+              </div>
+              <div class="aaVerticalGridline" style="width: 3px;"></div>
             </div>
-            <div class="aaVerticalGridline" style="width: 3px;"></div>
-          </div>
-        </template>
+          </template>
+        </div>
+        <div class="aaGridFooterBar"></div>
       </div>
-      <div class="aaGridFooterBar"></div>
     </div>
   </div>
 </template>

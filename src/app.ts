@@ -10,6 +10,43 @@ import "firebase/firestore";
 
 export class App {
 
+  constructor() {
+    if (!firebase.apps.length) {
+      firebase.initializeApp(this.firebaseConfig);
+    }
+    this.firestore=firebase.firestore();
+    let docURL = document.URL;
+    this.urlObj = new URL(docURL);
+    console.log("this.urlObj");
+    console.log(this.urlObj);
+    if(this.urlObj.hostname === "localhost") {
+      this.firestore.settings({
+                                host: "localhost:8085",
+                                ssl: false
+                              });
+    }
+    let booksId = this.urlObj.searchParams.get('booksId');
+    if (booksId) {
+      console.log(`booksId: "${booksId}"`);
+    }
+    else {
+      console.log("Query string parameter 'booksId' not found");
+    }
+
+
+    this.firestore.collection("example").get().then(
+      querySnapshot => {
+        let docs = querySnapshot.docs.map(doc => doc.data());
+        console.log("console.log(docs)");
+        console.log(docs);
+      }
+      )
+    console.log("console.log(firebase)");
+    console.log(firebase);
+
+
+  }
+
   firebaseConfig = {
     apiKey: "AIzaSyBIkCf6Tz-qQbDYSnE6QlYWb195nSqp-CY",
     authDomain: "au-eva.firebaseapp.com",
@@ -20,22 +57,9 @@ export class App {
     appId: "1:699165213300:web:29a56650cef6fe6fc4c721",
     measurementId: "G-WVEFCE4R4S"
   };
-  db;
+  firestore;
 
-  constructor() {
-
-    if (!firebase.apps.length) {
-      firebase.initializeApp(this.firebaseConfig);
-    }
-    this.db=firebase.firestore();
-    this.db.collection("example")
-      .get()
-      .then(querySnapshot => {
-        let docs = querySnapshot.docs.map(doc => doc.data());
-        console.log(docs);
-      })
-    console.log(firebase);
-  }
+  urlObj: URL;
 
   get MODULE_FAE() {
     return "fae";
