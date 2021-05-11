@@ -247,7 +247,8 @@ export class Data {
       /*id*/ `bchg${this.nextBchgId}`,
       /*sourceTran*/ sourceTran,
       /*targetAcct*/ targetAcct,
-      /*desc*/ "Deposit cash from ATM withdrawal",
+      /*desc*/ "" +
+        "Replenish with cash from ATM withdrawal",
       /*amt*/ 0.00);
     sourceTran.bchgList.push(newBchg);
     targetAcct.bchgList.push(newBchg);

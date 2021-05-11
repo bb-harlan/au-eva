@@ -24,6 +24,11 @@ export class App {
                                 host: "localhost:8085",
                                 ssl: false
                               });
+/*
+      this.firestore.settings.host = "localhost:8085";
+      this.firestore.settings.ssl = false;
+*/
+
     }
     let booksId = this.urlObj.searchParams.get('booksId');
     if (booksId) {
