@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Experiment</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.4.0/css/font-awesome.min.css">
+  <style>
+    .aaBody {
+      background-color: rgb(255, 200, 200);
+    }
+    .aaAnotherBackgroundColor {
+      background-color: rgb(200, 200, 255);
+    }
+  </style>
+</head>
+<body>
+<br>
+<button type="button" onclick="toggleBackgroundColor()">Toggle background color</button>
+<br>
+<br>
+<div id="observedElement" style="display: inline-block;
+                                 margin: 50px;
+                                 padding: 50px;
+                                 background-color: rgb(255, 200, 200);">innerHTML</div>
+<script>
+  var mutationObserver = new MutationObserver(mutationObserverCallback);
+  var elementToObserve = document.getElementById("observedElement");
+  console.log(elementToObserve);
+  mutationObserver.observe(elementToObserve, {childList: false, attributes: true, attributeOldValue: true,  subtree: true});
+  function mutationObserverCallback(mutationList, observer) {
+    for (let mutation of mutationList) {
+      console.log(mutation);
+    }
+  }
+  function changeClassList() {
+    if (backgroundToggled) {
+      elementToObserve.classList.toggle("aaAnotherBackgroundColor", false);
+    }
+    else {
+      elementToObserve.classList.toggle("aaAnotherBackgroundColor", true);
+    }
+    backgroundToggled = !backgroundToggled;
+  }
+  function toggleBackgroundColor() {
+    console.log(elementToObserve.style.backgroundColor);
+    if (elementToObserve.style.backgroundColor == "rgb(255, 200, 200)") {
+      elementToObserve.style.backgroundColor = "rgb(200, 200, 255)";
+      elementToObserve.style.display = "none"
+    }
+    else {
+      elementToObserve.style.backgroundColor = "rgb(255, 200, 200)";
+      elementToObserve.style.display = "inline-block"
+    }
+  }
+</script>
+</body>
+</html>

@@ -1,0 +1,31 @@
+Start a separate local terminal and run
+    firebase emulators:start --import=./test-data --export-on-exit
+
+Access Firebase Emulator Suite in browser at http://localhost:8081
+In Firebase Emulator Suite, select Firestore tab to see/modofy data
+
+========================================================================
+Microsoft Windows [Version 10.0.18363.959]
+(c) 2019 Microsoft Corporation. All rights reserved.
+
+D:\Users\Alan\WebstormProjects\au-eva>firebase emulators:start --import=./test-data --export-on-exit
+i  emulators: Starting emulators: firestore
+!  firestore: Did not find a Cloud Firestore rules file specified in a firebase.json config file.
+!  firestore: The emulator will default to allowing all reads and writes. Learn more about this option: https://firebase.google.com/docs/emulator-suite/install_and_configure#security_rules_configuration.
+i  firestore: Firestore Emulator logging to firestore-debug.log
+i  ui: Emulator UI logging to ui-debug.log
+
+┌───────────────────────────────────────────────────────────────────────┐
+│ ✔  All emulators ready! View status and logs at http://localhost:8081 │
+└───────────────────────────────────────────────────────────────────────┘
+
+┌───────────┬────────────────┬─────────────────────────────────┐
+│ Emulator  │ Host:Port      │ View in Emulator UI             │
+├───────────┼────────────────┼─────────────────────────────────┤
+│ Firestore │ localhost:8085 │ http://localhost:8081/firestore │
+└───────────┴────────────────┴─────────────────────────────────┘
+  Other reserved ports: 4400, 4500
+
+Issues? Report them at https://github.com/firebase/firebase-tools/issues and attach the *-debug.log files.
+
+

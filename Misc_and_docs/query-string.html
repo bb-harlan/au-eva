@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Querystring test</title>
+  <script>
+    var docURL = "https://example.com/path/to/page?name=ferret&color=purple";
+    let urlObj = new URL(docURL);
+    console.log(`urlObj.href: "${urlObj}"`)
+    console.log(`urlObj.hostname: "${urlObj.hostname}"`);
+    let params = urlObj.searchParams;
+    let name = params.get('name');
+    if (name) {
+      console.log(`urlObj.params.get('name'): "${name}"`);
+    }
+    else {
+      console.log("urlObj.params.get('name') is undefined");
+    }
+    let color = params.get('color');
+    if (color) {
+      console.log(`urlObj.params.get('color'): "${color}"`);
+    }
+    else {
+      console.log("urlObj.params.get('color') is undefined");
+    }
+
+    if (urlObj.hostname === "localhost") {
+      // override databaseUrl in firebase config object
+      // this.firebaseConfig.databaseURL = "https://localhost:9000";
+    }
+  </script>
+</head>
+<body>
+<h1>Query string experiment</h1>
+<p>See console log in browser inspector.</p>
+
+</body>
+</html>

@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>Zoom</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    .aaStd {
+      display: inline-block;
+      padding: 50px;
+      color: #000;
+      background-color: lightblue;
+      /*transform: scale(1);*/
+      transform: translate(0%);
+      transition: transform 4s;
+      /*opacity: 1;*/
+      /*transition: opacity 0.3s;*/
+      width: 400px;
+      height: 400px;
+      margin: 0 auto;
+    }
+    .aaTransform1Inactive {
+      transform: translate(-100%);
+    }
+    .aaTransform2Inactive {
+      transform: translate(100%);
+    }
+    .aaLeaving {
+      transform: translate(-100%);
+      /*transform: scale(0);*/
+      /*opacity: 0.25;*/
+    }
+    .aaDisplayNone {
+      /*display: none;*/
+    }
+  </style>
+  <script>
+    function from1to2() {
+      var div1 = document.getElementById("#para1");
+      var div2 = document.getElementById("#para2");
+      div1.classList.toggle('aaTransform1Inactive', true);
+    }
+    function transitionEnded1(event) {
+      var div1 = document.getElementById("#para1");
+      var div2 = document.getElementById("#para2");
+      div1.classList.toggle('aaTransform1Inactive', true);
+      div1.classList.toggle('aaDisplayNone', true);
+      div2.classList.toggle('aaDisplayNone', false);
+      div2.classList.toggle('aaTransform2Inactive', false);
+    }
+    function from2To1() {
+      var div1 = document.getElementById("#para1");
+      var div2 = document.getElementById("#para2");
+      div2.classList.toggle('aaTransform2Inactive', true);
+    }
+    function transitionEnded2(event) {
+      var div1 = document.getElementById("#para1");
+      var div2 = document.getElementById("#para2");
+      div2.classList.toggle('aaTransform2Inactive', true);
+      div2.classList.toggle('aaDisplayNone', true);
+      div1.classList.toggle('aaDisplayNone', false);
+      div1.classList.toggle('aaTransform1Inactive', false);
+    }
+  </script>
+</head>
+<body>
+
+<h1>Transition stuff</h1>
+<div id="#para1"
+     class="aaStd"
+     onclick="from1to2()"
+     ontransitionend="transitionEnded1(event)"
+     >
+  *** DIV #1 ***
+</div>
+<div id="#para2"
+     class="aaStd aaTransform2Inactive aaDisplayNone"
+     onclick="from2To1()"
+     ontransitionend="transitionEnded2(event)"
+     >
+  *** DIV #2 ***
+</div>
+<!--
+<button type="button" onclick="doTransform($event, true)">Zoom</button>
+<button type="button" onclick="doTransform($event, false)">Zoom</button>
+-->
+</body>
+</html>
