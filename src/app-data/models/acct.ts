@@ -54,6 +54,7 @@ export class Acct extends EquationSideItem {
   //
   title: string;
   normalBalance: number;
+  auxInfo: string = "";
   bchgList: Array<Bchg> = [];
   endingBalance: number = 0.00;
 

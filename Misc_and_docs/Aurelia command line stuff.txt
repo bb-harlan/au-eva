@@ -12,3 +12,9 @@ Check Aurelia version
 
 au -v
 
+Run in localhost
+================
+
+au run --watch
+
+

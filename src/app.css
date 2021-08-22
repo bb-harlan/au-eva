@@ -1,11 +1,11 @@
 body {
   text-align: center;
   color: #000;
-  /*background-color: #fff;*/
-  background-color: #ddd;
+  background-color: #999;
+  /*background-color: #ddd;*/
   /*background-color: #d0d0d0;*/
   /*background-color: #ccc;*/
-  /*background-color: #c0c0c0;*/
+  /*background-color: #808080;*/
   /*background-color: #ABABAB;*/
   /*background-color: #c0c0c0;*/
   font-family: "Times New Roman", Cambria, serif, Serif;
@@ -420,7 +420,8 @@ h1 {
   align-self: stretch;
 }
 .aaRowOpsSelected {
-  background-color: #58B;
+  /*background-color: #58B;*/
+  background-color: #000;
 }
 .aaRowOpsEmpty {
   width: 1.5pc;
@@ -439,9 +440,12 @@ h1 {
   background-color: #DBE6F0 !important;
 }
 .aaRowDataSelected {
-  -webkit-box-shadow: 0 0 0 2px #58b inset;
-  -moz-box-shadow: 0 0 0 2px #58b inset;
-  box-shadow: 0 0 0 2px #58b inset;
+  /*-webkit-box-shadow: 0 0 0 2px #58b inset;*/
+  /*-moz-box-shadow: 0 0 0 2px #58b inset;*/
+  /*box-shadow: 0 0 0 2px #58b inset;*/
+  -webkit-box-shadow: 0 0 0 2px #000 inset;
+  -moz-box-shadow: 0 0 0 2px #000 inset;
+  box-shadow: 0 0 0 2px #000 inset;
 }
 .aaCellId {
   display: inline-flex;
@@ -644,13 +648,12 @@ input::placeholder {
 }
 .aaDragging {
   cursor: n-resize;
- /* -webkit-box-shadow: 0px 0px 3px 1px #58b inset;
-  -moz-box-shadow: 0px 0px 3px 1px #58b inset;
-  box-shadow: 0 0 3px 1px #58b inset;*/
-  -webkit-box-shadow: 0px 0px 0px 2px #58b inset;
-  -moz-box-shadow: 0px 0px 0px 2px #58b inset;
-  box-shadow: 0 0 0px 2px #58b inset;
-  /*background-color: #C8D9E9 !important;*/
+  /*-webkit-box-shadow: 0px 0px 3px 1px #58b inset;*/
+  /*-moz-box-shadow: 0px 0px 3px 1px #58b inset;*/
+  /*box-shadow: 0 0 3px 1px #58b inset;*/
+  -webkit-box-shadow: 0px 0px 3px 1px #000 inset;
+  -moz-box-shadow: 0px 0px 3px 1px #000 inset;
+  box-shadow: 0 0 0 2px #000 inset;  /*background-color: #C8D9E9 !important;*/
   background-color: #EDF2F7 !important;
 }
 .aaPointerEventsNone {
