@@ -61,7 +61,7 @@ export class AuPopupAcctMover {
     another reference to the listItems in the array moverAcctList.
 
     The following for loop uses that moverAcctListItem property
-    to reference the original acct|annotation object and update its intraTranIndex property
+    to reference the original acct|annotation object and update its intraSideIndex property
     to reflect its possibly new position in the list as a result of moving.
     */
     if (this.moverAcctList.length >= 2) {

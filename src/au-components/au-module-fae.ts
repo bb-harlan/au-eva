@@ -12,19 +12,74 @@ export class AuModuleFae {
   /* @injected object(s) */
   app: App;
 
-  /* element reference(s) */
+  /* element & view-model references */
   moduleRootElement: Element;
-  viewmodelFaeSideAssets;
-  viewmodelFaeSideEquities;
+  vmFaeSideEditAssets; // view-model reference
+  vmFaeSideEditEquities; // view-model reference
+  vmFaeSideMoveAssets; // view-model reference
+  vmFaeSideMoveEquities; // view-model reference
   viewmodelPopupAcctMover;
   panelToolBar: Element;
 
   /* other properties */
+  moduleMode;
   observerScrollIntoView = new MutationObserver(this.callbackScrollIntoView);
   observerSetInputFocus = new MutationObserver(this.callbackSetInputFocus);
 
-  constructor(app, auModuleFae) {
+  constructor(app) {
     this.app = app;
+    this.moduleMode = this.app.MODE_NAV;
+  }
+
+  editOpen() {
+/*
+    this.vmFaeSideEditAssets.open();
+    this.vmFaeSideEditEquities.open();
+*/
+    this.moduleMode = this.app.MODE_EDIT;
+    this.app.elementNavRibbon.classList.toggle("aaHidden", true);
+    /*
+    * For other initialization see the bind() methoe of compomeent au-fae-side-edit
+    * */
+}
+  editSaveChanges() {
+    let missingTitleCnt = this.vmFaeSideEditAssets.missingTitleCnt() + this.vmFaeSideEditEquities.missingTitleCnt();
+    if (missingTitleCnt > 0) {
+      this.app.viewmodelPopupAlert.open("Save changes",
+                                        this.panelToolBar.getBoundingClientRect().bottom,
+                                        `Account title is missing for ${missingTitleCnt} account(s).`);
+      return;
+    }
+    this.vmFaeSideEditAssets.saveChanges();
+    this.vmFaeSideEditEquities.saveChanges();
+    this.moduleMode = this.app.MODE_NAV;
+    this.app.elementNavRibbon.classList.toggle("aaHidden", false);
+  }
+  editCancel() {
+    this.vmFaeSideEditAssets.cancel();
+    this.vmFaeSideEditEquities.cancel();
+    this.moduleMode = this.app.MODE_NAV;
+    this.app.elementNavRibbon.classList.toggle("aaHidden", false);
+  }
+  moveOpen() {
+/*
+    this.vmFaeSideMoveAssets.open();
+    this.vmFaeSideMoveEquities.open();
+*/
+    this.moduleMode = this.app.MODE_MOVE;
+    this.app.elementNavRibbon.classList.toggle("aaHidden", true);
+  }
+  moveSaveChanges() {
+    this.vmFaeSideMoveAssets.saveChanges();
+    this.vmFaeSideMoveEquities.saveChanges();
+    this.moduleMode = this.app.MODE_NAV;
+    this.app.elementNavRibbon.classList.toggle("aaHidden", false);
+  }
+  moveCancel() {
+    this.vmFaeSideMoveAssets.cancel();
+    this.vmFaeSideMoveEquities.cancel();
+    this.moduleMode = this.app.MODE_NAV;
+    this.app.elementNavRibbon.classList.toggle("aaHidden", false);
   }
 
   observeForScrollIntoView() {
@@ -61,6 +116,9 @@ export class AuModuleFae {
   }
 
   faeSidesEdit(event) {
+    this.vmFaeSideEditAssets.initialize();
+    this.vmFaeSideEditEquities.initialize();
+    return;
     this.app.candidateFaeSideAssets = this.app.data.faeSideAssets.clone();
     this.app.candidateFaeSideEquities = this.app.data.faeSideEquities.clone();
     if (this.app.selectedAcct) {
@@ -74,132 +132,58 @@ export class AuModuleFae {
       let filteredAcctList = candidateFaeSide.acctList.filter((listItem) => listItem instanceof Acct) as Array<Acct>;
       this.app.candidateSelectedAcct = filteredAcctList.find(element => element.id == this.app.selectedAcct.id);
     }
-    this.app.viewNavMode = false;
+    // this.app.viewNavMode = false;
+    this.moduleMode = this.app.MODE_EDIT;
+    this.app.elementNavRibbon.classList.toggle("aaHidden", true);
   }
   faeSidesEditDone(event) {
-    let matchingListItem;
-    let newAcct;
-    let newAnnotation;
-    let removalIndex;
-    let allSideListItems;
-    let missingTitleCnt = 0;
-    allSideListItems = this.app.candidateFaeSideAssets.acctList.concat(this.app.candidateFaeSideEquities.acctList);
-    for (let listItem of allSideListItems) {
-      if (listItem instanceof Acct && listItem.title.length == 0) {
-        missingTitleCnt++;
-      }
-    }
+    let missingTitleCnt = this.vmFaeSideEditAssets.missingTitleCnt() + this.vmFaeSideEditEquities.missingTitleCnt();
     if (missingTitleCnt > 0) {
       this.app.viewmodelPopupAlert.open("Save changes",
                                         this.panelToolBar.getBoundingClientRect().bottom,
                                         `Account title is missing for ${missingTitleCnt} account(s).`);
       return;
     }
-
-
-    /*** process Assets list ***/
-    /* remove any deleted listItems */
-    for (let listItem of this.app.data.faeSideAssets.acctList) {
-      matchingListItem = this.app.candidateFaeSideAssets.acctList.find(element => element.id == listItem.id);
-      if (!matchingListItem) {
-        removalIndex = this.app.data.faeSideAssets.acctList.findIndex(element => element.id == listItem.id);
-        this.app.data.faeSideAssets.acctList.splice(removalIndex, 1);
-      }
-    }
-    /* update acctlist with any new or changed listItems */
-    for (let listItem of this.app.candidateFaeSideAssets.acctList) {
-      if (listItem instanceof Annotation) {
-        matchingListItem = this.app.data.faeSideAssets.acctList.find(element => element.id == listItem.id);
-        if (matchingListItem) {
-          matchingListItem.intraSideIndex = listItem.intraSideIndex;
-          matchingListItem.annoText = listItem.annoText;
-        }
-        else {
-          this.app.data.faeSideAssets.acctList.push(listItem);
-        }
-      }
-      else if (listItem instanceof Acct) {
-        matchingListItem = this.app.data.faeSideAssets.acctList.find(element => element.id == listItem.id);
-        if (matchingListItem) {
-          matchingListItem.intraSideIndex = listItem.intraSideIndex;
-          matchingListItem.title = listItem.title;
-        }
-        else {
-          this.app.data.faeSideAssets.acctList.push(listItem);
-        }
-      }
-      else {
-        /* error */
-      }
-    }
-
-    /*** process Equities list ***/
-    /* remove any deleted listItems */
-    for (let listItem of this.app.data.faeSideEquities.acctList) {
-      matchingListItem = this.app.candidateFaeSideEquities.acctList.find(element => element.id == listItem.id);
-      if (!matchingListItem) {
-        removalIndex = this.app.data.faeSideEquities.acctList.findIndex(element => element.id == listItem.id);
-        this.app.data.faeSideEquities.acctList.splice(removalIndex, 1);
-      }
-    }
-    /* update acctlist with any new or changed listItems */
-    for (let listItem of this.app.candidateFaeSideEquities.acctList) {
-      if (listItem instanceof Annotation) {
-        matchingListItem = this.app.data.faeSideEquities.acctList.find(element => element.id == listItem.id);
-        if (matchingListItem) {
-          matchingListItem.intraSideIndex = listItem.intraSideIndex;
-          matchingListItem.annoText = listItem.annoText;
-        }
-        else {
-          this.app.data.faeSideEquities.acctList.push(listItem);
-        }
-      }
-      else if (listItem instanceof Acct) {
-        matchingListItem = this.app.data.faeSideEquities.acctList.find(element => element.id == listItem.id);
-        if (matchingListItem) {
-          matchingListItem.intraSideIndex = listItem.intraSideIndex;
-          matchingListItem.title = listItem.title;
-        }
-        else {
-          this.app.data.faeSideEquities.acctList.push(listItem);
-        }
-      }
-      else {
-        /* error */
-      }
-    }
+    this.vmFaeSideEditAssets.saveChanges();
+    this.vmFaeSideEditEquities.saveChanges();
 
     this.app.selectedAcct = this.app.candidateSelectedAcct;
-
-    this.app.candidateFaeSideAssets = null;
-    this.app.candidateFaeSideEquities = null;
     this.app.candidateSelectedAcct = null;
 
     this.app.data.faeSideAssets.refresh();
     this.app.data.faeSideEquities.refresh();
-    (this.observerScrollIntoView as any).app = this.app; // cast as "any" to programmatically add property
-    this.observerScrollIntoView.observe(this.moduleRootElement,
-                                        {
-                                          childList: true,
-                                          attributes: true,
-                                          subtree: true,
-                                          characterData: true
-                                        });
-    this.app.viewNavMode = true;
+    this.moduleMode = this.app.MODE_NAV;
+    /*
+        observeForScrollIntoView() {
+        (this.observerScrollIntoView as any).app = this.app; // cast as "any" to programmatically add property
+        this.observerScrollIntoView.observe(this.moduleRootElement,
+                                             {
+                                              childList: true,
+                                              attributes: true,
+                                              subtree: true,
+                                              characterData: true
+                                             } );
+    */
   }
-  faeSidesEditCancel(event) {
-    (this.observerScrollIntoView as any).app = this.app; // cast as "any" to programmatically add property
-    this.observerScrollIntoView.observe(this.moduleRootElement,
-                                        {
-                                          childList: true,
-                                          attributes: true,
-                                          subtree: true,
-                                          characterData: true
-                                        });
-    this.app.viewNavMode = true;
+  faeSidesEditCancel(event): void {
+    this.vmFaeSideEditAssets.cancel();
+    this.vmFaeSideEditEquities.cancel();
+    /*
+        (this.observerScrollIntoView as any).app = this.app; // cast as "any" to programmatically add property
+        this.observerScrollIntoView.observe(this.moduleRootElement,
+                                            {
+                                              childList: true,
+                                              attributes: true,
+                                              subtree: true,
+                                              characterData: true
+                                            });
+    */
+    // this.app.viewNavMode = true;
     this.app.candidateFaeSideAssets = null;
     this.app.candidateFaeSideEquities = null;
     this.app.candidateSelectedAcct = null;
+    this.moduleMode = this.app.MODE_NAV;
+    this.app.elementNavRibbon.classList.toggle("aaHidden", false);
   }
 }
 

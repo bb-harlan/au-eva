@@ -1,67 +1,127 @@
 <template>
   <require from="au-views/au-icon-edit.html"></require>
+  <require from="au-views/au-icon-row-mover.html"></require>
   <require from="au-views/au-text-ellipsis.html"></require>
   <require from="au-components/au-fae-side"></require>
+  <require from="au-components/au-fae-side-edit"></require>
+  <require from="au-components/au-fae-side-move"></require>
   <require from="au-attributes/au-fae-side-data"></require>
-  <require from="au-components/au-popup-acct-mover"></require>
+  <require from="au-views/au-icon-row-mover.html"></require>
+  <!--
+    <require from="au-components/au-popup-acct-mover"></require>
+  -->
+
   <div class="aaPanel aaPanelBoxShadow"
        css="${app.selectedModule == app.MODULE_FAE ? '' : 'display: none;'}"
        element.ref="moduleRootElement"
        id="observedElement">
     <div class="aaPanelHeader aaPanelHeaderModule">The fundamental accounting equation</div>
-    <template if.bind="app.viewNavMode">
-      <div class="aaPanelToolBar">
-        <span class="aaToolBarDivider">.</span>
-        <button type="button"
-                class="aaBtn"
-                click.trigger="faeSidesEdit($event)">
-          <au-icon-edit></au-icon-edit>
-          &nbsp;Edit account lists
-          <au-text-ellipsis></au-text-ellipsis>
-        </button>
-        <span class="aaToolBarDivider">.</span>
+    <div class="aaPanelToolBar"
+         css="${moduleMode == app.MODE_NAV ? '' : 'display: none;'}">
+<!--
+      <span class="aaToolBarDivider">.</span>
+-->
+      <button type="button"
+              class="aaBtn"
+              click.trigger="editOpen()">
+        <au-icon-edit></au-icon-edit>
+        &nbsp;Edit account lists
+        <au-text-ellipsis></au-text-ellipsis>
+      </button>
+      <span class="aaToolBarDivider aaHidden">.</span>
+      <button class="aaBtn"
+              type="button"
+              click.trigger="moveOpen()">
+        <au-icon-row-mover></au-icon-row-mover>
+        Move row(s) in account list(s)
+        <au-text-ellipsis></au-text-ellipsis>
+      </button>
+<!--
+      <span class="aaToolBarDivider">.</span>
+-->
+    </div>
+    <div class="aaPanelToolBar"
+         element.ref="panelToolBar"
+         css="${moduleMode == app.MODE_EDIT ? '' : 'display: none;'}">
+<!--
+      <span class="aaToolBarDivider">.</span>
+-->
+      <span class="aaFontLabel aaFontBold">Editing account lists:</span>
+      <span class="aaToolBarDivider aaHidden">.</span>
+      <button type="button" class="aaBtnFinish" click.trigger="editSaveChanges($event)">Save changes</button>
+      <span class="aaToolBarDivider aaHidden">.</span>
+      <button type="button" class="aaBtn" click.trigger="editCancel($event)">Cancel</button>
+<!--
+      <span class="aaToolBarDivider">.</span>
+-->
+    </div>
+    <div class="aaPanelToolBar"
+         css="${moduleMode == app.MODE_MOVE ? '' : 'display: none;'}">
+<!--
+      <span class="aaToolBarDivider">.</span>
+-->
+      <span class="aaFontLabel aaFontBold">Moving row(s):</span>
+      <span class="aaToolBarDivider aaHidden">.</span>
+      <button type="button" class="aaBtnFinish" click.trigger="moveSaveChanges($event)">Save changes</button>
+      <span class="aaToolBarDivider aaHidden">.</span>
+      <button type="button" class="aaBtn" click.trigger="moveCancel($event)">Cancel</button>
+<!--
+      <span class="aaToolBarDivider">.</span>
+-->
+    </div>
+    <div class="aaPanelBody"
+         css="${moduleMode == app.MODE_NAV ? '' : 'display: none;'}">
+      <div class="aaEquSideContainer">
+        <au-fae-side
+          fae-side.to-view="app.data.faeSideAssets">
+        </au-fae-side>
       </div>
+      <!-- equation's "equal" sign -->
+      <div class="aaEquSideContainer" style="padding: 0 1pc;">
+        <h1 style="margin: 0;">=</h1>
+      </div>
+      <div class="aaEquSideContainer">
+        <au-fae-side
+          fae-side.to-view="app.data.faeSideEquities">
+        </au-fae-side>
+      </div>
+    </div>
+    <template if.bind="moduleMode === app.MODE_EDIT">
       <div class="aaPanelBody">
         <div class="aaEquSideContainer">
-          <au-fae-side
-            view-model.ref="viewmodelFaeSideAssets"
-            fae-side.to-view="app.data.faeSideAssets">
-          </au-fae-side>
+          <au-fae-side-edit
+            fae-side.to-view="app.data.faeSideAssets"
+            view-model.ref="vmFaeSideEditAssets">
+          </au-fae-side-edit>
         </div>
-        <div class="aaEquSideContainer" style="padding: 0 1pc;">
+        <div class="aaEquSideContainer"
+             style="padding: 0 1pc;">
           <h1 style="margin: 0;">=</h1>
         </div>
         <div class="aaEquSideContainer">
-          <au-fae-side
-            view-model.ref="viewmodelFaeSideEquities"
-            fae-side.to-view="app.data.faeSideEquities">
-          </au-fae-side>
+          <au-fae-side-edit
+            fae-side.to-view="app.data.faeSideEquities"
+            view-model.ref="vmFaeSideEditEquities">
+          </au-fae-side-edit>
         </div>
       </div>
     </template>
-    <template if.bind="!app.viewNavMode">
-      <div class="aaPanelToolBar"  element.ref="panelToolBar">
-        <span class="aaToolBarDivider">.</span>
-        <span class="aaFontLabel aaFontBold">Editing account lists:</span>
-        <span class="aaToolBarDivider aaHidden">.</span>
-        <button type="button" class="aaBtnFinish" click.trigger="faeSidesEditDone($event)">Save changes</button>
-        <span class="aaToolBarDivider aaHidden">.</span>
-        <button type="button" class="aaBtn" click.trigger="faeSidesEditCancel($event)">Cancel</button>
-        <span class="aaToolBarDivider">.</span>
-      </div>
+    <template if.bind="moduleMode === app.MODE_MOVE">
       <div class="aaPanelBody">
         <div class="aaEquSideContainer">
-          <au-fae-side
-            fae-side.to-view="app.candidateFaeSideAssets">
-          </au-fae-side>
+          <au-fae-side-move
+            fae-side.to-view="app.data.faeSideAssets"
+            view-model.ref="vmFaeSideMoveAssets">
+          </au-fae-side-move>
         </div>
         <div class="aaEquSideContainer" style="padding: 0 1pc;">
           <h1 style="margin: 0;">=</h1>
         </div>
         <div class="aaEquSideContainer">
-          <au-fae-side
-            fae-side.to-view="app.candidateFaeSideEquities">
-          </au-fae-side>
+          <au-fae-side-move
+            fae-side.to-view="app.data.faeSideEquities"
+            view-model.ref="vmFaeSideMoveEquities">
+          </au-fae-side-move>
         </div>
       </div>
     </template>

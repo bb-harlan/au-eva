@@ -11,6 +11,7 @@ import "firebase/firestore";
 export class App {
 
   constructor() {
+/*
     if (!firebase.apps.length) {
       firebase.initializeApp(this.firebaseConfig);
     }
@@ -24,10 +25,10 @@ export class App {
                                 host: "localhost:8085",
                                 ssl: false
                               });
-/*
+/!*
       this.firestore.settings.host = "localhost:8085";
       this.firestore.settings.ssl = false;
-*/
+*!/
 
     }
     let booksId = this.urlObj.searchParams.get('booksId');
@@ -49,9 +50,11 @@ export class App {
     console.log("console.log(firebase)");
     console.log(firebase);
 
+*/
 
   }
 
+/*
   firebaseConfig = {
     apiKey: "AIzaSyBIkCf6Tz-qQbDYSnE6QlYWb195nSqp-CY",
     authDomain: "au-eva.firebaseapp.com",
@@ -65,8 +68,9 @@ export class App {
   firestore;
 
   urlObj: URL;
+*/
 
-  get MODULE_FAE() {
+  get MODULE_FAE()  {
     return "fae";
   }
   get MODULE_ACCT() {
@@ -87,6 +91,16 @@ export class App {
   }
   get NAV_RIGHT_CHAR() {
     return String.fromCharCode(0xf054); // FontAwesome
+  }
+
+  get MODE_NAV()  {
+    return "nav";
+  }
+  get MODE_EDIT()  {
+    return "edit";
+  }
+  get MODE_MOVE()  {
+    return "move";
   }
 
   /* element.ref properties */
@@ -112,6 +126,7 @@ export class App {
    *=====================================================
    */
   selectedModule = this.MODULE_FAE;
+  slectedMode = this.MODE_NAV;
   viewNavMode = true;
 
   selectedAcct: Acct | Annotation = null;
@@ -140,8 +155,8 @@ export class App {
 
   bind() {
     // this.data.generateEmptyData();
-    // this.data.generateTestData();
-    this.data.generateExample1Data();
+    this.data.generateTestData();
+    // this.data.generateExample1Data();
 
     /*** Test strigifying and reviving data ***/
     /*
@@ -192,6 +207,7 @@ export class App {
   removeHovering(event) {
     // event.target.classList.toggle("aaNavMapBtnHover", false);
   }
+  elementNavRibbon: HTMLElement;
 
   goFaeModule(event) {
     event.target.classList.toggle("aaNavModuleHover", false);
