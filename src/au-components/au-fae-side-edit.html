@@ -1,6 +1,6 @@
 <template>
   <require from="au-views/au-icon-edit.html"></require>
-  <require from="au-views/au-icon-row-mover.html"></require>
+  <require from="au-views/au-icon-mover-rowops.html"></require>
   <require from="au-views/au-icon-new.html"></require>
   <require from="au-views/au-icon-delete.html"></require>
   <require from="au-views/au-text-ellipsis.html"></require>
@@ -15,7 +15,7 @@
     <div class="aaGridTitleBar" style="font-size: larger;">${faeSide.id | auEquationSideConverter:true: false}
       accounts
     </div>
-    <div class="aaRow aaRowColumnHeaders aaFontLabel aaFontBold">
+    <div class="aaRow aaRowColumnHeaders">
       <div class="aaRowOps aaHidden">
           <span class="aaBtn">
                       <au-icon-new></au-icon-new>
@@ -28,7 +28,7 @@
                     </span>
       </div>
       <div class="aaVerticalGridline" style="background-color: #fff;" element.ref="popupLeft"></div>
-      <div class="aaRowData">
+      <div class="aaRowData aaFontLabel aaFontBold">
         <div class="aaCell aaCellAcctTitle aaCellInGrid">Title</div>
         <div class="aaVerticalGridline" style="background-color: #fff;"></div>
         <div class="aaCell aaCellBchgBal">Balance</div>

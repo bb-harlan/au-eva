@@ -1,5 +1,5 @@
 <template>
-  <require from="au-views/au-icon-row-mover.html"></require>
+  <require from="au-views/au-icon-mover-rowops.html"></require>
   <require from="au-converters/au-currency-converter"></require>
   <require from="au-converters/au-equation-side-converter"></require>
 
@@ -17,11 +17,11 @@
             <button type="button" class="aaBtn" style="margin-left: 4pc;" click.trigger="cancel()">Cancel</button>
           </div>
         </div>
-        <div class="aaRow aaRowColumnHeaders aaFontLabel aaFontBold">
+        <div class="aaRow aaRowColumnHeaders">
           <div class="aaRowOps aaRowOpsEmpty aaHidden">
           </div>
           <div class="aaVerticalGridline aaVerticalGridlineInHdg"></div>
-          <div class="aaRowData">
+          <div class="aaRowData aaFontLabel aaFontBold">
             <div class="aaCell aaCellAcctTitle">Title</div>
             <div class="aaVerticalGridline aaVerticalGridlineInHdg"></div>
             <div class="aaCell aaCellBchgBal">Balance</div>

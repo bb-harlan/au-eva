@@ -4,90 +4,91 @@
   <require from="au-views/au-icon-edit.html"></require>
   <require from="au-converters/au-currency-converter"></require>
   <require from="au-converters/au-equation-side-converter"></require>
-
-  <div class="aaPanel aaPanelBoxShadow"
-       css="${app.selectedModule == app.MODULE_ACCT ? '' : 'display: none;'}"
-       element.ref="moduleRootElement"
-       id="observedElement">
-    <div class="aaPanelHeader aaPanelHeaderModule">Account</div>
-    <div class="aaPanelBody">
-      <div class="aaForm">
-        <table border="0" style="border-collapse: collapse;">
-          <tr>
-            <td class="aaFormItemLabel">Equation side:</td>
-            <td class="aaFormItemData">${app.selectedAcct.parentFaeSide.id | auEquationSideConverter:true:true}</td>
-          </tr>
-          <tr>
-            <td class="aaFormItemLabel">Title:</td>
-            <td class="aaFormItemData">
-              ${app.selectedAcct.title}
-            </td>
-          </tr>
-        </table>
-      </div>
-      <div class="aaGridContainer">
-        <div class="aaGridTitleBar">Balance changes</div>
-        <div class="aaRow aaRowColumnHeaders aaFontLabel aaFontBold">
-          <div class="aaRowOps aaRowOpsEmpty aaHidden">
-          </div>
-          <div class="aaVerticalGridline aaVerticalGridlineInHdg"></div>
-          <div class="aaRowData">
-            <div class="aaCell aaCellTranDate">Date</div>
-            <div class="aaVerticalGridline aaVerticalGridlineInHdg"></div>
-            <div class="aaCell aaCellBchgDesc">Description</div>
-            <div class="aaVerticalGridline aaVerticalGridlineInHdg"></div>
-            <div class="aaCell aaCellBchgAmt">Amount</div>
-            <div class="aaVerticalGridline aaVerticalGridlineInHdg"></div>
-            <div class="aaCell aaCellBchgBal">New balance</div>
-            <div class="aaVerticalGridline aaVerticalGridlineInHdg"></div>
-          </div>
+  <div style="padding-left: 40pc;">
+    <div class="aaPanel aaPanelBoxShadow"
+         css="${app.selectedModule == app.MODULE_ACCT ? '' : 'display: none;'}"
+         element.ref="moduleRootElement"
+         id="observedElement">
+      <div class="aaPanelHeader aaPanelHeaderModule">Account</div>
+      <div class="aaPanelBody">
+        <div class="aaForm">
+          <table border="0" style="border-collapse: collapse;">
+            <tr>
+              <td class="aaFormItemLabel">Equation side:</td>
+              <td class="aaFormItemData">${app.selectedAcct.parentFaeSide.id | auEquationSideConverter:true:true}</td>
+            </tr>
+            <tr>
+              <td class="aaFormItemLabel">Title:</td>
+              <td class="aaFormItemData">
+                ${app.selectedAcct.title}
+              </td>
+            </tr>
+          </table>
         </div>
-        <div class="aaGridScrollableRows aaGridHeightInAcct"
-             id="acctModule-${app.selectedAcct.id}">
-          <template repeat.for="bchg of app.selectedAcct.bchgList">
-            <div class="aaRow aaRowBgColorToolbar"
-                 id="acct-${bchg.id}"
-                 mouseenter.trigger="onRowEnter($event, bchg)"
-                 mouseleave.trigger="onRowLeave($event, bchg)"
-                 click.trigger="app.selectBchg(bchg)"
-                 dblclick.trigger="app.selectAcctBchgGoTran(bchg)">
-              <div class="aaRowOps aaRowOpsEmpty aaBgColorToolbar ${app.selectedBchg.id == bchg.id ? 'aaRowOpsSelected' : ''}">
+        <div class="aaGridContainer">
+          <div class="aaGridTitleBar">Balance changes</div>
+          <div class="aaRow aaRowColumnHeaders">
+            <div class="aaRowOps aaRowOpsEmpty aaHidden">
+            </div>
+            <div class="aaVerticalGridline aaVerticalGridlineInHdg"></div>
+            <div class="aaRowData aaFontLabel aaFontBold">
+              <div class="aaCell aaCellTranDate">Date</div>
+              <div class="aaVerticalGridline aaVerticalGridlineInHdg"></div>
+              <div class="aaCell aaCellBchgDesc">Description</div>
+              <div class="aaVerticalGridline aaVerticalGridlineInHdg"></div>
+              <div class="aaCell aaCellBchgAmt">Amount</div>
+              <div class="aaVerticalGridline aaVerticalGridlineInHdg"></div>
+              <div class="aaCell aaCellBchgBal">New balance</div>
+              <div class="aaVerticalGridline aaVerticalGridlineInHdg"></div>
+            </div>
+          </div>
+          <div class="aaGridScrollableRows aaGridHeightInAcct"
+               id="acctModule-${app.selectedAcct.id}">
+            <template repeat.for="bchg of app.selectedAcct.bchgList">
+              <div class="aaRow aaRowBgColorToolbar"
+                   id="acct-${bchg.id}"
+                   mouseenter.trigger="onRowEnter($event, bchg)"
+                   mouseleave.trigger="onRowLeave($event, bchg)"
+                   click.trigger="app.selectBchg(bchg)"
+                   dblclick.trigger="app.selectAcctBchgGoTran(bchg)">
+                <div class="aaRowOps aaRowOpsEmpty aaBgColorToolbar ${app.selectedBchg.id == bchg.id ? 'aaRowOpsSelected' : ''}">
+                </div>
+                <div class="aaVerticalGridline"></div>
+                <div class="aaRowData aaRowBgColorData ${app.selectedBchg.id == bchg.id ? 'aaRowDataSelected' : ''}">
+                  <div class="aaCell aaFontData aaCellTranDate">${bchg.sourceTran.date}</div>
+                  <div class="aaVerticalGridline"></div>
+                  <div class="aaCell aaFontData aaCellBchgDesc">${bchg.desc}</div>
+                  <div class="aaVerticalGridline"></div>
+                  <div class="aaCell aaFontData aaCellBchgAmt">${bchg.amt | auCurrencyConverter}</div>
+                  <div class="aaVerticalGridline"></div>
+                  <div class="aaCell aaFontData aaCellBchgBal">${bchg.newBalance | auCurrencyConverter}</div>
+                </div>
+                <div class="aaVerticalGridline"></div>
+              </div>
+            </template>
+            <!--
+            The purpose of having the following invisible end-of-list row
+            is to provide an invisible horizontal spacer if acct.bchgList is empty
+            so as to display the column headings row properly..
+            -->
+            <div class="aaRow aaHidden">
+              <div class="aaRowOps aaRowOpsEmpty aaBgColorToolbar">
               </div>
               <div class="aaVerticalGridline"></div>
-              <div class="aaRowData aaRowBgColorData ${app.selectedBchg.id == bchg.id ? 'aaRowDataSelected' : ''}">
-                <div class="aaCell aaFontData aaCellTranDate">${bchg.sourceTran.date}</div>
+              <div class="aaRowData aaRowBgColorData">
+                <div class="aaCell aaFontData aaCellTranDate"></div>
                 <div class="aaVerticalGridline"></div>
-                <div class="aaCell aaFontData aaCellBchgDesc">${bchg.desc}</div>
+                <div class="aaCell aaFontData aaCellBchgDesc"></div>
                 <div class="aaVerticalGridline"></div>
-                <div class="aaCell aaFontData aaCellBchgAmt">${bchg.amt | auCurrencyConverter}</div>
+                <div class="aaCell aaFontData aaCellBchgAmt"></div>
                 <div class="aaVerticalGridline"></div>
-                <div class="aaCell aaFontData aaCellBchgBal">${bchg.newBalance | auCurrencyConverter}</div>
+                <div class="aaCell aaFontData aaCellBchgBal"></div>
               </div>
               <div class="aaVerticalGridline"></div>
             </div>
-          </template>
-          <!--
-          The purpose of having the following invisible end-of-list row
-          is to provide an invisible horizontal spacer if acct.bchgList is empty
-          so as to display the column headings row properly..
-          -->
-          <div class="aaRow aaHidden">
-            <div class="aaRowOps aaRowOpsEmpty aaBgColorToolbar">
-            </div>
-            <div class="aaVerticalGridline"></div>
-            <div class="aaRowData aaRowBgColorData">
-              <div class="aaCell aaFontData aaCellTranDate"></div>
-              <div class="aaVerticalGridline"></div>
-              <div class="aaCell aaFontData aaCellBchgDesc"></div>
-              <div class="aaVerticalGridline"></div>
-              <div class="aaCell aaFontData aaCellBchgAmt"></div>
-              <div class="aaVerticalGridline"></div>
-              <div class="aaCell aaFontData aaCellBchgBal"></div>
-            </div>
-            <div class="aaVerticalGridline"></div>
           </div>
+          <div class="aaGridFooterBar"></div>
         </div>
-        <div class="aaGridFooterBar"></div>
       </div>
     </div>
   </div>

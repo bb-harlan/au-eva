@@ -73,7 +73,7 @@ export class AuFaeSideMove {
 
   onRowMouseDown(event) {
     let targetRow: Element = event.currentTarget as Element;
-    targetRow.children[0].classList.toggle('aaRowOpsSelected', true);
+    targetRow.children[0].classList.toggle('aaRowOpsMoverSelected', true);
     targetRow.children[2].classList.toggle('aaDragging', true);
     targetRow.children[2].classList.toggle('aaRowDataHover', false);
     this.mouseIsDown = true;
@@ -81,7 +81,7 @@ export class AuFaeSideMove {
   }
   onRowMouseUp(event) {
     let targetRow = event.currentTarget as Element;
-    targetRow.children[0].classList.toggle('aaRowOpsSelected', false);
+    targetRow.children[0].classList.toggle('aaRowOpsMoverSelected', false);
     targetRow.children[2].classList.toggle('aaDragging', false);
     targetRow.children[2].classList.toggle('aaRowDataHover', true);
     this.mouseIsDown = false;

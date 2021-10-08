@@ -4,7 +4,7 @@
   <require from="au-views/au-icon-new.html"></require>
   <require from="au-views/au-icon-edit.html"></require>
   <require from="au-views/au-icon-delete.html"></require>
-  <require from="au-views/au-icon-row-mover.html"></require>
+  <require from="au-views/au-icon-mover-rowops.html"></require>
   <require from="au-views/au-icon-ellipsis.html"></require>
   <require from="au-views/au-text-ellipsis.html"></require>
   <require from="au-views/au-grid-bchg-cells-spacer.html"></require>
@@ -55,11 +55,11 @@
         </div>
         <div class="aaGridContainer">
           <div class="aaGridTitleBar">Account balance changes</div>
-          <div class="aaRow aaRowColumnHeaders aaFontLabel aaFontBold" style="border-bottom-width: 3px;">
+          <div class="aaRow aaRowColumnHeaders" style="border-bottom-width: 3px;">
             <div class="aaRowOps aaRowOpsEmpty aaHidden">
             </div>
             <div class="aaVerticalGridline aaVerticalGridlineInHdg aaVerticalGridlineWide"></div>
-            <div class="aaRowData">
+            <div class="aaRowData aaFontLabel aaFontBold">
               <au-grid-bchg-cells-heading fae-side.one-time="'asset'"></au-grid-bchg-cells-heading>
               <div class="aaVerticalGridline aaVerticalGridlineInHdg aaVerticalGridlineWide"></div>
               <au-grid-bchg-cells-heading fae-side.one-time="'equity'"></au-grid-bchg-cells-heading>
@@ -163,8 +163,8 @@
         </div>
         <div class="aaGridContainer">
           <div class="aaGridTitleBar">Account balance changes</div>
-          <div class="aaRow aaRowColumnHeaders aaFontLabel aaFontBold" style="border-bottom-width: 3px;">
-            <div class="aaRowData">
+          <div class="aaRow aaRowColumnHeaders" style="border-bottom-width: 3px;">
+            <div class="aaRowData aaFontLabel aaFontBold">
               <au-grid-bchg-cells-heading fae-side.one-time="'asset'"></au-grid-bchg-cells-heading>
               <div class="aaVerticalGridline aaVerticalGridlineInHdg aaVerticalGridlineWide"></div>
               <au-grid-bchg-cells-heading fae-side.one-time="'equity'"></au-grid-bchg-cells-heading>
@@ -279,12 +279,12 @@
             <button type="button"
                     class="aaBtn"
                     click.trigger="app.viewmodelPopupBchgMover.open()">
-              <au-icon-row-mover></au-icon-row-mover>
+              <au-icon-mover-rowops></au-icon-mover-rowops>
               &nbsp;Move rows
               <au-text-ellipsis></au-text-ellipsis>
             </button>
           </div>
-          <div class="aaRow aaRowColumnHeaders aaFontLabel aaFontBold" style="border-bottom-width: 3px;">
+          <div class="aaRow aaRowColumnHeaders" style="border-bottom-width: 3px;">
             <div class="aaRowOps aaFontLabel aaHidden">
                 <span class="aaBtn">
                   <au-icon-new></au-icon-new>
@@ -294,7 +294,7 @@
                 </span>
             </div>
             <div class="aaVerticalGridline aaVerticalGridlineInHdg aaVerticalGridlineWide"></div>
-            <div class="aaRowData">
+            <div class="aaRowData aaFontLabel aaFontBold">
               <au-grid-bchg-cells-heading fae-side.one-time="'asset'"></au-grid-bchg-cells-heading>
               <div class="aaVerticalGridline aaVerticalGridlineInHdg aaVerticalGridlineWide"></div>
               <au-grid-bchg-cells-heading fae-side.one-time="'equity'"></au-grid-bchg-cells-heading>
