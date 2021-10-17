@@ -2,23 +2,30 @@
   <require from="au-views/au-icon-nav-up.html"></require>
   <require from="au-views/au-icon-nav-down.html"></require>
   <require from="au-views/au-icon-edit.html"></require>
+  <require from="au-views/au-acct-panel-spacer.html"></require>
   <require from="au-converters/au-currency-converter"></require>
   <require from="au-converters/au-equation-side-converter"></require>
-  <div style="padding-left: 40pc;">
+  <div class="aaRowAcctPanels"
+       element.ref="moduleRootElement"
+       css="${app.selectedModule == app.MODULE_ACCT ? '' : 'display: none;'}">
+    <template if.bind="app.selectedAcct.parentFaeSide.id == 'Equities'">
+      <!-- blank space for asset acct column -->
+      <au-acct-panel-spacer></au-acct-panel-spacer>
+    </template>
     <div class="aaPanel aaPanelBoxShadow"
-         css="${app.selectedModule == app.MODULE_ACCT ? '' : 'display: none;'}"
-         element.ref="moduleRootElement"
          id="observedElement">
-      <div class="aaPanelHeader aaPanelHeaderModule">Account</div>
+      <div class="aaPanelHeader aaPanelHeaderModule">${app.selectedAcct.parentFaeSide.id | auEquationSideConverter:true:false} account</div>
       <div class="aaPanelBody">
         <div class="aaForm">
           <table border="0" style="border-collapse: collapse;">
+<!--
             <tr>
               <td class="aaFormItemLabel">Equation side:</td>
               <td class="aaFormItemData">${app.selectedAcct.parentFaeSide.id | auEquationSideConverter:true:true}</td>
             </tr>
+-->
             <tr>
-              <td class="aaFormItemLabel">Title:</td>
+              <td class="aaFormItemLabel">Account title:</td>
               <td class="aaFormItemData">
                 ${app.selectedAcct.title}
               </td>
@@ -91,5 +98,9 @@
         </div>
       </div>
     </div>
+    <template if.bind="app.selectedAcct.parentFaeSide.id == 'Assets'">
+      <!-- blank space for asset acct column -->
+      <au-acct-panel-spacer></au-acct-panel-spacer>
+    </template>
   </div>
 </template>

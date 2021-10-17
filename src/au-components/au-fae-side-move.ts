@@ -13,21 +13,19 @@ export class AuFaeSideMove {
   auModuleFae: AuModuleFae;
 
   @bindable faeSide: FaeSide;
-  candidateFaeSide: FaeSide;
-  candidateSelectedAcct
 
   /* element reference(s) */
   rowOpsMenuModal: HTMLElement;
   rowOpsBoundingClientRect;
   rowColumnHeaders: HTMLElement;
-  divScrollableRows: HTMLElement;
+  divScrollableRows: Element;
 
   /* other properties */
   Acct: typeof Acct = Acct;
   Annotation: typeof Annotation = Annotation;
   mouseIsDown: boolean = false;
   selectedMoverRow: Element = null;
-
+  rowEnterCnt: number = 0;
 
   /*
    * In the following two mouseenter/mouseleave handlers, the end-of-list
@@ -44,42 +42,24 @@ export class AuFaeSideMove {
     this.app = app;
     this.auModuleFae = auModuleFae;
   }
-
-/*
-  open(): void {
-    // alert("got here: open()");
-    this.candidateFaeSide = this.faeSide.clone();
-    console.log(this.candidateFaeSide);
-    /!*
-        if (this.app.selectedAcct) {
-          let filteredAcctList = this.candidateFaeSide.acctList.filter((listItem) => listItem instanceof Acct) as Array<Acct>;
-          this.candidateSelectedAcct = filteredAcctList.find(element => element.id == this.app.selectedAcct.id);
-    *!/
-  }
-*/
   saveChanges(): void {
-    if (this.divScrollableRows.children.length >= 2) {
-      for (let i = 0; i < this.divScrollableRows.children.length; i++) {
-        // let listItem = (<any>this.divScrollableRows.children[i]).listItem as Acct | Annotation;
-        let listItem = this.faeSide.acctList.find(element => element.id == this.divScrollableRows.children[i].id);
-        listItem.intraSideIndex = i;
-      }
-      this.faeSide.sortAcctList();
+    for (let i = 0; i < this.divScrollableRows.children.length - 1; i++) {
+      let listItem = this.faeSide.acctList.find(element => element.id == this.divScrollableRows.children[i].id);
+      listItem.intraSideIndex = i;
     }
+    this.faeSide.sortAcctList();
   }
   cancel(): void {
-    this.candidateFaeSide = null;
   }
-
-  onRowMouseDown(event) {
-    let targetRow: Element = event.currentTarget as Element;
+  onRowMouseDown(event): void {
+    let targetRow = event.currentTarget as Element;
     targetRow.children[0].classList.toggle('aaRowOpsMoverSelected', true);
     targetRow.children[2].classList.toggle('aaDragging', true);
     targetRow.children[2].classList.toggle('aaRowDataHover', false);
     this.mouseIsDown = true;
     this.selectedMoverRow = event.currentTarget;
   }
-  onRowMouseUp(event) {
+  onRowMouseUp(event): void {
     let targetRow = event.currentTarget as Element;
     targetRow.children[0].classList.toggle('aaRowOpsMoverSelected', false);
     targetRow.children[2].classList.toggle('aaDragging', false);
@@ -94,42 +74,43 @@ export class AuFaeSideMove {
     }
   }
   onRowMouseEnter(event, listItem) {
-    if (!this.mouseIsDown) {
+    let targetRow = event.currentTarget as Element;
+    if (this.mouseIsDown && this.selectedMoverRow) {
+      // user dragged mouse into row (with mous down)
+      if (this.selectedMoverRow.previousElementSibling && this.selectedMoverRow.previousElementSibling.id == targetRow.id) {
+        this.divScrollableRows.insertBefore(this.selectedMoverRow, targetRow);
+        this.selectedMoverRow.scrollIntoView({block: 'center'});
+      }
+      else if (this.selectedMoverRow.nextElementSibling && this.selectedMoverRow.nextElementSibling.id == targetRow.id) {
+        // NOTE: In the following statement "targetRow.nextSibling" works, "targetRow.nextElementSibling" does not work
+        this.selectedMoverRow.parentElement.insertBefore(this.selectedMoverRow, targetRow.nextSibling);
+        this.selectedMoverRow.scrollIntoView({block: 'center'});
+      }
+    }
+    else {
+      // user moved mouse into row with mouse up
       let targetRow = event.currentTarget as Element;
       targetRow.children[2].classList.toggle('aaRowDataHover', true);
     }
   }
-  onListMouseMove(event) {
-    if (!this.mouseIsDown || !this.selectedMoverRow) {
-      return;
-    }
-    let mouseY = event.clientY;
-    let moverGridRows = event.currentTarget;
-    let previousSibling = this.selectedMoverRow.previousElementSibling;
-    if (previousSibling && mouseY < this.selectedMoverRow.getBoundingClientRect().top) {
-      moverGridRows.insertBefore(this.selectedMoverRow, previousSibling);
-      return;
-    }
-    let nextSibling = this.selectedMoverRow.nextElementSibling;
-    if (nextSibling && mouseY >= nextSibling.getBoundingClientRect().top) {
-      moverGridRows.insertBefore(nextSibling, this.selectedMoverRow);
-      return;
-    }
-  }
   onListMouseLeave(event) {
     if (this.mouseIsDown && this.selectedMoverRow) {
-      this.selectedMoverRow.children[0].classList.toggle('aaDragging', false);
+      this.selectedMoverRow.scrollIntoView({block: 'center'});
+      this.selectedMoverRow.children[0].classList.toggle('aaRowOpsMoverSelected', false);
+      this.selectedMoverRow.children[2].classList.toggle('aaDragging', false);
       this.selectedMoverRow.children[0].classList.toggle('aaRowDataHover', false);
       this.mouseIsDown = false;
       this.selectedMoverRow = null;
-      return;
     }
   }
-
-  onRowEnter(event, listItem) {
-    event.target.children[2].classList.toggle('aaRowDataHover', true);
-  }
-  onRowLeave(event, listItem) {
-    event.target.children[2].classList.toggle('aaRowDataHover', false);
+  onTransparentRowMouseEnter(event) {
+    if (this.mouseIsDown && this.selectedMoverRow) {
+      // this.selectedMoverRow.scrollIntoView({block: 'center'});
+      this.selectedMoverRow.children[0].classList.toggle('aaRowOpsMoverSelected', false);
+      this.selectedMoverRow.children[2].classList.toggle('aaDragging', false);
+      this.selectedMoverRow.children[0].classList.toggle('aaRowDataHover', false);
+      this.mouseIsDown = false;
+      this.selectedMoverRow = null;
+    }
   }
 }

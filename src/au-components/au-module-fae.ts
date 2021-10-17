@@ -92,7 +92,8 @@ export class AuModuleFae {
     if (observer.app.selectedAcct) {
       let element = document.getElementById(observer.app.selectedAcct.id);
       if (element) {
-        element.scrollIntoView({behavior: "smooth", block: "center"});
+        // element.scrollIntoView({behavior: "smooth", block: "center"});
+        element.scrollIntoView({behavior: "auto", block: "nearest"});
       }
     }
     observer.disconnect();

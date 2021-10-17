@@ -1,5 +1,7 @@
 <template>
   <require from="au-views/au-icon-mover-rowops.html"></require>
+  <require from="au-views/au-icon-mover-toolbar.html"></require>
+  <require from="au-views/au-icon-mover-rowops-transparent.html"></require>
   <require from="au-views/au-text-ellipsis.html"></require>
   <require from="au-converters/au-currency-converter"></require>
   <require from="au-converters/au-equation-side-converter"></require>
@@ -11,10 +13,8 @@
     <div class="aaGridTitleBar" style="font-size: larger;">
       ${faeSide.id | auEquationSideConverter:true: false} accounts
     </div>
-    <div class="aaPanelToolBar">
-      <div style="text-align: center;">
-        <span class="aaFontLabel">&mdash; Drag & drop row(s) to desired list position(s). &mdash;</span>
-      </div>
+    <div class="aaPanelToolBar" style="text-align: center;">
+      <span class="aaFontLabel">&mdash; Drag & drop row(s) to desired list position(s). &mdash;</span>
     </div>
     <div class="aaRow aaRowColumnHeaders">
       <div class="aaRowOps aaRowOpsMover aaHidden">
@@ -30,7 +30,6 @@
     </div>
     <div class="aaGridScrollableRows aaGridHeightInFaeSide"
          element.ref="divScrollableRows"
-         mousemove.trigger="onListMouseMove($event)"
          mouseleave.trigger="onListMouseLeave($event)">
       <template repeat.for="listItem of faeSide.acctList">
         <div id="${listItem.id}"
@@ -59,24 +58,38 @@
           </div>
         </div>
       </template>
-      <template if.bind="moverAcctList.length == 0">
-        <div class="aaRow aaHidden">
-          <div class="aaRowOps">
-          </div>
-          <div class="aaVerticalGridline"></div>
-          <div class="aaRowData aaRowBgColorData">
-            <span class="aaCell aaFontData aaCellAcctTitle">x</span>
-            <div class="aaVerticalGridline"></div>
-            <span class="aaCell aaFontData aaCellBchgBal">0</span>
-            <div class="aaVerticalGridline"></div>
-          </div>
+      <!--
+      The following row serves to end any downward dragging operation when it reaches this last row
+      with its "mouseenter" vent handler. This row must not be hidden in order to fire the "mouseenter"
+       event, but I simulate "hidden" by making the color and background-color "transparent" for all
+       child elements so that it is indistinguishable from unoccupied grid rows.
+      -->
+      <div class="aaRow"
+           style="color: transparent; background-color: transparent;"
+           mouseenter.trigger="onTransparentRowMouseEnter($event)">
+        <div class="aaRowOps aaRowOpsMover"
+          style="color: transparent; background-color: transparent;">
+          <au-icon-mover-rowops-transparent></au-icon-mover-rowops-transparent>
         </div>
-      </template>
+        <div class="aaVerticalGridline"
+             style="color: transparent; background-color: transparent;"></div>
+        <div class="aaRowData"
+             style="color: transparent; background-color: transparent;">
+          <span class="aaCell aaFontData aaCellAcctTitle"
+                style="color: transparent; background-color: transparent;">x</span>
+          <div class="aaVerticalGridline"
+               style="color: transparent; background-color: transparent;"></div>
+          <span class="aaCell aaFontData aaCellBchgBal"
+                style="color: transparent; background-color: transparent;">x</span>
+          <div class="aaVerticalGridline"></div>
+        </div>
+      </div>
     </div>
     <div class="aaGridFooterBar"></div>
   </div>
 </template>
 
+<!--
 <div element.ref="rowOpsMenuModal" class="aaModal"
      style="background: transparent;"
      click.delegate="onRowOpsCancel($event)">
@@ -86,16 +99,16 @@
          position: fixed;
          top: ${rowOpsBoundingClientRect.top}px;
          left: ${rowOpsBoundingClientRect.left}px">
-    <!--
+    &lt;!&ndash;
             <span class="aaBtn" click.delegate="onRowOpsClose($event)">
                 <i class="fa fa-bars fa-fw" aria-hidden="true"></i></span>
-    -->
+    &ndash;&gt;
     <div class="btn-group">
-      <!--
+      &lt;!&ndash;
               <a class="aaBtn dropdown-toggle" data-toggle="dropdown">
                 <span class="fa fa-bars fa-fw" aria-hidden="true"></span>
               </a>
-      -->
+      &ndash;&gt;
       <ul class="dropdown-menu aaSansSerif" style="display: block; font-family: ">
         <li><a><i class="fa fa-plus-circle fa-fw aaIconGreen"></i> Insert new account row</a></li>
         <li><a><i class="fa fa-plus-circle fa-fw aaIconGreen"></i> Insert new annotation row</a></li>
@@ -105,5 +118,6 @@
     </div>
   </div>
 </div>
+-->
 
 </template>

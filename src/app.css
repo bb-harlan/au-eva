@@ -58,6 +58,9 @@ h1 {
 .aaIconWhite {
   color: #fff;
 }
+.aaIconTransparent {
+  color: transparent;
+}
 
 .aaAppToolBar {
   display: inline-block;
@@ -143,6 +146,7 @@ h1 {
   font-family: Arial, Helvetica, sans-serif, SansSerif;
   font-weight: bold;
   letter-spacing: 2px;
+  text-align: center;
 }
 .aaPanelHeaderModule {
   font-size: 150%;
@@ -212,6 +216,11 @@ h1 {
 }
 .aaHidden {
   visibility: hidden;
+}
+.aaTransparent {
+  color: transparent;
+  background-color: transparent;
+  padding: 0 0.25pc;
 }
 .aaEquSideContainer {
   display: inline-block;
@@ -385,6 +394,16 @@ h1 {
 }
 .aaRowBgColorNonData {
   background-color: #f0f0f0;
+}
+.aaRowAcctPanels {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center; /* vertical axis */
+  margin: 0;
+  text-align: left;
+  white-space: nowrap;
+  cursor: default;
 }
 .aaRow {
   display: flex;
