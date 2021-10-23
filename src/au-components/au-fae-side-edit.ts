@@ -17,6 +17,7 @@ export class AuFaeSideEdit {
   candidateSelectedAcct
 
   /* element reference(s) */
+  divGridRows: HTMLElement;
   popupTop: HTMLElement;
   rowOpsMenuModal: HTMLElement;
   rowOpsBoundingClientRect;
@@ -24,6 +25,7 @@ export class AuFaeSideEdit {
   /* other properties */
   Acct: typeof Acct = Acct;
   Annotation: typeof Annotation = Annotation;
+  mutationObserver = new MutationObserver(this.onMutation);
 
   /*
    * In the following two mouseenter/mouseleave handlers, the end-of-list
@@ -121,6 +123,7 @@ export class AuFaeSideEdit {
     }
   }
   acctNew(event, listItem) {
+    this.mutationObserver.observe(this.divGridRows, {subtree: false, childList: true});
     let insertionIndex: number;
     let newAcct: Acct;
     if (listItem) {
@@ -135,12 +138,13 @@ export class AuFaeSideEdit {
       /*intraSideIndex*/ 0,
       /*title*/ "",
       /*normalBalance*/ 1);
+    (this.mutationObserver as any).inputId = `${newAcct.id}-title`; // cast as "any" to programmatically add property
     this.candidateFaeSide.acctList.splice(insertionIndex, 0, newAcct);
     this.candidateFaeSide.reindexAcctList();
     this.candidateSelectedAcct = newAcct;
-    this.auModuleFae.observeForSetInputFocus();
   }
   annotationNew(event, listItem) {
+    this.mutationObserver.observe(this.divGridRows, {subtree: false, childList: true});
     let insertionIndex: number;
     let newAnnotation: Annotation;
     if (listItem) {
@@ -154,14 +158,26 @@ export class AuFaeSideEdit {
       /*parentFaeSide*/ this.candidateFaeSide,
       /*intraSideIndex*/ 0,
       /*annoText*/ "");
+    (this.mutationObserver as any).inputId = `${newAnnotation.id}-annoText`; // cast as "any" to programmatically add property
     this.candidateFaeSide.acctList.splice(insertionIndex, 0, newAnnotation);
     this.candidateFaeSide.reindexAcctList();
-    this.candidateSelectedAcct = newAnnotation;
-    this.auModuleFae.observeForSetInputFocus();
   }
   listItemDelete(event, listItem) {
     let removalIndex = listItem.intraSideIndex;
     this.candidateFaeSide.acctList.splice(removalIndex, 1);
     this.candidateFaeSide.reindexAcctList();
+  }
+
+  onMutation(mutationsList, mutationObserver) {
+    console.log("************ mutationsList *********************");
+    console.log(mutationsList);
+    let element = document.getElementById(mutationObserver.inputId);
+    if (element) {
+      (element as HTMLElement).focus();
+    }
+    else {
+      console.log("element not found");
+    }
+    mutationObserver.disconnect();
   }
 }

@@ -68,6 +68,7 @@ export class AuModuleFae {
 */
     this.moduleMode = this.app.MODE_MOVE;
     this.app.elementNavRibbon.classList.toggle("aaHidden", true);
+    this.app.selectedAcct = null;
   }
   moveSaveChanges() {
     this.vmFaeSideMoveAssets.saveChanges();
@@ -93,7 +94,7 @@ export class AuModuleFae {
       let element = document.getElementById(observer.app.selectedAcct.id);
       if (element) {
         // element.scrollIntoView({behavior: "smooth", block: "center"});
-        element.scrollIntoView({behavior: "auto", block: "nearest"});
+        element.scrollIntoView({behavior: "smooth", block: "center"});
       }
     }
     observer.disconnect();

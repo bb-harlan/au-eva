@@ -35,7 +35,8 @@
         <div class="aaVerticalGridline" style="background-color: #fff;"></div>
       </div>
     </div>
-    <div class="aaGridScrollableRows aaGridHeightInFaeSide">
+    <div element.ref="divGridRows"
+         class="aaGridScrollableRows aaGridHeightInFaeSide">
       <template repeat.for="listItem of candidateFaeSide.acctList">
         <!--
         NOTE: This datagrid is NOT in navigating mode, so the following row element must NOT have
@@ -103,7 +104,7 @@
             <div class="aaVerticalGridline"></div>
             <div class="aaRowData aaRowBgColorData">
               <input class="aaFormInputText aaCellAnnoTitle aaCellInGrid"
-                     id="${listItem.id}-title"
+                     id="${listItem.id}-annoText"
                      type="text"
                      placeholder="Annotation text"
                      focus.trigger="onTitleFocus($event, listItem)"
@@ -156,40 +157,40 @@
         </div>
     </div>
     <div class="aaGridFooterBar"></div>
-</div>
-<!--<div class="aaGridTotals">-->
-<div class="aaGridContainer" style="border-color: transparent; background-color: transparent;">
-  <div class="aaRow" style="border-bottom-color: transparent; background-color: transparent;">
-    <template if.bind="app.viewNavMode">
-      <div class="aaRowOps aaRowOpsEmpty aaHidden">
-      </div>
-    </template>
-    <template if.bind="!app.viewNavMode">
-      <div class="aaRowOps aaHidden aaFontLabel">
+  </div>
+  <!--<div class="aaGridTotals">-->
+  <div class="aaGridContainer" style="border-color: transparent; background-color: transparent;">
+    <div class="aaRow" style="border-bottom-color: transparent; background-color: transparent;">
+      <template if.bind="app.viewNavMode">
+        <div class="aaRowOps aaRowOpsEmpty aaHidden">
+        </div>
+      </template>
+      <template if.bind="!app.viewNavMode">
+        <div class="aaRowOps aaHidden aaFontLabel">
           <span class="aaBtn"
                 type="button">
             <au-icon-new></au-icon-new>
           </span>
-        <span class="aaBtn"
-              type="button">
+          <span class="aaBtn"
+                type="button">
             <au-icon-new></au-icon-new>
           </span>
-        <span class="aaBtn"
-              type="button">
+          <span class="aaBtn"
+                type="button">
             <au-icon-delete></au-icon-delete>
           </span>
-      </div>
-    </template>
-    <div class="aaVerticalGridline aaHidden"></div>
-    <div class="aaRowData">
+        </div>
+      </template>
+      <div class="aaVerticalGridline aaHidden"></div>
+      <div class="aaRowData">
         <span class="aaCell aaCellAcctTitle" style="text-align: right;"><span
           class="aaFontLabel">Total:</span></span>
+        <div class="aaVerticalGridline aaHidden"></div>
+        <span class="aaCell aaCellBchgBal">${faeSide.listTotal | auCurrencyConverter}</span>
+      </div>
       <div class="aaVerticalGridline aaHidden"></div>
-      <span class="aaCell aaCellBchgBal">${faeSide.listTotal | auCurrencyConverter}</span>
     </div>
-    <div class="aaVerticalGridline aaHidden"></div>
   </div>
-</div>
 </template>
 
 <div element.ref="rowOpsMenuModal" class="aaModal"
