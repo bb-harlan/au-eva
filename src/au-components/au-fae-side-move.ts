@@ -84,7 +84,7 @@ export class AuFaeSideMove {
       else if (this.selectedMoverRow.nextElementSibling && this.selectedMoverRow.nextElementSibling.id == targetRow.id) {
         // NOTE: In the following statement "targetRow.nextSibling" works, "targetRow.nextElementSibling" does not work
         this.selectedMoverRow.parentElement.insertBefore(this.selectedMoverRow, targetRow.nextSibling);
-        this.selectedMoverRow.scrollIntoView({block: 'center'});
+        this.selectedMoverRow.scrollIntoView({block: 'nearest'});
       }
     }
     else {

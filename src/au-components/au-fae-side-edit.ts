@@ -45,11 +45,6 @@ export class AuFaeSideEdit {
 
   bind() {
     this.candidateFaeSide = this.faeSide.clone();
-    /*
-        if (this.app.selectedAcct) {
-          let filteredAcctList = this.candidateFaeSide.acctList.filter((listItem) => listItem instanceof Acct) as Array<Acct>;
-          this.candidateSelectedAcct = filteredAcctList.find(element => element.id == this.app.selectedAcct.id);
-    */
   }
   missingTitleCnt(): number {
     let missingTitleCnt = 0;
@@ -176,6 +171,7 @@ export class AuFaeSideEdit {
       (element as HTMLElement).focus();
     }
     else {
+      // This shouldn't happena
       console.log("element not found");
     }
     mutationObserver.disconnect();

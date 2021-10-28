@@ -399,7 +399,8 @@ h1 {
   display: flex;
   flex-direction: row;
   justify-content: flex-start;
-  align-items: center; /* vertical axis */
+  /*align-items: center; !* vertical axis *!*/
+  align-items: start; /* vertical axis */
   margin: 0;
   text-align: left;
   white-space: nowrap;
