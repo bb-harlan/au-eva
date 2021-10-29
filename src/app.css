@@ -395,7 +395,7 @@ h1 {
 .aaRowBgColorNonData {
   background-color: #f0f0f0;
 }
-.aaRowAcctPanels {
+.aaRowAssetEquityPanels {
   display: flex;
   flex-direction: row;
   justify-content: flex-start;

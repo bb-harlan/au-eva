@@ -2,14 +2,13 @@
   <require from="au-views/au-bchg-panel-spacer.html"></require>
   <require from="au-converters/au-currency-converter"></require>
   <require from="au-converters/au-equation-side-converter"></require>
-  <div class="aaRowAcctPanels"
+  <div class="aaRowAssetEquityPanels"
        element.ref="moduleRootElement"
        css="${app.selectedModule == app.MODULE_BCHG ? '' : 'display: none;'}">
     <template if.bind="app.selectedAcct.parentFaeSide.id == 'Equities'">
       <!-- blank space for asset bchg column -->
       <au-bchg-panel-spacer></au-bchg-panel-spacer>
     </template>
-    <!-- blank space for asset bchg column -->
     <div class="aaPanel aaPanelBoxShadow"
          css="${app.selectedModule == app.MODULE_BCHG ? '' : 'display: none;'}">
       <div class="aaPanelHeader aaPanelHeaderModule">${app.selectedBchg.targetAcct.parentFaeSide.id | auEquationSideConverter:true:false} account balance change</div>

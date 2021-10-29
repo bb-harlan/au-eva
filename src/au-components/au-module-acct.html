@@ -5,7 +5,7 @@
   <require from="au-views/au-acct-panel-spacer.html"></require>
   <require from="au-converters/au-currency-converter"></require>
   <require from="au-converters/au-equation-side-converter"></require>
-  <div class="aaRowAcctPanels"
+  <div class="aaRowAssetEquityPanels"
        element.ref="moduleRootElement"
        css="${app.selectedModule == app.MODULE_ACCT ? '' : 'display: none;'}">
     <template if.bind="app.selectedAcct.parentFaeSide.id == 'Equities'">
