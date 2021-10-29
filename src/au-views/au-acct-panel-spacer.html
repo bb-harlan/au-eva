@@ -8,7 +8,10 @@
     <div class="aaPanelHeader aaPanelHeaderModule">(spacer)</div>
     <div class="aaPanelBody">
       <div class="aaGridContainer">
+<!--
         <div class="aaGridTitleBar">Balance changes</div>
+-->
+<!--
         <div class="aaRow aaRowColumnHeaders">
           <div class="aaRowOps aaRowOpsEmpty aaHidden"></div>
           <div class="aaVerticalGridline aaVerticalGridlineInHdg"></div>
@@ -23,21 +26,22 @@
             <div class="aaVerticalGridline aaVerticalGridlineInHdg"></div>
           </div>
         </div>
-        <div class="aaGridScrollableRows xaaGridHeightInAcct">
+-->
+        <div class="aaGridScrollableRows aaGridHeightInAcct">
           <!--anchor-->
           <!--
           The purpose of having the following invisible end-of-list row
           is to provide an invisible horizontal spacer if acct.bchgList is empty
           so as to display the column headings row properly..
           -->
-          <div class="aaRow aaHidden">
+          <div class="aaRow">
             <div class="aaRowOps aaRowOpsEmpty aaBgColorToolbar">
             </div>
             <div class="aaVerticalGridline"></div>
             <div class="aaRowData aaRowBgColorData">
               <div class="aaCell aaFontData aaCellTranDate"></div>
               <div class="aaVerticalGridline"></div>
-              <div class="aaCell aaFontData aaCellBchgDesc"></div>
+              <div class="aaCell aaFontData aaCellBchgDesc">(ending invisible row)</div>
               <div class="aaVerticalGridline"></div>
               <div class="aaCell aaFontData aaCellBchgAmt"></div>
               <div class="aaVerticalGridline"></div>
@@ -46,7 +50,9 @@
             <div class="aaVerticalGridline"></div>
           </div>
         </div>
+<!--
         <div class="aaGridFooterBar"></div>
+-->
       </div>
     </div>
   </div>
