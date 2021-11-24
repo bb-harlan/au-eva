@@ -6,4 +6,12 @@
 
 * responsive CSS
 
+* change CSS units from absolute length units (e.g., pc) to relative legth unit (e.g., em or ch).
+See https://developer.mozilla.org/en-US/docs/Learn/CSS/Building_blocks/Values_and_units
+
+* rework navigationmap
+
+* rework top-le level layout amd change fixed-length grids to fit-to-numberr-of-rows.
+
+* modify tran.bchgMover to work like faeSide.bchgMover
 

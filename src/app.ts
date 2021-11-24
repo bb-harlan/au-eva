@@ -1,4 +1,5 @@
 // import {TaskQueue, inject} from 'aurelia-framework';
+import {bindable} from 'aurelia-framework';
 import {Data} from "app-data/data";
 import {Acct, Annotation} from 'app-data/models/acct';
 import {FaeSide} from 'app-data/models/fae-side';
@@ -51,8 +52,29 @@ export class App {
     console.log(firebase);
 
 */
+    window.onresize = this.onResize;
+  }
+  onResize(event) {
+    console.log("******** in onResize ********");
+    console.log(`window.innerHeight: ${window.innerHeight};`);
+    console.log(event);
+    console.log(`event.currentTarget.innerHeight: ${event.currentTarget.innerHeight};`);
+    console.log(`event.currentTarget.innerWidth: ${event.currentTarget.innerWidth};`);
+    this.browserInnerHeight = event.currentTarget.innerHeight;
+    console.log(`app.browserInnerHeight: ${this.browserInnerHeight};`);
+    let bodyElement = document.getElementsByTagName("BODY")[0];
+    console.log(`document.getElementsByTagName("BODY")[0].clientHeight: ${bodyElement.clientHeight}`);
+    let bodyBoundingClientRect = bodyElement.getBoundingClientRect();
+    console.log(bodyBoundingClientRect);
+    console.log(`bodyBoundingClientRect.bottom: ${bodyBoundingClientRect.bottom};`);
+    let gridAssetRowsElement = document.getElementById("gridAssetRows");
+    let gridEquityRowsElement = document.getElementById("gridEquityRows");
+    gridAssetRowsElement.style.height = "300px";
+    gridEquityRowsElement.style.height = "300px";
 
   }
+  @bindable
+  browserInnerHeight: number;
 
 /*
   firebaseConfig = {
@@ -164,7 +186,6 @@ export class App {
     this.data.reviveData();
     */
   }
-
 
   selectAcct(acct): void {
     this.selectedAcct = acct;

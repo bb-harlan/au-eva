@@ -20,7 +20,9 @@
         <div class="aaVerticalGridline aaVerticalGridlineInHdg"></div>
       </div>
     </div>
-    <div class="aaGridScrollableRows aaGridHeightInFaeSide">
+    <div class="aaGridScrollableRows"
+         css="height: auto;"
+         id="grid${faeSide.id | auEquationSideConverter:true: false}Rows">
       <template repeat.for="listItem of faeSide.acctList">
         <template if.bind="listItem.isAcct()">
           <div class="aaRow"
@@ -79,17 +81,23 @@
   </div>
   <!--<div class="aaGridTotals">-->
   <div class="aaGridContainer" style="border-color: transparent; background-color: transparent;">
-    <div class="aaRow" style="border-bottom-color: transparent; background-color: transparent;">
-      <div class="aaRowOps aaRowOpsEmpty aaHidden">
-      </div>
-      <div class="aaVerticalGridline aaHidden"></div>
-      <div class="aaRowData">
+    <div class="aaGridScrollableRows"
+         style="height: auto;
+                background-color: transparent;
+                overflow: hidden;
+                scrollbar-gutter: stable;">
+      <div class="aaRow" style="border-bottom-color: transparent; background-color: transparent;">
+        <div class="aaRowOps aaRowOpsEmpty aaHidden">
+        </div>
+        <div class="aaVerticalGridline aaHidden"></div>
+        <div class="aaRowData">
         <span class="aaCell aaCellAcctTitle" style="text-align: right;"><span
           class="aaFontLabel">Total:</span></span>
+          <div class="aaVerticalGridline aaHidden"></div>
+          <span class="aaCell aaCellBchgBal">${faeSide.listTotal | auCurrencyConverter}</span>
+        </div>
         <div class="aaVerticalGridline aaHidden"></div>
-        <span class="aaCell aaCellBchgBal">${faeSide.listTotal | auCurrencyConverter}</span>
       </div>
-      <div class="aaVerticalGridline aaHidden"></div>
     </div>
   </div>
   <div element.ref="rowOpsMenuModal" class="aaModal"
