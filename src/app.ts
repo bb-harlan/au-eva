@@ -12,69 +12,68 @@ import "firebase/firestore";
 export class App {
 
   constructor() {
-/*
-    if (!firebase.apps.length) {
-      firebase.initializeApp(this.firebaseConfig);
-    }
-    this.firestore=firebase.firestore();
-    let docURL = document.URL;
-    this.urlObj = new URL(docURL);
-    console.log("this.urlObj");
-    console.log(this.urlObj);
-    if(this.urlObj.hostname === "localhost") {
-      this.firestore.settings({
-                                host: "localhost:8085",
-                                ssl: false
-                              });
-/!*
-      this.firestore.settings.host = "localhost:8085";
-      this.firestore.settings.ssl = false;
-*!/
+    /*
+        if (!firebase.apps.length) {
+          firebase.initializeApp(this.firebaseConfig);
+        }
+        this.firestore=firebase.firestore();
+        let docURL = document.URL;
+        this.urlObj = new URL(docURL);
+        console.log("this.urlObj");
+        console.log(this.urlObj);
+        if(this.urlObj.hostname === "localhost") {
+          this.firestore.settings({
+                                    host: "localhost:8085",
+                                    ssl: false
+                                  });
+    /!*
+          this.firestore.settings.host = "localhost:8085";
+          this.firestore.settings.ssl = false;
+    *!/
 
-    }
-    let booksId = this.urlObj.searchParams.get('booksId');
-    if (booksId) {
-      console.log(`booksId: "${booksId}"`);
-    }
-    else {
-      console.log("Query string parameter 'booksId' not found");
-    }
+        }
+        let booksId = this.urlObj.searchParams.get('booksId');
+        if (booksId) {
+          console.log(`booksId: "${booksId}"`);
+        }
+        else {
+          console.log("Query string parameter 'booksId' not found");
+        }
 
 
-    this.firestore.collection("example").get().then(
-      querySnapshot => {
-        let docs = querySnapshot.docs.map(doc => doc.data());
-        console.log("console.log(docs)");
-        console.log(docs);
-      }
-      )
-    console.log("console.log(firebase)");
-    console.log(firebase);
+        this.firestore.collection("example").get().then(
+          querySnapshot => {
+            let docs = querySnapshot.docs.map(doc => doc.data());
+            console.log("console.log(docs)");
+            console.log(docs);
+          }
+          )
+        console.log("console.log(firebase)");
+        console.log(firebase);
 
-*/
+    */
     window.onresize = this.onResize;
+    (document.getElementsByTagName("BODY")[0] as any).app = this; // cast as "any" to programmatically add property
   }
   onResize(event) {
     console.log("******** in onResize ********");
-    console.log(`window.innerHeight: ${window.innerHeight};`);
-    console.log(event);
-    console.log(`event.currentTarget.innerHeight: ${event.currentTarget.innerHeight};`);
-    console.log(`event.currentTarget.innerWidth: ${event.currentTarget.innerWidth};`);
-    this.browserInnerHeight = event.currentTarget.innerHeight;
-    console.log(`app.browserInnerHeight: ${this.browserInnerHeight};`);
-    let bodyElement = document.getElementsByTagName("BODY")[0];
-    console.log(`document.getElementsByTagName("BODY")[0].clientHeight: ${bodyElement.clientHeight}`);
-    let bodyBoundingClientRect = bodyElement.getBoundingClientRect();
-    console.log(bodyBoundingClientRect);
-    console.log(`bodyBoundingClientRect.bottom: ${bodyBoundingClientRect.bottom};`);
-    let gridAssetRowsElement = document.getElementById("gridAssetRows");
-    let gridEquityRowsElement = document.getElementById("gridEquityRows");
-    gridAssetRowsElement.style.height = "300px";
-    gridEquityRowsElement.style.height = "300px";
+    /*
+        bodyElement = event.currentTarget.document.activeElement;
+        console.log(`event.currentTarget.document.activeElement: ${bodyElement};`);
+        console.log(bodyElement);
+    */
+    let bodyElement;
+    bodyElement = document.getElementsByTagName("BODY")[0];
+    let domRectBody = bodyElement.getBoundingClientRect();
 
+    let panelElement = document.getElementById("observedElement");
+    let domRectPanel = panelElement.getBoundingClientRect();
+
+    bodyElement.app.heightTest = bodyElement.app.heightTest + domRectBody.bottom - domRectPanel.bottom - 5;
+    console.log(bodyElement.app.heightTest);
   }
-  @bindable
-  browserInnerHeight: number;
+
+  bodyElement: Element;
 
 /*
   firebaseConfig = {
@@ -176,15 +175,27 @@ export class App {
 
 
   bind() {
+    console.log("******** in attached() ********");
     // this.data.generateEmptyData();
-    this.data.generateTestData();
-    // this.data.generateExample1Data();
-
+    // this.data.generateTestData();
+    this.data.generateExample1Data();
     /*** Test strigifying and reviving data ***/
     /*
     this.data.stringifyData();
     this.data.reviveData();
     */
+
+/*
+    let bodyElement = document.getElementsByTagName("BODY")[0];
+    console.log(bodyElement);
+    let domRectBody = bodyElement.getBoundingClientRect();
+    console.log(domRectBody);
+    let panelElement = document.getElementById("observedElement");
+    console.log(panelElement);
+    let domRectPanel = panelElement.getBoundingClientRect();
+    console.log(domRectPanel);
+    this.heightTest = this.heightTest + domRectBody.bottom - domRectPanel.bottom;
+*/
   }
 
   selectAcct(acct): void {
@@ -229,6 +240,7 @@ export class App {
     // event.target.classList.toggle("aaNavMapBtnHover", false);
   }
   elementNavRibbon: HTMLElement;
+  heightTest: number = 75;
 
   goFaeModule(event) {
     event.target.classList.toggle("aaNavModuleHover", false);
@@ -284,13 +296,6 @@ export class App {
     let selectedTranIndex = this.data.jrnl.tranList.findIndex(element => element.id == this.selectedTran.id);
     this.selectedTran = this.data.jrnl.tranList[selectedTranIndex + 1];
   }
-
-/*
-  logBodyBoundingClientRect() {
-    let bodyElement = document.getElementsByTagName("BODY")[0];
-    console.log(bodyElement.getBoundingClientRect());
-  }
-*/
 }
 
 

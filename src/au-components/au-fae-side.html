@@ -12,16 +12,16 @@
     <div class="aaRow aaRowColumnHeaders">
       <div class="aaRowOps aaRowOpsEmpty aaHidden">
       </div>
-      <div class="aaVerticalGridline aaVerticalGridlineInHdg" element.ref="popupLeft"></div>
+      <div class="aaVerticalGridline" element.ref="popupLeft"></div>
       <div class="aaRowData aaFontLabel aaFontBold">
         <div class="aaCell aaCellAcctTitle">Title</div>
-        <div class="aaVerticalGridline aaVerticalGridlineInHdg"></div>
+        <div class="aaVerticalGridline"></div>
         <div class="aaCell aaCellBchgBal">Balance</div>
-        <div class="aaVerticalGridline aaVerticalGridlineInHdg"></div>
+        <div class="aaVerticalGridline"></div>
       </div>
     </div>
     <div class="aaGridScrollableRows"
-         css="height: auto;"
+         css="height: ${app.heightTest}px;"
          id="grid${faeSide.id | auEquationSideConverter:true: false}Rows">
       <template repeat.for="listItem of faeSide.acctList">
         <template if.bind="listItem.isAcct()">
