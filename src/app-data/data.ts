@@ -166,8 +166,22 @@ export class Data {
       /*title*/ "Tallahassee Bank - checking account",
       /*normalBalance*/ 1);
     this.faeSideAssets.acctList.push(newAcct);
+    newAcct = new Acct(
+      /*id*/ `acct${this.nextAcctId}`,
+      /*parentFaeSide*/ this.faeSideAssets,
+      /*intraSideIndex*/ this.nextSorter,
+      /*title*/ "2015 Subaru Outback",
+      /*normalBalance*/ 1);
+    this.faeSideAssets.acctList.push(newAcct);
     this.faeSideAssets.reindexAcctList();
 
+    newAcct = new Acct(
+      /*id*/ `acct${this.nextAcctId}`,
+      /*parentFaeSide*/ this.faeSideEquities,
+      /*intraSideIndex*/ this.nextSorter,
+      /*title*/ "Citi MasterCard",
+      /*normalBalance*/ 1);
+    this.faeSideEquities.acctList.push(newAcct);
     newAcct = new Acct(
       /*id*/ `acct${this.nextAcctId}`,
       /*parentFaeSide*/ this.faeSideEquities,
@@ -176,6 +190,7 @@ export class Data {
       /*normalBalance*/ 1);
     this.faeSideEquities.acctList.push(newAcct);
     this.faeSideEquities.reindexAcctList();
+
     /*
     *************************************************
     * create opening position transaction
@@ -203,7 +218,17 @@ export class Data {
       /*sourceTran*/ sourceTran,
       /*targetAcct*/ targetAcct,
       /*desc*/ "Opening position",
-      /*amt*/ 1700.00);
+      /*amt*/ 2700.00);
+    sourceTran.bchgList.push(newBchg);
+    targetAcct.bchgList.push(newBchg);
+
+    targetAcct = this.faeSideAssets.acctList[2] as Acct;
+    newBchg = new Bchg(
+      /*id*/ `bchg${this.nextBchgId}`,
+      /*sourceTran*/ sourceTran,
+      /*targetAcct*/ targetAcct,
+      /*desc*/ "Opening position",
+      /*amt*/ 16000.00);
     sourceTran.bchgList.push(newBchg);
     targetAcct.bchgList.push(newBchg);
 
@@ -213,9 +238,20 @@ export class Data {
       /*sourceTran*/ sourceTran,
       /*targetAcct*/ targetAcct,
       /*desc*/ "Opening position",
-      /*amt*/ 0.00);
+      /*amt*/ 900.00);
     sourceTran.bchgList.push(newBchg);
     targetAcct.bchgList.push(newBchg);
+
+    targetAcct = this.faeSideEquities.acctList[1] as Acct;
+    newBchg = new Bchg(
+      /*id*/ `bchg${this.nextBchgId}`,
+      /*sourceTran*/ sourceTran,
+      /*targetAcct*/ targetAcct,
+      /*desc*/ "Opening position",
+      /*amt*/ 900.00);
+    sourceTran.bchgList.push(newBchg);
+    targetAcct.bchgList.push(newBchg);
+
     newBchg.setAmtToBalanceTran();
 
     this.jrnl.tranList.push(sourceTran);

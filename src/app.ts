@@ -69,7 +69,7 @@ export class App {
     let panelElement = document.getElementById("observedElement");
     let domRectPanel = panelElement.getBoundingClientRect();
 
-    bodyElement.app.heightTest = bodyElement.app.heightTest + domRectBody.bottom - domRectPanel.bottom - 5;
+    bodyElement.app.heightTest = bodyElement.app.heightTest + domRectBody.bottom - domRectPanel.bottom - 40;
     console.log(bodyElement.app.heightTest);
   }
 
@@ -233,12 +233,14 @@ export class App {
     this.selectedTran = tran;
     this.goTranModule(event);
   }
+/*
   addHovering(event) {
-    // event.target.classList.toggle("aaNavMapBtnHover", true);
+    event.target.classList.toggle("aaNavMapBtnHover", true);
   }
   removeHovering(event) {
-    // event.target.classList.toggle("aaNavMapBtnHover", false);
+    event.target.classList.toggle("aaNavMapBtnHover", false);
   }
+*/
   elementNavRibbon: HTMLElement;
   heightTest: number = 75;
 
