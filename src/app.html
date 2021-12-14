@@ -266,26 +266,43 @@
               </button>
             </div>
           </div>
-          <!-- Column 3: Account balanve change -->
+          <!-- Column 3: Account balance change -->
           <div class="aaNavModuleColumn">
+            <!-- Row 1: blank -->
             <div class="aaNavMapCell">&nbsp;</div>
+            <!-- Row 2: blank -->
             <div class="aaNavMapCell">&nbsp;</div>
+            <!-- Row 3: Go-to button -->
             <div class="aaNavMapCell">
-              <i class="fas fa-map-marker-alt ${!selectedBchg ? 'aaHidden' : ''}"
-                 css="color: ${selectedModule == MODULE_BCHG ? '#009' : 'transparent'};
-             font-size: large;
-             margin-right: 5px"></i>
               <template if.bind="selectedBchg">
-                <button type="button"
-                        class="aaNavMapBtn ${selectedModule == MODULE_BCHG ? 'aaNavMapBtnSelected' : ''}"
-                        click.trigger="goBchgModule($event)">
-                  Account balance change
-                </button>
+                <template if.bind="selectedModule == MODULE_BCHG">
+                  <au-icon-map-marker></au-icon-map-marker>
+                  <button type="button"
+                          class="aaNavMapBtn aaNavMapBtnSelected">
+                    Account balance change
+                  </button>
+                </template>
+                <template if.bind="selectedModule !== MODULE_BCHG">
+                  <au-icon-map-marker-hidden></au-icon-map-marker-hidden>
+                  <button type="button"
+                          class="aaNavMapBtn"
+                          click.trigger="goBchgModule($event)">
+                    Account balance change
+                  </button>
+                </template>
+                <template if.bind="!selectedBchg">
+                  <au-icon-map-marker-hidden></au-icon-map-marker-hidden>
+                  <button type="button"
+                          class="aaNavMapBtn"
+                          disabled>
+                    Account balance change
+                  </button>
+                </template>
               </template>
               <template if.bind="!selectedBchg ">
+                <au-icon-map-marker-hidden></au-icon-map-marker-hidden>
                 <button type="button"
-                        class="aaNavMapBtn ${selectedModule == MODULE_BCHG ? 'aaNavMapBtnSelected' : ''}"
-                        css="-webkit-box-shadow: none; -moz-box-shadow: none; box-shadow: none;"
+                        class="aaNavMapBtn"
                         disabled>
                   Account balance change
                 </button>
