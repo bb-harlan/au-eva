@@ -519,7 +519,7 @@ h1 {
 }
 
 .aaRowOpsMoverSelected {
-  background-color: #009;
+  background-color: #009900;
 }
 
 .aaRowData {
@@ -638,6 +638,10 @@ h1 {
 
 .aaCellTranDate {
   min-width: 7pc;
+  text-align: center;
+}
+.aaCellTranId {
+  min-width: 5pc;
   text-align: center;
 }
 
@@ -773,12 +777,9 @@ input::placeholder {
 
 .aaDragging {
   cursor: n-resize;
-  /*-webkit-box-shadow: 0px 0px 3px 1px #4980B6 inset;*/
-  /*-moz-box-shadow: 0px 0px 3px 1px #4980B6 inset;*/
-  /*box-shadow: 0 0 3px 1px #4980B6 inset;*/
-  -webkit-box-shadow: 0px 0px 3px 1px #00e inset;
-  -moz-box-shadow: 0px 0px 3px 1px #00e inset;
-  box-shadow: 0 0 0 2px #00e inset; /*background-color: #C8D9E9 !important;*/
+  -webkit-box-shadow: 0px 0px 3px 1px #090 inset;
+  -moz-box-shadow: 0px 0px 3px 1px #090 inset;
+  box-shadow: 0 0 0 2px #090 inset; /*background-color: #C8D9E9 !important;*/
   background-color: #EDF2F7 !important;
 }
 
