@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>App Layout</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    .aaBox {
+      display: block;
+      /*flex-direction: column;
+      justify-content: flex-start;
+      align-items: flex-start;*/
+      padding: 1ch;
+      /*margin: 0.5ch;*/
+      border: 0.5ch solid #00f;
+    }
+
+    .aaAcctTitle {
+      display: inline-flex;;
+      width: 30ch;
+      text-align: left;
+    }
+
+    .aaAcctBalance {
+      display: inline-flex;
+      justify-content: flex-end;
+      width: 15ch;
+      text-align: right;
+    }
+
+    .aaListRow {
+      display: flex;
+      flex-direction: row;
+      justify-content: flex-start;
+      align-items: center; /* vertical axis */
+      text-align: left;
+      white-space: nowrap;
+      cursor: default;
+    }
+
+    .aaScrollableList {
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      align-items: flex-start;
+      overflow-y: scroll;
+    }
+
+    .aaEquRow {
+      display: flex;
+      justify-content: center;
+      position: absolute;
+      margin-top: 100px;
+      margin-bottom: 50px;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      right: 0;
+    }
+
+    .aaPage {
+      display: flex;
+      flex-direction: column;
+      align-items: stretch;
+      justify-content: center;
+      position: absolute;
+      top: 0;
+      bottom: 0;
+    }
+
+    .aaFixedHeader {
+      display: flex;
+      justify-content: center;
+      position: fixed;
+      margin: 0;
+      height: 100px;
+      top: 0;
+    }
+
+    .aaFixedFooter {
+      display: flex;
+      justify-content: center;
+      position: fixed;
+      margin: 0;
+      height: 50px;
+      bottom: 0;
+    }
+
+    .aaAppLayout {
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      align-items: center;
+      position: fixed;
+      right: 0;
+      left: 0;
+    }
+
+    .aaLevel1 {
+      display: flex;
+      flex-direction: row;
+    }
+
+    .aaLevel2 {
+      display: flex;
+      flex-direction: column;
+    }
+  </style>
+</head>
+<body>
+<div class="aaBox aaLevel1"
+     style="width: 100%">
+  <div class="aaBox aaLevel2"
+       style="width: 15%">
+    TOC
+  </div>
+  <div class="aaBox aaLevel2"
+       style="width: 85%
+       height: 100%">
+    <iframe src="http://localhost:8080"
+            width="100%"
+            height="100%"
+            style="position: absolute;
+                   top: 0;
+                   right: 0;
+                   bottom: 0;
+                   left: 0;"></iframe>
+  </div>
+</div>
+
+</body>
+</html>
