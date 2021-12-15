@@ -159,6 +159,7 @@ export class AuModuleTran {
     this.tranOp = this.TRAN_OP_EDIT;
     this.app.viewNavMode = false;
     this.app.viewmodelTran.observeForSetInputFocus();
+    this.app.elementNavRibbon.classList.toggle("aaHidden", true);
   }
   tranEditDone(event) {
     if (!this.tranValid()) {
@@ -194,7 +195,7 @@ export class AuModuleTran {
       this.app.navBtnReturn.click();
       this.app.navBtnReturn = null;
     }
-
+    this.app.elementNavRibbon.classList.toggle("aaHidden", false);
   }
   tranEditCancel(event) {
     this.app.candidateTran = null;
@@ -205,6 +206,7 @@ export class AuModuleTran {
       this.app.navBtnReturn.click();
       this.app.navBtnReturn = null;
     }
+    this.app.elementNavRibbon.classList.toggle("aaHidden", false);
   }
   tranDelete(event) {
     this.tranOp = this.TRAN_OP_DELETE;

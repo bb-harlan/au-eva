@@ -457,6 +457,7 @@ h1 {
   justify-content: flex-start;
   /*align-items: center; !* vertical axis *!*/
   align-items: start; /* vertical axis */
+  column-gap: 4ch;
   margin: 0;
   text-align: left;
   white-space: nowrap;

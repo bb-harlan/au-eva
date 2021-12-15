@@ -14,16 +14,18 @@
     </template>
     <div class="aaPanel aaPanelBoxShadow"
          id="observedElement">
-      <div class="aaPanelHeader aaPanelHeaderModule">${app.selectedAcct.parentFaeSide.id | auEquationSideConverter:true:false} account</div>
+      <div class="aaPanelHeader aaPanelHeaderModule">${app.selectedAcct.parentFaeSide.id |
+        auEquationSideConverter:true:false} account
+      </div>
       <div class="aaPanelBody">
         <div class="aaForm">
           <table border="0" style="border-collapse: collapse;">
-<!--
-            <tr>
-              <td class="aaFormItemLabel">Equation side:</td>
-              <td class="aaFormItemData">${app.selectedAcct.parentFaeSide.id | auEquationSideConverter:true:true}</td>
-            </tr>
--->
+            <!--
+                        <tr>
+                          <td class="aaFormItemLabel">Equation side:</td>
+                          <td class="aaFormItemData">${app.selectedAcct.parentFaeSide.id | auEquationSideConverter:true:true}</td>
+                        </tr>
+            -->
             <tr>
               <td class="aaFormItemLabel">Account title:</td>
               <td class="aaFormItemData">
@@ -58,7 +60,8 @@
                    mouseleave.trigger="onRowLeave($event, bchg)"
                    click.trigger="app.selectBchg(bchg)"
                    dblclick.trigger="app.selectAcctBchgGoTran(bchg)">
-                <div class="aaRowOps aaRowOpsEmpty aaBgColorToolbar ${app.selectedBchg.id == bchg.id ? 'aaRowOpsSelected' : ''}">
+                <div
+                  class="aaRowOps aaRowOpsEmpty aaBgColorToolbar ${app.selectedBchg.id == bchg.id ? 'aaRowOpsSelected' : ''}">
                 </div>
                 <div class="aaVerticalGridline"></div>
                 <div class="aaRowData aaRowBgColorData ${app.selectedBchg.id == bchg.id ? 'aaRowDataSelected' : ''}">
@@ -99,7 +102,7 @@
       </div>
     </div>
     <template if.bind="app.selectedAcct.parentFaeSide.id == 'Assets'">
-      <!-- blank space for asset acct column -->
+      <!-- blank space for equity acct column -->
       <au-acct-panel-spacer></au-acct-panel-spacer>
     </template>
   </div>

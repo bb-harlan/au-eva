@@ -4,55 +4,55 @@
   <require from="au-views/au-icon-edit.html"></require>
   <require from="au-converters/au-currency-converter"></require>
   <require from="au-converters/au-equation-side-converter"></require>
-  <div class="aaPanel aaPanelBoxShadow aaHidden">
-    <div class="aaPanelHeader aaPanelHeaderModule">(spacer)</div>
-    <div class="aaPanelBody">
-      <div class="aaGridContainer">
-<!--
-        <div class="aaGridTitleBar">Balance changes</div>
--->
-<!--
-        <div class="aaRow aaRowColumnHeaders">
-          <div class="aaRowOps aaRowOpsEmpty aaHidden"></div>
-          <div class="aaVerticalGridline"></div>
-          <div class="aaRowData aaFontLabel aaFontBold">
-            <div class="aaCell aaCellTranDate">Date</div>
-            <div class="aaVerticalGridline"></div>
-            <div class="aaCell aaCellBchgDesc">Description</div>
-            <div class="aaVerticalGridline"></div>
-            <div class="aaCell aaCellBchgAmt">Amount</div>
-            <div class="aaVerticalGridline"></div>
-            <div class="aaCell aaCellBchgBal">New balance</div>
-            <div class="aaVerticalGridline"></div>
-          </div>
+  <div class="aaPanel aaPanelBoxShadow" style="border-color: #ddd;">
+    <div class="aaPanelHeader aaPanelHeaderModule"
+         style="visibility: hidden; background-color: #ddd;"><span style="visibility: hidden;">(spacer)</span></div>
+      <div class="aaPanelBody aaHidden">
+        <div class="aaForm">
+          <table border="0" style="border-collapse: collapse;">
+            <tr>
+              <td class="aaFormItemLabel">Account title:</td>
+              <td class="aaFormItemData">x</td>
+            </tr>
+          </table>
         </div>
--->
-        <div class="aaGridScrollableRows aaGridHeightInAcct">
-          <!--anchor-->
-          <!--
-          The purpose of having the following invisible end-of-list row
-          is to provide an invisible horizontal spacer if acct.bchgList is empty
-          so as to display the column headings row properly..
-          -->
-          <div class="aaRow">
-            <div class="aaRowOps aaRowOpsEmpty aaBgColorToolbar">
+        <div class="aaGridContainer">
+          <div class="aaGridTitleBar">Balance changes</div>
+          <div class="aaRow aaRowColumnHeaders">
+            <div class="aaRowOps aaRowOpsEmpty aaHidden">
             </div>
             <div class="aaVerticalGridline"></div>
-            <div class="aaRowData aaRowBgColorData">
-              <div class="aaCell aaFontData aaCellTranDate"></div>
+            <div class="aaRowData aaFontLabel aaFontBold">
+              <div class="aaCell aaCellTranDate">Date</div>
               <div class="aaVerticalGridline"></div>
-              <div class="aaCell aaFontData aaCellBchgDesc">(ending invisible row)</div>
+              <div class="aaCell aaCellBchgDesc">Description</div>
               <div class="aaVerticalGridline"></div>
-              <div class="aaCell aaFontData aaCellBchgAmt"></div>
+              <div class="aaCell aaCellBchgAmt">Amount</div>
               <div class="aaVerticalGridline"></div>
-              <div class="aaCell aaFontData aaCellBchgBal"></div>
+              <div class="aaCell aaCellBchgBal">New balance</div>
+              <div class="aaVerticalGridline"></div>
             </div>
-            <div class="aaVerticalGridline"></div>
           </div>
+          <div class="aaGridScrollableRows aaGridHeightInAcct"
+               id="acctModule-${app.selectedAcct.id}">
+            <div class="aaRow aaHidden">
+              <div class="aaRowOps aaRowOpsEmpty aaBgColorToolbar">
+              </div>
+              <div class="aaVerticalGridline"></div>
+              <div class="aaRowData aaRowBgColorData">
+                <div class="aaCell aaFontData aaCellTranDate"></div>
+                <div class="aaVerticalGridline"></div>
+                <div class="aaCell aaFontData aaCellBchgDesc">(ending invsible row)</div>
+                <div class="aaVerticalGridline"></div>
+                <div class="aaCell aaFontData aaCellBchgAmt"></div>
+                <div class="aaVerticalGridline"></div>
+                <div class="aaCell aaFontData aaCellBchgBal"></div>
+              </div>
+              <div class="aaVerticalGridline"></div>
+            </div>
+          </div>
+          <div class="aaGridFooterBar"></div>
         </div>
-<!--
-        <div class="aaGridFooterBar"></div>
--->
       </div>
     </div>
   </div>

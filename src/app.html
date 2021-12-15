@@ -18,14 +18,11 @@
       margin-top: 2ch;
       padding: 0.25pc;
       color: #000;
-      /*background-color: #ddd;*/
       font-family: Arial, Helvetica, sans-serif, SansSerif;
       font-weight: normal;
       letter-spacing: 2px;
-      font-size: 150%;
+      font-size: 200%;
       align-self: stretch;
-      /*border-top: 1px solid #4980B6;
-      border-bottom: 1px solid #4980B6;*/
     }
 
     .aaNavRibbon {
@@ -219,8 +216,7 @@
             <div class="aaNavMapCell">
               <button type="button"
                       class="aaNavMapArrow ${selectedModule != MODULE_ACCT ||
-                                   selectedAcct.id == filteredAcctList[0].id ?
-                                   'aaHidden' : ''}"
+                             selectedAcct.id == filteredAcctList[0].id ? 'aaHidden' : ''}"
                       click.trigger="goPrevAcct($event)"
                       title="Go to previous account in list">
                 <au-icon-nav-up></au-icon-nav-up>
@@ -258,8 +254,7 @@
             <div class="aaNavMapCell">
               <button type="button"
                       class="aaNavMapArrow ${selectedModule != MODULE_ACCT ||
-                                   selectedAcct.id == filteredAcctList[filteredAcctList.length - 1].id ?
-                                   'aaHidden' : ''}"
+                             selectedAcct.id == filteredAcctList[filteredAcctList.length - 1].id ? 'aaHidden' : ''}"
                       click.trigger="goNextAcct($event)"
                       title="Go to next account in list">
                 <au-icon-nav-down></au-icon-nav-down>
@@ -315,8 +310,7 @@
             <div class="aaNavMapCell">
               <button type="button"
                       class="aaNavMapArrow ${selectedModule != MODULE_TRAN ||
-                                   selectedTran.id == data.jrnl.tranList[0].id ?
-                                   'aaHidden' : ''}"
+                             selectedTran.id == data.jrnl.tranList[0].id ? 'aaHidden' : ''}"
                       click.trigger="goPrevTran($event)"
                       title="Go to previous transaction">
                 <au-icon-nav-up></au-icon-nav-up>
@@ -354,8 +348,7 @@
             <div class="aaNavMapCell">
               <button type="button"
                       class="aaNavMapArrow ${selectedModule != MODULE_TRAN ||
-                                   selectedTran.id == data.jrnl.tranList[data.jrnl.tranList.length - 1].id ?
-                                   'aaHidden' : ''}"
+                             selectedTran.id == data.jrnl.tranList[data.jrnl.tranList.length - 1].id ? 'aaHidden' : ''}"
                       click.trigger="goNextTran($event)"
                       title="Go to next transaction">
                 <au-icon-nav-down></au-icon-nav-down>
