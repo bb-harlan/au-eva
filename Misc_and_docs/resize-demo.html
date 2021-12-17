@@ -8,17 +8,28 @@
   <title>Window Size Logger</title>
 </head>
 <body>
-<p>Resize the browser window to fire the <code>resize</code> event.</p>
-<p>Window height: <span id="height"></span></p>
-<p>Window width: <span id="width"></span></p>
+<p>Resize the browser window to fire the <code>onResize</code> event.</p>
+<p>Window height: <span id="paraHeight"></span></p>
+<p>Window width: <span id="paraWidth"></span></p>
 <script>
-  const heightOutput = document.querySelector("#height");
-  const widthOutput = document.querySelector("#width");
-  function resize() {
-    heightOutput.textContent = window.innerHeight;
-    widthOutput.textContent = window.innerWidth;
+  console.log("Executing script...");
+  window.onresize = onResize1;
+  const elementHeightOutput = document.querySelector("#paraHeight");
+  const elementWidthOutput = document.querySelector("#paraWidth");
+  function onResize1() {
+    window.onresize = onResize2;
+    console.log("********** in onResize1) **********");
+    console.log(window.innerHeight);
+    elementHeightOutput.innerHTML = window.innerHeight;
+    elementWidthOutput.innerHTML = window.innerWidth;
   }
-  window.onresize = resize;
+  function onResize2() {
+    window.onresize = onResize1;
+    console.log("********** in onResize2) **********");
+    console.log(window.innerHeight);
+    elementHeightOutput.innerHTML = window.innerHeight;
+    elementWidthOutput.innerHTML = window.innerWidth;
+  }
 </script>
 </body>
 </html>
