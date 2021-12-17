@@ -53,27 +53,18 @@ export class App {
 
     */
     window.onresize = this.onResize;
-    (document.getElementsByTagName("BODY")[0] as any).app = this; // cast as "any" to programmatically add property
+   (window as any).app = this; // cast as "any" to programmatically add property
+    console.log(`(window as any).app.heightTest: ${(window as any).app.heightTest};`);
   }
   onResize(event) {
     console.log("******** in onResize ********");
-    /*
-        bodyElement = event.currentTarget.document.activeElement;
-        console.log(`event.currentTarget.document.activeElement: ${bodyElement};`);
-        console.log(bodyElement);
-    */
-    let bodyElement;
-    bodyElement = document.getElementsByTagName("BODY")[0];
-    let domRectBody = bodyElement.getBoundingClientRect();
-
     let panelElement = document.getElementById("observedElement");
     let domRectPanel = panelElement.getBoundingClientRect();
+    console.log(domRectPanel);
 
-    bodyElement.app.heightTest = bodyElement.app.heightTest + domRectBody.bottom - domRectPanel.bottom - 40;
-    console.log(bodyElement.app.heightTest);
+    (window as any).app.heightTest = (window as any).app.heightTest + (window as any).innerHeight - domRectPanel.bottom - 40;
+    console.log((window as any).app.heightTest);
   }
-
-  bodyElement: Element;
 
 /*
   firebaseConfig = {
@@ -175,7 +166,7 @@ export class App {
 
 
   bind() {
-    console.log("******** in attached() ********");
+    console.log("******** in app.bind() ********");
     // this.data.generateEmptyData();
     // this.data.generateTestData();
     this.data.generateExample1Data();

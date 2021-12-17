@@ -638,11 +638,11 @@ h1 {
 }
 
 .aaCellTranDate {
-  min-width: 7pc;
+  width: 7pc;
   text-align: center;
 }
 .aaCellTranId {
-  min-width: 5pc;
+  width: 5pc;
   text-align: center;
 }
 
