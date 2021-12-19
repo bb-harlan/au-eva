@@ -52,37 +52,25 @@ export class App {
         console.log(firebase);
 
     */
-    window.onresize = this.onResize;
-   (window as any).app = this; // cast as "any" to programmatically add property
-    console.log(`(window as any).app.heightTest: ${(window as any).app.heightTest};`);
-  }
-  onResize(event) {
-    console.log("******** in onResize ********");
-    let panelElement = document.getElementById("observedElement");
-    let domRectPanel = panelElement.getBoundingClientRect();
-    console.log(domRectPanel);
-
-    (window as any).app.heightTest = (window as any).app.heightTest + (window as any).innerHeight - domRectPanel.bottom - 40;
-    console.log((window as any).app.heightTest);
   }
 
-/*
-  firebaseConfig = {
-    apiKey: "AIzaSyBIkCf6Tz-qQbDYSnE6QlYWb195nSqp-CY",
-    authDomain: "au-eva.firebaseapp.com",
-    databaseURL: "https://au-eva.firebaseio.com",
-    projectId: "au-eva",
-    storageBucket: "au-eva.appspot.com",
-    messagingSenderId: "699165213300",
-    appId: "1:699165213300:web:29a56650cef6fe6fc4c721",
-    measurementId: "G-WVEFCE4R4S"
-  };
-  firestore;
+  /*
+    firebaseConfig = {
+      apiKey: "AIzaSyBIkCf6Tz-qQbDYSnE6QlYWb195nSqp-CY",
+      authDomain: "au-eva.firebaseapp.com",
+      databaseURL: "https://au-eva.firebaseio.com",
+      projectId: "au-eva",
+      storageBucket: "au-eva.appspot.com",
+      messagingSenderId: "699165213300",
+      appId: "1:699165213300:web:29a56650cef6fe6fc4c721",
+      measurementId: "G-WVEFCE4R4S"
+    };
+    firestore;
 
-  urlObj: URL;
-*/
+    urlObj: URL;
+  */
 
-  get MODULE_FAE()  {
+  get MODULE_FAE() {
     return "fae";
   }
   get MODULE_ACCT() {
@@ -105,13 +93,13 @@ export class App {
     return String.fromCharCode(0xf054); // FontAwesome
   }
 
-  get MODE_NAV()  {
+  get MODE_NAV() {
     return "nav";
   }
-  get MODE_EDIT()  {
+  get MODE_EDIT() {
     return "edit";
   }
-  get MODE_MOVE()  {
+  get MODE_MOVE() {
     return "move";
   }
 
@@ -164,29 +152,44 @@ export class App {
     1,
     1);
 
-
-  bind() {
-    console.log("******** in app.bind() ********");
+  activate() {
+    console.log("******** in app.activate() ********");
+  }
+  created(owningView, myView) {
+    console.log("******** in app.created() ********");
+    this.data.generateTestData();
     // this.data.generateEmptyData();
-    // this.data.generateTestData();
-    this.data.generateExample1Data();
-    /*** Test strigifying and reviving data ***/
-    /*
+    // this.data.generateExample1Data();
     this.data.stringifyData();
     this.data.reviveData();
-    */
+  }
+  bind() {
+    console.log("******** in app.bind() ********");
+    /*** Test strigifying and reviving data ***/
 
-/*
-    let bodyElement = document.getElementsByTagName("BODY")[0];
-    console.log(bodyElement);
-    let domRectBody = bodyElement.getBoundingClientRect();
-    console.log(domRectBody);
-    let panelElement = document.getElementById("observedElement");
-    console.log(panelElement);
-    let domRectPanel = panelElement.getBoundingClientRect();
-    console.log(domRectPanel);
-    this.heightTest = this.heightTest + domRectBody.bottom - domRectPanel.bottom;
-*/
+    /*
+        let bodyElement = document.getElementsByTagName("BODY")[0];
+        console.log(bodyElement);
+        let domRectBody = bodyElement.getBoundingClientRect();
+        console.log(domRectBody);
+        let panelElement = document.getElementById("observedElement");
+        console.log(panelElement);
+        let domRectPanel = panelElement.getBoundingClientRect();
+        console.log(domRectPanel);
+        this.heightTest = this.heightTest + domRectBody.bottom - domRectPanel.bottom;
+    */
+  }
+  attached() {
+    console.log("******** in app.attached() ********");
+  }
+  deactivate() {
+    console.log("******** in app.deactivate() ********");
+  }
+  detached() {
+    console.log("******** in app.detached() ********");
+  }
+  unbind() {
+    console.log("******** in app.unbind() ********");
   }
 
   selectAcct(acct): void {
@@ -224,21 +227,20 @@ export class App {
     this.selectedTran = tran;
     this.goTranModule(event);
   }
-/*
-  addHovering(event) {
-    event.target.classList.toggle("aaNavMapBtnHover", true);
-  }
-  removeHovering(event) {
-    event.target.classList.toggle("aaNavMapBtnHover", false);
-  }
-*/
+  /*
+    addHovering(event) {
+      event.target.classList.toggle("aaNavMapBtnHover", true);
+    }
+    removeHovering(event) {
+      event.target.classList.toggle("aaNavMapBtnHover", false);
+    }
+  */
   elementNavRibbon: HTMLElement;
-  heightTest: number = 75;
 
   goFaeModule(event) {
     event.target.classList.toggle("aaNavModuleHover", false);
     this.selectedModule = null;
-    this.viewmodelFae.observeForScrollIntoView();
+    // this.viewmodelFae.observeForScrollIntoView();
     this.selectedModule = this.MODULE_FAE;
   }
   goAcctModule(event) {
@@ -249,7 +251,7 @@ export class App {
     this.filteredAcctList =
       this.selectedAcct.parentFaeSide.acctList.filter(listItem => listItem instanceof Acct) as Array<Acct>;
     this.selectedModule = null;
-    this.viewmodelAcct.observeForScrollIntoView();
+    // this.viewmodelAcct.observeForScrollIntoView();
     this.selectedModule = this.MODULE_ACCT;
   }
   goBchgModule(event) {

@@ -21,6 +21,11 @@ export class AuModuleAcct {
   constructor(app) {
     this.app = app;
   }
+
+  bind() {
+    console.log("****** in auModuleAcct.bind() ******");
+  }
+
   observeForScrollIntoView() {
     (this.observerScrollIntoView as any).app = this.app; // cast as "any" to programmatically add property
     this.observerScrollIntoView.observe(this.moduleRootElement,

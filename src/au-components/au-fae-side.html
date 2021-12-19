@@ -21,7 +21,7 @@
       </div>
     </div>
     <div class="aaGridScrollableRows"
-         css="height: ${app.heightTest}px;"
+         css="height: ${auModuleFae.scrollableRowsHeight}px;"
          id="grid${faeSide.id | auEquationSideConverter:true: false}Rows">
       <template repeat.for="listItem of faeSide.acctList">
         <template if.bind="listItem.isAcct()">

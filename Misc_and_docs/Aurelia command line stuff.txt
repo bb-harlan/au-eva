@@ -5,6 +5,12 @@ in the GitHub project repository, specify the publishing source as masters/docs
 
 au build --env prod
 
+add newly created to repository
+   app.????.bundle.js
+   app.????.bundle.map
+   vender.????.bundle.js
+   vender.????.bundle.map
+
 Commit the changes and push to GitHub
 
 Check Aurelia version

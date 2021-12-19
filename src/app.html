@@ -446,8 +446,12 @@
       </div>
     </div>
     <div class="aaPanelContainer">
-      <au-module-fae view-model.ref="viewmodelFae"></au-module-fae>
-      <au-module-acct view-model.ref="viewmodelAcct"></au-module-acct>
+      <template if.bind="selectedModule == MODULE_FAE">
+        <au-module-fae view-model.ref="viewmodelFae"></au-module-fae>
+      </template>
+      <template if.bind="selectedModule == MODULE_ACCT">
+        <au-module-acct view-model.ref="viewmodelAcct"></au-module-acct>
+      </template>
       <au-module-bchg view-model.ref="viewmodelBchg"></au-module-bchg>
       <au-module-tran view-model.ref="viewmodelTran"></au-module-tran>
       <au-module-jrnl view-model.ref="viewmodelJrnl"></au-module-jrnl>

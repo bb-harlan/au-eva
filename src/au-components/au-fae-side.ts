@@ -29,7 +29,7 @@ export class AuFaeSide {
   /*
    * In the following two mouseenter/mouseleave handlers, the end-of-list
    * row passes a null value as listItem to signal that the call is from the
-   * enau run --watchd-of-list row from which there is no listItem to navigation to. This method
+   * end-of-list row from which there is no listItem to navigation to. This method
    * uses that signal to know not to make the nav button visible--
    * that is, it is to remain hidden. The nav button is present but hidden
    * in the end-of-list row to make the horizontal alignment of the remaining columns correct.
@@ -41,6 +41,10 @@ export class AuFaeSide {
     this.app = app;
     this.auModuleFae = auModuleFae;
   }
+  bind() {
+    console.log("****** in auFaeSide.bind() ******");
+  }
+
 
   onRowEnter(event, listItem) {
     event.target.children[2].classList.toggle('aaRowDataHover', true);

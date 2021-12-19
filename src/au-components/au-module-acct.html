@@ -7,7 +7,7 @@
   <require from="au-converters/au-equation-side-converter"></require>
   <div class="aaRowAssetEquityPanels"
        element.ref="moduleRootElement"
-       css="${app.selectedModule == app.MODULE_ACCT ? '' : 'display: none;'}">
+       xcss="${app.selectedModule == app.MODULE_ACCT ? '' : 'display: none;'}">
     <template if.bind="app.selectedAcct.parentFaeSide.id == 'Equities'">
       <!-- blank space for asset acct column -->
       <au-acct-panel-spacer></au-acct-panel-spacer>

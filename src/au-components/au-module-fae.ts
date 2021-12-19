@@ -22,6 +22,8 @@ export class AuModuleFae {
   panelToolBar: Element;
 
   /* other properties */
+  scrollableRowsHeight: number = 200;
+
   moduleMode;
   observerScrollIntoView = new MutationObserver(this.callbackScrollIntoView);
   observerSetInputFocus = new MutationObserver(this.callbackSetInputFocus);
@@ -29,19 +31,57 @@ export class AuModuleFae {
   constructor(app) {
     this.app = app;
     this.moduleMode = this.app.MODE_NAV;
+    (window as any).onresize = this.onResize;
+    (window as any).auModuleFae = this;
+  }
+  onResize(event) {
+    console.log("******** in onResize ********");
+    let domRectPanel = (window as any).auModuleFae.moduleRootElement.getBoundingClientRect();
+    (window as any).auModuleFae.scrollableRowsHeight = (window as any).auModuleFae.scrollableRowsHeight + (window as any).innerHeight - domRectPanel.bottom - 25;
+  }
+  activate() {
+    console.log("******** in auModuleFae.activate() ********");
+  }
+  created(owningView, myView) {
+    console.log("******** in auModuleFae.created() ********");
+  }
+  bind() {
+    console.log("****** in auModuleFae.bind() ******");
+  }
+  attached() {
+    console.log("******** in auModuleFae.attached() ********");
+    /* initialize this.scrollableRowsHeight so that the module panel
+       extends downward to within 25px of bottom of window.
+    */
+    let domRectPanel = this.moduleRootElement.getBoundingClientRect();
+    this.scrollableRowsHeight = this.scrollableRowsHeight + (window as any).innerHeight - domRectPanel.bottom - 25;
+    /*
+    this.crollableRowsHeight is used in au-fae-side.html as follows:
+    <div class="aaGridScrollableRows"
+         css="height: ${auModuleFae.scrollableRowsHeight}px;" ...
+    */
+  }
+  deactivate() {
+    console.log("******** in auModuleFae.deactivate() ********");
+  }
+  detached() {
+    console.log("******** in auModuleFae.detached() ********");
+  }
+  unbind() {
+    console.log("******** in auModuleFae.unbind() ********");
   }
 
   editOpen() {
-/*
-    this.vmFaeSideEditAssets.open();
-    this.vmFaeSideEditEquities.open();
-*/
+    /*
+        this.vmFaeSideEditAssets.open();
+        this.vmFaeSideEditEquities.open();
+    */
     this.moduleMode = this.app.MODE_EDIT;
     this.app.elementNavRibbon.classList.toggle("aaHidden", true);
     /*
-    * For other initialization see the bind() methoe of compomeent au-fae-side-edit
+    * For other initialization see the bind() method of compomeent au-fae-side-edit
     * */
-}
+  }
   editSaveChanges() {
     let missingTitleCnt = this.vmFaeSideEditAssets.missingTitleCnt() + this.vmFaeSideEditEquities.missingTitleCnt();
     if (missingTitleCnt > 0) {
@@ -62,10 +102,10 @@ export class AuModuleFae {
     this.app.elementNavRibbon.classList.toggle("aaHidden", false);
   }
   moveOpen() {
-/*
-    this.vmFaeSideMoveAssets.open();
-    this.vmFaeSideMoveEquities.open();
-*/
+    /*
+        this.vmFaeSideMoveAssets.open();
+        this.vmFaeSideMoveEquities.open();
+    */
     this.moduleMode = this.app.MODE_MOVE;
     this.app.elementNavRibbon.classList.toggle("aaHidden", true);
     this.app.selectedAcct = null;
